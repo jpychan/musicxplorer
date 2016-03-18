@@ -1,2 +1,10 @@
-<h1>Testing!</h1>
+h1 #{@festival}
 
+div class="driving-cost"
+  h2 cost of driving [round trip]
+  p 
+    assumes you start with an empty tank of gas
+    br does not currently account for switching mode of transportation e.g. ferries
+  == @price_by_car
+
+div class="flickr-imgs" data-name="#{@festival}"
