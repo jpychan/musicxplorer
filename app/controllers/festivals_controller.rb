@@ -2,13 +2,14 @@ class FestivalsController < ApplicationController
 
   def show
     # will take params or an obj as an arg once search form is up
-    driving = DrivingCostService.new
+    driving = DrivingInfoService.new
     @festival = driving.festival
     @price_by_car = driving.calc_driving_cost
+    @time_by_car = driving.get_trip_time[0]
   end
 
   def all  
-    
+    @genres = Genre.all    
   end
 
   def flickr_images

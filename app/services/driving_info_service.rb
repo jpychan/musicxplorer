@@ -1,4 +1,4 @@
-class DrivingCostService
+class DrivingInfoService
   # this will take params/obj as an argument once search form is up
   # right now this doesn't account for ferry prices/changing mode of transportation
   # TODO: account for more specific adresses once search form is up
@@ -27,18 +27,18 @@ class DrivingCostService
   end
 
   def get_avg_gas_price
-    gasbuddy = Nokogiri::HTML(open('http://gasbuddy.com/?search=Vancouver%2C+BC'))
+    gasbuddy = Nokogiri::HTML(open("http://gasbuddy.com/?search=#{@origin_city}%2C+#{@origin_prov}"))
     gasbuddy.css('.gb-price-lg')[0].text.gsub(/\s+/, '').to_f / 100
   end
 
-  def get_trip_dist
+  def get_trip
     origin = [@origin_city, @origin_prov].join('+')
     dest = [@dest_city, @dest_prov].join('+')
     
     googl_dist = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=#{origin}|#{dest}&destinations=#{dest}|#{origin}&key=#{ENV['GOOGL_DIST_KEY']}&avoid=tolls"
     googl_resp = HTTParty.get(googl_dist)
     googl_data = JSON.parse(googl_resp.body)['rows']
-
+  
     round_trip = []
     googl_data.each do |trip|
       # filter the distance matrix
@@ -46,11 +46,20 @@ class DrivingCostService
         round_trip << ele if ele['distance']['value'] != 0
       end
     end
-    
+    round_trip
+  end
+
+  def get_trip_dist
     # convert from m to km & add distance to & from destination
-    round_trip.reduce(0) do |sum, dist|
+    get_trip.reduce(0) do |sum, dist|
       dist_in_km = dist['distance']['value'] / 1000.0
       sum + dist_in_km
+    end
+  end
+
+  def get_trip_time
+    get_trip.map do |trip|
+      trip['duration']['text']
     end
   end
 

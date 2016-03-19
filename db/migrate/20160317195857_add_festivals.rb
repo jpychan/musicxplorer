@@ -30,6 +30,16 @@ class AddFestivals < ActiveRecord::Migration
       t.references :genre_4
       t.timestamps null: false
     end
-
+  
+    if Genre.all.empty? 
+      Genre.create(genre_type: 'Blues')
+      Genre.create(genre_type: 'Country')
+      Genre.create(genre_type: 'Dubstep')
+      Genre.create(genre_type: 'Indie')
+      Genre.create(genre_type: 'Jazz')
+      Genre.create(genre_type: 'Misc')
+      Genre.create(genre_type: 'Pop')
+      Genre.create(genre_type: 'Rock')
+    end
   end
 end

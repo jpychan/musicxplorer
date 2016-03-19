@@ -1,5 +1,4 @@
 class FestivalGenre < ActiveRecord::Base
-
   belongs_to :festival
   belongs_to :genre_1, class_name: "Genre",
                         foreign_key: "genre_1_id"
