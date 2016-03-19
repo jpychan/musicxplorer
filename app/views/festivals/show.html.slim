@@ -1,4 +1,9 @@
-h1 #{@festival}
+h1 #{@festival.name}
+
+div
+  = link_to @festival.website, @festival.website
+  p #{@festival.start_date} to #{@festival.end_date}
+  p #{@festival.description}
 
 div class="driving-cost"
   h2 cost of driving [round trip] in CDN
@@ -8,4 +13,4 @@ div class="driving-cost"
   p $#{@price_by_car}
   p duration: approx #{@time_by_car} [one way]
 
-div class="flickr-imgs" data-name="#{@festival}"
+div class="flickr-imgs" data-name="#{@festival.name}"

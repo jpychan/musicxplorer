@@ -1,5 +1,7 @@
 h1 festival.find
 
+= @selected_festival.inspect
+
 = form_tag '/festival-list', remote: true,  method: :get, id: 'festival-search'
   div
     = label_tag :city, 'Enter a city' 

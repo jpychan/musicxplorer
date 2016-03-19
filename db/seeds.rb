@@ -33,9 +33,9 @@ Festival.create(name: 'Shambhala Music Festival', start_date: Date.new(2016,8,5)
  description: 'This is Canada’s premiere Electronic Music Festival. Cutting edge Talent, Lights and Sound come together in Paradise to give life to a non -sponsored family run anomaly. Seeing it for yourself is the only way to understand exactly what is Shambhala.',
  price: 365, currency: 'CAD', camping: true)
 
-FestivalGenre.create(festival_id: Festival.first.id, genre_id: Genre.first.id)
-FestivalGenre.create(festival_id: Festival.first.id, genre_id: Genre.find(3).id)
-FestivalGenre.create(festival_id: Festival.find(2), genre_id: Genre.find(2).id)
+FestivalGenre.create(festival_id: Festival.first.id, genre_id: 1)
+FestivalGenre.create(festival_id: Festival.first.id, genre_id: 2)
+FestivalGenre.create(festival_id: Festival.last.id, genre_id: 3)
 
 # Festival.create(name: 'Rifflandia', start_date: '2016-09-15', end_date:'2016-09-18',
 # city: 'Victoria', state: 'BC', country: 'Canada', website: 'http://rifflandia.com/', location: 'Victoria',

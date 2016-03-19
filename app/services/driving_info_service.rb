@@ -3,11 +3,9 @@ class DrivingInfoService
   # right now this doesn't account for ferry prices/changing mode of transportation
   # TODO: account for more specific adresses once search form is up
 
-  attr_reader :festival, :origin_city, :origin_prov, :dest_city, :dest_prov
+  attr_reader :origin_city, :origin_prov, :dest_city, :dest_prov
 
   def initialize
-    @festival = 'rifflandia'
-
     # these will eventually be properties of a festival obj
     @origin_city = 'Vancouver'
     @origin_prov = 'BC'

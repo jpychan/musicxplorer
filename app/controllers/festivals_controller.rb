@@ -3,13 +3,15 @@ class FestivalsController < ApplicationController
   def show
     # will take params or an obj as an arg once search form is up
     driving = DrivingInfoService.new
-    @festival = driving.festival
+    @festival = Festival.find(params[:id])
     @price_by_car = driving.calc_driving_cost
     @time_by_car = driving.get_trip_time[0]
   end
 
   def all  
-    @genres = Genre.all    
+    @genres = Genre.all
+    selected = $redis.get('selected');    
+    @selected_festival = selected
   end
 
   # TODO: need to modify this based on actual data format & account for blank fields
@@ -18,6 +20,17 @@ class FestivalsController < ApplicationController
     festivals = Festival.where('start_date >= ?', params[:date]).order(:start_date)
     @festivals = festivals.select{|f| f.genres.include?( Genre.find(params[:genre]) )}
     render json: @festivals
+  end
+
+  def festival_compare
+  end
+  
+  def festival_select
+    festival = Festival.find(params[:festivalId]).to_json
+    if festival
+      $redis.set('selected', festival)
+    end
+    redirect_to root_path
   end
 
   def flickr_images
