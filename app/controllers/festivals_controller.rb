@@ -12,6 +12,14 @@ class FestivalsController < ApplicationController
     @genres = Genre.all    
   end
 
+  # TODO: need to modify this based on actual data format & account for blank fields
+  def festival_list
+    # find festivals w/in a 500km radius [would extend into the states]
+    festivals = Festival.where('start_date >= ?', params[:date]).order(:start_date)
+    @festivals = festivals.select{|f| f.genres.include?( Genre.find(params[:genre]) )}
+    render json: @festivals
+  end
+
   def flickr_images
     @festival = params[:festival]
     img_src = "https://api.flickr.com/services/rest/?api_key=#{ENV['FLICKR_KEY']}&method=flickr.photos.search&text=#{@festival}&sort=relevance&per_page=10&content_type=1&format=json&nojsoncallback=1"

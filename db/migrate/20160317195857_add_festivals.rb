@@ -24,6 +24,7 @@ class AddFestivals < ActiveRecord::Migration
 
     create_table :festival_genres do |t|
       t.references :festival
+      t.references :genre
       t.references :genre_1
       t.references :genre_2
       t.references :genre_3

@@ -23,15 +23,19 @@
 # Genre.create(genre_type: 'r&b')
 # Genre.create(genre_type: 'world music')
 
-# Festival.create(name: 'Pemberton Music Festival', start_date: '2016-07-14', end_date:'2016-07-17', location: 'Pemberton',
-# city: 'Pemberton', state: 'BC', country: 'Canada', website: 'http://pembertonmusicfestival.com/',
-# description: 'Grab your friends and leave the world behind for a four-day celebration beneath epic Mount Currie in Pemberton Valley. Full of dancing, food, friendship, and of course — the best music EVER!',
-# price: 295, currency: 'CAD', camping: true)
+Festival.create(name: 'Pemberton Music Festival', start_date: Date.new(2016,7,14), end_date: Date.new(2016,7,17), location: 'Pemberton',
+ city: 'Pemberton', state: 'BC', country: 'Canada', website: 'http://pembertonmusicfestival.com/',
+ description: 'Grab your friends and leave the world behind for a four-day celebration beneath epic Mount Currie in Pemberton Valley. Full of dancing, food, friendship, and of course — the best music EVER!',
+ price: 295, currency: 'CAD', camping: true)
 
-# Festival.create(name: 'Shambhala Music Festival', start_date: '2016-08-05', end_date:'2016-08-08', location: 'Salmo River Ranch',
-# city: 'Nelson', state: 'BC', country: 'Canada', website: 'http://www.shambhalamusicfestival.com/',
-# description: 'This is Canada’s premiere Electronic Music Festival. Cutting edge Talent, Lights and Sound come together in Paradise to give life to a non -sponsored family run anomaly. Seeing it for yourself is the only way to understand exactly what is Shambhala.',
-# price: 365, currency: 'CAD', camping: true)
+Festival.create(name: 'Shambhala Music Festival', start_date: Date.new(2016,8,5), end_date: Date.new(2016,8,8), location: 'Salmo River Ranch',
+ city: 'Nelson', state: 'BC', country: 'Canada', website: 'http://www.shambhalamusicfestival.com/',
+ description: 'This is Canada’s premiere Electronic Music Festival. Cutting edge Talent, Lights and Sound come together in Paradise to give life to a non -sponsored family run anomaly. Seeing it for yourself is the only way to understand exactly what is Shambhala.',
+ price: 365, currency: 'CAD', camping: true)
+
+FestivalGenre.create(festival_id: Festival.first.id, genre_id: Genre.first.id)
+FestivalGenre.create(festival_id: Festival.first.id, genre_id: Genre.find(3).id)
+FestivalGenre.create(festival_id: Festival.find(2), genre_id: Genre.find(2).id)
 
 # Festival.create(name: 'Rifflandia', start_date: '2016-09-15', end_date:'2016-09-18',
 # city: 'Victoria', state: 'BC', country: 'Canada', website: 'http://rifflandia.com/', location: 'Victoria',
@@ -54,9 +58,9 @@
 #  Coldwater River during the day and party it up all night with amazing music!", price: 265, currency: 'CAD', camping: true)
 
 
-FestivalGenre.create(festival_id: 1, genre_1_id: 1, genre_2_id: 2, genre_3_id: 7, genre_4_id: 5)
-FestivalGenre.create(festival_id: 2, genre_1_id: 1)
-FestivalGenre.create(festival_id: 3, genre_1_id: 16)  
-FestivalGenre.create(festival_id: 4, genre_1_id: 6)
-FestivalGenre.create(festival_id: 5, genre_1_id: 6)
+#FestivalGenre.create(festival_id: 1, genre_1_id: 1, genre_2_id: 2, genre_3_id: 7, genre_4_id: 5)
+#FestivalGenre.create(festival_id: 2, genre_1_id: 1)
+#FestivalGenre.create(festival_id: 3, genre_1_id: 16)  
+#FestivalGenre.create(festival_id: 4, genre_1_id: 6)
+#FestivalGenre.create(festival_id: 5, genre_1_id: 6)
 

@@ -1,6 +1,6 @@
 h1 festival.find
 
-= form_tag '#', remote: true,  method: :get
+= form_tag '/festival-list', remote: true,  method: :get, id: 'festival-search'
   div
     = label_tag :city, 'Enter a city' 
     = text_field_tag :city 
@@ -8,9 +8,10 @@ h1 festival.find
   div
     = label_tag :state, 'Enter a state/province'
     = text_field_tag :state
+
   div
     = label_tag :date, 'Select a date'
-    = date_field_tag :date, '', value: Date.today
+    = text_field_tag :date, '', class: 'date-picker'
   div 
     = label_tag :genre, 'Select a genre'
     = select_tag :genre, options_from_collection_for_select(@genres, 'id', 'genre_type')

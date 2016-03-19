@@ -15,6 +15,7 @@ ActiveRecord::Schema.define(version: 20160317195857) do
 
   create_table "festival_genres", force: :cascade do |t|
     t.integer  "festival_id"
+    t.integer  "genre_id"
     t.integer  "genre_1_id"
     t.integer  "genre_2_id"
     t.integer  "genre_3_id"

@@ -13,3 +13,21 @@
  *= require_tree .
  *= require_self
  */
+
+.ui-datepicker { 
+  background: #fff;
+  font-family: Arial;
+  opacity: 0.9;
+}
+
+.ui-datepicker a { 
+  text-decoration: none;
+  color: salmon;
+}
+
+.ui-datepicker-next,
+.ui-datepicker-prev {
+  cursor: pointer;
+  padding: 10px;
+}
+

@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 
   get '/flickr_images/:festival' => 'festivals#flickr_images'
+  get '/festival-list' => 'festivals#festival_list'
+
   root 'festivals#all'
 
   resources :festivals, only: [:show, :all]
