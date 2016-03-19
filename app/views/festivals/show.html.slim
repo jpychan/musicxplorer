@@ -1,10 +1,10 @@
 h1 #{@festival}
 
 div class="driving-cost"
-  h2 cost of driving [round trip]
+  h2 cost of driving [round trip] in CDN
   p 
-    assumes you start with an empty tank of gas
+    assumes you start with an empty tank of gas & that you gas up near your starting point
     br does not currently account for switching mode of transportation e.g. ferries
-  == @price_by_car
+  p $#{@price_by_car}
 
 div class="flickr-imgs" data-name="#{@festival}"
