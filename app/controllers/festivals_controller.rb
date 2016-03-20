@@ -9,18 +9,18 @@ class FestivalsController < ApplicationController
     @time_by_car = driving.get_trip_time[0]
   end
 
-  def all  
+  def all
     @genres = Genre.all
-    selected = $redis.get('selected');    
-    @selected_festival = selected
+  #  selected = $redis.get('selected');
+  #  @selected_festival = selected
   end
 
   # TODO: need to modify this based on actual data format
   # select festival distance <= 500km [one way]
   def festival_list
     origin = [ params[:city],params[:state] ].join('+')
-    festivals = Festival.where('start_date >= ?', params[:date]).order(:start_date)
-    @festivals = festivals.select do |f| 
+    festivals = Festival.where('date >= ?', params[:date]).order(:date)
+    @festivals = festivals.select do |f|
         dest = [ f.city, f.state ].join('+')
 
         googl_dist = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=#{origin}&destinations=#{dest}&key=#{ENV['GOOGL_DIST_KEY']}&avoid=tolls"
@@ -34,21 +34,21 @@ class FestivalsController < ApplicationController
 
   def festival_compare
   end
-  
+
   def festival_select
     festival = Festival.find(params[:festivalId]).to_json
     if festival
-      $redis.set('selected', festival)
+  #    $redis.set('selected', festival)
     end
     redirect_to root_path
   end
 
   def flickr_images
-    @festival = params[:festival]
+    @festival = params[:festival].gsub(/\s\d{4}/, '')
     img_src = "https://api.flickr.com/services/rest/?api_key=#{ENV['FLICKR_KEY']}&method=flickr.photos.search&text=#{@festival}&sort=relevance&per_page=10&content_type=1&format=json&nojsoncallback=1"
     response = HTTParty.get(img_src).body
     @image = JSON.parse(response)
-    render json: @image 
+    render json: @image
   end
 
 end

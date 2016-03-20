@@ -7,17 +7,22 @@ class AddFestivals < ActiveRecord::Migration
       t.string :date
       # t.date :end_date
       t.string :location
-      t.string :city
+      # t.string :city
       # t.string :state
       # t.string :country
-      # t.string :website
-      # t.text :description
-      # t.string :artist_lineup
-      # t.integer :price
+      t.string :website
+      t.text :description
+      # t.text :artist_lineup
+      t.integer :price
       # t.string :currency
-      # t.boolean :camping
+      t.string :camping
       t.timestamps null: false
     end
+
+    # create_table :artists do |t|
+    #   t.references :festival
+    #   t.string :name
+    # end
 
     create_table :genres do |t|
       t.string :genre_type

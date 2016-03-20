@@ -55,32 +55,58 @@
 #FestivalGenre.create(festival_id: 4, genre_1_id: 6)
 #FestivalGenre.create(festival_id: 5, genre_1_id: 6)
 
+# TODO: refactor!
 def extract_data
- page = to_nokogiri(get_the_body)
- event_data = page.css('.marker').map do |marker|
-   {
-     lat: marker.attributes["data-lat"].value,
-     lng: marker.attributes["data-lng"].value,
-     city: marker.css('p')[0].children.text,
-     date: marker.css('p')[1].children.text,
-     event: get_event_name(marker)
-   }
- end
+  #page = to_nokogiri(get_the_body('https://www.musicfestivalwizard.com/music-festival-map'))
+  page = get_the_body('https://www.musicfestivalwizard.com/music-festival-map')
+  festival_info = []
+  page.css('.marker').each do |marker|
+    data = {}
+    data[:lat] = marker.attributes["data-lat"].value
+    data[:lng] = marker.attributes["data-lng"].value
+    data[:city] = marker.css('p')[0].children.text
+    data[:date] = marker.css('p')[1].children.text
+    data[:event] = get_event_name(marker)
+
+    url = marker.children.css('.gm-infowindow a:first-child')[0]['href']
+    details = get_the_body(url)
+    festival = details.css('#festival-basics').children.select do |line|
+        (line.name == 'text' || line.name == 'a') && !line.text.start_with?("\r\n")
+      end
+
+    data[:price] = festival[2].text if festival[2]
+    data[:camping] = festival[3].text if festival[3]
+    data[:website] = festival[4]['href'] if festival[4]
+    data[:description] = festival[5].text if festival[5]
+
+    festival_info << data
+  end
+  festival_info
 end
 
 def get_event_name(marker_obj)
    marker_obj.css('a:nth-child(2)')[0].children.text
- end
+end
 
+#def to_nokogiri(body)
+# Nokogiri::HTML(body)
+#end
 
-def to_nokogiri(body)
+def get_the_body(url)
+ body = HTTParty.get(url)
  Nokogiri::HTML(body)
 end
 
-def get_the_body
- HTTParty.get('https://www.musicfestivalwizard.com/music-festival-map')
-end
-
 extract_data.each do |i|
- Festival.create(latitude: i[:lat].to_f, longitude: i[:lng].to_f, city: i[:city], date: i[:date], name: i[:event])
+  Festival.create(
+    name: i[:event],
+    latitude: i[:lat].to_f,
+    longitude: i[:lng].to_f,
+    location: i[:city],
+    date: i[:date],
+    website: i[:website],
+    description: i[:description],
+    price: i[:price],
+    camping: i[:camping]
+    )
 end

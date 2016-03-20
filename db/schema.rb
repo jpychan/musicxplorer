@@ -30,9 +30,12 @@ ActiveRecord::Schema.define(version: 20160317195857) do
     t.decimal  "longitude"
     t.string   "date"
     t.string   "location"
-    t.string   "city"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "website"
+    t.text     "description"
+    t.integer  "price"
+    t.string   "camping"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "genres", force: :cascade do |t|

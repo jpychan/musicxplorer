@@ -11,7 +11,7 @@ class FestivalGenre < ActiveRecord::Base
   belongs_to :genre_4, class_name: "Genre",
                         foreign_key: "genre_4_id"
 
-  validates :festival, presence: true, uniqueness: true
+  #validates :festival, presence: true, uniqueness: true
   #validates :genre_1, presence: true
 
 end

@@ -1,10 +1,12 @@
 h1 #{@festival.name}
 
 div
+  p Where: #{@festival.location} 
+  p When: #{@festival.date}
+  p Price: #{@festival.price}
+  p Camping: #{@festival.camping}
   = link_to @festival.website, @festival.website
-  p #{@festival.start_date} to #{@festival.end_date}
   p #{@festival.description}
-
 div class="driving-cost"
   h2 cost of driving [round trip] in CDN
   p 
