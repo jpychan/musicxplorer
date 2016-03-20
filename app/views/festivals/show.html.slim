@@ -5,8 +5,15 @@ div
   p When: #{@festival.date}
   p Price: #{display(@festival.price)}
   p Camping: #{display(@festival.camping)}
-  = display( link_to @festival.website, @festival.website )
+  = display( @festival.website ) == 'n/a' ? '' : (link_to @festival.website, @festival.website)
   p #{@festival.description}
+
+div
+  h2 Artists
+  ul
+    - @festival.artists.each do |artist|
+      li #{artist.name}
+
 div class="driving-cost"
   h2 cost of driving [round trip] in CDN
   p

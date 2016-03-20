@@ -3,21 +3,30 @@ h1 festival.find
 
 = form_tag '/festival-list', remote: true,  method: :get, id: 'festival-search'
   div
-    = label_tag :city, 'Enter a city' 
-    = text_field_tag :city 
-
-  div
-    = label_tag :state, 'Enter a state/province'
-    = text_field_tag :state
+    = label_tag :location, 'Enter a location'
+    = text_field_tag :location
 
   div
     = label_tag :date, 'Select a date'
     = text_field_tag :date, '', class: 'date-picker'
-  div 
-    = label_tag :genre, 'Select a genre'
-    = select_tag :genre, options_from_collection_for_select(@genres, 'id', 'genre_type')
+
+  div
+    = label_tag :camping, 'Camping style festivals?'
+    p
+      | no preference
+      = radio_button_tag :camping, 'any', true
+      | yes
+      = radio_button_tag :camping, 'yes'
+      | no
+      = radio_button_tag :camping, 'no'
+
+  div
+    = label_tag :artist, 'Search by artist'
+    = select_tag :artist,
+        options_from_collection_for_select(@artists, 'id', 'name'),
+        include_blank: ''
 
   div
     = submit_tag 'Search!'
 
-div id="search-results" 
+div id="search-results"

@@ -13,21 +13,17 @@
 
 ActiveRecord::Schema.define(version: 20160317195857) do
 
-  create_table "festival_genres", force: :cascade do |t|
-    t.integer  "festival_id"
-    t.integer  "genre_id"
-    t.integer  "genre_1_id"
-    t.integer  "genre_2_id"
-    t.integer  "genre_3_id"
-    t.integer  "genre_4_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+  create_table "artists", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "festivals", force: :cascade do |t|
     t.string   "name"
-    t.decimal  "latitude"
-    t.decimal  "longitude"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.date     "start_date"
     t.string   "date"
     t.string   "location"
     t.string   "website"
@@ -38,10 +34,11 @@ ActiveRecord::Schema.define(version: 20160317195857) do
     t.datetime "updated_at",  null: false
   end
 
-  create_table "genres", force: :cascade do |t|
-    t.string   "genre_type"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table "performances", force: :cascade do |t|
+    t.integer  "festival_id"
+    t.integer  "artist_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
 end

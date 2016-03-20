@@ -1,5 +1,6 @@
 class FestivalsController < ApplicationController
   SEARCH_RADIUS = 500
+  TOO_FAR = SEARCH_RADIUS + 1   # value if ZERO_RESULTS returned in google distance matrix API
 
   def show
     # will take params or an obj as an arg once search form is up
@@ -10,24 +11,28 @@ class FestivalsController < ApplicationController
   end
 
   def all
-    @genres = Genre.all
+    @artists = Artist.all.order(:name)
   #  selected = $redis.get('selected');
   #  @selected_festival = selected
   end
 
-  # TODO: need to modify this based on actual data format
   # select festival distance <= 500km [one way]
+  # TODO: refactor
   def festival_list
-    origin = [ params[:city],params[:state] ].join('+')
-    festivals = Festival.where('date >= ?', params[:date]).order(:date)
+    origin = params[:location] == '' ? 'Vancouver+BC' : params[:location].gsub(/,/, '').split(' ').join('+')
+    camping = params[:camping] == 'any' ? '%' : params[:camping]
+
+    festivals = Festival.where('start_date >= ? AND LOWER(camping) LIKE ?', params[:date], camping).order(:start_date)
     @festivals = festivals.select do |f|
-        dest = [ f.city, f.state ].join('+')
+        dest = [f.latitude.to_f, f.longitude.to_f].join(',')
 
         googl_dist = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=#{origin}&destinations=#{dest}&key=#{ENV['GOOGL_DIST_KEY']}&avoid=tolls"
         resp = HTTParty.get(googl_dist).body
-        results = JSON.parse(resp)
-        dist_km = results['rows'][0]['elements'][0]['distance']['value'] / 1000.0
-        dist_km <= SEARCH_RADIUS && f.genres.include?( Genre.find(params[:genre]) )
+        results = JSON.parse(resp)['rows'][0]['elements'][0]
+
+        dist_km = results['status'] != 'ZERO_RESULTS' ? (results['distance']['value'] / 1000.0) : TOO_FAR
+        find_artist = params[:artist] == '' ? true : f.artists.include?( Artist.find(params[:artist]) )
+        dist_km <= SEARCH_RADIUS && find_artist
       end
     render json: @festivals
   end
