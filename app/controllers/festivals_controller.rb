@@ -20,14 +20,14 @@ class FestivalsController < ApplicationController
   # TODO: refactor
   def festival_list
     origin = params[:location] == '' ? 'Vancouver+BC' : params[:location].gsub(/,/, '').split(' ').join('+')
-    camping = params[:camping] == 'any' ? '%' : params[:camping]
 
-    festivals = Festival.where('start_date >= ? AND LOWER(camping) LIKE ?', params[:date], camping).order(:start_date)
+    festivals = Festival.where('start_date >= ? AND LOWER(camping) LIKE ?', params[:date], "%#{params[:camping]}%").order(:start_date)
     @festivals = festivals.select do |f|
         dest = [f.latitude.to_f, f.longitude.to_f].join(',')
 
         googl_dist = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=#{origin}&destinations=#{dest}&key=#{ENV['GOOGL_DIST_KEY']}&avoid=tolls"
         resp = HTTParty.get(googl_dist).body
+        byebug
         results = JSON.parse(resp)['rows'][0]['elements'][0]
 
         dist_km = results['status'] != 'ZERO_RESULTS' ? (results['distance']['value'] / 1000.0) : TOO_FAR
