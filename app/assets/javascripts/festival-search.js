@@ -13,14 +13,16 @@ $(function() {
     if (data.length === 0) { results.text('No results found'); }
 
     data.forEach(function(festival) {
-      var festivalDiv = $('<div>').addClass('festival-result').appendTo(results);
-      festivalDiv.attr('data-id', festival.id);
+      var festivalDiv = $('<div>').appendTo(results);
 
       $('<a>').attr('href', '/festivals/' + festival.id)
         .text(festival.name)
         .appendTo(festivalDiv);
 
-      $('<div>').text(festival.description).appendTo(festivalDiv);
+      $('<div>').text(festival.description)
+        .attr('data-id', festival.id)
+        .addClass('festival-result')
+        .appendTo(festivalDiv);
       
     });
   });

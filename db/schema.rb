@@ -26,20 +26,13 @@ ActiveRecord::Schema.define(version: 20160317195857) do
 
   create_table "festivals", force: :cascade do |t|
     t.string   "name"
-    t.date     "start_date"
-    t.date     "end_date"
+    t.decimal  "latitude"
+    t.decimal  "longitude"
+    t.string   "date"
     t.string   "location"
     t.string   "city"
-    t.string   "state"
-    t.string   "country"
-    t.string   "website"
-    t.text     "description"
-    t.string   "artist_lineup"
-    t.integer  "price"
-    t.string   "currency"
-    t.boolean  "camping"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "genres", force: :cascade do |t|

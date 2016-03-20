@@ -2,18 +2,20 @@ class AddFestivals < ActiveRecord::Migration
   def change
     create_table :festivals do |t|
       t.string :name
-      t.date :start_date
-      t.date :end_date
+      t.decimal :latitude
+      t.decimal :longitude
+      t.string :date
+      # t.date :end_date
       t.string :location
       t.string :city
-      t.string :state
-      t.string :country
-      t.string :website
-      t.text :description
-      t.string :artist_lineup
-      t.integer :price
-      t.string :currency
-      t.boolean :camping
+      # t.string :state
+      # t.string :country
+      # t.string :website
+      # t.text :description
+      # t.string :artist_lineup
+      # t.integer :price
+      # t.string :currency
+      # t.boolean :camping
       t.timestamps null: false
     end
 
@@ -31,16 +33,16 @@ class AddFestivals < ActiveRecord::Migration
       t.references :genre_4
       t.timestamps null: false
     end
-  
-    if Genre.all.empty? 
-      Genre.create(genre_type: 'Blues')
-      Genre.create(genre_type: 'Country')
-      Genre.create(genre_type: 'Dubstep')
-      Genre.create(genre_type: 'Indie')
-      Genre.create(genre_type: 'Jazz')
-      Genre.create(genre_type: 'Misc')
-      Genre.create(genre_type: 'Pop')
-      Genre.create(genre_type: 'Rock')
-    end
+
+    # if Genre.all.empty?
+    #   Genre.create(genre_type: 'Blues')
+    #   Genre.create(genre_type: 'Country')
+    #   Genre.create(genre_type: 'Dubstep')
+    #   Genre.create(genre_type: 'Indie')
+    #   Genre.create(genre_type: 'Jazz')
+    #   Genre.create(genre_type: 'Misc')
+    #   Genre.create(genre_type: 'Pop')
+    #   Genre.create(genre_type: 'Rock')
+    # end
   end
 end

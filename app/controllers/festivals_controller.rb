@@ -1,4 +1,5 @@
 class FestivalsController < ApplicationController
+  SEARCH_RADIUS = 500
 
   def show
     # will take params or an obj as an arg once search form is up
@@ -14,11 +15,20 @@ class FestivalsController < ApplicationController
     @selected_festival = selected
   end
 
-  # TODO: need to modify this based on actual data format & account for blank fields
+  # TODO: need to modify this based on actual data format
+  # select festival distance <= 500km [one way]
   def festival_list
-    # find festivals w/in a 500km radius [would extend into the states]
+    origin = [ params[:city],params[:state] ].join('+')
     festivals = Festival.where('start_date >= ?', params[:date]).order(:start_date)
-    @festivals = festivals.select{|f| f.genres.include?( Genre.find(params[:genre]) )}
+    @festivals = festivals.select do |f| 
+        dest = [ f.city, f.state ].join('+')
+
+        googl_dist = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=#{origin}&destinations=#{dest}&key=#{ENV['GOOGL_DIST_KEY']}&avoid=tolls"
+        resp = HTTParty.get(googl_dist).body
+        results = JSON.parse(resp)
+        dist_km = results['rows'][0]['elements'][0]['distance']['value'] / 1000.0
+        dist_km <= SEARCH_RADIUS && f.genres.include?( Genre.find(params[:genre]) )
+      end
     render json: @festivals
   end
 
