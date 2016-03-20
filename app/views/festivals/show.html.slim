@@ -1,18 +1,18 @@
 h1 #{@festival.name}
 
 div
-  p Where: #{@festival.location} 
+  p Where: #{@festival.location}
   p When: #{@festival.date}
-  p Price: #{@festival.price}
-  p Camping: #{@festival.camping}
-  = link_to @festival.website, @festival.website
+  p Price: #{display(@festival.price)}
+  p Camping: #{display(@festival.camping)}
+  = display( link_to @festival.website, @festival.website )
   p #{@festival.description}
 div class="driving-cost"
   h2 cost of driving [round trip] in CDN
-  p 
-    assumes you start with an empty tank of gas & that you gas up near your starting point
+  p
+    | assumes you start with an empty tank of gas & that you gas up near your starting point
     br does not currently account for switching mode of transportation e.g. ferries
-  p $#{@price_by_car}
-  p duration: approx #{@time_by_car} [one way]
+  p $#{display(@price_by_car)}
+  p trip duration: approx #{@time_by_car} [one way, driving non-stop]
 
 div class="flickr-imgs" data-name="#{@festival.name}"
