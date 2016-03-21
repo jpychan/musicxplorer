@@ -27,6 +27,13 @@ gem 'nokogiri'
 
 gem 'slim'
 
+gem 'jsonpath'
+
+gem 'oj'
+gem 'oj_mimic_json'
+
+gem 'responders'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
