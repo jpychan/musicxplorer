@@ -4,6 +4,8 @@ Rails.application.routes.draw do
 
   resources :festivals, only: [:show, :all]
 
+  post 'festivals/search_flights', defaults: { format: 'js' }
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
