@@ -1,6 +1,6 @@
 h1 = @festival.name
 
-- form_tag ({controller: "festivals", action: "search_flights"}, remote: true) do
+= form_tag "/festivals/search_flights", remote: true do
 
   = hidden_field_tag :festival_id, @festival.id
 
