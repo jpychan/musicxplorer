@@ -14,3 +14,44 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+var myLatLng = {lat: 49.2827, lng: -123.1207}
+function initMap() {
+  var map = new google.maps.Map(document.getElementById('map'), {
+    center: myLatLng,
+    zoom: 8
+  });
+//   function addMarker(latitude, longitude, label) {
+  var marker = new google.maps.Marker({
+    map: map,
+    position: myLatLng,
+    title: 'Hello World'
+  });
+}
+
+//function addMarker() {
+  //iterate through each lat/lng in database
+  //add based on location
+  //add marker based on user search?
+  //location searched, add marker based on 
+  //corresponding lat/lng
+// function getPlaces(Cities) {
+//   for (var i=0; i < Cities.length; i++) {
+//     create Marker (Cities[i]);
+//   }
+// }
+
+// function createMarker(place) {
+//   var place_marker = new.google.maps.Circle ({
+//     strokeColor: '#FF000', 
+//     strokeOpacity: 0.8,
+//     strokeWeight: 1,
+//     fillColor: '#FF000',
+//     fillOpacity: 0.35,
+//     map: map, 
+//     center: place.geometry.location,
+//     position: place.geometry.location, 
+//     radius: 20
+//   });
+// }
+
+

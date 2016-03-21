@@ -25,7 +25,13 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 #web scraper
 gem 'nokogiri'
 
-gem 'slim'
+gem 'slim-rails'
+
+gem 'httparty'
+gem 'dotenv-rails'
+
+gem 'redis'
+gem 'redis-rails'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

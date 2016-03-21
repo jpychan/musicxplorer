@@ -11,7 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160317195857) do
+ActiveRecord::Schema.define(version: 20160321184212) do
+
+  create_table "artists", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "festival_genres", force: :cascade do |t|
     t.integer  "festival_id"
@@ -26,11 +32,7 @@ ActiveRecord::Schema.define(version: 20160317195857) do
   create_table "festivals", force: :cascade do |t|
     t.string   "name"
     t.date     "start_date"
-    t.date     "end_date"
     t.string   "location"
-    t.string   "city"
-    t.string   "state"
-    t.string   "country"
     t.string   "website"
     t.text     "description"
     t.string   "artist_lineup"
@@ -39,12 +41,22 @@ ActiveRecord::Schema.define(version: 20160317195857) do
     t.boolean  "camping"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.float    "latitude"
+    t.float    "longitude"
+    t.string   "date"
   end
 
   create_table "genres", force: :cascade do |t|
     t.string   "genre_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "performances", force: :cascade do |t|
+    t.integer  "festival_id"
+    t.integer  "artist_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
 end
