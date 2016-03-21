@@ -28,6 +28,7 @@ gem 'slim'
 
 gem 'httparty'
 gem 'dotenv-rails'
+gem 'geonames_api'
 
 gem 'redis'
 gem 'redis-rails'

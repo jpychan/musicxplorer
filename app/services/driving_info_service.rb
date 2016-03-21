@@ -1,7 +1,7 @@
 class DrivingInfoService
   # this will take params/obj as an argument once search form is up
   # right now this doesn't account for ferry prices/changing mode of transportation
-  # TODO: account for more specific adresses once search form is up
+  # TODO: ask user which city they're making the trip from? 
 
   attr_reader :origin_city, :origin_prov, :dest_city, :dest_prov
 

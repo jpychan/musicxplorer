@@ -1,6 +1,7 @@
 class FestivalsController < ApplicationController
   SEARCH_RADIUS = 500
   TOO_FAR = SEARCH_RADIUS + 1   # value if ZERO_RESULTS returned in google distance matrix API
+  IN_RANGE = SEARCH_RADIUS - 1
 
   def show
     # will take params or an obj as an arg once search form is up
@@ -16,24 +17,16 @@ class FestivalsController < ApplicationController
   #  @selected_festival = selected
   end
 
-  # select festival distance <= 500km [one way]
   # TODO: refactor
   def festival_list
-    origin = params[:location] == '' ? 'Vancouver+BC' : params[:location].gsub(/,/, '').split(' ').join('+')
-
     festivals = Festival.where('start_date >= ? AND LOWER(camping) LIKE ?', params[:date], "%#{params[:camping]}%").order(:start_date)
     @festivals = festivals.select do |f|
-        dest = [f.latitude.to_f, f.longitude.to_f].join(',')
+      d = DistanceService.new(params[:location], f)
+      dist_km = d.calc_distance
 
-        googl_dist = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=#{origin}&destinations=#{dest}&key=#{ENV['GOOGL_DIST_KEY']}&avoid=tolls"
-        resp = HTTParty.get(googl_dist).body
-        byebug
-        results = JSON.parse(resp)['rows'][0]['elements'][0]
-
-        dist_km = results['status'] != 'ZERO_RESULTS' ? (results['distance']['value'] / 1000.0) : TOO_FAR
-        find_artist = params[:artist] == '' ? true : f.artists.include?( Artist.find(params[:artist]) )
-        dist_km <= SEARCH_RADIUS && find_artist
-      end
+      find_artist = params[:artist] == '' ? true : f.artists.include?( Festival.includes(:artists).find(params[:artist]) )
+      dist_km <= SEARCH_RADIUS && find_artist
+    end
     render json: @festivals
   end
 

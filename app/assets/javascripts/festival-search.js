@@ -19,12 +19,14 @@ $(function() {
         .text(festival.name)
         .appendTo(festivalDiv);
 
-      $('<div>').text('Location: ' + festival.location).appendTo(festivalDiv);
-
-      $('<div>').text(festival.description)
-        .attr('data-id', festival.id)
-        .addClass('festival-result')
-        .appendTo(festivalDiv);
+      var festivalDetails = $('<div>').addClass('festival-result')
+                              .attr('data-id', festival.id)
+                              .appendTo(festivalDiv);
+                              
+      $('<div>').text('Location: ' + festival.location).appendTo(festivalDetails );
+      $('<div>').text('Date: ' + festival.date).appendTo(festivalDetails);
+      $('<div>').text('Camping: ' + festival.camping).appendTo(festivalDetails);
+      $('<div>').text(festival.description).appendTo(festivalDiv);
 
     });
   });
