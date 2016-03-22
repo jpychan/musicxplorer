@@ -4,6 +4,18 @@ class FestivalsController < ApplicationController
 
   before_filter :set_form
 
+  def autocomplete
+    input = params["query"]
+    @results = Festival.autocomplete(input)
+    
+    @results = @results["airports"].to_json
+
+    respond_to do |format|
+      # format.js { render layout: false, content_type: 'text/javascript' }
+      format.json { render json: @results }
+    end
+  end
+
   def show
     @festival = Festival.find(params[:id])
     render :show
@@ -11,27 +23,9 @@ class FestivalsController < ApplicationController
 
   def search_flights
 
-    # @first_five_results = []
-    # @first_five_results[0] = 
-    # {
-    #   departure: "YVR",
-    #   arrival: "YYJ"
-    # }
-    # @first_five_results[1] = 
-    # {
-    #   departure: "YYJ",
-    #   arrival: "YVR"
-    # }
-
     @festival = Festival.find(params[:festival_id])
     @results = @festival.search_flights(params)
        
-    # legs = JsonPath.on(@results, '$.Legs').flatten
-    # places = JsonPath.on(@results, '$.Places').flatten
-    # query = JsonPath.on(@results, '$.Query')
-    # carriers = JsonPath.on(@results, '$.Carriers')[0]
-    # agents = JsonPath.on(@aresults, '$.Agents')[0]
-
     legs = @results["Legs"]
     places = @results["Places"]
     query = @results["Query"]

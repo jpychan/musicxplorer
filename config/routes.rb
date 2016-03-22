@@ -1,10 +1,10 @@
 Rails.application.routes.draw do
 
-  root 'festivals#all'
-
   resources :festivals, only: [:show, :all]
 
   post 'festivals/search_flights', defaults: { format: 'js' }
+
+  get 'autocomplete', to: 'festivals#autocomplete', defaults: {format: 'json'}
 
 
   # The priority is based upon order of creation: first created -> highest priority.

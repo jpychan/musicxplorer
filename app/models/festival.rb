@@ -14,6 +14,50 @@ class Festival < ActiveRecord::Base
     get_itineraries
 
     return @data
+  end
+
+  def nearest_airport(lat, long)
+    #LONG AND LAT
+    url = URI("https://airport.api.aero/airport/nearest/49.2827/-123.1207?user_key=0d77ca209a119446e1b385afb6dac816")
+
+    http = Net::HTTP.new(url.host, url.port)
+    http.use_ssl = true
+    http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+    request = Net::HTTP::Get.new(url)
+    request["cache-control"] = 'no-cache'
+    request["postman-token"] = '591bc895-8af0-ec3e-2e85-45adeb179617'
+
+    response = http.request(request)
+    airport = JSON.parse(response)
+  end
+
+  def self.autocomplete(input)
+
+    # url = URI("http://partners.api.skyscanner.net/apiservices/autosuggest/v1.0/CA/CAD/en-US/?query=#{input}&apiKey=prtl6749387986743898559646983194")
+    # http = Net::HTTP.new(url.host, url.port)
+
+    # request = Net::HTTP::Get.new(url)
+    # request["cache-control"] = 'no-cache'
+    # request["postman-token"] = 'f371f2aa-486f-979c-9b9d-9c6543ec19d1'
+    # request["Accept"] = 'application/json'
+
+    #Autocomplete Search
+    url = URI("https://airport.api.aero/airport/match/#{input}?user_key=0d77ca209a119446e1b385afb6dac816")
+
+    http = Net::HTTP.new(url.host, url.port)
+    http.use_ssl = true
+    http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+    request = Net::HTTP::Get.new(url)
+    request["dataType"] = "application/json"
+    request["cache-control"] = 'no-cache'
+    request["postman-token"] = 'fe08650e-b22a-9d6d-81d9-4924f5672e0d'
+    response = http.request(request)
+    response = response.body
+    response = JSON.parse(response[/{.+}/])
+
+    return response
 
   end
 
