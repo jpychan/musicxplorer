@@ -11,40 +11,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160317195857) do
+ActiveRecord::Schema.define(version: 20160322183133) do
 
-  create_table "festival_genres", force: :cascade do |t|
-    t.integer  "festival_id"
-    t.integer  "genre_1_id"
-    t.integer  "genre_2_id"
-    t.integer  "genre_3_id"
-    t.integer  "genre_4_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+  create_table "artists", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "festivals", force: :cascade do |t|
     t.string   "name"
+    t.float    "latitude"
+    t.float    "longitude"
     t.date     "start_date"
-    t.date     "end_date"
+    t.string   "date"
     t.string   "location"
-    t.string   "city"
-    t.string   "state"
-    t.string   "country"
     t.string   "website"
     t.text     "description"
-    t.string   "artist_lineup"
     t.integer  "price"
-    t.string   "currency"
-    t.boolean  "camping"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.string   "camping"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.date     "end_date"
   end
 
-  create_table "genres", force: :cascade do |t|
-    t.string   "genre_type"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table "performances", force: :cascade do |t|
+    t.integer  "festival_id"
+    t.integer  "artist_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
 end

@@ -60,50 +60,56 @@
 # FestivalGenre.create(festival_id: 4, genre_1_id: 6)
 # FestivalGenre.create(festival_id: 5, genre_1_id: 6)
 
-for i in 0..5
+for i in 244..439
 
   festival = Festival.find(i)
 
-  date = festival.date
+  if festival.end_date == nil
 
-  if date.count('-') == 1
+    date = festival.date
 
-    date = date.split("-")
+    date = date.sub(/\./, ',')
 
-    if date[1].start_with?(' ')
+    byebug
 
-      month = date[1].squish.split(' ')[0]
-      year = date[1].split(' ')[2]
-      date = date[1].split(' ')[1].delete!(',')
+    if date.count('-') == 1
+
+      date = date.split("-")
+
+      if date[1].start_with?(' ') || date[1].match(/^[a-zA-Z]/)
+
+        month = date[1].squish.split(' ')[0]
+        year = date[1].split(' ')[2]
+        date = date[1].split(' ')[1].delete!(',')
+      
+      else
+
+        month = date[0].split(' ')[0]
+
+        date = date[1].split(',')
+
+        year = date[1].squish
+
+        date = date[0].squish
+
+      end
+
+        festival.end_date = Date.parse("#{month} #{date},#{year}")
+
+        festival.save
+
+        puts festival.id
+
     
-    else
+    elsif date.count('-') == 0
 
-      month = date[0].split(' ')[0]
+      festival.end_date = festival.start_date
+      festival.save
 
-      date = date[1].split(',')
-
-      year = date[1]
-
-      date = date[0]
-
+      puts festival.id
+      
     end
-
-      festival.end_date = Date.parse("#{month} #{date},#{year}")
-
-      # festival.save
-
-      puts festival.end_date
-
-  
-  elsif date.count('-') == 0
-
-    festival.end_date = festival.start_date
-    # festival.save
-
-    puts festival.end_date
-    
   end
 
 
 end
-
