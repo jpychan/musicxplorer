@@ -14,19 +14,29 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
-var myLatLng = {lat: 49.2827, lng: -123.1207}
-function initMap() {
-  var map = new google.maps.Map(document.getElementById('map'), {
-    center: myLatLng,
-    zoom: 8
-  });
-//   function addMarker(latitude, longitude, label) {
-  var marker = new google.maps.Marker({
-    map: map,
-    position: myLatLng,
-    title: 'Hello World'
-  });
-}
+// var myLatLng = {lat: 49.2827, lng: -123.1207}
+// function initMap() {
+//   var map = new google.maps.Map(document.getElementById('map'), {
+//     center: myLatLng,
+//     zoom: 8
+//   });
+// //   function addMarker(latitude, longitude, label) {
+//   var marker = new google.maps.Marker({
+//     map: map,
+//     position: myLatLng,
+//     title: 'Hello World'
+//   });
+// }
+
+// var addmarker;
+//   for (var i=0; i < Festival.length, i++)
+//   function createMarker() {
+//     addmarker = new google.maps.Marker({
+//       position: coords,
+//       map: map, 
+//       title: title
+//     });
+//   }
 
 //function addMarker() {
   //iterate through each lat/lng in database

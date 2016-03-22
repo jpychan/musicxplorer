@@ -57,4 +57,8 @@ class FestivalsController < ApplicationController
     render json: @image
   end
 
+  def parse_all
+    render json: Festival.all, content_type: "application/json"
+  end
+
 end
