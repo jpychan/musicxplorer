@@ -24,7 +24,6 @@ class FestivalsController < ApplicationController
   def search_flights
 
     @festival = Festival.find(params[:festival_id])
-    byebug
     @first_five_results = @festival.search_flights(params)
        
     respond_to do |format|

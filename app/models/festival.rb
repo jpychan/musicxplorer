@@ -5,11 +5,7 @@ class Festival < ActiveRecord::Base
   validates :name, presence: true, uniqueness: true
 
   def search_flights(params)
-
-    # @session_id 
-    # @polling_url
-    # @data
-    
+   
     session_id = create_skyscanner_session(params)
     data = get_itineraries(session_id)
     @results = get_first_five_results(data)
@@ -30,7 +26,6 @@ class Festival < ActiveRecord::Base
 
     request = Net::HTTP::Get.new(url)
     request["cache-control"] = 'no-cache'
-    request["postman-token"] = '591bc895-8af0-ec3e-2e85-45adeb179617'
 
     response = http.request(request)
     response = response.body
@@ -57,7 +52,6 @@ class Festival < ActiveRecord::Base
     request = Net::HTTP::Get.new(url)
     request["dataType"] = "application/json"
     request["cache-control"] = 'no-cache'
-    request["postman-token"] = 'fe08650e-b22a-9d6d-81d9-4924f5672e0d'
     response = http.request(request)
     response = response.body
     response = JSON.parse(response[/{.+}/])
@@ -74,7 +68,7 @@ class Festival < ActiveRecord::Base
     inbound_date = festival.end_date + 1
     arrival_airport = nearest_airport(festival.latitude, festival.longitude)
     arrival_airport = arrival_airport["airports"][0]["code"].downcase
-
+    departure_airport = params[:departure_airport].downcase
 
     http = Net::HTTP.new(url.host, url.port)
 
@@ -82,8 +76,7 @@ class Festival < ActiveRecord::Base
     request["content-type"] = 'application/x-www-form-urlencoded'
     request["accept"] = 'application/json'
     request["cache-control"] = 'no-cache'
-    # request["postman-token"] = '7e6a7b9a-78be-69ac-99ce-6ce01c5f1743'
-    request.body = "country=CA&currency=CAD&locale=en-CA&adults=#{params[:adults]}&children=#{params[:children]}&infants=#{params[:infants]}&originplace=yvr-iata&destinationplace=#{arrival_airport}-iata&outbounddate=#{outbound_date}&inbounddate=#{inbound_date}&locationschema=Iata&cabinclass=#{params[:cabin_class]}&groupPricing=true"
+    request.body = "country=CA&currency=CAD&locale=en-CA&adults=#{params[:adults]}&children=#{params[:children]}&infants=#{params[:infants]}&originplace=#{departure_airport}-iata&destinationplace=#{arrival_airport}-iata&outbounddate=#{outbound_date}&inbounddate=#{inbound_date}&locationschema=Iata&cabinclass=#{params[:cabin_class]}&groupPricing=true"
     response = http.request(request)
     polling_url = response["location"]
     session_id = polling_url.split('/').last
@@ -100,7 +93,6 @@ class Festival < ActiveRecord::Base
     request["content-type"] = 'application/x-www-form-urlencoded'
     request["accept"] = 'application/json'
     request["cache-control"] = 'no-cache'
-    # request["postman-token"] = '84e760a9-cdf6-09a9-7f63-e0e0456937c7'
 
     response = http.request(request)
     response = response.body
