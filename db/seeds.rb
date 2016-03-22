@@ -1,19 +1,3 @@
-# Genre.create(genre_type: 'electronic')
-# Genre.create(genre_type: 'rock')
-# Genre.create(genre_type: 'indie')
-# Genre.create(genre_type: 'jam')
-# Genre.create(genre_type: 'metal')
-# Genre.create(genre_type: 'country')
-# Genre.create(genre_type: 'hip hop')
-# Genre.create(genre_type: 'bluegrass')
-# Genre.create(genre_type: 'jazz')
-# Genre.create(genre_type: 'folk')
-# Genre.create(genre_type: 'latin')
-# Genre.create(genre_type: 'reggae')
-# Genre.create(genre_type: 'classical')
-# Genre.create(genre_type: 'r&b')
-# Genre.create(genre_type: 'world music')
-
 # Festival.create(name: 'Pemberton Music Festival', start_date: Date.new(2016,7,14), end_date: Date.new(2016,7,17), location: 'Pemberton',
 #  city: 'Pemberton', state: 'BC', country: 'Canada', website: 'http://pembertonmusicfestival.com/',
 #  description: 'Grab your friends and leave the world behind for a four-day celebration beneath epic Mount Currie in Pemberton Valley. Full of dancing, food, friendship, and of course — the best music EVER!',
@@ -23,11 +7,6 @@
 #  city: 'Nelson', state: 'BC', country: 'Canada', website: 'http://www.shambhalamusicfestival.com/',
 #  description: 'This is Canada’s premiere Electronic Music Festival. Cutting edge Talent, Lights and Sound come together in Paradise to give life to a non -sponsored family run anomaly. Seeing it for yourself is the only way to understand exactly what is Shambhala.',
 #  price: 365, currency: 'CAD', camping: true)
-#
-# FestivalGenre.create(festival_id: Festival.first.id, genre_id: 1)
-# FestivalGenre.create(festival_id: Festival.first.id, genre_id: 2)
-# FestivalGenre.create(festival_id: Festival.last.id, genre_id: 3)
-
 # Festival.create(name: 'Rifflandia', start_date: '2016-09-15', end_date:'2016-09-18',
 # city: 'Victoria', state: 'BC', country: 'Canada', website: 'http://rifflandia.com/', location: 'Victoria',
 # description: "Every September Rifflandia Festival transforms the city of Victoria into one big musical buffet, with over 100 performances on 10 stages, all within walking distance in the city's beautiful and historic downtown core.
@@ -48,17 +27,15 @@
 #  28th to 31st in Merritt, BC! It's going to be an amazing year meeting new friends and old as we chill in the
 #  Coldwater River during the day and party it up all night with amazing music!", price: 265, currency: 'CAD', camping: true)
 
-
-#FestivalGenre.create(festival_id: 1, genre_1_id: 1, genre_2_id: 2, genre_3_id: 7, genre_4_id: 5)
-#FestivalGenre.create(festival_id: 2, genre_1_id: 1)
-#FestivalGenre.create(festival_id: 3, genre_1_id: 16)
-#FestivalGenre.create(festival_id: 4, genre_1_id: 6)
-#FestivalGenre.create(festival_id: 5, genre_1_id: 6)
-
 # TODO: refactor!
+
+def get_festivals
+  festival = FestivalService.new 
+  festival.get_festival_page
+end
+
 def extract_data
-  #page = to_nokogiri(get_the_body('https://www.musicfestivalwizard.com/music-festival-map'))
-  page = get_the_body('https://www.musicfestivalwizard.com/music-festival-map')
+  page = get_festivals
   festival_info = []
   page.css('.marker').each do |marker|
     data = {}
@@ -98,15 +75,6 @@ end
 
 def get_event_name(marker_obj)
    marker_obj.css('a:nth-child(2)')[0].children.text
-end
-
-#def to_nokogiri(body)
-# Nokogiri::HTML(body)
-#end
-
-def get_the_body(url)
- body = HTTParty.get(url)
- Nokogiri::HTML(body)
 end
 
 extract_data.each do |i|
