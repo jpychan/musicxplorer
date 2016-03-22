@@ -6,6 +6,8 @@ Rails.application.routes.draw do
 
   get 'autocomplete', to: 'festivals#autocomplete', defaults: {format: 'json'}
 
+  get 'search_flights_default', to: 'festivals#search_flights_default', defaults: { format: 'js'}
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
