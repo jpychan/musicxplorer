@@ -54,9 +54,56 @@
 #  Coldwater River during the day and party it up all night with amazing music!", price: 265, currency: 'CAD', camping: true)
 
 
-FestivalGenre.create(festival_id: 1, genre_1_id: 1, genre_2_id: 2, genre_3_id: 7, genre_4_id: 5)
-FestivalGenre.create(festival_id: 2, genre_1_id: 1)
-FestivalGenre.create(festival_id: 3, genre_1_id: 16)  
-FestivalGenre.create(festival_id: 4, genre_1_id: 6)
-FestivalGenre.create(festival_id: 5, genre_1_id: 6)
+# FestivalGenre.create(festival_id: 1, genre_1_id: 1, genre_2_id: 2, genre_3_id: 7, genre_4_id: 5)
+# FestivalGenre.create(festival_id: 2, genre_1_id: 1)
+# FestivalGenre.create(festival_id: 3, genre_1_id: 16)  
+# FestivalGenre.create(festival_id: 4, genre_1_id: 6)
+# FestivalGenre.create(festival_id: 5, genre_1_id: 6)
+
+for i in 0..5
+
+  festival = Festival.find(i)
+
+  date = festival.date
+
+  if date.count('-') == 1
+
+    date = date.split("-")
+
+    if date[1].start_with?(' ')
+
+      month = date[1].squish.split(' ')[0]
+      year = date[1].split(' ')[2]
+      date = date[1].split(' ')[1].delete!(',')
+    
+    else
+
+      month = date[0].split(' ')[0]
+
+      date = date[1].split(',')
+
+      year = date[1]
+
+      date = date[0]
+
+    end
+
+      festival.end_date = Date.parse("#{month} #{date},#{year}")
+
+      # festival.save
+
+      puts festival.end_date
+
+  
+  elsif date.count('-') == 0
+
+    festival.end_date = festival.start_date
+    # festival.save
+
+    puts festival.end_date
+    
+  end
+
+
+end
 
