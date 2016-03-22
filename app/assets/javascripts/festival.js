@@ -8,9 +8,6 @@ function initMap() {
     zoom: 7
   });
 
-
-
-
 var marker = new google.maps.Marker({
     map: map,
     position: myLatLng,
@@ -19,7 +16,7 @@ var marker = new google.maps.Marker({
 };
 
 $.getJSON("/festivals", function(data) {
-  console.log(data)
+  // console.log(data)
   $.each(data, function(index, festival) {
     console.log(festival)
     var marker = new google.maps.Marker ({
@@ -29,14 +26,18 @@ $.getJSON("/festivals", function(data) {
     });
     var contentString = "This is a string";
     var infowindow = new google.maps.InfoWindow({
-      content: festival.name
+      content: (festival.name + ',' + ' ' + festival.date)
     });
     marker.addListener('click', function() {
       infowindow.open(map, marker);
+      infowindow.addListener('closeclick', function() {
+        infowindow.close();
+      });
+      // setTimeout(function(){
+      //   infowindow.close();
+      // },3000)
     })
   });
-
-
 });
 
 
