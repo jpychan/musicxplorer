@@ -24,7 +24,13 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 #web scraper
 gem 'nokogiri'
 
-gem 'slim'
+gem 'slim-rails'
+
+gem 'httparty'
+gem 'dotenv-rails'
+
+gem 'redis'
+gem 'redis-rails'
 
 gem 'httparty'
 gem 'dotenv-rails'

@@ -3,6 +3,9 @@ class FestivalsController < ApplicationController
   TOO_FAR = SEARCH_RADIUS + 1   # value if ZERO_RESULTS returned in google distance matrix API
   IN_RANGE = SEARCH_RADIUS - 1
 
+ SEARCH_RADIUS = 500
+ TOO_FAR = SEARCH_RADIUS + 1   # value if ZERO_RESULTS returned in google distance matrix API
+
   def show
     # will take params or an obj as an arg once search form is up
     @festival = Festival.find(params[:id])
@@ -29,8 +32,13 @@ class FestivalsController < ApplicationController
       find_artist = params[:artist] == '' ? true : f.artists.include?( params[:artist] )
       dist_km <= SEARCH_RADIUS && find_artist
     end
-    render json: @festivals
+  #  selected = $redis.get('selected');
+  #  @selected_festival = selected
   end
+
+  # select festival distance <= 500km [one way]
+  # TODO: refactor
+  
 
   def festival_compare
   end
@@ -50,6 +58,10 @@ class FestivalsController < ApplicationController
     response = HTTParty.get(img_src).body
     @image = JSON.parse(response)
     render json: @image
+  end
+
+  def parse_all
+    render json: Festival.all, content_type: "application/json"
   end
 
 end
