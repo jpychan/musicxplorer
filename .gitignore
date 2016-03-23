@@ -18,3 +18,8 @@
 /log/*
 !/log/.keep
 /tmp
+
+.env
+*.swp
+*.rdb
+.byebug_history

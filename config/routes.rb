@@ -1,7 +1,16 @@
 Rails.application.routes.draw do
 
-  resources :festivals, only: [:show, :all]
+  get '/flickr_images/:festival' => 'festivals#flickr_images'
+  get '/festival-list' => 'festivals#festival_list'
+  get '/festivals/compare' => 'festivals#festival_compare'
+  post '/festival-select' => 'festivals#festival_select'
 
+  root 'festivals#all'
+
+  get 'festivals' => 'festivals#parse_all'
+
+  resources :festivals, only: [:show, :all]
+  
   post 'festivals/search_flights', defaults: { format: 'js' }
 
   get 'autocomplete', to: 'festivals#autocomplete', defaults: {format: 'json'}
@@ -13,7 +22,7 @@ Rails.application.routes.draw do
   # root 'welcome#index'
 
   # Example of regular route:
-  #   get 'products/:id' => 'catalog#view'
+     #get 'products/:id' => 'catalog#view'
 
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase

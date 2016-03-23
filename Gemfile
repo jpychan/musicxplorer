@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 
-
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.6'
 
@@ -16,8 +15,10 @@ gem 'coffee-rails', '~> 4.1.0'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
+
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
+
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
@@ -26,12 +27,22 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 #web scraper
 gem 'nokogiri'
 
-gem 'slim'
+gem 'slim-rails'
+
+gem 'httparty'
+gem 'dotenv-rails'
+
+gem 'redis'
+gem 'redis-rails'
+
+gem 'httparty'
+gem 'dotenv-rails'
+gem 'geonames_api'
+
+gem 'redis'
+gem 'redis-rails'
 
 gem 'jsonpath'
-
-gem 'oj'
-gem 'oj_mimic_json'
 
 gem 'geocoder'
 

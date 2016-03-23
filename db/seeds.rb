@@ -1216,3 +1216,4 @@ Genre.create!([
   {name: "Bluegrass"},
   {name: "Blues"}
 ])
+

@@ -1,1 +1,33 @@
-<h1>Testing!</h1>
+
+ h1 id="wel" Festival Finder
+= form_tag '/festival-list', remote: true,  method: :get, id: 'festival-search'
+  div
+    = label_tag :location, 'Enter a location'
+    = text_field_tag :location
+
+  div
+    = label_tag :date, 'Select a date'
+    = text_field_tag :date, '', class: 'date-picker'
+
+  div
+    = label_tag :camping, 'Camping style festivals?'
+    p
+      | no preference
+      = radio_button_tag :camping, '', true
+      | yes
+      = radio_button_tag :camping, 'yes'
+      | no
+      = radio_button_tag :camping, 'no'
+
+  div
+    = label_tag :artist, 'Search by artist'
+    = select_tag :artist,
+        options_from_collection_for_select(@artists, 'id', 'name'),
+        include_blank: ''
+
+  div
+    = submit_tag 'Search!'
+
+div id="search-results"
+
+
