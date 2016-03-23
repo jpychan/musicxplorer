@@ -58,6 +58,8 @@ var marker = new google.maps.Marker({
   });
 };
 
+});
+
 // $.getJSON("/festivals", function(data) {
 //   // console.log(data)
 //   $.each(data, function(index, festival) {
@@ -82,7 +84,7 @@ var marker = new google.maps.Marker({
 //     })
 //   });
 // });
-});
+
 
 
 // var map = new google.maps.Map(document.getElementById('map'), {
