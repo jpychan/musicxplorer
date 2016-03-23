@@ -4,6 +4,7 @@ div
   p Where: #{@festival.location}
   p When: #{@festival.date}
   p Price: #{display(@festival.price)}
+  p Genres: #{display(@festival.genres)}
   p Camping: #{display(@festival.camping)}
   = display( @festival.website ) == 'n/a' ? '' : (link_to @festival.website, @festival.website)
   p #{@festival.description}

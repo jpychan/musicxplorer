@@ -20,3 +20,5 @@
 *.swp
 *.rdb
 .byebug_history
+*.swn
+*.swo

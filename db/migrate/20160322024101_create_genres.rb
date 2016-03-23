@@ -33,12 +33,11 @@ class CreateGenres < ActiveRecord::Migration
       info = details.css('.heading-meta-item a').children.map do |row|
         row.text
       end
-      puts festival_name
+
       info.each do |row| 
         find_festival = Festival.find_by(name: festival_name)
         if genres.include?(row) && find_festival
           genre_id = Genre.find_by(name: row).id
-          puts genre_id
           FestivalGenre.create(festival_id: find_festival.id, genre_id: genre_id)
         end
       end
