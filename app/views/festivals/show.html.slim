@@ -1,11 +1,13 @@
 h1 #{@festival.name}
 
-div
+/ cool to change name of class but plz let Carmen know so she can change the JS! :)
+div.festival-details
   p Where: #{@festival.location}
   p When: #{@festival.date}
-  p Price: #{display(@festival.price)}
-  p Camping: #{display(@festival.camping)}
-  = display( @festival.website ) == 'n/a' ? '' : (link_to @festival.website, @festival.website)
+  p Price: #{ display(@festival.price) }
+  p Genres: #{ display( get_genres(@festival) )}
+  p Camping: #{ display(@festival.camping) }
+  = display(@festival.website) == 'n/a' ? '' : (link_to @festival.website, @festival.website)
   p #{@festival.description}
 
 div
@@ -14,7 +16,7 @@ div
     - @festival.artists.each do |artist|
       li #{artist.name}
 
-div class="driving-cost"
+div.driving-cost
   h2 cost of driving [round trip] in CDN
   p
     | assumes you start with an empty tank of gas & that you gas up near your starting point
@@ -23,5 +25,3 @@ div class="driving-cost"
   p trip duration: approx #{@time_by_car} [one way, driving non-stop]
 
 div class="flickr-imgs" data-name="#{@festival.name}"
-h1 Testing!
-

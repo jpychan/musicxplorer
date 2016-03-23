@@ -7,9 +7,9 @@ Rails.application.routes.draw do
 
   root 'festivals#all'
 
-  get 'festivals' => 'festivals#parse_all'
+  get '/festivals' => 'festivals#parse_all'
 
-  resources :festivals, only: [:show, :all]
+  resources :festivals, only: [:show]
   
   post 'festivals/search_flights', defaults: { format: 'js' }
 

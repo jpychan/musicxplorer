@@ -25,7 +25,6 @@ module Skyscanner
     festival = Festival.find(params[:festival_id])
     outbound_date = festival.start_date - 1
     inbound_date = festival.end_date + 1
-    byebug
     arrival_airport = nearest_airport(festival.latitude, festival.longitude)
     arrival_airport = arrival_airport["airports"][0]["code"].downcase
     departure_airport = params[:departure_airport].downcase
