@@ -22,14 +22,11 @@ class FestivalsController < ApplicationController
   end
 
   def festival_list
-    festivals = Festival.includes(:artists, :genres).where('start_date >= ? AND LOWER(camping) LIKE ?', params[:date], "%#{params[:camping]}%").order(:start_date)
-
+   festivals = Festival.joins("inner join performances as p on p.festival_id = festivals.id inner join artists as a on p.artist_id = a.id inner join festival_genres as fg on fg.festival_id = festivals.id inner join genres as g on fg.genre_id = g.id").where('start_date >= ? AND LOWER(camping) LIKE ? AND g.name LIKE ? AND a.name LIKE ?', params[:date], "%#{params[:camping]}%", "%#{params[:genre]}%", "%#{params[:artist]}%").distinct
     @festivals = festivals.select do |f|
       d = DistanceService.new(params[:location], f)
       dist_km = d.calc_distance
-      find_genre = params[:genre] == '' ? true : f.genres.include?( Genre.find(params[:genre]) )
-      find_artist = params[:artist] == '' ? true : f.artists.include?( Artist.find(params[:artist]) )
-      dist_km <= SEARCH_RADIUS && find_artist && find_genre
+      dist_km <= SEARCH_RADIUS
     end
     render json: @festivals
   end
@@ -38,7 +35,7 @@ class FestivalsController < ApplicationController
   end
 
   def festival_select
-    festival = Festival.find(params[:festivalId])
+    ftstival = Festival.find(params[:festivalId])
     festival_json = festival.to_json
     if festival
       #$redis.hset({}, festival.id, festival_json)

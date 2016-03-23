@@ -5,6 +5,10 @@ $(function() {
     dateFormat: 'yy-mm-dd'
   });
 
+  $('#festival-search input[type=submit]').on('click', function(event, data) {
+    $('#search-results').empty();
+    $('#search-results').html('<p>Loading...</p>');
+  });
   // POPULATE SEARCH RESULTS
   $('#festival-search').on('ajax:success', function(event, data) {
     var results = $('#search-results');
@@ -26,8 +30,12 @@ $(function() {
       $('<div>').text('Location: ' + festival.location).appendTo(festivalDetails );
       $('<div>').text('Date: ' + festival.date).appendTo(festivalDetails);
       $('<div>').text('Camping: ' + festival.camping).appendTo(festivalDetails);
-      $('<div>').text(festival.description).appendTo(festivalDiv);
-
+      if (festival.description === null) {
+        $('<div>').text('Description unavailable').appendTo(festivalDiv);
+      }
+      else {
+        $('<div>').text(festival.description).appendTo(festivalDiv);
+      }
     });
   });
 

@@ -22,13 +22,13 @@ h1 id="wel" Festival Finder
   div
     = label_tag :artist, 'Search by artist'
     = select_tag :artist,
-        options_from_collection_for_select(@artists, 'id', 'name'),
+        options_from_collection_for_select(@artists, 'name', 'name'),
         include_blank: ''
 
   div
     = label_tag :genre, 'Search by genre'
     = select_tag :genre,
-        options_from_collection_for_select(@genres, 'id', 'name'),
+        options_from_collection_for_select(@genres, 'name', 'name'),
         include_blank: ''
 
   div
