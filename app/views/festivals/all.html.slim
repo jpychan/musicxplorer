@@ -1,6 +1,5 @@
-h1 festival.find
 
-
+ h1 id="wel" Festival Finder
 = form_tag '/festival-list', remote: true,  method: :get, id: 'festival-search'
   div
     = label_tag :location, 'Enter a location'
@@ -30,3 +29,5 @@ h1 festival.find
     = submit_tag 'Search!'
 
 div id="search-results"
+
+
