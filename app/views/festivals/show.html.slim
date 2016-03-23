@@ -4,10 +4,10 @@ h1 #{@festival.name}
 div.festival-details
   p Where: #{@festival.location}
   p When: #{@festival.date}
-  p Price: #{display(@festival.price)}
-  p Genres: #{display(@festival.genres)}
-  p Camping: #{display(@festival.camping)}
-  = display( @festival.website ) == 'n/a' ? '' : (link_to @festival.website, @festival.website)
+  p Price: #{ display(@festival.price) }
+  p Genres: #{ display( get_genres(@festival) )}
+  p Camping: #{ display(@festival.camping) }
+  = display(@festival.website) == 'n/a' ? '' : (link_to @festival.website, @festival.website)
   p #{@festival.description}
 
 div
@@ -25,4 +25,3 @@ div.driving-cost
   p trip duration: approx #{@time_by_car} [one way, driving non-stop]
 
 div class="flickr-imgs" data-name="#{@festival.name}"
-

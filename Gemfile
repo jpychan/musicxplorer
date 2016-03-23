@@ -26,6 +26,8 @@ gem 'nokogiri'
 
 gem 'slim-rails'
 
+gem 'bullet'
+
 gem 'redis'
 gem 'redis-rails'
 

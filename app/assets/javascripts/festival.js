@@ -43,6 +43,7 @@ $(function() {
       });
     });
   }
+});
 
   function initMap() {
     var myLatLng = {lat: 49.2827, lng: -123.1207};
@@ -102,7 +103,3 @@ $(function() {
      });
    });
   }
-
-});
-
-
