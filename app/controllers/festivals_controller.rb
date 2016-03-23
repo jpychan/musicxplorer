@@ -1,7 +1,5 @@
 class FestivalsController < ApplicationController
 
-  respond_to :html, :js, :json
-
   before_filter :set_form
 
   def autocomplete
