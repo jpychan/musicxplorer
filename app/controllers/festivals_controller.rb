@@ -31,7 +31,6 @@ class FestivalsController < ApplicationController
     end
   end
 
-
   def all
     render :all
   end

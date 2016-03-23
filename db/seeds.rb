@@ -64,13 +64,11 @@ for i in 244..439
 
   festival = Festival.find(i)
 
-  if festival.end_date == nil
+  if festival.end_date == nil 
 
     date = festival.date
 
     date = date.sub(/\./, ',')
-
-    byebug
 
     if date.count('-') == 1
 
