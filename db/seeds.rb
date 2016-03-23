@@ -85,7 +85,7 @@ end
 # TODO: refactor!
 def extract_data
   #page = to_nokogiri(get_the_body('https://www.musicfestivalwizard.com/music-festival-map'))
-  page = get_the_body('https://www.musicfestivalwizard.com/music-festival-map')
+  page = get_the_body('./festival_wizard.html')
   festival_info = []
   page.css('.marker').each do |marker|
     data = {}
@@ -132,7 +132,7 @@ end
 #end
 
 def get_the_body(url)
- body = HTTParty.get(url)
+ body = File.open("db/festival_wizard.html")# body = HTTParty.get(url)
  Nokogiri::HTML(body)
 end
 
@@ -176,10 +176,8 @@ end
 #     t.float    "latitude"
 #     t.float    "longitude"
 #     t.string   "date"
->>>>>>> db_changes
+  # [:artists].each do |artist|
+  #   a = Artist.find_or_create_by(name: artist)
+  #   Performance.create(artist_id: a.id, festival_id: f.id)
+  # end
 
-  i[:artists].each do |artist|
-    a = Artist.find_or_create_by(name: artist)
-    Performance.create(artist_id: a.id, festival_id: f.id)
-  end
-end

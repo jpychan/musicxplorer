@@ -20,3 +20,6 @@
 *.swp
 *.rdb
 .byebug_history
+.DS_store
+
+
