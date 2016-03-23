@@ -1,3 +1,4 @@
+# DATA FROM SEED DUMP GEM
 Festival.create!([
   {name: "Treefort Music Festival 2016", latitude: 43.6187102, longitude: -116.21460680000001, start_date: "2016-03-23", date: "March 23-27, 2016", location: "Boise, ID", website: "http://treefortmusicfest.com/#/", description: "Boise in Idaho may sound like an odd city choice for an epic festival, but the Treefort Festival continues to impress us year after year. Treefort typically takes place the week after SXSW to take advantage of artists heading back to the Northwest. Short lines and a welcoming city continually keeps Treefort at the top of our list. Since their inception, the festival has grown in size to include film, yoga, beer, and comedy. \r\n", price: 0, camping: " No", end_date: "2016-03-27"},
   {name: "DGTL Festival 2016", latitude: 52.4010604, longitude: 4.889499800000067, start_date: "2016-03-26", date: "March 26-27, 2016", location: "Amsterdam, The Netherlands", website: "http://dgtl.nl/home/", description: nil, price: 0, camping: " Yes", end_date: "2016-03-27"},
@@ -1235,7 +1236,7 @@ Genre.create!([
 # TODO: refactor!
 
 # def get_festivals
-#   festival = FestivalService.new 
+#   festival = FestivalService.new
 #   festival.get_festival_page
 # end
 
@@ -1283,7 +1284,7 @@ Genre.create!([
 # end
 # # FestivalGenre.create(festival_id: 1, genre_1_id: 1, genre_2_id: 2, genre_3_id: 7, genre_4_id: 5)
 # # FestivalGenre.create(festival_id: 2, genre_1_id: 1)
-# # FestivalGenre.create(festival_id: 3, genre_1_id: 16)  
+# # FestivalGenre.create(festival_id: 3, genre_1_id: 16)
 # # FestivalGenre.create(festival_id: 4, genre_1_id: 6)
 # # FestivalGenre.create(festival_id: 5, genre_1_id: 6)
 
@@ -1385,4 +1386,3 @@ Genre.create!([
 #   #   a = Artist.find_or_create_by(name: artist)
 #   #   Performance.create(artist_id: a.id, festival_id: f.id)
 #   # end
-

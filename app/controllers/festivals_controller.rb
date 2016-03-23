@@ -37,8 +37,9 @@ class FestivalsController < ApplicationController
     end
   end
 
-    def all
-      @artists = Artist.all.order(:name)
+  def all
+    @artists = Artist.all.order(:name)
+    @genres = Genre.all.order(:name)
     #selected = $redis.hgetall({}
     # $redis.hkeys({}).each do |key|
     #   $redis.hget({}, key)
@@ -76,8 +77,9 @@ class FestivalsController < ApplicationController
   end
 
   def flickr_images
-    @festival = params[:festival].gsub(/\s\d{4}/, '')
-    img_src = "https://api.flickr.com/services/rest/?api_key=#{ENV['FLICKR_KEY']}&method=flickr.photos.search&tags=festival&text=#{@festival}&sort=relevance&per_page=10&content_type=1&format=json&nojsoncallback=1"
+    festival = params[:festival].gsub(/\s\d{4}/, '')
+    @festival = Festival.find_by(name: festival)
+    img_src = "https://api.flickr.com/services/rest/?api_key=#{ENV['FLICKR_KEY']}&method=flickr.photos.search&tags=festival&text=#{@festival.name} #{@festival.location}&sort=relevance&per_page=10&content_type=1&format=json&nojsoncallback=1"
     response = HTTParty.get(img_src).body
     @image = JSON.parse(response)
     render json: @image
