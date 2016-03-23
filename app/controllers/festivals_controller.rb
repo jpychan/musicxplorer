@@ -3,19 +3,42 @@ class FestivalsController < ApplicationController
   TOO_FAR = SEARCH_RADIUS + 1   # value if ZERO_RESULTS returned in google distance matrix API
   IN_RANGE = SEARCH_RADIUS - 1
 
- SEARCH_RADIUS = 500
- TOO_FAR = SEARCH_RADIUS + 1   # value if ZERO_RESULTS returned in google distance matrix API
+  SEARCH_RADIUS = 500
+  TOO_FAR = SEARCH_RADIUS + 1   # value if ZERO_RESULTS returned in google distance matrix API
+
+ before_filter :set_form
+
+ def autocomplete
+  input = params["query"]
+  @results = Festival.autocomplete(input)
+
+  @results = @results["airports"].to_json
+
+  respond_to do |format|
+      # format.js { render layout: false, content_type: 'text/javascript' }
+      format.json { render json: @results }
+    end
+  end
 
   def show
-    # will take params or an obj as an arg once search form is up
     @festival = Festival.find(params[:id])
     driving = DrivingInfoService.new(@festival)
     @price_by_car = driving.calc_driving_cost
-    @time_by_car = driving.get_trip_time[0]
+    @time_by_car = driving.get_trip_time[0] 
   end
 
-  def all
-    @artists = Artist.all.order(:name)
+  def search_flights
+
+    @festival = Festival.find(params[:festival_id])
+    @first_five_results = @festival.search_flights(params)
+
+    respond_to do |format|
+      format.js {render layout: false}
+    end
+  end
+
+    def all
+      @artists = Artist.all.order(:name)
     #selected = $redis.hgetall({}
     # $redis.hkeys({}).each do |key|
     #   $redis.hget({}, key)
@@ -62,6 +85,11 @@ class FestivalsController < ApplicationController
 
   def parse_all
     render json: Festival.all, content_type: "application/json"
+  end
+
+  def set_form
+    @cabin_classes = [['Economy', 'Economy'], ['Premium Economy', 'PremiumEconomy'], ['Business', 'Business'], ['First Class', 'First']]
+    @passenger_numbers = [['0', 0], [ '1', 1], ['2', 2], ['3', 3], ['4', 4], ['5', 5]]
   end
 
 end
