@@ -1,5 +1,3 @@
-# DATA FROM SEED DUMP GEM
-puts "Creating artists..."
 Artist.create!([
   {name: "Acid dad"},
   {name: "Acid mothers temple"},
@@ -8410,8 +8408,11 @@ Artist.create!([
   {name: "Twinkle brothers"},
   {name: "Weeding dub"}
 ])
+<<<<<<< HEAD
+=======
 
 puts "Creating festivals..."
+>>>>>>> 8271d1a1103fefd98adf00e2835aae94a02e530e
 Festival.create!([
   {name: "Treefort Music Festival 2016", latitude: 43.6187102, longitude: -116.21460680000001, start_date: "2016-03-23", date: "March 23-27, 2016", location: "Boise, ID", website: "http://treefortmusicfest.com/#/", description: "Boise in Idaho may sound like an odd city choice for an epic festival, but the Treefort Festival continues to impress us year after year. Treefort typically takes place the week after SXSW to take advantage of artists heading back to the Northwest. Short lines and a welcoming city continually keeps Treefort at the top of our list. Since their inception, the festival has grown in size to include film, yoga, beer, and comedy. \r\n", price: 0, camping: " No", end_date: "2016-03-27"},
   {name: "DGTL Festival 2016", latitude: 52.4010604, longitude: 4.889499800000067, start_date: "2016-03-26", date: "March 26-27, 2016", location: "Amsterdam, The Netherlands", website: "http://dgtl.nl/home/", description: nil, price: 0, camping: " Yes", end_date: "2016-03-27"},
@@ -9634,8 +9635,11 @@ Genre.create!([
   {name: "Bluegrass"},
   {name: "Blues"}
 ])
+<<<<<<< HEAD
+=======
 
 puts "Creating festival/artist connections..."
+>>>>>>> 8271d1a1103fefd98adf00e2835aae94a02e530e
 Performance.create!([
   {festival_id: 1, artist_id: 1},
   {festival_id: 1, artist_id: 2},
@@ -23085,100 +23089,3 @@ Performance.create!([
   {festival_id: 436, artist_id: 8407},
   {festival_id: 436, artist_id: 8408}
 ])
-
-# ORIGINAL SEED CODE
-# TODO: refactor!
-# def extract_data
-#   page = get_the_body('./festival_wizard.html')
-#   festival_info = []
-#   puts "Collecting data..."
-#   page.css('.marker').each do |marker|
-#     data = {}
-#     data[:lat] = marker.attributes["data-lat"].value
-#     data[:lng] = marker.attributes["data-lng"].value
-#     data[:city] = marker.css('p')[0].children.text
-#     data[:date] = marker.css('p')[1].children.text
-#     data[:start_date] = format_date(marker)
-#     data[:event] = get_event_name(marker)
-#
-#     url = marker.children.css('.gm-infowindow a:first-child')[0]['href']
-#     details = get_the_body(url)
-#     festival = details.css('#festival-basics').children.select do |line|
-#         (line.name == 'text' || line.name == 'a') && !line.text.start_with?("\r\n")
-#       end
-#
-#     data[:price] = festival[2].text if festival[2]
-#     data[:camping] = festival[3].text if festival[3]
-#     data[:website] = festival[4]['href'] if festival[4]
-#     data[:description] = festival[5].text if festival[5]
-#     data[:artists] = details.css('.lineupguide li').map { |artist| artist.text.capitalize if artist.text }
-#
-#     festival_info << data
-#   end
-#   puts "Done!"
-#   festival_info
-# end
-#
-# def format_date(marker)
-#   date = marker.css('p')[1].children.text
-#   date_arr = date.gsub(/\-\w+/, '').gsub(',', '').split(' ')
-#   months = ['January', 'February', 'March', 'April', 'May', 'June',
-#             'July', 'August', 'September', 'October', 'November', 'December']
-#   find_month = months.index(date_arr.shift)
-#   month_num = find_month ? find_month + 1 : 1
-#   Date.new(date_arr.last.to_i, month_num, date_arr.first.to_i)
-# end
-#
-# def get_event_name(marker_obj)
-#    marker_obj.css('a:nth-child(2)')[0].children.text
-# end
-#
-# def get_the_body(url)
-#  body = File.open(url)# body = HTTParty.get(url)
-#  Nokogiri::HTML(body)
-# end
-#
-# extract_data.each do |i|
-#   f = Festival.create(
-#     name: i[:event],
-#     latitude: i[:lat].to_f,
-#     longitude: i[:lng].to_f,
-#     location: i[:city],
-#     start_date: i[:start_date],
-#     date: i[:date],
-#     website: i[:website],
-#     description: i[:description],
-#     price: i[:price],
-#     camping: i[:camping]
-#     )
-#   # here to reassure myself data is being saved to db
-#   puts f.name
-#
-#   i[:artists].each do |artist|
-#     a = Artist.find_or_create_by(name: artist)
-#     Performance.create(artist_id: a.id, festival_id: f.id)
-#   end
-# end
-
-#  #Festival.create(name: 'Rifflandia', start_date: nil, location: 'Victoria, BC', website: 'rifflandia.com', description: 'This September 15-18, the ninth-annual Rifflandia Festival will transform the city of Victoria, featuring a truly diverse line-up of artists across numerous stages, all within walking distance in the city’s beautiful and historic downtown core.', price: 150, latitude: 48.4222, longitude: -123.3640, date: 'Sept. 16th - Sept. 18th, 2016')
-#  #Festival.create(name: 'Philips Backyard Weekender', start_date: nil, location: 'Victoria, BC', website: 'backyardweekender.com', description:'The Phillips Backyard Weekender is a 19+ licensed event taking place rain or shine in the very awesome and large Phillips Backyard, located at the Phillips Brewery in Victoria, BC.', price: 100 , latitude: 48.4222, longitude: -123.3657, date: 'July 8th-July 10th, 2016')
-#  #Festival.create(name: 'Rock the Shores', start_date: nil, location: 'Colwood, BC', website: 'rocktheshores.com', price: 125, latitude: 48.4236, longitude: -123.4958, date: 'July 22nd-July 24th, 2016')
-#  #cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-# # "name"
-# #     t.date     "start_date"
-# #     t.string   "location"
-# #     t.string   "website"
-# #     t.text     "description"
-# #     t.string   "artist_lineup"
-# #     t.integer  "price"
-# #     t.string   "currency"
-# #     t.boolean  "camping"
-# #     t.datetime "created_at",    null: false
-# #     t.datetime "updated_at",    null: false
-# #     t.float    "latitude"
-# #     t.float    "longitude"
-# #     t.string   "date"
-#   # [:artists].each do |artist|
-#   #   a = Artist.find_or_create_by(name: artist)
-#   #   Performance.create(artist_id: a.id, festival_id: f.id)
-#   # end
