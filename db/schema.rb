@@ -11,13 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160317195857) do
+ActiveRecord::Schema.define(version: 20160323155213) do
 
   create_table "artists", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "festival_genres", force: :cascade do |t|
+    t.integer  "genre_id"
+    t.integer  "festival_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "festival_genres", ["festival_id"], name: "index_festival_genres_on_festival_id"
+  add_index "festival_genres", ["genre_id"], name: "index_festival_genres_on_genre_id"
 
   create_table "festivals", force: :cascade do |t|
     t.string   "name"
@@ -32,6 +42,16 @@ ActiveRecord::Schema.define(version: 20160317195857) do
     t.string   "camping"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.date     "end_date"
+  end
+
+  add_index "festivals", ["camping"], name: "index_festivals_on_camping"
+  add_index "festivals", ["start_date"], name: "index_festivals_on_start_date"
+
+  create_table "genres", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "performances", force: :cascade do |t|
@@ -40,5 +60,8 @@ ActiveRecord::Schema.define(version: 20160317195857) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
+
+  add_index "performances", ["artist_id"], name: "index_performances_on_artist_id"
+  add_index "performances", ["festival_id"], name: "index_performances_on_festival_id"
 
 end
