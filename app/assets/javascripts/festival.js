@@ -1,5 +1,35 @@
 $(function() {
-  
+
+  var airports = function(request, response) {
+      $.getJSON("/autocomplete", {
+        query: request.term,
+      }, function(data) {
+        // data is an array of objects and must be transformed for autocomplete to use
+        var array = data.error ? [] : $.map(data, function(m) {
+          return {
+            label: m.name,
+            value: m.code
+          };
+        });
+        return response(array);
+      });
+    }
+
+  $("#departure_airport").autocomplete({
+    delay: 500,
+    minLength: 3,
+    source: airports,
+    select: function(event, ui) {
+      $('#departure_airport').val(ui.item.value);
+    }
+  })
+  .data( "ui-autocomplete" )._renderItem = function( ul, item ) {
+            return $( "<li>" )
+            .append( "<a>" + item.label + "<br>" + item.value + "</a>" )
+            .appendTo( ul );
+         };
+
+ 
   // FLICKR
   var festival = $('.flickr-imgs').data('name');
   $.ajax('/flickr_images/' + festival, { dataType: 'json' }).done(function(data) { 
@@ -11,9 +41,6 @@ $(function() {
       $('<img>').attr('src', imgSrc).appendTo('.flickr-imgs');
     });
   });
-
-});
-
 
 var myLatLng = {lat: 49.2827, lng: -123.1207};
 var map;
@@ -31,29 +58,30 @@ var marker = new google.maps.Marker({
   });
 };
 
-$.getJSON("/festivals", function(data) {
-  // console.log(data)
-  $.each(data, function(index, festival) {
-    console.log(festival)
-    var marker = new google.maps.Marker ({
-      map: map, 
-      position: {lat:festival.latitude, lng:festival.longitude}, 
-      name: name
-    });
-    var contentString = "This is a string";
-    var infowindow = new google.maps.InfoWindow({
-      content: (festival.name + ',' + ' ' + festival.date)
-    });
-    marker.addListener('click', function() {
-      infowindow.open(map, marker);
-      infowindow.addListener('closeclick', function() {
-        infowindow.close();
-      });
-      // setTimeout(function(){
-      //   infowindow.close();
-      // },3000)
-    })
-  });
+// $.getJSON("/festivals", function(data) {
+//   // console.log(data)
+//   $.each(data, function(index, festival) {
+//     console.log(festival)
+//     var marker = new google.maps.Marker ({
+//       map: map, 
+//       position: {lat:festival.latitude, lng:festival.longitude}, 
+//       name: name
+//     });
+//     var contentString = "This is a string";
+//     var infowindow = new google.maps.InfoWindow({
+//       content: (festival.name + ',' + ' ' + festival.date)
+//     });
+//     marker.addListener('click', function() {
+//       infowindow.open(map, marker);
+//       infowindow.addListener('closeclick', function() {
+//         infowindow.close();
+//       });
+//       // setTimeout(function(){
+//       //   infowindow.close();
+//       // },3000)
+//     })
+//   });
+// });
 });
 
 
@@ -77,3 +105,4 @@ $.getJSON("/festivals", function(data) {
 //     placeMarker(arrayOfFestivals[i].latitude, arrayOfFestivals[i].longitude, arrayOfFestivals[i].title);
 //   }
 // }
+
