@@ -1,19 +1,19 @@
 $(function() {
-
+  console.log("inside function")
   var airports = function(request, response) {
-      $.getJSON("/autocomplete", {
-        query: request.term,
-      }, function(data) {
-        // data is an array of objects and must be transformed for autocomplete to use
-        var array = data.error ? [] : $.map(data, function(m) {
-          return {
-            label: m.name,
-            value: m.code
-          };
-        });
-        return response(array);
+    $.getJSON("/autocomplete", {
+      query: request.term,
+    }, function(data) {
+      // data is an array of objects and must be transformed for autocomplete to use
+      var array = data.error ? [] : $.map(data, function(m) {
+        return {
+          label: m.name,
+          value: m.code
+        };
       });
-    };
+      return response(array);
+    });
+  };
 
 //  $("#departure_airport").autocomplete({
 //    delay: 500,
@@ -43,43 +43,76 @@ $(function() {
       });
     });
   }
+
+  console.log("outside function")
+  window.initMap = function initMap() {
+    var myLatLng = {lat: 49.2827, lng: -123.1207};
+    var map;
+
+    map = new google.maps.Map(document.getElementById('map'), {
+      center: myLatLng,
+      zoom: 7
+      });
+    var marker = new google.maps.Marker({
+      map: map,
+      position: myLatLng,
+      title: 'Hello World'
+    });
+
+    $.getJSON("/festivals", function(data) {
+      // console.log(data)
+      $.each(data, function(index, festival) {
+        console.log(".each")
+        var marker = new google.maps.Marker({
+          map: map, 
+          position: {lat:festival.latitude, lng:festival.longitude}, 
+          name: name
+        });
+        var contentString = "This is a string";
+        var infowindow = new google.maps.InfoWindow({
+          content: (festival.name + ',' + ' ' + festival.date)
+        });
+        marker.addListener('click', function() {
+          console.log("listener")
+          infowindow.open(map, marker);
+          infowindow.addListener('closeclick', function() {
+            infowindow.close();
+         });
+        // setTimeout(function(){
+        //   infowindow.close();
+        // },3000)
+        })
+      });
+    });
+  
+    $('.pan').on('click', function(){
+      var latLng = new google.maps.LatLng(49.8994, -97.1392); //should pan to specified location (based on card/div?)
+      map.panTo(latLng);
+    });
+  }
+    // var lastScrollTop = 0;
+    //   $(window).scroll(function() {
+    //   var st = $(this).scrollTop();
+    //     if (st < lastScrollTop) {
+    //       $('#wel').fadeIn();
+    //     } else {
+    //       $('#wel').fadeOut();
+    //     }
+    //   lastScrollTop = st;
+    // }
+    // })
+    $(window).on("scroll", function(e) {
+      if ($(window).scrollTop() >= $("#wel").height()) $("#wel").fadeOut(1000);
+      else $("#wel").fadeIn(1200);
+    // });
+  });
 });
 
-function initMap() {
-  var myLatLng = {lat: 49.2827, lng: -123.1207};
-  var map;
 
-  map = new google.maps.Map(document.getElementById('map'), {
-    center: myLatLng,
-    zoom: 7
-    });
-  var marker = new google.maps.Marker({
-    map: map,
-    position: myLatLng,
-    title: 'Hello World'
-  });
-
-   $.getJSON("/festivals", function(data) {
-     // console.log(data)
-     $.each(data, function(index, festival) {
-       var marker = new google.maps.Marker ({
-         map: map, 
-         position: {lat:festival.latitude, lng:festival.longitude}, 
-         name: name
-       });
-       var contentString = "This is a string";
-       var infowindow = new google.maps.InfoWindow({
-         content: (festival.name + ',' + ' ' + festival.date)
-       });
-       marker.addListener('click', function() {
-         infowindow.open(map, marker);
-         infowindow.addListener('closeclick', function() {
-           infowindow.close();
-         });
-         // setTimeout(function(){
-         //   infowindow.close();
-         // },3000)
-       })
-     });
-   });
-  }
+ // var map;
+ //      function initMap() {
+ //        map = new google.maps.Map(document.getElementById('map'), {
+ //          center: {lat: -34.397, lng: 150.644},
+ //          zoom: 8
+ //        });
+ //      }

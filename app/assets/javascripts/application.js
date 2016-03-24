@@ -13,7 +13,10 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui
-//= require_tree .
+//= require festival-search
+//= require festival
+
+
 // var myLatLng = {lat: 49.2827, lng: -123.1207}
 // function initMap() {
 //   var map = new google.maps.Map(document.getElementById('map'), {

@@ -8,10 +8,9 @@ html
    = javascript_include_tag "application"
    = csrf_meta_tags
    link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css"
-   / script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"
-
  body
    = yield
-   script async="" defer="" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyApKknQ2HJDwP0l2NNQcdE6pPfpFKNtwto&callback=initMap"
-   
-    
+   / div id ="button"
+   button class="pan pure button" Pan
+   script async="" defer="" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyApKknQ2HJDwP0l2NNQcdE6pPfpFKNtwto&callback=initMap" 
+      
