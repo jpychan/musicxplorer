@@ -1,13 +1,11 @@
 class DistanceService
   EARTH_RADIUS = 6371 # km
 
-  def initialize(usr_location, festival)
-    @usr_location = usr_location
-    @festival = festival
+  def initialize
   end
  
-  def origin_point
-    location = @usr_location == '' ? 'Vancouver BC' : @usr_location
+  def origin_point(usr_location)
+    location = usr_location == '' ? 'Vancouver BC' : usr_location
     origin = GeoNamesAPI::PlaceSearch.find_by_place_name(location).geonames[0]
     {lat: origin.lat, lng: origin.lng}
   end
@@ -16,11 +14,11 @@ class DistanceService
     deg/180 * Math::PI
   end
 
-  def calc_distance
-    orig_lat = to_radians(origin_point[:lat])
-    orig_lng = to_radians(origin_point[:lng])
-    dest_lat = to_radians(@festival.latitude)
-    dest_lng = to_radians(@festival.longitude)
+  def calc_distance(origin, festival)
+    orig_lat = to_radians(origin[:lat])
+    orig_lng = to_radians(origin[:lng])
+    dest_lat = to_radians(festival.latitude)
+    dest_lng = to_radians(festival.longitude)
 
     lat_diff = dest_lat - orig_lat
     lng_diff = dest_lng - orig_lng

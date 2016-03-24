@@ -1,14 +1,41 @@
 $(function() {
+  // DATE PICKER
+  // set max date to account for greyhound search limit
+  function maxDay() {
+    var d = new Date();
+    d.setDate(d.getDate() + 320);
+    return d;
+  }
 
   $('.date-picker').datepicker({
     minDate: new Date(),
+    maxDate: maxDay(), 
     dateFormat: 'yy-mm-dd'
+  });
+
+  // SOULMATE AUTO-COMPLETE
+  var render = function(term, data, type) {
+    return term;
+  };
+  var select = function(term, data, type) {
+    $('#search-artist').val(term);
+    $('ul#soulmate').hide();
+  };
+
+  $('#search-artist').soulmate({
+    url: '/autocomplete/search',
+    types: ['artists'],
+    renderCallback: render,
+    selectCallback: select,
+    minQuerylength: 2,
+    maxResults: 5
   });
 
   $('#festival-search input[type=submit]').on('click', function(event, data) {
     $('#search-results').empty();
     $('#search-results').html('<p>Loading...</p>');
   });
+
   // POPULATE SEARCH RESULTS
   $('#festival-search').on('ajax:success', function(event, data) {
     var results = $('#search-results');

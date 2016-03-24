@@ -30,6 +30,8 @@ gem 'bullet'
 
 gem 'redis'
 gem 'redis-rails'
+gem 'rack-contrib'
+gem 'soulmate', require: 'soulmate/server'
 
 gem 'httparty'
 gem 'dotenv-rails'

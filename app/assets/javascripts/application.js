@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery.soulmate
 //= require jquery-ui
 //= require_tree .
 // var myLatLng = {lat: 49.2827, lng: -123.1207}

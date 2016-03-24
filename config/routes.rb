@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  mount Soulmate::Server, at: '/autocomplete'
 
   get '/flickr_images/:festival' => 'festivals#flickr_images'
   get '/festival-list' => 'festivals#festival_list'
