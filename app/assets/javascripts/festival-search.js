@@ -13,6 +13,40 @@ $(function() {
     dateFormat: 'yy-mm-dd'
   });
 
+  // SET USER LOCATION
+  var locationInput = $('#get_location');
+  var usrLocation = $('#usr_location');
+  locationInput.hide();
+
+  $('#edit_location').on('click', function() {
+    var inputBtn = $(this);
+    // TODO: keep checking value of #get_location
+    if ( locationInput.val() === '' ) {
+      inputBtn.hide();
+    }
+
+    usrLocation.hide();
+    locationInput.show();    
+    locationInput.on('blur paste', function() {
+      usrLocation.text( locationInput.val() );
+      usrLocation.show();
+      $(this).hide();
+      inputBtn.show();
+      
+      // don't send until click btn    
+      $.ajax('/usr-coordinates',
+        { dataType: 'json',
+          type: 'POST',
+          data: {usr_location: usrLocation.text()},
+          success: function() { console.log('user location set'); },
+          error: function(xhr) { 
+            console.log(usrLocation.text());
+            console.log(xhr.statusText); }
+      });
+    });
+  });
+  
+
   // SOULMATE AUTO-COMPLETE
   var render, select;
   render = function(term, data, type) {
@@ -33,22 +67,10 @@ $(function() {
   });
 
   // DISPLAY WHILE WAIT FOR RESULTS TO LOAD
-  $('#festival-search input[type=submit]').on('click', function(event, data) {
+  $('#submit-search').on('click', function(event, data) {
     $('#search-results').empty();
     $('#search-results').html('<p>Loading...</p>');
   });
-
-  // CALCULATE DISTANCE BY LAT/LNG
- // var distance_calcs = {
- //   usr_location: $('#location').val(),
- //   origin_point: $.ajax('/origin-point', 
- //     { dataType: 'json',
- //       success: function(data) {
- //         console.log(data);
- //       }
- //     })
- //   }
- // }
 
   // POPULATE SEARCH RESULTS
   $('#festival-search').on('ajax:success', function(event, data) {

@@ -3,21 +3,30 @@ class DistanceService
 
   def initialize
   end
- 
-  def origin_point(usr_location)
+
+  def get_usr_location(usr_location)
     location = usr_location == '' ? 'Vancouver BC' : usr_location
+    if $redis.hget('user', 'location') == location
+      $redis.hgetall('user')
+    else
+      origin_point(location)
+    end
+  end
+   
+  def origin_point(location)
     origin = GeoNamesAPI::PlaceSearch.find_by_place_name(location).geonames[0]
     #{lat: 51.50853, lng: -0.12574} -> 351ms vs 859ms-1s w API
-    {lat: origin.lat, lng: origin.lng}
+    #{lat: origin.lat, lng: origin.lng}
+    $redis.hmset('user', 'location', location, 'lat', origin.lat, 'lng', origin.lng)
   end
 
   def to_radians(deg)
-    deg/180 * Math::PI
+    deg.to_f/180 * Math::PI
   end
 
   def calc_distance(origin, festival)
-    orig_lat = to_radians(origin[:lat])
-    orig_lng = to_radians(origin[:lng])
+    orig_lat = to_radians(origin['lat'])
+    orig_lng = to_radians(origin['lng'])
     dest_lat = to_radians(festival.latitude)
     dest_lng = to_radians(festival.longitude)
 

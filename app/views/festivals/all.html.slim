@@ -3,11 +3,13 @@ h1 id="wel" Festival Finder
 - @selected_festivals.each do |festival|
   = festival['name']
 
-= form_tag '/festival-list', remote: true,  method: :get, id: 'festival-search'
+= form_tag '/usr-coordinates', remote: true
   div
-    = label_tag :location, 'Enter a location'
-    = text_field_tag :location
+    = text_field_tag :location, '', id: 'get_location'
+    = button_tag 'Enter your location', id: 'edit_location'
+    div#usr_location
 
+= form_tag '/festival-list', remote: true,  method: :get, id: 'festival-search'
   div
     = label_tag :date, 'Select a date'
     = text_field_tag :date, '', class: 'date-picker'
@@ -33,7 +35,7 @@ h1 id="wel" Festival Finder
         include_blank: ''
 
   div
-    = submit_tag 'Search!'
+    = submit_tag 'Search!', id: 'submit-search'
 
 div id="search-results"
 
