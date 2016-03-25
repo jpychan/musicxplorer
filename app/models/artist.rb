@@ -7,11 +7,11 @@ class Artist < ActiveRecord::Base
 
   def load_into_soulmate
     loader = Soulmate::Loader.new("artists")
-    loader.add("term" => name, "id" => self.id)
+    loader.add("term" => name, "id" => id)
   end
 
   def remove_from_soulmate
     loader = Soulmate::Loader.new("artists")
-    loader.remove("id" => self.id)
+    loader.remove("id" => id)
   end
 end

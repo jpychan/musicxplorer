@@ -14,27 +14,41 @@ $(function() {
   });
 
   // SOULMATE AUTO-COMPLETE
-  var render = function(term, data, type) {
+  var render, select;
+  render = function(term, data, type) {
     return term;
   };
-  var select = function(term, data, type) {
+  select = function(term, data, type) {
     $('#search-artist').val(term);
     $('ul#soulmate').hide();
   };
 
   $('#search-artist').soulmate({
-    url: '/autocomplete/search',
+    url: '/soulmate/search',
     types: ['artists'],
     renderCallback: render,
     selectCallback: select,
-    minQuerylength: 2,
+    minQueryLength: 2,
     maxResults: 5
   });
 
+  // DISPLAY WHILE WAIT FOR RESULTS TO LOAD
   $('#festival-search input[type=submit]').on('click', function(event, data) {
     $('#search-results').empty();
     $('#search-results').html('<p>Loading...</p>');
   });
+
+  // CALCULATE DISTANCE BY LAT/LNG
+ // var distance_calcs = {
+ //   usr_location: $('#location').val(),
+ //   origin_point: $.ajax('/origin-point', 
+ //     { dataType: 'json',
+ //       success: function(data) {
+ //         console.log(data);
+ //       }
+ //     })
+ //   }
+ // }
 
   // POPULATE SEARCH RESULTS
   $('#festival-search').on('ajax:success', function(event, data) {

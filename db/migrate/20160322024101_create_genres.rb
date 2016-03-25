@@ -44,5 +44,5 @@ class CreateGenres < ActiveRecord::Migration
   #   end
   #
   #   puts "Done! :)"
-  # end
+  end
 end

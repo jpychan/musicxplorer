@@ -5,7 +5,7 @@ class FestivalsController < ApplicationController
 
   def show
     # will take params or an obj as an arg once search form is up
-    @festival = Festival.includes(:artists, :genres).find(params[:id])
+    @festival = Festival.find(params[:id])
     driving = DrivingInfoService.new(@festival)
     @price_by_car = driving.calc_driving_cost
     @time_by_car = driving.get_trip_time[0]
@@ -14,11 +14,10 @@ class FestivalsController < ApplicationController
   def all
     @artists = Artist.all.order(:name)
     @genres = Genre.all.order(:name)
-    selected = $redis.hgetall({})
-     $redis.hkeys({}).each do |key|
-       $redis.hget({}, key)
-     end
-    @selected_festival = selected
+
+    @selected_festivals = $redis.hkeys({}).map do |key|
+      JSON.parse($redis.hget({}, key))
+    end
   end
 
   # GET FESTIVAL SEARCH RESULTS
@@ -42,8 +41,12 @@ class FestivalsController < ApplicationController
   def festival_select
     festival = Festival.find(params[:festivalId])
     festival_json = festival.to_json
+    
+    driving = DrivingInfoService.new(festival)
+    @price_by_car = driving.calc_driving_cost
+    @time_by_car = driving.get_trip_time[0]
     if festival
-      #$redis.hset({}, festival.id, festival_json)
+      $redis.hset({}, festival.id, festival_json)
     end
     redirect_to root_path
   end
