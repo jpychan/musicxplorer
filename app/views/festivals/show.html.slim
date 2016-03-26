@@ -48,8 +48,16 @@
                   br Plane
 
             div[id="car" class="route-details active"]
-              div[id="map" data-latitude="#{@festival.latitude}" data-longitude="#{@festival.longitude}"]
 
+              div.driving-cost
+                h2 cost of driving [round trip] in CDN
+                p
+                  | assumes you start with an empty tank of gas and that you gas up near your starting point
+                  br does not currently account for switching mode of transportation e.g. ferries
+                p $#{display(@price_by_car)}
+                p trip duration: #{@time_by_car}
+
+              div[id="map" data-latitude="#{@festival.latitude}" data-longitude="#{@festival.longitude}"]
             div[id="bus" class="route-details hidden"]
               p Tab-1
 
@@ -68,13 +76,6 @@
 
     div[class="flickr-imgs" data-name="#{@festival.name}"]
 
-    div.driving-cost
-      h2 cost of driving [round trip] in CDN
-      p
-        | assumes you start with an empty tank of gas and that you gas up near your starting point
-        br does not currently account for switching mode of transportation e.g. ferries
-      p $#{display(@price_by_car)}
-      p trip duration: approx #{@time_by_car} [one way, driving non-stop]
 
 
     script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1CqC9GEW-FdV8IsnwZaXTX6reVN7wYOo"

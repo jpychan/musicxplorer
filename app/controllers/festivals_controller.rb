@@ -39,7 +39,7 @@ class FestivalsController < ApplicationController
       puts dist_km
       dist_km <= SEARCH_RADIUS
     end
-    paginate json: @festivals
+    render json: @festivals
   end
 
   def festival_compare
@@ -61,7 +61,7 @@ class FestivalsController < ApplicationController
   def flickr_images 
     festival = params[:festival].gsub(/\s\d{4}/, '')
     @festival = Festival.find_by(name: params[:festival])
-    img_src = "https://api.flickr.com/services/rest/?api_key=#{ENV['FLICKR_KEY']}&method=flickr.photos.search&tags=festival&text=#{festival}&sort=relevance&per_page=10&content_type=1&format=json&nojsoncallback=1"
+  img_src = "https://api.flickr.com/services/rest/?api_key=#{ENV['FLICKR_KEY']}&method=flickr.photos.search&tags=festival&text=#{festival}&sort=relevance&per_page=10&content_type=1&format=json&nojsoncallback=1"
     response = HTTParty.get(img_src).body
     @image = JSON.parse(response)
     render json: @image
@@ -71,23 +71,27 @@ class FestivalsController < ApplicationController
     render json: Festival.all, content_type: "application/json"
   end
 
-   def search_flights
-
+  def search_flights
     @festival = Festival.find(params[:festival_id])
+    @usr_location = $redis.hgetall('user')
+  
     if params[:default]
       params[:cabin_class] = "Economy"
       params[:adult] = 1
       params[:children] = 0
       params[:infants] = 0
-    
+      params[:departure_airport] = 'yvr'
     end
-
+  
+    @arrival_airport = @festival.airport(@festival.latitude, @festival.longitude)
+  
+    @cabin_classes = [['Economy', 'Economy'], ['Premium Economy', 'PremiumEconomy'], ['Business', 'Business'], ['First Class', 'First']]
+    @passenger_numbers = [['0', 0], [ '1', 1], ['2', 2], ['3', 3], ['4', 4], ['5', 5]]
+  
     @first_five_results = @festival.search_flights(params)
-
-
+  
     respond_to do |format|
       format.js {render layout: false}
     end
   end
-  
 end

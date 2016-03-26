@@ -18,6 +18,13 @@ class Festival < ActiveRecord::Base
     return @results
   end
 
+  def airport(latitude, longitude)
+    arrival_airport = nearest_airport(latitude, longitude)
+    arrival_airport = arrival_airport["airports"][0]["code"]
+
+    return arrival_airport
+  end
+
   def self.autocomplete(input)
 
     #Autocomplete Search
@@ -37,6 +44,5 @@ class Festival < ActiveRecord::Base
     return response
 
   end
-  
 end
   
