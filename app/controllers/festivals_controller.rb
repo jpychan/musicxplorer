@@ -14,12 +14,14 @@ class FestivalsController < ApplicationController
   def all
     @artists = Artist.all.order(:name)
     @genres = Genre.all.order(:name)
+    @usr_location = $redis.hget('user', 'location')
     @selected_festivals = []   # temporarily here to not break the views
     #@selected_festivals = $redis.hkeys({}).map do |key|
     #  JSON.parse($redis.hget({}, key))
     #end
   end
 
+  # PRE-CALCULATE COORDINATES FOR USER LOCATION
   def get_usr_coordinates
     d = DistanceService.new
     d.get_usr_location(params[:usr_location])

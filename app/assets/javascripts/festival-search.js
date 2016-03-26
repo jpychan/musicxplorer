@@ -20,33 +20,26 @@ $(function() {
 
   $('#edit_location').on('click', function() {
     var inputBtn = $(this);
-    // TODO: keep checking value of #get_location
-    if ( locationInput.val() === '' ) {
-      inputBtn.hide();
-    }
-
+    inputBtn.hide();
     usrLocation.hide();
     locationInput.show();    
+
     locationInput.on('blur paste', function() {
       usrLocation.text( locationInput.val() );
       usrLocation.show();
       $(this).hide();
       inputBtn.show();
-      
-      // don't send until click btn    
+      console.log('yay');
       $.ajax('/usr-coordinates',
-        { dataType: 'json',
-          type: 'POST',
-          data: {usr_location: usrLocation.text()},
-          success: function() { console.log('user location set'); },
-          error: function(xhr) { 
-            console.log(usrLocation.text());
-            console.log(xhr.statusText); }
+          { dataType: 'json',
+            type: 'POST',
+            data: {usr_location: usrLocation.text()},
+            success: function() { console.log('user location set'); },
+            error: function(xhr) { console.log(xhr.statusText); }
       });
     });
   });
   
-
   // SOULMATE AUTO-COMPLETE
   var render, select;
   render = function(term, data, type) {
@@ -73,6 +66,15 @@ $(function() {
   });
 
   // POPULATE SEARCH RESULTS
+  function formatResults(label,ele, div) {
+    if (ele === null || ele === 0) {
+      $('<div>').text(label + ': n/a').appendTo(div);
+    }
+    else {
+      $('<div>').text(label + ': ' + ele).appendTo(div);
+    }
+  }
+
   $('#festival-search').on('ajax:success', function(event, data) {
     var results = $('#search-results');
     results.empty();
@@ -92,13 +94,10 @@ $(function() {
                               
       $('<div>').text('Location: ' + festival.location).appendTo(festivalDetails );
       $('<div>').text('Date: ' + festival.date).appendTo(festivalDetails);
-      $('<div>').text('Camping: ' + festival.camping).appendTo(festivalDetails);
-      if (festival.description === null) {
-        $('<div>').text('Description unavailable').appendTo(festivalDiv);
-      }
-      else {
-        $('<div>').text(festival.description).appendTo(festivalDiv);
-      }
+
+      formatResults('Price', festival.price, festivalDetails);
+      formatResults('Camping', festival.camping, festivalDetails);
+      formatResults('Description', festival.description, festivalDetails);
     });
   });
 

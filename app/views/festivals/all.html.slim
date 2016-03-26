@@ -3,11 +3,11 @@ h1 id="wel" Festival Finder
 - @selected_festivals.each do |festival|
   = festival['name']
 
-= form_tag '/usr-coordinates', remote: true
-  div
-    = text_field_tag :location, '', id: 'get_location'
-    = button_tag 'Enter your location', id: 'edit_location'
-    div#usr_location
+div
+  = text_field_tag :location, '', id: 'get_location'
+  = button_tag 'Enter your location', id: 'edit_location'
+  div#usr_location
+    = @usr_location
 
 = form_tag '/festival-list', remote: true,  method: :get, id: 'festival-search'
   div

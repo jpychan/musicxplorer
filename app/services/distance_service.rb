@@ -15,8 +15,6 @@ class DistanceService
    
   def origin_point(location)
     origin = GeoNamesAPI::PlaceSearch.find_by_place_name(location).geonames[0]
-    #{lat: 51.50853, lng: -0.12574} -> 351ms vs 859ms-1s w API
-    #{lat: origin.lat, lng: origin.lng}
     $redis.hmset('user', 'location', location, 'lat', origin.lat, 'lng', origin.lng)
   end
 
