@@ -107,13 +107,13 @@ $(function() {
     var selectedId = { festivalId: $(this).attr('data-id') };
 
     // TODO: maybe attach a condition to this...
-    $.ajax('/festival-select',
-      { dataType: 'json',
-        type: 'POST',
-        data: selectedId,
-        success: function() { console.log('festival selected'); },
-        error: function(xhr) { console.log(xhr.statusText); }
-      });
+    //$.ajax('/festival-select',
+    //  { dataType: 'json',
+    //    type: 'POST',
+    //    data: selectedId,
+    //    success: function() { console.log('festival selected'); },
+    //    error: function(xhr) { console.log(xhr.statusText); }
+    //  });
   });
 
 });
