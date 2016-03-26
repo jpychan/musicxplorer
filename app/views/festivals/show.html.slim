@@ -1,92 +1,89 @@
 .container
+  
+  #festival-show
 
-  .header
-    h1 Music Festivals
+    .header
+      h1 Music Festivals
 
-  .music-festival
-    div
-      h1 Rifflandia
+    .music-festival
+      div
+        h1 #{@festival.name}
 
-    .tabs
-      ul.tabs-nav
-        li 
-          a[href="#overview"] Overview
-        li
-          a[href="#travel"] Travel
+      #tabs
+        ul#tabs-nav
+          li 
+            a[href="#overview" id="overview-tab"] Overview
+          li
+            a[href="#travel" id="travel-tab"] Travel
 
-    .tabs-content
-      div[id="overview" class="content pure-g"]
-        div.pure-u-2-5
-          h1 Overview
-          p Date: Sept 1-3, 2016
-          p Location: Victoria, BC
-          p Tickets: $100
-          p Camping: No
-          p a[href="#"] Website
+      .tabs-content
+        div[id="overview" class="content pure-g"]
+          div[class="pure-u-2-5"]
+            h1 Overview
+            p Date: #{@festival.date}
+            p Location: #{@festival.location}
+            p Genres: #{ display( get_genres(@festival) )}
+            p Tickets: #{ display(@festival.price) }
+            p Camping: #{ display(@festival.camping) }
+            = display(@festival.website) == 'n/a' ? '' : (link_to "Website", @festival.website)
 
-      div.pure-u-3-5
-        iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d42360.86698760241!2d-123.3935215819341!3d48.42670261113097!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x548f738bddb06171%3A0x38e8f3741ebb48ed!2sVictoria%2C+BC!5e0!3m2!1sen!2sca!4v1458766369065" width="600" height="450" frameborder="0" style="border:0" allowfullscreen
-    
-    .tabs-content
-      div[id="travel" class="content hidden"]
-        div[id="travel-tabs"]
-          ul
-            li a[href="#car"] i[class="fa fa-car fa-2x"] Car
-            li a[href="#bus"] i[class="fa fa-bus fa-2x"] Bus
-            li a[href="#flight"] i[class="fa fa-plane fa-2x"] Plane
+          div[class="pure-u-3-5" id="festival-map"]
+      
+      .tabs-content
+        div[id="travel" class="content hidden"]
+          div[id="travel-tabs"]
+            ul
+              li
+                a[href="#car" id="car-tab"]
+                  i[class="fa fa-car fa-2x"]
+                  br Car
+              li 
+                a[href="#bus" id="bus-tab"]
+                  i[class="fa fa-bus fa-2x"]
+                  br Bus
+              li 
+                a[href="#flight" id="flight-tab"]
+                  i[class="fa fa-plane fa-2x"]
+                  br Plane
 
-        div[id="car" class="route-details active"]
-          div[id="map"]
+            div[id="car" class="route-details active"]
+              div[id="map" data-latitude="#{@festival.latitude}" data-longitude="#{@festival.longitude}"]
 
-        div[id="bus" class="route-details hidden"]
-          p Tab-1
+            div[id="bus" class="route-details hidden"]
+              p Tab-1
 
-        div[id="flight" class="route-details hidden"]
-          div[class="flight-search-details"]
-            p Flight from Vancouver (YVR) to Toronto (YYZ)
-            p May 1-7, 2016 | Economy
+            div[id="flight" class="route-details hidden"]
+              = form_tag "search_flights", remote: true do
+                = hidden_field_tag :festival_id, @festival.id
+                = hidden_field_tag :cabin_class, "Economy"
+                = hidden_field_tag :adults, 1
+                = hidden_field_tag :children, 0
+                = hidden_field_tag :infants, 0
+                = submit_tag "Get Flights"
+              # = link_to "Get Flights Default", search_flights_path, remote: true, params: {default: true}
 
-          div[class="flight-result pure-g"]
-            div[class="pure-u-4-5"]
-              div[class="flight departure pure-g"]
-                div[class="pure-u-1-4"]
-                  p Tues
-                  p May 1, 2016
+       
 
-                div[class="pure-u-1-2"]
-                  p 14:00 - 00:00
-                  p WestJet
+    div 
+      h2 Description
+      p #{@festival.description}
 
-                div[class="pure-u-1-4"]
-                  p 5h0m</p>
-                  p 0 stops
+    div 
 
-              div[class="flight-arrival pure-g"]
-                div[class="pure-u-1-4"]
-                  p Tues
-                  p May 1, 2016
+      h2 Artists
+      ul
+      - @festival.artists.each do |artist|
+        li #{artist.name}
 
-                  
-                div[class="pure-u-1-2"]
-                  p 14:00 - 00:00
-                  p WestJet
+    div[class="flickr-imgs" data-name="#{@festival.name}"]
 
-                div[class="pure-u-1-4"]
-                  p 5h0m
-                  p 0 stops
-
-            div[class="pure-u-1-5"]
-              h3 $500
-              a[href="#" class="pure-button pure-button-primary"]Book Now
+    div.driving-cost
+      h2 cost of driving [round trip] in CDN
+      p
+        | assumes you start with an empty tank of gas and that you gas up near your starting point
+        br does not currently account for switching mode of transportation e.g. ferries
+      p $#{display(@price_by_car)}
+      p trip duration: approx #{@time_by_car} [one way, driving non-stop]
 
 
-  div 
-    h2 Description
-    p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero.
-
-  div 
-    h2 The Artists
-    ul
-      li Artist
-
-script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1CqC9GEW-FdV8IsnwZaXTX6reVN7wYOo"
+    script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1CqC9GEW-FdV8IsnwZaXTX6reVN7wYOo"
