@@ -1,3 +1,4 @@
+puts "Creating artists..."
 Artist.create!([
   {name: "Acid dad"},
   {name: "Acid mothers temple"},
@@ -8408,11 +8409,8 @@ Artist.create!([
   {name: "Twinkle brothers"},
   {name: "Weeding dub"}
 ])
-<<<<<<< HEAD
-=======
 
 puts "Creating festivals..."
->>>>>>> 8271d1a1103fefd98adf00e2835aae94a02e530e
 Festival.create!([
   {name: "Treefort Music Festival 2016", latitude: 43.6187102, longitude: -116.21460680000001, start_date: "2016-03-23", date: "March 23-27, 2016", location: "Boise, ID", website: "http://treefortmusicfest.com/#/", description: "Boise in Idaho may sound like an odd city choice for an epic festival, but the Treefort Festival continues to impress us year after year. Treefort typically takes place the week after SXSW to take advantage of artists heading back to the Northwest. Short lines and a welcoming city continually keeps Treefort at the top of our list. Since their inception, the festival has grown in size to include film, yoga, beer, and comedy. \r\n", price: 0, camping: " No", end_date: "2016-03-27"},
   {name: "DGTL Festival 2016", latitude: 52.4010604, longitude: 4.889499800000067, start_date: "2016-03-26", date: "March 26-27, 2016", location: "Amsterdam, The Netherlands", website: "http://dgtl.nl/home/", description: nil, price: 0, camping: " Yes", end_date: "2016-03-27"},
@@ -9635,11 +9633,8 @@ Genre.create!([
   {name: "Bluegrass"},
   {name: "Blues"}
 ])
-<<<<<<< HEAD
-=======
 
 puts "Creating festival/artist connections..."
->>>>>>> 8271d1a1103fefd98adf00e2835aae94a02e530e
 Performance.create!([
   {festival_id: 1, artist_id: 1},
   {festival_id: 1, artist_id: 2},
@@ -23088,4 +23083,8 @@ Performance.create!([
   {festival_id: 436, artist_id: 8406},
   {festival_id: 436, artist_id: 8407},
   {festival_id: 436, artist_id: 8408}
-])
+]);
+
+puts "Done!"
+
+

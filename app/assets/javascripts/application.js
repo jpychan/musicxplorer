@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui
+//= require jquery.soulmate
 //= require_tree .
 
 // var myLatLng = {lat: 49.2827, lng: -123.1207}
@@ -64,5 +65,3 @@
 //     radius: 20
 //   });
 // }
-
-

@@ -27,9 +27,11 @@ gem 'nokogiri'
 gem 'slim-rails'
 
 gem 'bullet'
-
+gem 'pg'
 gem 'redis'
 gem 'redis-rails'
+gem 'rack-contrib'
+gem 'soulmate', require: 'soulmate/server'
 
 gem 'httparty'
 gem 'dotenv-rails'
@@ -41,6 +43,7 @@ gem 'geocoder'
 
 gem 'seed_dump'
 
+gem 'sqlite3'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -53,8 +56,6 @@ gem 'seed_dump'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
-  # Use sqlite3 as the database for Active Record
-  gem 'sqlite3'
 end
 
 group :development do
@@ -66,5 +67,4 @@ group :development do
 end
 
 group :production do
-  gem 'pg'
 end
