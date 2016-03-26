@@ -27,7 +27,7 @@ module Skyscanner
     inbound_date = festival.end_date + 1
     arrival_airport = nearest_airport(festival.latitude, festival.longitude)
     arrival_airport = arrival_airport["airports"][0]["code"].downcase
-    departure_airport = params[:departure_airport].downcase
+    # departure_airport = params[:departure_airport].downcase
 
     http = Net::HTTP.new(url.host, url.port)
 
@@ -35,7 +35,7 @@ module Skyscanner
     request["content-type"] = 'application/x-www-form-urlencoded'
     request["accept"] = 'application/json'
     request["cache-control"] = 'no-cache'
-    request.body = "country=CA&currency=CAD&locale=en-CA&adults=#{params[:adults]}&children=#{params[:children]}&infants=#{params[:infants]}&originplace=#{departure_airport}-iata&destinationplace=#{arrival_airport}-iata&outbounddate=#{outbound_date}&inbounddate=#{inbound_date}&locationschema=Iata&cabinclass=#{params[:cabin_class]}&groupPricing=true"
+    request.body = "country=CA&currency=CAD&locale=en-CA&adults=#{params[:adults]}&children=#{params[:children]}&infants=#{params[:infants]}&originplace=yvr-iata&destinationplace=#{arrival_airport}-iata&outbounddate=#{outbound_date}&inbounddate=#{inbound_date}&locationschema=Iata&cabinclass=#{params[:cabin_class]}&groupPricing=true"
     response = http.request(request)
     polling_url = response["location"]
     session_id = polling_url.split('/').last
@@ -68,16 +68,28 @@ module Skyscanner
     agents = data["Agents"]
     @first_five_results = JsonPath.on(data, '$..Itineraries[:4]')
 
+    @first_five_results << query
+    @first_five_results[5]["OutboundDate"] = Date.parse(@first_five_results[5]["OutboundDate"])
+    @first_five_results[5]["InboundDate"] = Date.parse(@first_five_results[5]["InboundDate"])
+    
     j = 0
 
-    while j <= @first_five_results.length - 1
+    while j <= @first_five_results.length - 2
       outbound_leg_id = @first_five_results[j]["OutboundLegId"]
       inbound_leg_id = @first_five_results[j]["InboundLegId"]
       agent_id = @first_five_results[j]["PricingOptions"][0]["Agents"][0]
 
       @first_five_results[j][:outbound_leg] = legs.select { |leg| leg["Id"] == outbound_leg_id}[0]
+      @first_five_results[j][:outbound_departure_time] = DateTime.parse(@first_five_results[j][:outbound_leg]["Departure"])
+      @first_five_results[j][:outbound_departure_time] = @first_five_results[j][:outbound_departure_time].strftime('%I:%M %p')
+      @first_five_results[j][:outbound_arrival_time] = DateTime.parse(@first_five_results[j][:outbound_leg]["Arrival"])
+      @first_five_results[j][:outbound_arrival_time] = @first_five_results[j][:outbound_arrival_time].strftime('%I:%M %p')
 
       @first_five_results[j][:inbound_leg] = legs.select { |leg| leg["Id"] == inbound_leg_id}[0]
+      @first_five_results[j][:inbound_departure_time] = DateTime.parse(@first_five_results[j][:inbound_leg]["Departure"])
+      @first_five_results[j][:inbound_departure_time] = @first_five_results[j][:inbound_departure_time].strftime('%I:%M %p')
+      @first_five_results[j][:inbound_arrival_time] = DateTime.parse(@first_five_results[j][:inbound_leg]["Arrival"])
+      @first_five_results[j][:inbound_arrival_time] = @first_five_results[j][:inbound_arrival_time].strftime('%I:%M %p')
 
       departure_airport_id = @first_five_results[j][:outbound_leg]["OriginStation"]
       arrival_airport_id = @first_five_results[j][:outbound_leg]["DestinationStation"]
@@ -92,7 +104,7 @@ module Skyscanner
 
       j += 1
     end
-      byebug
+
       return @first_five_results
   end
 

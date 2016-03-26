@@ -1,27 +1,80 @@
-h1 #{@festival.name}
+.container
+  
+  #festival-show
 
-/ cool to change name of class but plz let Carmen know so she can change the JS! :)
-div.festival-details
-  p Where: #{@festival.location}
-  p When: #{@festival.date}
-  p Price: #{ display(@festival.price) }
-  p Genres: #{ display( get_genres(@festival) )}
-  p Camping: #{ display(@festival.camping) }
-  = display(@festival.website) == 'n/a' ? '' : (link_to @festival.website, @festival.website)
-  p #{@festival.description}
+    .header
+      h1 Music Festivals
+      button[id="flight-search-change"] Change Your Search Settings
 
-div
-  h2 Artists
-  ul
-    - @festival.artists.each do |artist|
-      li #{artist.name}
+    .music-festival
+      div
+        h1 #{@festival.name}
 
-div.driving-cost
-  h2 cost of driving [round trip] in CDN
-  p
-    | assumes you start with an empty tank of gas & that you gas up near your starting point
-    br does not currently account for switching mode of transportation e.g. ferries
-  p $#{display(@price_by_car)}
-  p trip duration: approx #{@time_by_car} [one way, driving non-stop]
+      #tabs
+        ul#tabs-nav
+          li 
+            a[href="#overview" id="overview-tab"] Overview
+          li
+            a[href="#travel" id="travel-tab"] Travel
 
-div class="flickr-imgs" data-name="#{@festival.name}"
+      .tabs-content
+        div[id="overview" class="content pure-g"]
+          div[class="pure-u-2-5"]
+            h1 Overview
+            p Date: #{@festival.date}
+            p Location: #{@festival.location}
+            p Genres: #{ display( get_genres(@festival) )}
+            p Tickets: #{ display(@festival.price) }
+            p Camping: #{ display(@festival.camping) }
+            = display(@festival.website) == 'n/a' ? '' : (link_to "Website", @festival.website)
+
+          div[class="pure-u-3-5" id="festival-map"]
+      
+      .tabs-content
+        div[id="travel" class="content hidden"]
+          div[id="travel-tabs"]
+            ul
+              li
+                a[href="#car" id="car-tab" data-div="#car"]
+                  i[class="fa fa-car fa-2x"]
+                  br Car
+              li 
+                a[href="#bus" id="bus-tab" data-div="#bus"]
+                  i[class="fa fa-bus fa-2x"]
+                  br Bus
+              li 
+                a[href="/search_flights?default=true&festival_id=#{@festival.id}" id="flight-tab" data-div="#flight" data-remote="true"]                 
+                  i[class="fa fa-plane fa-2x"]
+                  br Plane
+
+            div[id="car" class="route-details active"]
+              div[id="map" data-latitude="#{@festival.latitude}" data-longitude="#{@festival.longitude}"]
+
+            div[id="bus" class="route-details hidden"]
+              p Tab-1
+
+            div[id="flight" class="route-details hidden"]
+
+    div 
+      h2 Description
+      p #{@festival.description}
+
+    div 
+
+      h2 Artists
+      ul
+      - @festival.artists.each do |artist|
+        li #{artist.name}
+
+    div[class="flickr-imgs" data-name="#{@festival.name}"]
+
+    div.driving-cost
+      h2 cost of driving [round trip] in CDN
+      p
+        | assumes you start with an empty tank of gas and that you gas up near your starting point
+        br does not currently account for switching mode of transportation e.g. ferries
+      p $#{display(@price_by_car)}
+      p trip duration: approx #{@time_by_car} [one way, driving non-stop]
+
+
+    script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1CqC9GEW-FdV8IsnwZaXTX6reVN7wYOo"

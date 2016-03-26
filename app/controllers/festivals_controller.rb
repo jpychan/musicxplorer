@@ -61,7 +61,7 @@ class FestivalsController < ApplicationController
   def flickr_images 
     festival = params[:festival].gsub(/\s\d{4}/, '')
     @festival = Festival.find_by(name: params[:festival])
-  img_src = "https://api.flickr.com/services/rest/?api_key=#{ENV['FLICKR_KEY']}&method=flickr.photos.search&tags=festival&text=#{festival}&sort=relevance&per_page=10&content_type=1&format=json&nojsoncallback=1"
+    img_src = "https://api.flickr.com/services/rest/?api_key=#{ENV['FLICKR_KEY']}&method=flickr.photos.search&tags=festival&text=#{festival}&sort=relevance&per_page=10&content_type=1&format=json&nojsoncallback=1"
     response = HTTParty.get(img_src).body
     @image = JSON.parse(response)
     render json: @image
@@ -70,4 +70,24 @@ class FestivalsController < ApplicationController
   def parse_all
     render json: Festival.all, content_type: "application/json"
   end
+
+   def search_flights
+
+    @festival = Festival.find(params[:festival_id])
+    if params[:default]
+      params[:cabin_class] = "Economy"
+      params[:adult] = 1
+      params[:children] = 0
+      params[:infants] = 0
+    
+    end
+
+    @first_five_results = @festival.search_flights(params)
+
+
+    respond_to do |format|
+      format.js {render layout: false}
+    end
+  end
+  
 end
