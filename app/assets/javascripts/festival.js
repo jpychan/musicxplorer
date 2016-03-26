@@ -149,14 +149,14 @@ $(function() {
     event.preventDefault();
 
     $('.route-details:not(".hidden")').removeClass('active').addClass('hidden');
-    var activeTravelTab = $(this).find('a').attr('href');
+
+    var activeTravelTab = $(this).find('a')[0].dataset.div;
+
     $(activeTravelTab).addClass("active").removeClass("hidden");
     $(activeTravelTab).fadeIn();
 
     festivalMaps.resetDrivingMap();
   });
-
-
 
 
   // FLICKR

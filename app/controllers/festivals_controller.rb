@@ -58,10 +58,17 @@ class FestivalsController < ApplicationController
 
    def search_flights
 
-    byebug
-
     @festival = Festival.find(params[:festival_id])
+    if params[:default]
+      params[:cabin_class] = "Economy"
+      params[:adult] = 1
+      params[:children] = 0
+      params[:infants] = 0
+    
+    end
+
     @first_five_results = @festival.search_flights(params)
+
 
     respond_to do |format|
       format.js {render layout: false}

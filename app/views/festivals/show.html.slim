@@ -4,6 +4,7 @@
 
     .header
       h1 Music Festivals
+      button[id="flight-search-change"] Change Your Search Settings
 
     .music-festival
       div
@@ -34,15 +35,15 @@
           div[id="travel-tabs"]
             ul
               li
-                a[href="#car" id="car-tab"]
+                a[href="#car" id="car-tab" data-div="#car"]
                   i[class="fa fa-car fa-2x"]
                   br Car
               li 
-                a[href="#bus" id="bus-tab"]
+                a[href="#bus" id="bus-tab" data-div="#bus"]
                   i[class="fa fa-bus fa-2x"]
                   br Bus
               li 
-                a[href="#flight" id="flight-tab"]
+                a[href="/search_flights?default=true&festival_id=#{@festival.id}" id="flight-tab" data-div="#flight" data-remote="true"]                 
                   i[class="fa fa-plane fa-2x"]
                   br Plane
 
@@ -53,16 +54,6 @@
               p Tab-1
 
             div[id="flight" class="route-details hidden"]
-              = form_tag "search_flights", remote: true do
-                = hidden_field_tag :festival_id, @festival.id
-                = hidden_field_tag :cabin_class, "Economy"
-                = hidden_field_tag :adults, 1
-                = hidden_field_tag :children, 0
-                = hidden_field_tag :infants, 0
-                = submit_tag "Get Flights"
-              # = link_to "Get Flights Default", search_flights_path, remote: true, params: {default: true}
-
-       
 
     div 
       h2 Description
