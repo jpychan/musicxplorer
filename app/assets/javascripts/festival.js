@@ -1,11 +1,11 @@
 $(function() {
 
-  var userLocation = new Promise(function(resolve, reject) {
-    navigator.geolocation.getCurrentPosition(function(position) {
-      var coordinates = {lat:position.coords.latitude, long:position.coords.longitude};
-      resolve(coordinates);
-     });
-    });
+  // var userLocation = new Promise(function(resolve, reject) {
+  //   navigator.geolocation.getCurrentPosition(function(position) {
+  //     var coordinates = {lat:position.coords.latitude, long:position.coords.longitude};
+  //     resolve(coordinates);
+  //    });
+  //   });
 
   var airports = function(request, response) {
       $.getJSON("/autocomplete", {
@@ -22,21 +22,6 @@ $(function() {
       });
     };
 
-//  $("#departure_airport").autocomplete({
-//    delay: 500,
-//    minLength: 3,
-//    source: airports,
-//    select: function(event, ui) {
-//      $('#departure_airport').val(ui.item.value);
-//    }
-//  })
-//  .data( "ui-autocomplete" )._renderItem = function( ul, item ) {
-//            return $( "<li>" )
-//            .append( "<a>" + item.label + "<br>" + item.value + "</a>" )
-//            .appendTo( ul );
-//         };
-//
-
   //Load Driving Directions
 
   var drivingMapDiv = $('#travel-tabs').find('#map');
@@ -45,11 +30,7 @@ $(function() {
     long: drivingMapDiv[0].dataset.longitude
   };
 
-  var departure = new google.maps.LatLng(49.246, -123.116)
-
-  // userLocation.then(function(data) {
-  //   departure = new google.maps.LatLng(data.lat, data.long);
-  // });
+  var departure = new google.maps.LatLng(49.246, -123.116);
 
   var destination = new google.maps.LatLng(destinationCoords.lat, destinationCoords.long);
 
@@ -159,23 +140,59 @@ $(function() {
   });
 
 
+  $('#festival-show').on('click', '#flight-search-btn', function() {
+    $('#flight-search-form').slideToggle(200);
+
+  });
+
+
   // FLICKR
+  if ($('#festival-show').length > 0) {
+    festivalMaps.loadFestivalMap();
+    festivalMaps.loadDrivingMap();
 
-   if ($('#festival-show').length > 0) {
+    var festival = $('.flickr-imgs').data('name');
+    $.ajax('/flickr_images/' + festival, { dataType: 'json' }).done(function(data) { 
+      if (data.stat != 'ok') { return console.log('error'); }
+   
+      var imgs = data.photos.photo;
+      imgs.forEach(function(img) { 
+        var imgSrc = 'https://farm'+img.farm+'.staticflickr.com/'+img.server+'/'+img.id+'_'+img.secret+'.jpg';
+        $('<img>').attr('src', imgSrc).appendTo('.flickr-imgs');
+      });
+    });
+  }
 
-     festivalMaps.loadFestivalMap();
-     festivalMaps.loadDrivingMap();
+  if ($('#flight-search-details').length > 0 ) {
 
-     var festival = $('.flickr-imgs').data('name');
-     $.ajax('/flickr_images/' + festival, { dataType: 'json' }).done(function(data) { 
-       if (data.stat != 'ok') { return console.log('error'); }
-    
-       var imgs = data.photos.photo;
-       imgs.forEach(function(img) { 
-         var imgSrc = 'https://farm'+img.farm+'.staticflickr.com/'+img.server+'/'+img.id+'_'+img.secret+'.jpg';
-         $('<img>').attr('src', imgSrc).appendTo('.flickr-imgs');
-       });
-     });
-   }
+     $("#departure_airport").autocomplete({
+       delay: 500,
+       minLength: 3,
+       source: airports,
+       select: function(event, ui) {
+         $('#departure_airport').val(ui.item.value);
+       }
+     })
+     .data( "ui-autocomplete" )._renderItem = function( ul, item ) {
+               return $( "<li>" )
+               .append( "<a>" + item.label + "<br>" + item.value + "</a>" )
+               .appendTo( ul );
+            };
+
+     $("#arrival_airport").autocomplete({
+     delay: 500,
+     minLength: 3,
+     source: airports,
+     select: function(event, ui) {
+       $('#departure_airport').val(ui.item.value);
+       }
+     })
+     .data( "ui-autocomplete" )._renderItem = function( ul, item ) {
+               return $( "<li>" )
+               .append( "<a>" + item.label + "<br>" + item.value + "</a>" )
+               .appendTo( ul );
+            };
+
+  }
 
 });

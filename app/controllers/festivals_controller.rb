@@ -4,17 +4,29 @@ class FestivalsController < ApplicationController
   IN_RANGE = SEARCH_RADIUS - 1
 
   def show
+
     # will take params or an obj as an arg once search form is up
     @festival = Festival.find(params[:id])
-    driving = DrivingInfoService.new(@festival)
-    @price_by_car = driving.calc_driving_cost
-    @time_by_car = driving.get_trip_time[0]
+    # driving = DrivingInfoService.new(@festival)
+    # @price_by_car = driving.calc_driving_cost
+    # @time_by_car = driving.get_trip_time[0]
+
+    @usr_location = $redis.hgetall('user')
+    @usr_location = {
+      lat: @usr_location["lat"],
+      long: @usr_location["lng"]
+    }
+
+    @arrival_airport = @festival.airport(@festival.latitude, @festival.longitude)
+
+
   end
 
   def all
     @artists = Artist.all.order(:name)
     @genres = Genre.all.order(:name)
     @usr_location = $redis.hget('user', 'location')
+
     @selected_festivals = []   # temporarily here to not break the views
     #@selected_festivals = $redis.hkeys({}).map do |key|
     #  JSON.parse($redis.hget({}, key))
@@ -58,6 +70,18 @@ class FestivalsController < ApplicationController
     redirect_to root_path
   end
 
+  def autocomplete
+    input = params["query"]
+    @results = Festival.autocomplete(input)
+
+    @results = @results["airports"].to_json
+
+    respond_to do |format|
+        # format.js { render layout: false, content_type: 'text/javascript' }
+        format.json { render json: @results }
+    end
+  end
+
   def flickr_images 
     festival = params[:festival].gsub(/\s\d{4}/, '')
     @festival = Festival.find_by(name: params[:festival])
@@ -74,7 +98,7 @@ class FestivalsController < ApplicationController
   def search_flights
     @festival = Festival.find(params[:festival_id])
     @usr_location = $redis.hgetall('user')
-  
+ 
     if params[:default]
       params[:cabin_class] = "Economy"
       params[:adult] = 1
@@ -82,16 +106,17 @@ class FestivalsController < ApplicationController
       params[:infants] = 0
       params[:departure_airport] = 'yvr'
     end
-  
+ 
     @arrival_airport = @festival.airport(@festival.latitude, @festival.longitude)
-  
+ 
     @cabin_classes = [['Economy', 'Economy'], ['Premium Economy', 'PremiumEconomy'], ['Business', 'Business'], ['First Class', 'First']]
     @passenger_numbers = [['0', 0], [ '1', 1], ['2', 2], ['3', 3], ['4', 4], ['5', 5]]
-  
+ 
     @first_five_results = @festival.search_flights(params)
-  
+ 
     respond_to do |format|
       format.js {render layout: false}
     end
   end
+  
 end
