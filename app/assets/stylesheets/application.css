@@ -32,13 +32,14 @@
 }
 
  body {
-  background-color: #f5f5f0;
+  background-color: #DEE0FA;
  }
 
  #map {
-  height: 500px;
-  width: 650px;
-  margin-left: 20px;
+  height: 400px;
+  width: 550px;
+  margin-left: 5em;
+  float: right;
   /*border-radius: 20px;*/
   /*margin-left: 50%;*/
   /*margin-top: 30px;*/
@@ -48,30 +49,66 @@
 /*#map img { max-width: inherit; }*/
 
 #wel {
+  /*position: fixed;*/
   text-align: center;
+  height: 60px;
   /*margin-left: 20px;*/
   margin-top: -10px;
-  /*font-family: Helvetica;*/
   font-size: 70px;
   color: white;
-  background-image: url(https://pixabay.com/static/uploads/photo/2015/05/15/14/59/concert-768807_960_720.jpg);
-  /*opacity: 50%;*/
+  background-image: url('/header_image2.jpeg');
+  opacity: 0.75;
   letter-spacing: 6px;
-  padding: 60px;
-  padding-bottom: 160px;
+  padding: 100px;
+  padding-bottom: 200px;
   font-family: Helvetica;
   font-weight: lighter;
-  /*margin-bottom: -20px;*/
+  background-size: cover;
 }
 
-.pan {
+.pan_button {
   position: relative;
-  display: inline-block;
+  /*display: inline-block;*/
   margin-left: 20px;
   margin-top: 10px;
   clear: left;
   font-size: 125%;
-  background: lightblue; 
+  background: lightblue;
+  font-family: Helvetica;
+}
+
+.map_button {
+  background: lightblue;
+  font-family: Helvetica;
+  font-size: 125%;
+  padding-right: 10px;
+  position: relative;
+  /*display: inline-block;*/
+  /*margin-left: 20px;
+  margin-top: 10px;
+  clear: left;*/
+}
+
+.card {
+  background-image: url('/festival1.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-radius: 5px;
+  box-shadow: 10px;
+  height: 320px;
+  margin: 40px;
+  opacity: 0.75;
+  width: 300px;  
+  -webkit box-shadow: 10px;
+}
+
+.card_header {
+  border-radius: 5px;
+  background-color: white;
+  font-family: Helvetica;
+  font-weight: lighter;
+  padding: 30px;
+  text-align: center;
 }
 
 /*#button {
