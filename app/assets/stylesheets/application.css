@@ -91,7 +91,8 @@
 }
 
 .card {
-  background-image: url('/festival1.jpg');
+  /*background-image: url('/festival1.jpg');*/
+  background-color: #6666ff;
   background-size: cover;
   background-repeat: no-repeat;
   border-radius: 5px;
@@ -107,15 +108,16 @@
   border-radius: 5px;
   background-color: white;
   font-family: Helvetica;
-  font-weight: lighter;
+  /*font-weight: lighter;*/
   padding: 30px;
   text-align: center;
 }
 
-.card_header.p {
-  font-size: 6px;
+#card_description {
+  font-size: 14px;
+  padding: 12px;
+  text-align: center;
 }
-
 /*#button {
   position: relative;
   float: top;
