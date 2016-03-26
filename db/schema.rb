@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20160323155213) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "artists", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
@@ -26,8 +29,8 @@ ActiveRecord::Schema.define(version: 20160323155213) do
     t.datetime "updated_at",  null: false
   end
 
-  add_index "festival_genres", ["festival_id"], name: "index_festival_genres_on_festival_id"
-  add_index "festival_genres", ["genre_id"], name: "index_festival_genres_on_genre_id"
+  add_index "festival_genres", ["festival_id"], name: "index_festival_genres_on_festival_id", using: :btree
+  add_index "festival_genres", ["genre_id"], name: "index_festival_genres_on_genre_id", using: :btree
 
   create_table "festivals", force: :cascade do |t|
     t.string   "name"
@@ -45,8 +48,8 @@ ActiveRecord::Schema.define(version: 20160323155213) do
     t.date     "end_date"
   end
 
-  add_index "festivals", ["camping"], name: "index_festivals_on_camping"
-  add_index "festivals", ["start_date"], name: "index_festivals_on_start_date"
+  add_index "festivals", ["camping"], name: "index_festivals_on_camping", using: :btree
+  add_index "festivals", ["start_date"], name: "index_festivals_on_start_date", using: :btree
 
   create_table "genres", force: :cascade do |t|
     t.string   "name"
@@ -61,7 +64,7 @@ ActiveRecord::Schema.define(version: 20160323155213) do
     t.datetime "updated_at",  null: false
   end
 
-  add_index "performances", ["artist_id"], name: "index_performances_on_artist_id"
-  add_index "performances", ["festival_id"], name: "index_performances_on_festival_id"
+  add_index "performances", ["artist_id"], name: "index_performances_on_artist_id", using: :btree
+  add_index "performances", ["festival_id"], name: "index_performances_on_festival_id", using: :btree
 
 end

@@ -2,9 +2,9 @@ class Festival < ActiveRecord::Base
 
   include Skyscanner
 
-  has_many :performances
+  has_many :performances, dependent: :destroy
   has_many :artists, through: :performances
-  has_many :festival_genres
+  has_many :festival_genres, dependent: :destroy
   has_many :genres, through: :festival_genres
 
   validates :name, presence: true
