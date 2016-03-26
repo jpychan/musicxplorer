@@ -198,3 +198,6 @@ li.active {
   /*margin-bottom: -20px;*/
 }
 
+#flight-search-form {
+  display: none;
+}

@@ -13,9 +13,17 @@ class Festival < ActiveRecord::Base
  
     session_id = create_skyscanner_session(params)
     data = get_itineraries(session_id)
+    byebug
     @results = get_first_five_results(data)
 
     return @results
+  end
+
+  def airport(latitude, longitude)
+    arrival_airport = nearest_airport(latitude, longitude)
+    arrival_airport = arrival_airport["airports"][0]["code"]
+
+    return arrival_airport
   end
 
   def self.autocomplete(input)
