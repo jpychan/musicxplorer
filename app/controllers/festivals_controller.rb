@@ -39,7 +39,7 @@ class FestivalsController < ApplicationController
       puts dist_km
       dist_km <= SEARCH_RADIUS
     end
-    paginate json: @festivals
+    render json: @festivals
   end
 
   def festival_compare
