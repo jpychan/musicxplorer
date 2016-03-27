@@ -43,7 +43,6 @@ module Skyscanner
     return session_id
   end
 
-
   def get_itineraries(session_id)
     url = URI("http://partners.api.skyscanner.net/apiservices/pricing/uk2/v1.0/#{session_id}?apiKey=#{ENV['SKYSCANNER_API']}")
     http = Net::HTTP.new(url.host, url.port)
@@ -68,16 +67,28 @@ module Skyscanner
     agents = data["Agents"]
     @first_five_results = JsonPath.on(data, '$..Itineraries[:4]')
 
+    @first_five_results << query
+    @first_five_results[5]["OutboundDate"] = Date.parse(@first_five_results[5]["OutboundDate"])
+    @first_five_results[5]["InboundDate"] = Date.parse(@first_five_results[5]["InboundDate"])
+    
     j = 0
 
-    while j <= @first_five_results.length - 1
+    while j <= @first_five_results.length - 2
       outbound_leg_id = @first_five_results[j]["OutboundLegId"]
       inbound_leg_id = @first_five_results[j]["InboundLegId"]
       agent_id = @first_five_results[j]["PricingOptions"][0]["Agents"][0]
 
       @first_five_results[j][:outbound_leg] = legs.select { |leg| leg["Id"] == outbound_leg_id}[0]
+      @first_five_results[j][:outbound_departure_time] = DateTime.parse(@first_five_results[j][:outbound_leg]["Departure"])
+      @first_five_results[j][:outbound_departure_time] = @first_five_results[j][:outbound_departure_time].strftime('%I:%M %p')
+      @first_five_results[j][:outbound_arrival_time] = DateTime.parse(@first_five_results[j][:outbound_leg]["Arrival"])
+      @first_five_results[j][:outbound_arrival_time] = @first_five_results[j][:outbound_arrival_time].strftime('%I:%M %p')
 
       @first_five_results[j][:inbound_leg] = legs.select { |leg| leg["Id"] == inbound_leg_id}[0]
+      @first_five_results[j][:inbound_departure_time] = DateTime.parse(@first_five_results[j][:inbound_leg]["Departure"])
+      @first_five_results[j][:inbound_departure_time] = @first_five_results[j][:inbound_departure_time].strftime('%I:%M %p')
+      @first_five_results[j][:inbound_arrival_time] = DateTime.parse(@first_five_results[j][:inbound_leg]["Arrival"])
+      @first_five_results[j][:inbound_arrival_time] = @first_five_results[j][:inbound_arrival_time].strftime('%I:%M %p')
 
       departure_airport_id = @first_five_results[j][:outbound_leg]["OriginStation"]
       arrival_airport_id = @first_five_results[j][:outbound_leg]["DestinationStation"]
@@ -92,8 +103,8 @@ module Skyscanner
 
       j += 1
     end
-      byebug
-      return @first_five_results
+
+    return @first_five_results
   end
 
 

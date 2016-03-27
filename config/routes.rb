@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   post '/festival-select' => 'festivals#festival_select'
   post '/usr-coordinates' => 'festivals#get_usr_coordinates'
+  post '/festival-unselect' => 'festivals#festival_unselect'
 
   root 'festivals#all'
 
@@ -14,7 +15,7 @@ Rails.application.routes.draw do
 
   resources :festivals, only: [:show]
   
-  post 'festivals/search_flights', defaults: { format: 'js' }
+  get '/search_flights' => 'festivals#search_flights', defaults: { format: 'js' }
 
   get 'autocomplete', to: 'festivals#autocomplete', defaults: {format: 'json'}
 

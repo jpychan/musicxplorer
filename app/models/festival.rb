@@ -10,7 +10,6 @@ class Festival < ActiveRecord::Base
   validates :name, presence: true
 
   def search_flights(params)
- 
     session_id = create_skyscanner_session(params)
     data = get_itineraries(session_id)
     @results = get_first_five_results(data)
@@ -18,15 +17,14 @@ class Festival < ActiveRecord::Base
     return @results
   end
 
+  def airport(latitude, longitude)
+    arrival_airport = nearest_airport(latitude, longitude)
+    arrival_airport = arrival_airport["airports"][0]["code"]
+
+    return arrival_airport
+  end
+
   def self.autocomplete(input)
-
-    # url = URI("http://partners.api.skyscanner.net/apiservices/autosuggest/v1.0/CA/CAD/en-US/?query=#{input}&apiKey=prtl6749387986743898559646983194")
-    # http = Net::HTTP.new(url.host, url.port)
-
-    # request = Net::HTTP::Get.new(url)
-    # request["cache-control"] = 'no-cache'
-    # request["postman-token"] = 'f371f2aa-486f-979c-9b9d-9c6543ec19d1'
-    # request["Accept"] = 'application/json'
 
     #Autocomplete Search
     url = URI("https://airport.api.aero/airport/match/#{input}?user_key=#{ENV['AIRPORT_API_USERKEY']}")
@@ -45,7 +43,5 @@ class Festival < ActiveRecord::Base
     return response
 
   end
-  
-
 end
   
