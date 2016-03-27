@@ -8925,6 +8925,7 @@ Artist.create!([
   {name: "Hi5 Ghost & Boofy"},
   {name: "Marcus Intalex  Med School"}
 ])
+puts "Creating festivals..."
 Festival.create!([
   {name: "Tallinn Music Week 2016", latitude: 59.4369608, longitude: 24.7535746, start_date: "2016-03-28", date: "March 28-April 4, 2016", location: "Tallinn, Estonia", website: "http://tmw.ee/", description: "Tmw is an annually held music industry conference and the biggest indoor festival in the baltic-nordic region.\r\n", price: 40, camping: " No", end_date: "2016-04-04", city: "Tallinn", state: "Harju County", country: "EE"},
   {name: "Byron Bay Bluesfest 2016", latitude: -28.6441616, longitude: 153.6123788, start_date: "2016-03-24", date: "March 24-28, 2016", location: "Byron Bay, Australia", website: "http://www.bluesfest.com.au/", description: nil, price: 0, camping: " Yes", end_date: "2016-03-28", city: "Byron Bay", state: "NSW", country: "AU"},
@@ -10143,6 +10144,9 @@ Genre.create!([
   {name: "Bluegrass"},
   {name: "Blues"}
 ])
+
+puts "Creating festival/artist connections..."
+
 Performance.create!([
   {festival_id: 1, artist_id: 1},
   {festival_id: 1, artist_id: 2},
@@ -23591,4 +23595,5 @@ Performance.create!([
   {festival_id: 436, artist_id: 8406},
   {festival_id: 436, artist_id: 8407},
   {festival_id: 436, artist_id: 8408}
-])
+
+puts "Done!"

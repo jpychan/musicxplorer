@@ -3,12 +3,11 @@ class DrivingInfoService
   # right now this doesn't account for ferry prices/changing mode of transportation
   # TODO: ask user which city they're making the trip from? 
 
-  attr_reader :origin_city, :origin_prov, :dest_city, :dest_prov
+  attr_reader :origin
 
   def initialize(festival)
     @festival = festival
-    @origin_city = 'Vancouver'
-    @origin_prov = 'BC'
+    @origin = $redis.hmget('user', 'location')
   end
 
   def get_fuel_consumption
@@ -23,14 +22,18 @@ class DrivingInfoService
   end
 
   def get_avg_gas_price
-    gasbuddy = Nokogiri::HTML(open("http://gasbuddy.com/?search=#{@origin_city}%2C+#{@origin_prov}"))
+    origin = @origin.split(' ').join('%2C')
+    gasbuddy = Nokogiri::HTML(open("http://gasbuddy.com/?search=#{origin}"))
     gasbuddy.css('.gb-price-lg')[0].text.gsub(/\s+/, '').to_f / 100
   end
 
   def get_trip
-    origin = [@origin_city, @origin_prov].join('+')
-    dest = [@festival.latitude.to_f, @festival.longitude.to_f].join(',')
-    googl_dist = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=#{origin}|#{dest}&destinations=#{dest}|#{origin}&key=#{ENV['GOOGL_DIST_KEY']}&avoid=tolls"  
+
+    origin = @origin.split(' ').join('+')
+    dest = [@festival.latitude, @festival.longitude].join(',')
+
+    googl_dist = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=#{origin}|#{dest}&destinations=#{dest}|#{origin}&key=#{ENV['GOOGL_DIST_KEY']}&avoid=tolls"
+
     googl_resp = HTTParty.get(googl_dist)
     googl_data = JSON.parse(googl_resp.body)['rows']
 

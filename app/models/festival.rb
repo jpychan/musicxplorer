@@ -10,7 +10,6 @@ class Festival < ActiveRecord::Base
   validates :name, presence: true
 
   def search_flights(params)
- 
     session_id = create_skyscanner_session(params)
     data = get_itineraries(session_id)
     @results = get_first_five_results(data)
@@ -48,6 +47,5 @@ class Festival < ActiveRecord::Base
   def self.different_airport?(departure, arrival)
     departure != arrival ? true : false
   end
-  
+
 end
-  

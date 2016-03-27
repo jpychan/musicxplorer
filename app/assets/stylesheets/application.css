@@ -153,7 +153,6 @@ li.active {
   margin-bottom: 30px;
 }
 
-
 .ui-datepicker { 
   background: #fff;
   font-family: Arial;
@@ -172,31 +171,127 @@ li.active {
 }
 
  body {
-  background-color: #f5f5f0;
+  background-color: #DEE0FA;
  }
 
- #home #map {
+ /*#map {
+  box-shadow: 1px 1px 5px #333333;
+}*/
+
+/* #home*/ #map {
   height: 500px;
-  width: 650px;
-  margin-left: 20px;
+  width: 1000px;
+  margin-left: 250px;
+  margin-bottom: 30px;
+  margin-top: 50px;
+  /*position: absolute;
+  margin-top: 40px;
+  top: 50%;
+  left: 50%;
+  margin: -100px 0 0 -150px;*/
+ /* float: right;*/
   /*border-radius: 20px;*/
-  margin-left: 50%;
-  margin-top: 30px;
-  margin-right: 30px;
+  /*margin-left: 50%;*/
+  /*margin-top: 30px;*/
 }
 
 #wel {
+  /*position: fixed;*/
   text-align: center;
+  height: 60px;
   /*margin-left: 20px;*/
   margin-top: -10px;
-  /*font-family: Helvetica;*/
-  font-size: 60px;
-  color: navy;
-  background-color: lightblue;
-  letter-spacing: 3px;
-  padding: 40px;
-  /*margin-bottom: -20px;*/
+  font-size: 70px;
+  color: white;
+  background-image: url('/header_image2.jpeg');
+  opacity: 0.75;
+  letter-spacing: 6px;
+  padding: 100px;
+  padding-bottom: 200px;
+  font-family: Helvetica;
+  font-weight: lighter;
+  background-size: cover;
 }
+
+.pan_button {
+  background: lightblue;
+  font-family: Helvetica;
+  font-size: 125%;
+  position: relative;
+  margin-top: 10px;
+  /*display: inline-block;*/
+  margin-left: 48%;
+  margin-bottom: 30px;
+}
+
+.map_button {
+  background: lightblue;
+  font-family: Helvetica;
+  font-size: 125%;
+  padding-right: 10px;
+  position: relative;
+  margin-bottom: 30px;
+  /*display: inline-block;*/
+  /*margin-left: 20px;
+  margin-top: 10px;
+  clear: left;*/
+}
+
+.card {
+  /*background-image: url('/festival1.jpg');*/
+  background-color: #6666ff;
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-radius: 5px;
+  box-shadow: 1px 1px 5px #333333;
+  height: 340px;
+  margin: 40px;
+  opacity: 0.75;
+  width: 380px;  
+}
+
+.card_header {
+  border-radius: 5px;
+  background-color: white;
+  font-family: Helvetica;
+  /*font-weight: lighter;*/
+  padding: 40px;
+  text-align: center;
+}
+
+#card_description {
+  font-size: 14px;
+  padding: 12px;
+  text-align: center;
+}
+/*#location {
+  margin-left: 50%;
+}
+
+#date {
+  margin-left: 50%;
+}
+
+#camping {
+  margin-left: 50%;
+}
+
+#artist {
+  margin-left: 50%;
+}
+
+#genre {
+  margin-left: 50%;
+}
+
+#search {
+  margin-left: 50%;
+}*/
+/*#button {
+  position: relative;
+  float: top;
+  margin-bottom: 50px;
+}*/
 
 #flight-search-form {
   display: none;

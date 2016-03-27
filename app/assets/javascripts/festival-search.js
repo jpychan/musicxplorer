@@ -7,7 +7,7 @@ $(function() {
     return d;
   }
 
-  $('.date-picker').datepicker({
+  $('#date-picker').datepicker({
     minDate: new Date(),
     maxDate: maxDay(), 
     dateFormat: 'yy-mm-dd'
@@ -29,7 +29,6 @@ $(function() {
       usrLocation.show();
       $(this).hide();
       inputBtn.show();
-      console.log('yay');
       $.ajax('/usr-coordinates',
           { dataType: 'json',
             type: 'POST',
