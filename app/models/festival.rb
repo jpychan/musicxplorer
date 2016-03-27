@@ -43,5 +43,9 @@ class Festival < ActiveRecord::Base
     return response
 
   end
+
+  def self.different_airport?(departure, arrival)
+    departure != arrival ? true : false
+  end
+
 end
-  

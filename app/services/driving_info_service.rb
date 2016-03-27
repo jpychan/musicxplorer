@@ -28,10 +28,12 @@ class DrivingInfoService
   end
 
   def get_trip
+
     origin = @origin.split(' ').join('+')
     dest = [@festival.latitude, @festival.longitude].join(',')
 
     googl_dist = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=#{origin}|#{dest}&destinations=#{dest}|#{origin}&key=#{ENV['GOOGL_DIST_KEY']}&avoid=tolls"
+
     googl_resp = HTTParty.get(googl_dist)
     googl_data = JSON.parse(googl_resp.body)['rows']
 
