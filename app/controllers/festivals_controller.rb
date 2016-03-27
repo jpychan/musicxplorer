@@ -64,9 +64,9 @@ class FestivalsController < ApplicationController
 #    driving = DrivingInfoService.new(festival) 
 #    festival_json['price_car'] = driving.calc_driving_cost
 #    festival_json['time_car'] = driving.get_trip_time[0]
-#    
+#    var user = $redis.hgetall('user')
 #    flight_params = {
-#      departure_airport: festival.airport(festival.latitude, festival.longitude),
+#      departure_airport: festival.airport(user['lat'], user['lng']),
 #      festival_id: festival.id,
 #      cabin_class: 'Economy',
 #      adults: 1,
@@ -78,6 +78,11 @@ class FestivalsController < ApplicationController
     if festival
       $redis.hset('festivals', festival.id, festival_json.to_json)
     end
+    redirect_to root_path
+  end
+  
+  def festival_unselect
+    $redis.hdel('festivals', params[:festivalId])
     redirect_to root_path
   end
 

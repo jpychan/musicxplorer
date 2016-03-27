@@ -1,5 +1,6 @@
 $(function() {
-  $('.fave-btn').on('click', function() {
+  // Add festival ID to list of selected festivals
+  $('.cache-btns').on('click', '.fave-btn',function() {
     var flight = $('#flight-search-details');
     var driving = $('.driving-cost');
     var tripCost = {
@@ -14,8 +15,17 @@ $(function() {
       { dataType: 'json',
         type: 'POST',
         data: tripCost
-      }
-    );
+      });
+    $(this).replaceWith('<button class="remove-btn">Remove from Favourites</button>');
+  });
+
+  $('.cache-btns').on('click', '.remove-btn', function() {
+    $(this).replaceWith('<button class="fave-btn">Add to Favourites</button>');
+    $.ajax('/festival-unselect',
+      { dataType: 'json',
+        type: 'DELETE', 
+        data: { festivalId: $('.music-festival').attr('data-id') },
+      });
   });
   // var userLocation = new Promise(function(resolve, reject) {
   //   navigator.geolocation.getCurrentPosition(function(position) {

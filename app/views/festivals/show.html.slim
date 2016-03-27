@@ -5,8 +5,11 @@
     .header
       h1 Music Festivals
       button[id="flight-search-change"] Change Your Search Settings
-      button.fave-btn Add to favorites
-
+      div.cache-btns
+        - if $redis.hget('festivals', @festival.id)
+          = render 'unfavorite'
+        - else
+          = render 'favorite'
     .music-festival data-id="#{@festival.id}"
       div
         h1 #{@festival.name}

@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   post '/festival-select' => 'festivals#festival_select'
   post '/usr-coordinates' => 'festivals#get_usr_coordinates'
+  delete '/festival-unselect' => 'festivals#festival_unselect'
 
   root 'festivals#all'
 
