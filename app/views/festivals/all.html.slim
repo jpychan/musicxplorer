@@ -1,8 +1,6 @@
 h1 id="wel" Festival Finder
 
-- @selected_festivals.each do |festival|
-  = festival['name']
-  br $#{display(festival['price_car'])}
+= link_to 'festival comparison', festivals_compare_path
 
 div
   = text_field_tag :location, '', id: 'get_location'

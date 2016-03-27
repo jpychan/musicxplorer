@@ -21,10 +21,6 @@ class FestivalsController < ApplicationController
     @artists = Artist.all.order(:name)
     @genres = Genre.all.order(:name)
     @usr_location = $redis.hget('user', 'location')
-
-    @selected_festivals = $redis.hkeys('festivals').map do |key|
-      JSON.parse($redis.hget('festivals', key))
-    end
   end
 
   # PRE-CALCULATE COORDINATES FOR USER LOCATION
@@ -36,7 +32,8 @@ class FestivalsController < ApplicationController
 
   # GET FESTIVAL SEARCH RESULTS
   def festival_list
-    festivals = Festival.joins("INNER JOIN performances AS p ON p.festival_id = festivals.id INNER JOIN artists AS a ON p.artist_id = a.id INNER JOIN festival_genres AS fg ON fg.festival_id = festivals.id INNER JOIN genres AS g ON fg.genre_id = g.id").where('start_date >= ? AND LOWER(camping) LIKE ? AND g.name LIKE ? AND a.name LIKE ?', params[:date], "%#{params[:camping]}%", "%#{params[:genre]}%", "%#{params[:artist]}%").distinct
+    date = params[:date] == '' ? Date.today : params[:date]
+    festivals = Festival.joins("INNER JOIN performances AS p ON p.festival_id = festivals.id INNER JOIN artists AS a ON p.artist_id = a.id INNER JOIN festival_genres AS fg ON fg.festival_id = festivals.id INNER JOIN genres AS g ON fg.genre_id = g.id").where('start_date >= ? AND LOWER(camping) LIKE ? AND g.name LIKE ? AND a.name LIKE ?', date, "%#{params[:camping]}%", "%#{params[:genre]}%", "%#{params[:artist]}%").distinct
 
     d = DistanceService.new
     origin = $redis.hgetall('user')
@@ -49,6 +46,9 @@ class FestivalsController < ApplicationController
   end
 
   def festival_compare
+    @selected_festivals = $redis.hkeys('festivals').map do |key|
+      JSON.parse($redis.hget('festivals', key))
+    end
   end
 
   # TODO: refactor

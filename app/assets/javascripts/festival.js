@@ -1,5 +1,5 @@
 $(function() {
-  // Add festival ID to list of selected festivals
+  // ADD OR REMOVE FESTIVALS FROM FAVORITES ON FESTIVAL SHOW PAGE
   $('.cache-btns').on('click', '.fave-btn',function() {
     var flight = $('#flight-search-details');
     var driving = $('.driving-cost');
@@ -24,9 +24,22 @@ $(function() {
     $.ajax('/festival-unselect',
       { dataType: 'json',
         type: 'DELETE', 
-        data: { festivalId: $('.music-festival').attr('data-id') },
+        data: { festivalId: $('.music-festival').attr('data-id') }
       });
   });
+
+  // REMOVE FESTIVALS FROM FESTIVAL FAVOURITES PAGE
+  $('.remove-fave').on('click', function() {
+    var festivalDiv = $(this).closest('.fave-festival');
+    var data = { festivalId: festivalDiv.attr('data-id') };
+    $.ajax('/festival-unselect', 
+      { dataType: 'json',
+        type: 'POST',
+        data: data,
+        complete: function() { festivalDiv.remove(); }
+      });
+  });
+
   // var userLocation = new Promise(function(resolve, reject) {
   //   navigator.geolocation.getCurrentPosition(function(position) {
   //     var coordinates = {lat:position.coords.latitude, long:position.coords.longitude};
