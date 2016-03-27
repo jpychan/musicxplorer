@@ -23,11 +23,9 @@ module Skyscanner
     url = URI("http://partners.api.skyscanner.net/apiservices/pricing/v1.0?apiKey=#{ENV['SKYSCANNER_API']}")
 
     festival = Festival.find(params[:festival_id])
+
     outbound_date = festival.start_date - 1
     inbound_date = festival.end_date + 1
-    # arrival_airport = nearest_airport(festival.latitude, festival.longitude)
-    # arrival_airport = arrival_airport["airports"][0]["code"].downcase
-    # departure_airport = params[:departure_airport].downcase
 
     http = Net::HTTP.new(url.host, url.port)
 
@@ -105,10 +103,7 @@ module Skyscanner
 
       j += 1
     end
-
       return @first_five_results
   end
-
-
 
 end

@@ -16,7 +16,7 @@ class DistanceService
   def origin_point(location)
     origin = GeoNamesAPI::PlaceSearch.find_by_place_name(location).geonames[0]
     
-    departure_airport = get_nearest_airport(origin.lat, origin.long, origin.country_code)
+    departure_airport = get_nearest_airport(origin.lat, origin.lng, origin.country_code)
 
     $redis.hmset('user', 'location', location, 'lat', origin.lat, 'lng', origin.lng, 'country', origin.country_code, 'departure_airport', departure_airport)
 

@@ -13,7 +13,6 @@ class Festival < ActiveRecord::Base
  
     session_id = create_skyscanner_session(params)
     data = get_itineraries(session_id)
-    byebug
     @results = get_first_five_results(data)
 
     return @results
@@ -44,6 +43,10 @@ class Festival < ActiveRecord::Base
 
     return response
 
+  end
+
+  def self.different_airport?(departure, arrival)
+    departure != arrival ? true : false
   end
   
 end

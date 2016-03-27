@@ -7,9 +7,9 @@ class FestivalsController < ApplicationController
 
     # will take params or an obj as an arg once search form is up
     @festival = Festival.find(params[:id])
-    # driving = DrivingInfoService.new(@festival)
-    # @price_by_car = driving.calc_driving_cost
-    # @time_by_car = driving.get_trip_time[0]
+    driving = DrivingInfoService.new(@festival)
+    @price_by_car = driving.calc_driving_cost
+    @time_by_car = driving.get_trip_time[0]
 
     @usr_location = $redis.hgetall('user')
     @usr_location = {
@@ -107,16 +107,21 @@ class FestivalsController < ApplicationController
     params[:infants] = 0
     params[:departure_airport] = $redis.hget('user', 'departure_airport')
 
+    d = DistanceService.new
+    params[:arrival_airport] = d.get_nearest_airport(@festival.latitude, @festival.longitude, @festival.country)
   end
 
-  d = DistanceService.new
- 
-  # params[:arrival_airport] = d.get_nearest_airport(@festival.latitude, @festival.longitude, @festival.country)
+  @valid_search = Festival.different_airport?(params[:departure_airport], params[:arrival_airport])
+  @in_future = @festival.start_date > Time.now
 
-  @cabin_classes = [['Economy', 'Economy'], ['Premium Economy', 'PremiumEconomy'], ['Business', 'Business'], ['First Class', 'First']]
-  @passenger_numbers = [['0', 0], [ '1', 1], ['2', 2], ['3', 3], ['4', 4], ['5', 5]]
+  if @valid_search && @in_future
+    
+    @first_five_results = @festival.search_flights(params)
 
-  @first_five_results = @festival.search_flights(params)
+  end
+
+    @cabin_classes = [['Economy', 'Economy'], ['Premium Economy', 'PremiumEconomy'], ['Business', 'Business'], ['First Class', 'First']]
+    @passenger_numbers = [['0', 0], [ '1', 1], ['2', 2], ['3', 3], ['4', 4], ['5', 5]]
 
   respond_to do |format|
     format.js {render layout: false}
