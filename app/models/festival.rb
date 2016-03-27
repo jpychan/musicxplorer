@@ -10,10 +10,8 @@ class Festival < ActiveRecord::Base
   validates :name, presence: true
 
   def search_flights(params)
- 
     session_id = create_skyscanner_session(params)
     data = get_itineraries(session_id)
-    byebug
     @results = get_first_five_results(data)
 
     return @results

@@ -1,15 +1,12 @@
 class FestivalsController < ApplicationController
   SEARCH_RADIUS = 500
-  TOO_FAR = SEARCH_RADIUS + 1   # value if ZERO_RESULTS returned in google distance matrix API
-  IN_RANGE = SEARCH_RADIUS - 1
 
   def show
-
-    # will take params or an obj as an arg once search form is up
     @festival = Festival.find(params[:id])
-    # driving = DrivingInfoService.new(@festival)
-    # @price_by_car = driving.calc_driving_cost
-    # @time_by_car = driving.get_trip_time[0]
+
+    driving = DrivingInfoService.new(@festival)
+    @price_by_car = driving.calc_driving_cost
+    @time_by_car = driving.get_trip_time[0]
 
     @usr_location = $redis.hgetall('user')
     @usr_location = {
@@ -18,8 +15,6 @@ class FestivalsController < ApplicationController
     }
 
     @arrival_airport = @festival.airport(@festival.latitude, @festival.longitude)
-
-
   end
 
   def all
@@ -27,10 +22,9 @@ class FestivalsController < ApplicationController
     @genres = Genre.all.order(:name)
     @usr_location = $redis.hget('user', 'location')
 
-    @selected_festivals = []   # temporarily here to not break the views
-    #@selected_festivals = $redis.hkeys({}).map do |key|
-    #  JSON.parse($redis.hget({}, key))
-    #end
+    @selected_festivals = $redis.hkeys('festivals').map do |key|
+      JSON.parse($redis.hget('festivals', key))
+    end
   end
 
   # PRE-CALCULATE COORDINATES FOR USER LOCATION
@@ -57,15 +51,32 @@ class FestivalsController < ApplicationController
   def festival_compare
   end
 
+  # TODO: refactor
   def festival_select
     festival = Festival.find(params[:festivalId])
-    #festival_json = festival.to_json
-    
-    driving = DrivingInfoService.new(festival)
-    @price_by_car = driving.calc_driving_cost
-    @time_by_car = driving.get_trip_time[0]
+    festival_json = festival.as_json
+    festival_json['price_car'] = params[:drivingPrice]
+    festival_json['time_car'] = params[:drivingTime]
+    festival_json['price_flight'] = params[:flightPrice]
+    festival_json['time_flight_in'] = params[:flightTimeIn]
+    festival_json['time_flight_out'] = params[:flightTimeOut]
+ 
+#    driving = DrivingInfoService.new(festival) 
+#    festival_json['price_car'] = driving.calc_driving_cost
+#    festival_json['time_car'] = driving.get_trip_time[0]
+#    
+#    flight_params = {
+#      departure_airport: festival.airport(festival.latitude, festival.longitude),
+#      festival_id: festival.id,
+#      cabin_class: 'Economy',
+#      adults: 1,
+#      children: 0,
+#      infants: 0
+#      }
+#    festival.search_flights(flight_params)[0]
+
     if festival
-    #  $redis.hset({}, festival.id, festival_json)
+      $redis.hset('festivals', festival.id, festival_json.to_json)
     end
     redirect_to root_path
   end
@@ -113,7 +124,6 @@ class FestivalsController < ApplicationController
     @passenger_numbers = [['0', 0], [ '1', 1], ['2', 2], ['3', 3], ['4', 4], ['5', 5]]
  
     @first_five_results = @festival.search_flights(params)
- 
     respond_to do |format|
       format.js {render layout: false}
     end

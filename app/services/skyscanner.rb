@@ -37,13 +37,11 @@ module Skyscanner
     request["cache-control"] = 'no-cache'
     request.body = "country=CA&currency=CAD&locale=en-CA&adults=#{params[:adults]}&children=#{params[:children]}&infants=#{params[:infants]}&originplace=#{departure_airport}-iata&destinationplace=#{arrival_airport}-iata&outbounddate=#{outbound_date}&inbounddate=#{inbound_date}&locationschema=Iata&cabinclass=#{params[:cabin_class]}&groupPricing=true"
     response = http.request(request)
-    byebug
     polling_url = response["location"]
     session_id = polling_url.split('/').last
 
     return session_id
   end
-
 
   def get_itineraries(session_id)
     url = URI("http://partners.api.skyscanner.net/apiservices/pricing/uk2/v1.0/#{session_id}?apiKey=#{ENV['SKYSCANNER_API']}")
@@ -106,7 +104,7 @@ module Skyscanner
       j += 1
     end
 
-      return @first_five_results
+    return @first_five_results
   end
 
 

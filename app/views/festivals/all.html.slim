@@ -2,6 +2,7 @@ h1 id="wel" Festival Finder
 
 - @selected_festivals.each do |festival|
   = festival['name']
+  br $#{display(festival['price_car'])}
 
 div
   = text_field_tag :location, '', id: 'get_location'

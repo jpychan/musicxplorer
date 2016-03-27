@@ -3,9 +3,11 @@
   #festival-show
 
     .header
-      h1 Music Festivals  
+      h1 Music Festivals
+      button[id="flight-search-change"] Change Your Search Settings
+      button.fave-btn Add to favorites
 
-    .music-festival
+    .music-festival data-id="#{@festival.id}"
       div
         h1 #{@festival.name}
 
@@ -48,7 +50,7 @@
 
             div[id="car" class="route-details active"]
 
-              div.driving-cost
+              div.driving-cost data-car-price="#{@price_by_car}" data-car-time="#{@time_by_car}"
                 h2 cost of driving [round trip] in CDN
                 p
                   | assumes you start with an empty tank of gas and that you gas up near your starting point
@@ -74,7 +76,5 @@
         li #{artist.name}
 
     div[class="flickr-imgs" data-name="#{@festival.name}"]
-
-
 
     script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1CqC9GEW-FdV8IsnwZaXTX6reVN7wYOo"
