@@ -47,7 +47,7 @@ class FestivalsController < ApplicationController
     d = DistanceService.new
     origin = $redis.hgetall('user')
     @festivals = festivals.select do |f|
-      dist_km = d.calc_distance(origin, f)
+      dist_km = d.calc_distance(origin['lat'], origin['lng'], f)
       puts dist_km
       dist_km <= SEARCH_RADIUS
     end
@@ -98,17 +98,20 @@ class FestivalsController < ApplicationController
  def search_flights
 
   @festival = Festival.find(params[:festival_id])
-  @usr_location = $redis.hgetall('user')
+  user_country = $redis.hget('user', 'country')
 
   if params[:default]
     params[:cabin_class] = "Economy"
     params[:adult] = 1
     params[:children] = 0
     params[:infants] = 0
-    params[:departure_airport] = 'yvr'
+    params[:departure_airport] = $redis.hget('user', 'departure_airport')
+
   end
 
-  @arrival_airport = @festival.airport(@festival.latitude, @festival.longitude)
+  d = DistanceService.new
+ 
+  # params[:arrival_airport] = d.get_nearest_airport(@festival.latitude, @festival.longitude, @festival.country)
 
   @cabin_classes = [['Economy', 'Economy'], ['Premium Economy', 'PremiumEconomy'], ['Business', 'Business'], ['First Class', 'First']]
   @passenger_numbers = [['0', 0], [ '1', 1], ['2', 2], ['3', 3], ['4', 4], ['5', 5]]

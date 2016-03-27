@@ -1,6 +1,6 @@
 div[id="flight-search-details"]
   p Flight from #{@first_five_results[0][:departure_airport]["Name"]} (#{@first_five_results[0][:departure_airport]["Code"]}) to #{@first_five_results[0][:arrival_airport]["Name"]} (#{@first_five_results[0][:arrival_airport]["Code"]})
-  p #{@first_five_results[5]["OutboundDate"]} - #{@first_five_results[5]["InboundDate"]} | #{@first_five_results[5]["CabinClass"]}
+  p #{@first_five_results[5]["OutboundDate"]} to #{@first_five_results[5]["InboundDate"]} | #{@first_five_results[5]["CabinClass"]}
 
   button[id="flight-search-btn"] Change Your Search Settings
 
@@ -38,7 +38,7 @@ div[id="flight-search-details"]
             
           div[class="pure-u-1-2"]
             p #{result[:inbound_departure_time]} - #{result[:inbound_arrival_time]}
-            p #{result[:arrival_carrier]}
+            p Returning Carrier
 
           div[class="pure-u-1-4"]
             p #{result[:inbound_leg]["Duration"]} min
