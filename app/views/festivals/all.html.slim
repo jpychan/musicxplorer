@@ -12,7 +12,7 @@ div id="location"
 = form_tag '/festival-list', remote: true,  method: :get, id: 'festival-search'
   div id="date"
     = label_tag :date, 'Select a date'
-    = text_field_tag :date, '', class: 'date-picker'
+    = text_field_tag :date, '', id: 'date-picker'
 
   div id="camping"
     = label_tag :camping, 'Camping style festivals?'
