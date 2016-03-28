@@ -4,6 +4,7 @@
 
     .header
       h1 Music Festivals
+
       div.cache-btns
         - if $redis.hget('festivals', @festival.id)
           = render 'unfavorite'

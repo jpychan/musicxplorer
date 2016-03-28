@@ -6,11 +6,13 @@
     button[id="flight-search-btn"] Change Your Search Settings
 
     #flight-search-form
-      = form_tag "/festivals/search_flights", remote: true do
+      = form_tag "/search_flights", method: "get", remote: true do
 
         = hidden_field_tag :festival_id, @festival.id
-        = text_field_tag(:departure_airport, 'yvr' , class: 'autocomplete')
-        = text_field_tag(:arrival_airport, @arrival_airport, class: 'autocomplete')
+        = autocomplete_field_tag :departure_airport, @first_five_results[0][:departure_airport]["Name"], autocomplete_airport_name_festivals_path, :id_element => '#departure_airport_id'
+        = hidden_field_tag :departure_airport_id
+        = autocomplete_field_tag :arrival_airport, @first_five_results[0][:arrival_airport]["Name"], autocomplete_airport_name_festivals_path, :id_element => '#arrival_airport_id'
+        = hidden_field_tag :arrival_airport_id
         = select_tag :cabin_class, options_for_select(@cabin_classes)
         = select_tag :adults, options_for_select(@passenger_numbers)
         = select_tag :children, options_for_select(@passenger_numbers)

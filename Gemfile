@@ -46,6 +46,8 @@ gem 'seed_dump'
 gem 'sqlite3'
 gem 'kaminari'
 
+gem 'rails-jquery-autocomplete'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

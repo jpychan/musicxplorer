@@ -1,4 +1,7 @@
 class FestivalsController < ApplicationController
+
+  autocomplete :airport, :name, :full => true, :extra_data => [:iata_code]
+  
   SEARCH_RADIUS = 500
 
   def show
@@ -14,7 +17,6 @@ class FestivalsController < ApplicationController
       long: @usr_location["lng"]
     }
 
-    @arrival_airport = @festival.airport(@festival.latitude, @festival.longitude)
   end
 
   def all
@@ -125,6 +127,9 @@ class FestivalsController < ApplicationController
 
       d = DistanceService.new
       params[:arrival_airport] = d.get_nearest_airport(@festival.latitude, @festival.longitude, @festival.country)
+    else
+      params[:departure_airport] = Airport.find(params[:departure_airport_id])[:iata_code].downcase
+      params[:arrival_airport] = Airport.find(params[:arrival_airport_id])[:iata_code].downcase
     end
 
     @valid_search = Festival.different_airport?(params[:departure_airport], params[:arrival_airport])

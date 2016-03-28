@@ -203,36 +203,7 @@ $(function() {
  //      }
  // }
 
-  if ($('#flight-search-details').length > 0 ) {
-
-     $("#departure_airport").autocomplete({
-       delay: 500,
-       minLength: 3,
-       source: airports,
-       select: function(event, ui) {
-         $('#departure_airport').val(ui.item.value);
-       }
-     })
-     .data( "ui-autocomplete" )._renderItem = function( ul, item ) {
-               return $( "<li>" )
-               .append( "<a>" + item.label + "<br>" + item.value + "</a>" )
-               .appendTo( ul );
-            };
-
-     $("#arrival_airport").autocomplete({
-     delay: 500,
-     minLength: 3,
-     source: airports,
-     select: function(event, ui) {
-       $('#departure_airport').val(ui.item.value);
-       }
-     })
-     .data( "ui-autocomplete" )._renderItem = function( ul, item ) {
-               return $( "<li>" )
-               .append( "<a>" + item.label + "<br>" + item.value + "</a>" )
-               .appendTo( ul );
-            };
-  }
+  
 });
 
 
