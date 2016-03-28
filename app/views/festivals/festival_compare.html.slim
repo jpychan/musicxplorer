@@ -15,5 +15,6 @@ h1 Favourited Festivals
       br driving time: #{festival['time_car']}
     div
       flight cost: $#{display(festival['price_flight'])}
-      br flight time to/from festival: #{festival['time_flight_in']}/#{festival['time_flight_out']}
+      br flight time to/from festival: #{display(festival['time_flight_in'])}/
+                                       #{display(festival['time_flight_out'])}
 

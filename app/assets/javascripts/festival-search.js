@@ -7,7 +7,7 @@ $(function() {
     return d;
   }
 
-  $('.date-picker').datepicker({
+  $('#date-picker').datepicker({
     minDate: new Date(),
     maxDate: maxDay(), 
     dateFormat: 'yy-mm-dd'
