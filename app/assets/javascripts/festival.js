@@ -1,5 +1,12 @@
 $(function() {
 
+  function addSearched() {
+    for (var i = 0; i < searched.length; i++) {
+      var ele = searched[i];
+       $('#search-results').appendTo('#results_container'); 
+     };
+    };
+
   // ADD OR REMOVE FESTIVALS FROM FAVORITES ON FESTIVAL SHOW PAGE
   $('.cache-btns').on('click', '.fave-btn',function() {
     var flight = $('#flight-search-details');
@@ -40,7 +47,7 @@ $(function() {
       });
   });
 
-  debugger;
+  // debugger;
 
   var carPrice = $('.driving-cost')[0].dataset.carPrice
 
@@ -97,7 +104,7 @@ $(function() {
         zoom: 8
       });
 
-      debugger;
+      // debugger;
 
       festivalMarker = new google.maps.Marker({
         position: destination,
@@ -255,4 +262,5 @@ $(function() {
     var latLng = new google.maps.LatLng(49.8994, -97.1392); //should pan to specified location (based on card/div?)
     map.panTo(latLng);
   });
+
  }   

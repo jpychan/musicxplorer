@@ -23595,5 +23595,10 @@ Performance.create!([
   {festival_id: 436, artist_id: 8406},
   {festival_id: 436, artist_id: 8407},
   {festival_id: 436, artist_id: 8408}
+])
+
+Festival.create(name: 'Rifflandia', start_date: nil, location: 'Victoria, BC', website: 'rifflandia.com', description: 'This September 15-18, the ninth-annual Rifflandia Festival will transform the city of Victoria, featuring a truly diverse line-up of artists across numerous stages, all within walking distance in the city’s beautiful and historic downtown core.', price: 150, latitude: 48.4222, longitude: -123.3640, date: 'Sept. 16th - Sept. 18th, 2016')
+Festival.create(name: 'Philips Backyard Weekender', start_date: nil, location: 'Victoria, BC', website: 'backyardweekender.com', description:'The Phillips Backyard Weekender is a 19+ licensed event taking place rain or shine in the very awesome and large Phillips Backyard, located at the Phillips Brewery in Victoria, BC.', price: 100 , latitude: 48.4222, longitude: -123.3657, date: 'July 8th-July 10th, 2016')
+Festival.create(name: 'Rock the Shores', start_date: nil, location: 'Colwood, BC', website: 'rocktheshores.com', price: 125, latitude: 48.4236, longitude: -123.4958, date: 'July 22nd-July 24th, 2016')
 
 puts "Done!"

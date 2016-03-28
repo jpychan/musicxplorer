@@ -14,9 +14,17 @@
  *= require soulmate
  *= require_self
  */
+.pure-g {
+  font-family: Helvetica;
+  font-weight: lighter;
+}
+
 body {
   background-color: #DEE0FA;
   font-family: Helvetica;
+}
+
+#festival-show {
   margin: 0 15%;
   width: 70%;
 }
@@ -172,11 +180,13 @@ li.active {
 }*/
 
 /* #home*/ #map {
-  height: 500px;
-  width: 1000px;
-  margin-left: 250px;
-  margin-bottom: 30px;
-  margin-top: 50px;
+  display: inline-block;
+  height: 800px;
+  width: 650px;
+  margin-left: 20px;
+  margin-right: 30px;
+  margin-bottom: 100px;
+  /*margin-top: 50px;*/
   /*position: absolute;
   margin-top: 40px;
   top: 50%;
@@ -213,7 +223,7 @@ li.active {
   font-size: 125%;
   position: relative;
   margin-top: 10px;
-  /*display: inline-block;*/
+  display: inline-block;
   margin-left: 50%;
   margin-bottom: 30px;
 }
@@ -225,15 +235,32 @@ li.active {
   padding-right: 10px;
   position: relative;
   margin-bottom: 30px;
-  /*display: inline-block;*/
-  /*margin-left: 20px;
+  display: inline-block;
+  margin-left: 20px;
   margin-top: 10px;
-  clear: left;*/
+  clear: left;
 }
 
 #search-results {
   text-align: center;
   margin: 100px;
+}
+
+#results_container {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 1px 1px 5px #333333;
+  display: inline-block;
+  float: left;
+  height: 800px;
+  margin-bottom: 100px;
+  margin-left: 30px;
+  margin-top: 120px;
+  margin-right: 30px;
+  overflow: auto;
+  position: relative;
+  width: 650px;
+  z-index: -1;
 }
 
 /*.card {

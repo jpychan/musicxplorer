@@ -100,6 +100,14 @@ $(function() {
     });
   });
 
+  //append searched data to container
+  function addSearched(searched) {
+    for (var i = 0; i < searched.length; i++) {
+      var ele = searched[i];
+       $('#search-results').text(ele).appendTo('.results_p'); 
+      };
+    };
+
   // SELECT FESTIVALS
   // TODO: toggling selection
   $('#search-results').on('click', '.festival-result', function() {
