@@ -19,7 +19,6 @@ class DistanceService
     departure_airport = get_nearest_airport(origin.lat, origin.lng, origin.country_code)
 
     $redis.hmset('user', 'location', location, 'lat', origin.lat, 'lng', origin.lng, 'country', origin.country_code, 'departure_airport', departure_airport)
-
   end
 
   def to_radians(deg)
@@ -54,6 +53,6 @@ class DistanceService
     end
 
     departure_airport_index = @airport_distances.index(@airport_distances.min)
-    departure_airport = airport_list[departure_airport_index][:iata_code].downcase
+    airport_list[departure_airport_index][:iata_code].downcase
   end
 end

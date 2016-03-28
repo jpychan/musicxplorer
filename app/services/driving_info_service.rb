@@ -5,7 +5,7 @@ class DrivingInfoService
 
   def initialize(festival)
     @festival = festival
-    @origin = $redis.hmget('user', 'location')
+    @origin = $redis.hgetall('user')
   end
 
   def get_fuel_consumption
@@ -20,17 +20,18 @@ class DrivingInfoService
   end
 
   def get_avg_gas_price
-    origin = @origin.split(' ').join('%2C')
+    origin = @origin['location'].gsub(',','').split(' ').join('%2C')
     gasbuddy = Nokogiri::HTML(open("http://gasbuddy.com/?search=#{origin}"))
     gasbuddy.css('.gb-price-lg')[0].text.gsub(/\s+/, '').to_f / 100
   end
 
   def get_trip
-
-    origin = @origin.split(' ').join('+')
+    origin = [@origin['lat'], @origin['lng']].join(',')
     dest = [@festival.latitude, @festival.longitude].join(',')
 
-    googl_dist = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=#{origin}|#{dest}&destinations=#{dest}|#{origin}&key=#{ENV['GOOGL_DIST_KEY']}&avoid=tolls"
+    url  = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=#{origin}|#{dest}&destinations=#{dest}|#{origin}&key=#{ENV['GOOGL_DIST_KEY']}&avoid=tolls"
+    encode_url = URI.encode(url)
+    googl_dist = URI.parse(encode_url) 
 
     googl_resp = HTTParty.get(googl_dist)
     googl_data = JSON.parse(googl_resp.body)['rows']

@@ -33,9 +33,8 @@ module Skyscanner
     request["content-type"] = 'application/x-www-form-urlencoded'
     request["accept"] = 'application/json'
     request["cache-control"] = 'no-cache'
-    request.body = "country=CA&currency=CAD&locale=en-CA&adults=#{params[:adults]}&children=#{params[:children]}&infants=#{params[:infants]}&originplace=#{params[:departure_airport]}-iata&destinationplace=#{params[:arrival_airport]}-iata&outbounddate=#{outbound_date}&inbounddate=#{inbound_date}&locationschema=Iata&cabinclass=#{params[:cabin_class]}&groupPricing=true"
+    request.body = "country=CA&currency=CAD&locale=en-CA&adults=#{params[:adult]}&children=#{params[:children]}&infants=#{params[:infants]}&originplace=#{params[:departure_airport]}-iata&destinationplace=#{params[:arrival_airport]}-iata&outbounddate=#{outbound_date}&inbounddate=#{inbound_date}&locationschema=Iata&cabinclass=#{params[:cabin_class]}&groupPricing=true"
     response = http.request(request)
-    byebug
     polling_url = response["location"]
     session_id = polling_url.split('/').last
 
@@ -103,7 +102,5 @@ module Skyscanner
     end
 
     return @first_five_results
-
   end
-
 end
