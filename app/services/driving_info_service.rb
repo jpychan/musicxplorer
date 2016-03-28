@@ -29,8 +29,11 @@ class DrivingInfoService
     origin = @origin.split(' ').join('+')
     dest = [@festival.latitude, @festival.longitude].join(',')
 
-    googl_dist = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=#{origin}|#{dest}&destinations=#{dest}|#{origin}&key=#{ENV['GOOGL_DIST_KEY']}&avoid=tolls"
-    googl_resp = HTTParty.get(googl_dist)
+    url  = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=#{origin}|#{dest}&destinations=#{dest}|#{origin}&key=#{ENV['GOOGL_DIST_KEY']}&avoid=tolls"
+    encode_url = URI.encode(url)
+    googl_dist = URI.parse(encode_url) 
+
+    googl_resp = HTTParty.get(googl_dist, verify: false)
     googl_data = JSON.parse(googl_resp.body)['rows']
 
     round_trip = []

@@ -43,7 +43,9 @@ gem 'geocoder'
 
 gem 'seed_dump'
 
-gem 'kaminari'
+# Greyhound Scraper
+gem  'watir-webdriver'
+gem 'watir-scroll'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

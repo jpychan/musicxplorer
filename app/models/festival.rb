@@ -8,7 +8,7 @@ class Festival < ActiveRecord::Base
   has_many :genres, through: :festival_genres
 
   validates :name, presence: true
-
+  
   def search_flights(params)
     session_id = create_skyscanner_session(params)
     data = get_itineraries(session_id)
@@ -25,7 +25,6 @@ class Festival < ActiveRecord::Base
   end
 
   def self.autocomplete(input)
-
     #Autocomplete Search
     url = URI("https://airport.api.aero/airport/match/#{input}?user_key=#{ENV['AIRPORT_API_USERKEY']}")
 
@@ -41,7 +40,11 @@ class Festival < ActiveRecord::Base
     response = JSON.parse(response[/{.+}/])
 
     return response
-
   end
+
+  def self.different_airport?(departure, arrival)
+    departure != arrival
+  end
+
 end
   

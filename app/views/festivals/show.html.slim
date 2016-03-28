@@ -4,7 +4,7 @@
 
     .header
       h1 Music Festivals
-      button[id="flight-search-change"] Change Your Search Settings
+
       div.cache-btns
         - if $redis.hget('festivals', @festival.id)
           = render 'unfavorite'
@@ -61,7 +61,8 @@
                 p $#{display(@price_by_car)}
                 p trip duration: #{@time_by_car}
 
-              div[id="map" data-latitude="#{@festival.latitude}" data-longitude="#{@festival.longitude}"]
+              div[id="driving-map" data-latitude="#{@festival.latitude}" data-longitude="#{@festival.longitude}"]
+
             div[id="bus" class="route-details hidden"]
               p Tab-1
 

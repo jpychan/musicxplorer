@@ -17,6 +17,8 @@ Rails.application.routes.draw do
   
   get '/search_flights' => 'festivals#search_flights', defaults: { format: 'js' }
 
+  get '/search_greyhound' => 'festivals#search_greyhound', defaults: { format: 'js' }
+
   get 'autocomplete', to: 'festivals#autocomplete', defaults: {format: 'json'}
 
   # The priority is based upon order of creation: first created -> highest priority.

@@ -7,6 +7,7 @@ class FestivalGridService
   def get_cheapest_flight(festival, user)
     flight_params = {
       departure_airport: user['airport'] || 'yvr',
+      arrival_airport: festival.airport(festival.latitude, festival.longitude),
       festival_id: festival.id,
       cabin_class: 'Economy',
       adults: 1,

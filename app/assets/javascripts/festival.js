@@ -1,19 +1,4 @@
 $(function() {
-  // console.log("inside function")
-  // var airports = function(request, response) {
-  //   $.getJSON("/autocomplete", {
-  //     query: request.term,
-  //   }, function(data) {
-  //     // data is an array of objects and must be transformed for autocomplete to use
-  //     var array = data.error ? [] : $.map(data, function(m) {
-  //       return {
-  //         label: m.name,
-  //         value: m.code
-  //       };
-  //     });
-  //     return response(array);
-  //   });
-  // };
 
   // ADD OR REMOVE FESTIVALS FROM FAVORITES ON FESTIVAL SHOW PAGE
   $('.cache-btns').on('click', '.fave-btn',function() {
@@ -51,46 +36,30 @@ $(function() {
       });
   });
 
-  // var userLocation = new Promise(function(resolve, reject) {
-  //   navigator.geolocation.getCurrentPosition(function(position) {
-  //     var coordinates = {lat:position.coords.latitude, long:position.coords.longitude};
-  //     resolve(coordinates);
-  //    });
-  //   });
+  // debugger;
 
- // $("#departure_airport").autocomplete({
- //   delay: 500,
- //   minLength: 3,
- //   source: airports,
- //   select: function(event, ui) {
- //     $('#departure_airport').val(ui.item.value);
- //   }
- // })
- // .data( "ui-autocomplete" )._renderItem = function( ul, item ) {
- //           return $( "<li>" )
- //           .append( "<a>" + item.label + "<br>" + item.value + "</a>" )
- //           .appendTo( ul );
- //        };
+  var carPrice = $('.driving-cost')[0].dataset.carPrice
 
-  //Load Driving Directions
-  var drivingMapDiv = $('#travel-tabs').find('#map');
-  var destinationCoords = {
-    lat: drivingMapDiv[0].dataset.latitude,
-    long: drivingMapDiv[0].dataset.longitude
-  };
+  //Load Driving Directions on Festival Details page
 
-  var departure = new google.maps.LatLng(49.246, -123.116);
+    var drivingMapDiv = $('#travel-tabs').find('#driving-map');
+    var destinationCoords = {
+      lat: drivingMapDiv[0].dataset.latitude,
+      long: drivingMapDiv[0].dataset.longitude
+    };
 
-  var destination = new google.maps.LatLng(destinationCoords.lat, destinationCoords.long);
-  var map;
-  var map2;
-  var festivalMarker;
+    var departure = new google.maps.LatLng(49.246, -123.116);
 
-  var festivalMaps = {
+    var destination = new google.maps.LatLng(destinationCoords.lat, destinationCoords.long);
+    var map;
+    var map2;
+    var festivalMarker;
+
+    var festivalMaps = {
 
     loadDrivingMap: function() {
 
-      map = new google.maps.Map(document.getElementById('map'), {
+      map = new google.maps.Map(document.getElementById('driving-map'), {
         center: departure,
         scrollwheel: false,
         zoom: 8
@@ -124,6 +93,8 @@ $(function() {
         zoom: 8
       });
 
+      // debugger;
+
       festivalMarker = new google.maps.Marker({
         position: destination,
         map: map2
@@ -137,15 +108,19 @@ $(function() {
     map.setZoom(4);
     },
   };
+
+  festivalMaps.loadFestivalMap();
+
+  if ($('#festival-show').length > 0 && carPrice > 0) {
+    festivalMaps.loadDrivingMap();
+
+  }
   
   // show first content by default
   $('#tabs-nav li:first-child').addClass('active');
 
   // click function
   $('#festival-show').on('click', '#tabs-nav li', function(event){
-    map2 = null;
-
-    $("#festival-map").empty();
 
     event.preventDefault();
 
@@ -157,17 +132,13 @@ $(function() {
     $(activeTab).removeClass('hidden').addClass('active');
     $(activeTab).fadeIn();
 
-    festivalMaps.resetDrivingMap();
+    if (carPrice > 0) {
 
-    if (activeTab === "#overview") {
-      festivalMaps.loadFestivalMap();
+      festivalMaps.resetDrivingMap();
     }
 
   });
 
-  //$('#festival-show').on('click', '#travel-tab', function(event){
-
-  //});
 
   //Travel tabs
   $('#festival-show').on('click', '#travel-tabs li', function(event){
@@ -181,7 +152,11 @@ $(function() {
     $(activeTravelTab).addClass("active").removeClass("hidden");
     $(activeTravelTab).fadeIn();
 
-    festivalMaps.resetDrivingMap();
+    if (carPrice > 0) {
+
+      festivalMaps.resetDrivingMap();
+    }
+
   });
 
   $('#festival-show').on('click', '#flight-search-btn', function() {
@@ -191,8 +166,6 @@ $(function() {
 
   // FLICKR
   if ($('#festival-show').length > 0) {
-    festivalMaps.loadFestivalMap();
-    festivalMaps.loadDrivingMap();
 
     var festival = $('.flickr-imgs').data('name');
     $.ajax('/flickr_images/' + festival, { dataType: 'json' }).done(function(data) { 
@@ -206,8 +179,7 @@ $(function() {
     });
   }
 
-
-   
+  
   var target = $('#wel');
   var targetHeight = target.outerHeight();
 
@@ -227,36 +199,7 @@ $(function() {
  //      }
  // }
 
-  if ($('#flight-search-details').length > 0 ) {
-
-     $("#departure_airport").autocomplete({
-       delay: 500,
-       minLength: 3,
-       source: airports,
-       select: function(event, ui) {
-         $('#departure_airport').val(ui.item.value);
-       }
-     })
-     .data( "ui-autocomplete" )._renderItem = function( ul, item ) {
-               return $( "<li>" )
-               .append( "<a>" + item.label + "<br>" + item.value + "</a>" )
-               .appendTo( ul );
-            };
-
-     $("#arrival_airport").autocomplete({
-     delay: 500,
-     minLength: 3,
-     source: airports,
-     select: function(event, ui) {
-       $('#departure_airport').val(ui.item.value);
-       }
-     })
-     .data( "ui-autocomplete" )._renderItem = function( ul, item ) {
-               return $( "<li>" )
-               .append( "<a>" + item.label + "<br>" + item.value + "</a>" )
-               .appendTo( ul );
-            };
-  }
+  
 });
 
 

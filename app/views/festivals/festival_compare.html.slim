@@ -3,6 +3,7 @@ h1 Favourited Festivals
 - @selected_festivals.each do |festival|
   div.fave-festival data-id="#{festival['id']}"
     button.remove-fave
+      i[class="fa fa-star"] 
       | Remove from Favourites
     = link_to festival['name'], festival_path(festival['id'])
     br Date: #{festival['date']}
