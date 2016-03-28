@@ -1,0 +1,43 @@
+h1 id="wel" Festival Finder
+
+- @selected_festivals.each do |festival|
+  = festival['name']
+
+div
+  = text_field_tag :location, '', id: 'get_location'
+  = button_tag 'Enter your location', id: 'edit_location'
+  div#usr_location
+    = @usr_location
+
+= form_tag '/festival-list', remote: true,  method: :get, id: 'festival-search'
+  div
+    = label_tag :date, 'Select a date'
+    = text_field_tag :date, '', class: 'date-picker'
+
+  div
+    = label_tag :camping, 'Camping style festivals?'
+    p
+      | no preference
+      = radio_button_tag :camping, '', true
+      | yes
+      = radio_button_tag :camping, 'yes'
+      | no
+      = radio_button_tag :camping, 'no'
+
+  div
+    = label_tag :artist, 'Search by artist'
+    = text_field_tag :artist, '', id: 'search-artist', autocomplete: :off
+
+  div
+    = label_tag :genre, 'Search by genre'
+    = select_tag :genre,
+        options_from_collection_for_select(@genres, 'name', 'name'),
+        include_blank: ''
+
+  div
+    = submit_tag 'Search!', id: 'submit-search'
+
+div id="search-results"
+
+
+div#map
