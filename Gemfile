@@ -43,7 +43,6 @@ gem 'geocoder'
 
 gem 'seed_dump'
 
-gem 'sqlite3'
 gem 'kaminari'
 
 gem 'rails-jquery-autocomplete'

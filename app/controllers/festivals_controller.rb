@@ -7,16 +7,15 @@ class FestivalsController < ApplicationController
   def show
     @festival = Festival.find(params[:id])
 
-    driving = DrivingInfoService.new(@festival)
-    @price_by_car = driving.calc_driving_cost
-    @time_by_car = driving.get_trip_time[0]
+    # driving = DrivingInfoService.new(@festival)
+    # @price_by_car = driving.calc_driving_cost
+    # @time_by_car = driving.get_trip_time[0]
 
     @usr_location = $redis.hgetall('user')
     @usr_location = {
       lat: @usr_location["lat"],
       long: @usr_location["lng"]
     }
-
   end
 
   def all
@@ -63,9 +62,6 @@ class FestivalsController < ApplicationController
     festival_json['time_flight_in'] = params[:flightTimeIn]
     festival_json['time_flight_out'] = params[:flightTimeOut]
  
-#    driving = DrivingInfoService.new(festival) 
-#    festival_json['price_car'] = driving.calc_driving_cost
-#    festival_json['time_car'] = driving.get_trip_time[0]
 #    var user = $redis.hgetall('user')
 #    flight_params = {
 #      departure_airport: festival.airport(user['lat'], user['lng']),

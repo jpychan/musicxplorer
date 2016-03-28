@@ -15,12 +15,12 @@
  *= require_self
  */
 body {
+  background-color: #DEE0FA;
+  font-family: Helvetica;
   margin: 0 15%;
   width: 70%;
 }
-
 /* Tabs */
-
 #tabs-nav {
   list-style: none;
   margin: 0;
@@ -60,7 +60,6 @@ li.active {
   position: relative;
   left: 0;
 }
-
 /* Travel Details Tabs */
 
 #travel-tabs {
@@ -111,11 +110,9 @@ li.active {
   font-size: 14px;
   padding-left: 20px;
 }
-
 #festival-show #driving-map {
   width: 100%;
   height: 100%;
-
 }
 
 #travel-tabs .flight-search-details {
@@ -170,10 +167,6 @@ li.active {
   padding: 10px;
 }
 
- body {
-  background-color: #DEE0FA;
- }
-
  /*#map {
   box-shadow: 1px 1px 5px #333333;
 }*/
@@ -211,6 +204,7 @@ li.active {
   font-family: Helvetica;
   font-weight: lighter;
   background-size: cover;
+  /*width: 130%;*/
 }
 
 .pan_button {
@@ -220,7 +214,7 @@ li.active {
   position: relative;
   margin-top: 10px;
   /*display: inline-block;*/
-  margin-left: 48%;
+  margin-left: 50%;
   margin-bottom: 30px;
 }
 
@@ -237,9 +231,15 @@ li.active {
   clear: left;*/
 }
 
-.card {
+#search-results {
+  text-align: center;
+  margin: 100px;
+}
+
+/*.card {
+>>>>>>> Stashed changes
   /*background-image: url('/festival1.jpg');*/
-  background-color: #6666ff;
+  /*background-color: #6666ff;
   background-size: cover;
   background-repeat: no-repeat;
   border-radius: 5px;
@@ -248,22 +248,23 @@ li.active {
   margin: 40px;
   opacity: 0.75;
   width: 380px;  
+<<<<<<< Updated upstream
 }
-
-.card_header {
+*/
+/*.card_header {
   border-radius: 5px;
   background-color: white;
-  font-family: Helvetica;
+  font-family: Helvetica;*/
   /*font-weight: lighter;*/
-  padding: 40px;
+  /*padding: 40px;
   text-align: center;
-}
+}*/
 
-#card_description {
+/*#card_description {
   font-size: 14px;
   padding: 12px;
   text-align: center;
-}
+}*/
 /*#location {
   margin-left: 50%;
 }
