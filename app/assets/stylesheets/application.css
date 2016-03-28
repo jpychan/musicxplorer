@@ -180,8 +180,9 @@ li.active {
 }*/
 
 /* #home*/ #map {
+  box-shadow: 1px 1px 5px #333333;
   display: inline-block;
-  height: 800px;
+  height: 750px;
   width: 650px;
   margin-top: 120px;
   margin-left: 20px;
@@ -259,7 +260,7 @@ li.active {
   box-shadow: 1px 1px 5px #333333;
   display: inline-block;
   float: left;
-  height: 800px;
+  height: 750px;
   margin-bottom: 100px;
   margin-left: 30px;
   margin-top: 120px;
@@ -270,8 +271,14 @@ li.active {
   /*z-index: -1;*/
 }
 
-.festival-results {
+.festival-result {
   margin: 10px;
+  /*padding: 10px;*/
+}
+
+.main_links {
+  font-size: 25px;
+  color: #F56C57;
 }
 
 /*.card {
