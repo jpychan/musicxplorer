@@ -30,7 +30,7 @@ class FestivalsController < ApplicationController
     d = DistanceService.new
     origin = $redis.hgetall('user')
     @festivals = festivals.select do |f|
-      dist_km = d.calc_distance(origin, f)
+      dist_km = d.calc_distance(origin['lat'], origin['lng'], f)
       puts dist_km
       dist_km <= SEARCH_RADIUS
     end
@@ -94,24 +94,35 @@ class FestivalsController < ApplicationController
   end
 
   def search_flights
+
     @festival = Festival.find(params[:festival_id])
- 
+    user_country = $redis.hget('user', 'country')
+
     if params[:default]
       params[:cabin_class] = "Economy"
       params[:adult] = 1
       params[:children] = 0
       params[:infants] = 0
-      params[:departure_airport] = $redis.hget('user', 'airport')
-      params[:arrival_airport] = @festival.airport(@festival.latitude, @festival.longitude)
+      params[:departure_airport] = $redis.hget('user', 'departure_airport')
+
+      d = DistanceService.new
+      params[:arrival_airport] = d.get_nearest_airport(@festival.latitude, @festival.longitude, @festival.country)
     end
- 
-    @cabin_classes = [['Economy', 'Economy'], ['Premium Economy', 'PremiumEconomy'], ['Business', 'Business'], ['First Class', 'First']]
-    @passenger_numbers = [['0', 0], [ '1', 1], ['2', 2], ['3', 3], ['4', 4], ['5', 5]]
- 
-    @first_five_results = @festival.search_flights(params)
+
+    @valid_search = Festival.different_airport?(params[:departure_airport], params[:arrival_airport])
+    @in_future = @festival.start_date > Time.now
+
+    if @valid_search && @in_future
+      @first_five_results = @festival.search_flights(params)
+    end
+
+      @cabin_classes = [['Economy', 'Economy'], ['Premium Economy', 'PremiumEconomy'], ['Business', 'Business'], ['First Class', 'First']]
+      @passenger_numbers = [['0', 0], [ '1', 1], ['2', 2], ['3', 3], ['4', 4], ['5', 5]]
+
     respond_to do |format|
       format.js {render layout: false}
     end
+<<<<<<< HEAD
   end
 
   def search_greyhound
@@ -143,4 +154,9 @@ class FestivalsController < ApplicationController
       format.js {render layout: false}
     end
   end
+=======
+  
+  end
+
+>>>>>>> f7eb01e94da36288711059fe4d9b6ed752f374cd
 end

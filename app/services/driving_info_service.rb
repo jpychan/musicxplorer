@@ -26,6 +26,7 @@ class DrivingInfoService
   end
 
   def get_trip
+
     origin = @origin.split(' ').join('+')
     dest = [@festival.latitude, @festival.longitude].join(',')
 
