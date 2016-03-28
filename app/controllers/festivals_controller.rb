@@ -10,14 +10,8 @@ class FestivalsController < ApplicationController
     driving = DrivingInfoService.new(@festival)
     @price_by_car = driving.calc_driving_cost
     @time_by_car = driving.get_trip_time[0]
-
     @usr_location = $redis.hgetall('user')
-    @usr_location = {
-      lat: @usr_location["lat"],
-      long: @usr_location["lng"]
-    }
-
-  end
+ end
 
   def all
     @artists = Artist.all.order(:name)
@@ -25,8 +19,8 @@ class FestivalsController < ApplicationController
     @usr_location = $redis.hget('user', 'location')
   end
 
-  # PRE-CALCULATE COORDINATES FOR USER LOCATION
-  def get_usr_coordinates
+  # PRE-CALCULATE COORDINATES & GET AIRPORT
+  def get_usr_info
     d = DistanceService.new
     d.get_usr_location(params[:usr_location])
     redirect_to root_path
@@ -55,28 +49,17 @@ class FestivalsController < ApplicationController
 
   # TODO: refactor
   def festival_select
-    festival = Festival.find(params[:festivalId])
-    festival_json = festival.as_json
+    festival_json = Festival.find(params[:festivalId]).as_json
+    user = $redis.hgetall('user')
+    f = FestivalGridService.new
+    flight = f.get_cheapest_flight(festival, user)
+
     festival_json['price_car'] = params[:drivingPrice]
     festival_json['time_car'] = params[:drivingTime]
-    festival_json['price_flight'] = params[:flightPrice]
-    festival_json['time_flight_in'] = params[:flightTimeIn]
-    festival_json['time_flight_out'] = params[:flightTimeOut]
+    festival_json['price_flight'] = flight['PricingOptions'][0]['Price']
+    festival_json['time_flight_in'] = flight[:inbound_leg]['Duration']
+    festival_json['time_flight_out'] = flight[:outbound_leg]['Duration']
  
-#    driving = DrivingInfoService.new(festival) 
-#    festival_json['price_car'] = driving.calc_driving_cost
-#    festival_json['time_car'] = driving.get_trip_time[0]
-#    var user = $redis.hgetall('user')
-#    flight_params = {
-#      departure_airport: festival.airport(user['lat'], user['lng']),
-#      festival_id: festival.id,
-#      cabin_class: 'Economy',
-#      adults: 1,
-#      children: 0,
-#      infants: 0
-#      }
-#    festival.search_flights(flight_params)[0]
-
     if festival
       $redis.hset('festivals', festival.id, festival_json.to_json)
     end
@@ -114,7 +97,6 @@ class FestivalsController < ApplicationController
   end
 
   def search_flights
-
     @festival = Festival.find(params[:festival_id])
     user_country = $redis.hget('user', 'country')
 
@@ -144,6 +126,13 @@ class FestivalsController < ApplicationController
       @cabin_classes = [['Economy', 'Economy'], ['Premium Economy', 'PremiumEconomy'], ['Business', 'Business'], ['First Class', 'First']]
       @passenger_numbers = [['0', 0], [ '1', 1], ['2', 2], ['3', 3], ['4', 4], ['5', 5]]
 
+      params[:departure_airport] = $redis.hget('user', 'airport')
+    end
+ 
+    @cabin_classes = [['Economy', 'Economy'], ['Premium Economy', 'PremiumEconomy'], ['Business', 'Business'], ['First Class', 'First']]
+    @passenger_numbers = [['0', 0], [ '1', 1], ['2', 2], ['3', 3], ['4', 4], ['5', 5]]
+ 
+    @first_five_results = @festival.search_flights(params)
     respond_to do |format|
       format.js {render layout: false}
     end
