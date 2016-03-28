@@ -17,13 +17,9 @@ $(function() {
 
   // ADD OR REMOVE FESTIVALS FROM FAVORITES ON FESTIVAL SHOW PAGE
   $('.cache-btns').on('click', '.fave-btn',function() {
-    var flight = $('#flight-search-details');
     var driving = $('.driving-cost');
     var tripCost = {
       festivalId: $('.music-festival').attr('data-id'),
-      flightPrice: flight.attr('data-cheapest-flight'),
-      flightTimeIn: flight.attr('data-flight-time-in'),
-      flightTimeOut: flight.attr('data-flight-time-out'),
       drivingPrice: driving.attr('data-car-price'),
       drivingTime: driving.attr('data-car-time')
     };

@@ -1,8 +1,6 @@
 class DrivingInfoService
-  # this will take params/obj as an argument once search form is up
   # right now this doesn't account for ferry prices/changing mode of transportation
-  # TODO: ask user which city they're making the trip from? 
-
+  # TODO: driving distance within same city doesn't currently work [because based on city's latitude/longitude rather than specific addresses]
   attr_reader :origin
 
   def initialize(festival)

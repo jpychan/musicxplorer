@@ -57,7 +57,6 @@ module Skyscanner
   end
 
   def get_first_five_results(data)
-
     legs = data["Legs"]
     places = data["Places"]
     query = data["Query"]
