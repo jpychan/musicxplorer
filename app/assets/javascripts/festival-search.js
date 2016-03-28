@@ -7,7 +7,7 @@ $(function() {
     return d;
   }
 
-  $('.date-picker').datepicker({
+  $('#date-picker').datepicker({
     minDate: new Date(),
     maxDate: maxDay(), 
     dateFormat: 'yy-mm-dd'
@@ -29,7 +29,7 @@ $(function() {
       usrLocation.show();
       $(this).hide();
       inputBtn.show();
-      $.ajax('/usr-coordinates',
+      $.ajax('/usr-info',
           { dataType: 'json',
             type: 'POST',
             data: {usr_location: usrLocation.text()},
@@ -101,18 +101,16 @@ $(function() {
   });
 
   // SELECT FESTIVALS
-  // TODO: toggling selection
-  $('#search-results').on('click', '.festival-result', function() {
-    var selectedId = { festivalId: $(this).attr('data-id') };
+  //$('#search-results').on('click', '.festival-result', function() {
+  //  var selectedId = { festivalId: $(this).attr('data-id') };
 
-    // TODO: maybe attach a condition to this...
-    $.ajax('/festival-select',
-      { dataType: 'json',
-        type: 'POST',
-        data: selectedId,
-        success: function() { console.log('festival selected'); },
-        error: function(xhr) { console.log(xhr.statusText); }
-      });
-  });
+  //  $.ajax('/festival-select',
+  //    { dataType: 'json',
+  //      type: 'POST',
+  //      data: selectedId,
+  //      success: function() { console.log('festival selected'); },
+  //      error: function(xhr) { console.log(xhr.statusText); }
+  //    });
+  //});
 
 });

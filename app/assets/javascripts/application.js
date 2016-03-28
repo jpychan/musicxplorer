@@ -13,10 +13,6 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui
-
-//= require festival-search
-//= require festival
-
 //= require jquery.soulmate
 //= require_tree .
 
