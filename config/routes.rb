@@ -3,7 +3,6 @@ Rails.application.routes.draw do
 
   get '/flickr_images/:festival' => 'festivals#flickr_images'
   get '/festival-list' => 'festivals#festival_list'
-  get '/festivals/compare' => 'festivals#festival_compare'
 
   post '/festival-select' => 'festivals#festival_select'
   post '/usr-info' => 'festivals#get_usr_info'

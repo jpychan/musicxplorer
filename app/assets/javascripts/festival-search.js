@@ -99,18 +99,4 @@ $(function() {
       formatResults('Description', festival.description, festivalDetails);
     });
   });
-
-  // SELECT FESTIVALS
-  //$('#search-results').on('click', '.festival-result', function() {
-  //  var selectedId = { festivalId: $(this).attr('data-id') };
-
-  //  $.ajax('/festival-select',
-  //    { dataType: 'json',
-  //      type: 'POST',
-  //      data: selectedId,
-  //      success: function() { console.log('festival selected'); },
-  //      error: function(xhr) { console.log(xhr.statusText); }
-  //    });
-  //});
-
 });

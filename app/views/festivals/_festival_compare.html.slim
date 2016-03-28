@@ -1,0 +1,26 @@
+div[class="modal fade" id="gridModal" tabindex="-1" role="dialog" aria-labelledby="gridModalLabel" aria-hidden="true"]
+  div[class="modal-dialog modal" role="document"]
+    div[class="modal-content"]
+      div[class="modal-header"]
+        button[class="close" data-dismiss="modal" aria-label="Close"]
+          i class="fa fa-times" 
+          | close
+        h1 Favourited Festivals
+
+      div[class="modal-body"]
+        - @selected_festivals.each do |festival|
+          div.fave-festival data-id="#{festival['id']}"
+            button.remove-fave
+              i[class="fa fa-star"] 
+              | Remove from Favourites
+            br #{link_to festival['name'], festival_path(festival['id'])}
+            br Date: #{festival['date']}
+            br location: #{festival['location']}
+            br Price: #{display(festival['price'])}
+            br Camping: #{display(festival['camping'])}
+            br  driving cost: $#{display(festival['price_car'])}
+            br driving time: #{festival['time_car']}
+            br  flight cost: $#{display(festival['price_flight'])}
+            br flight time to/from festival: #{display(festival['time_flight_in'])} mins &
+                                               #{display(festival['time_flight_out'])} mins
+        

@@ -17,6 +17,9 @@ class FestivalsController < ApplicationController
     @genres = Genre.all.order(:name)
     @usr_location = $redis.hget('user', 'location')
     @upcoming = Festival.includes(:genres).where('start_date > ?', Date.today).order(:start_date).limit(20)
+    @selected_festivals = $redis.hkeys('festivals').map do |key|
+      JSON.parse($redis.hget('festivals', key))
+    end
   end
 
   # PRE-CALCULATE COORDINATES & GET AIRPORT
@@ -39,12 +42,6 @@ class FestivalsController < ApplicationController
       dist_km <= SEARCH_RADIUS
     end
     render json: @festivals
-  end
-
-  def festival_compare
-    @selected_festivals = $redis.hkeys('festivals').map do |key|
-      JSON.parse($redis.hget('festivals', key))
-    end
   end
 
   # TODO: refactor
