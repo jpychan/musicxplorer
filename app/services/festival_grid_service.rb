@@ -5,9 +5,10 @@ class FestivalGridService
   end
 
   def get_cheapest_flight(festival, user)
+    d = DistanceService.new
     flight_params = {
       departure_airport: user['airport'] || 'yvr',
-      arrival_airport: festival.airport(festival.latitude, festival.longitude),
+      arrival_airport: d.get_nearest_airport(festival.latitude, festival.longitude, festival.country),
       festival_id: festival.id,
       cabin_class: 'Economy',
       adults: 1,

@@ -23595,5 +23595,5 @@ Performance.create!([
   {festival_id: 436, artist_id: 8406},
   {festival_id: 436, artist_id: 8407},
   {festival_id: 436, artist_id: 8408}
-
+])
 puts "Done!"

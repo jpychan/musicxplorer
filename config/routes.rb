@@ -13,7 +13,9 @@ Rails.application.routes.draw do
 
   get '/festivals' => 'festivals#parse_all'
 
-  resources :festivals, only: [:show]
+  resources :festivals, only: [:show] do
+   get :autocomplete_airport_name, :on => :collection
+ end
   
   get '/search_flights' => 'festivals#search_flights', defaults: { format: 'js' }
 

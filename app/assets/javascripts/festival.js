@@ -38,7 +38,7 @@ $(function() {
 
   // debugger;
 
-  var carPrice = $('.driving-cost')[0].dataset.carPrice
+  var carPrice = $('.driving-cost')[0].dataset.carPrice;
 
   //Load Driving Directions on Festival Details page
 
@@ -94,7 +94,6 @@ $(function() {
       });
 
       // debugger;
-
       festivalMarker = new google.maps.Marker({
         position: destination,
         map: map2
@@ -133,7 +132,6 @@ $(function() {
     $(activeTab).fadeIn();
 
     if (carPrice > 0) {
-
       festivalMaps.resetDrivingMap();
     }
 
@@ -198,33 +196,29 @@ $(function() {
  //        });
  //      }
  // }
-
-  
 });
 
+function initMap() {
+  var myLatLng = {lat: 49.2827, lng: -123.1207};
+  var map;
 
-  console.log("outside function");
-  function initMap() {
-    var myLatLng = {lat: 49.2827, lng: -123.1207};
-    var map;
+  map = new google.maps.Map(document.getElementById('map'), {
+    center: myLatLng,
+    zoom: 7
+  });
 
-    map = new google.maps.Map(document.getElementById('map'), {
-      center: myLatLng,
-      zoom: 7
-    });
+  var marker = new google.maps.Marker({
+    map: map,
+    position: myLatLng,
+    title: 'Hello World'
+  });
 
-    var marker = new google.maps.Marker({
-      map: map,
-      position: myLatLng,
-      title: 'Hello World'
-    });
-
-    $.getJSON("/festivals", function(data) {
-      $.each(data, function(index, festival) {
-        var marker = new google.maps.Marker({
-          map: map, 
-          position: {lat:festival.latitude, lng:festival.longitude}, 
-          name: name
+  $.getJSON("/festivals", function(data) {
+    $.each(data, function(index, festival) {
+      var marker = new google.maps.Marker({
+        map: map, 
+        position: {lat:festival.latitude, lng:festival.longitude}, 
+        name: name
       });
       // var contentString = "This is a string";
       var infowindow = new google.maps.InfoWindow({
@@ -235,7 +229,7 @@ $(function() {
         infowindow.open(map, marker);
         infowindow.addListener('closeclick', function() {
           infowindow.close();
-       });
+        });
       // setTimeout(function(){
       //   infowindow.close();
       // },3000)
@@ -251,4 +245,4 @@ $(function() {
     var latLng = new google.maps.LatLng(49.8994, -97.1392); //should pan to specified location (based on card/div?)
     map.panTo(latLng);
   });
- }   
+}   

@@ -24,27 +24,8 @@ class Festival < ActiveRecord::Base
     return arrival_airport
   end
 
-  def self.autocomplete(input)
-    #Autocomplete Search
-    url = URI("https://airport.api.aero/airport/match/#{input}?user_key=#{ENV['AIRPORT_API_USERKEY']}")
-
-    http = Net::HTTP.new(url.host, url.port)
-    http.use_ssl = true
-    http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-    request = Net::HTTP::Get.new(url)
-    request["dataType"] = "application/json"
-    request["cache-control"] = 'no-cache'
-    response = http.request(request)
-    response = response.body
-    response = JSON.parse(response[/{.+}/])
-
-    return response
-  end
-
   def self.different_airport?(departure, arrival)
     departure != arrival
   end
 
 end
-  

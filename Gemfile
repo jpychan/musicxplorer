@@ -47,6 +47,8 @@ gem 'seed_dump'
 gem  'watir-webdriver'
 gem 'watir-scroll'
 
+gem 'rails-jquery-autocomplete'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
