@@ -13,7 +13,7 @@ $(function() {
         type: 'POST',
         data: tripCost
       });
-    $(this).replaceWith('<button class="remove-btn">Remove from Favourites</button>');
+    $(this).replaceWith('<button class="remove-btn"><i class="fa fa-star"></i> Remove from Favourites</button>');
   });
 
   $('.cache-btns').on('click', '.remove-btn', function() {
@@ -36,7 +36,8 @@ $(function() {
       });
   });
 
-  // debugger;
+  // DYNAMICALLY ADD NEWLY FAVORITED FESTIVAL TO GRID
+
 
   var carPrice = $('.driving-cost')[0].dataset.carPrice;
 
