@@ -11,11 +11,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
+ActiveRecord::Schema.define(version: 20160327051318) do
+=======
 ActiveRecord::Schema.define(version: 20160323155213) do
+>>>>>>> 3c009229f304f14407c20786d2b1626b90221819
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+<<<<<<< HEAD
+  create_table "airports", force: :cascade do |t|
+    t.string   "name"
+    t.float    "latitude"
+    t.string   "longitude"
+    t.string   "float"
+    t.string   "city"
+    t.string   "country"
+    t.string   "iata_code"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+=======
+>>>>>>> 3c009229f304f14407c20786d2b1626b90221819
   create_table "artists", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
@@ -46,6 +65,12 @@ ActiveRecord::Schema.define(version: 20160323155213) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.date     "end_date"
+<<<<<<< HEAD
+    t.string   "city"
+    t.string   "state"
+    t.string   "country"
+=======
+>>>>>>> 3c009229f304f14407c20786d2b1626b90221819
   end
 
   add_index "festivals", ["camping"], name: "index_festivals_on_camping", using: :btree

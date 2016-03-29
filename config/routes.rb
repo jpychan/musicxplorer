@@ -3,18 +3,21 @@ Rails.application.routes.draw do
 
   get '/flickr_images/:festival' => 'festivals#flickr_images'
   get '/festival-list' => 'festivals#festival_list'
-  get '/festivals/compare' => 'festivals#festival_compare'
 
   post '/festival-select' => 'festivals#festival_select'
-  post '/usr-coordinates' => 'festivals#get_usr_coordinates'
+  post '/usr-info' => 'festivals#get_usr_info'
+  post '/festival-unselect' => 'festivals#festival_unselect'
 
   root 'festivals#all'
 
   get '/festivals' => 'festivals#parse_all'
 
-  resources :festivals, only: [:show]
+  resources :festivals, only: [:show] do
+   get :autocomplete_airport_name, :on => :collection
+ end
   
   get '/search_flights' => 'festivals#search_flights', defaults: { format: 'js' }
+
   get '/search_greyhound' => 'festivals#search_greyhound', defaults: { format: 'js' }
 
   get 'autocomplete', to: 'festivals#autocomplete', defaults: {format: 'json'}

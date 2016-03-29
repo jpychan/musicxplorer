@@ -7,7 +7,7 @@ $(function() {
     return d;
   }
 
-  $('.date-picker').datepicker({
+  $('#date-picker').datepicker({
     minDate: new Date(),
     maxDate: maxDay(), 
     dateFormat: 'yy-mm-dd'
@@ -29,14 +29,13 @@ $(function() {
       usrLocation.show();
       $(this).hide();
       inputBtn.show();
-      console.log('yay');
-      $.ajax('/usr-coordinates',
-          { dataType: 'json',
-            type: 'POST',
-            data: {usr_location: usrLocation.text()},
-            success: function() { console.log('user location set'); },
-            error: function(xhr) { console.log(xhr.statusText); }
-      });
+      $.ajax('/usr-info',
+        { dataType: 'json',
+          type: 'POST',
+          data: {usr_location: usrLocation.text()},
+          success: function() { console.log('user location set'); },
+          error: function(xhr) { console.log(xhr.statusText); }
+        });
     });
   });
   
@@ -99,21 +98,6 @@ $(function() {
       formatResults('Camping', festival.camping, festivalDetails);
       formatResults('Description', festival.description, festivalDetails);
     });
-  });
-
-  // SELECT FESTIVALS
-  // TODO: toggling selection
-  $('#search-results').on('click', '.festival-result', function() {
-    var selectedId = { festivalId: $(this).attr('data-id') };
-
-    // TODO: maybe attach a condition to this...
-    //$.ajax('/festival-select',
-    //  { dataType: 'json',
-    //    type: 'POST',
-    //    data: selectedId,
-    //    success: function() { console.log('festival selected'); },
-    //    error: function(xhr) { console.log(xhr.statusText); }
-    //  });
   });
 
 });

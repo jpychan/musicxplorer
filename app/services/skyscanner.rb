@@ -1,33 +1,31 @@
 module Skyscanner
 
-  def nearest_airport(lat, long)
-    lat = lat.to_s
-    long = long.to_s
+  # def nearest_airport(lat, long)
+  #   lat = lat.to_s
+  #   long = long.to_s
 
-    # LONG AND LAT
-    url = URI("https://airport.api.aero/airport/nearest/#{lat}/#{long}?user_key=#{ENV['AIRPORT_API_USERKEY']}")
+  #   # LONG AND LAT
+  #   url = URI("https://airport.api.aero/airport/nearest/#{lat}/#{long}?user_key=#{ENV['AIRPORT_API_USERKEY']}")
 
-    http = Net::HTTP.new(url.host, url.port)
-    http.use_ssl = true
-    http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+  #   http = Net::HTTP.new(url.host, url.port)
+  #   http.use_ssl = true
+  #   http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
-    request = Net::HTTP::Get.new(url)
-    request["cache-control"] = 'no-cache'
+  #   request = Net::HTTP::Get.new(url)
+  #   request["cache-control"] = 'no-cache'
 
-    response = http.request(request)
-    response = response.body
-    response = JSON.parse(response[/{.+}/])
-  end
+  #   response = http.request(request)
+  #   response = response.body
+  #   response = JSON.parse(response[/{.+}/])
+  # end
 
   def create_skyscanner_session(params)
     url = URI("http://partners.api.skyscanner.net/apiservices/pricing/v1.0?apiKey=#{ENV['SKYSCANNER_API']}")
 
     festival = Festival.find(params[:festival_id])
+
     outbound_date = festival.start_date - 1
     inbound_date = festival.end_date + 1
-    arrival_airport = nearest_airport(festival.latitude, festival.longitude)
-    arrival_airport = arrival_airport["airports"][0]["code"].downcase
-    departure_airport = params[:departure_airport].downcase
 
     http = Net::HTTP.new(url.host, url.port)
 
@@ -35,14 +33,13 @@ module Skyscanner
     request["content-type"] = 'application/x-www-form-urlencoded'
     request["accept"] = 'application/json'
     request["cache-control"] = 'no-cache'
-    request.body = "country=CA&currency=CAD&locale=en-CA&adults=#{params[:adults]}&children=#{params[:children]}&infants=#{params[:infants]}&originplace=#{departure_airport}-iata&destinationplace=#{arrival_airport}-iata&outbounddate=#{outbound_date}&inbounddate=#{inbound_date}&locationschema=Iata&cabinclass=#{params[:cabin_class]}&groupPricing=true"
+    request.body = "country=CA&currency=CAD&locale=en-CA&adults=#{params[:adult]}&children=#{params[:children]}&infants=#{params[:infants]}&originplace=#{params[:departure_airport]}-iata&destinationplace=#{params[:arrival_airport]}-iata&outbounddate=#{outbound_date}&inbounddate=#{inbound_date}&locationschema=Iata&cabinclass=#{params[:cabin_class]}&groupPricing=true"
     response = http.request(request)
     polling_url = response["location"]
     session_id = polling_url.split('/').last
 
     return session_id
   end
-
 
   def get_itineraries(session_id)
     url = URI("http://partners.api.skyscanner.net/apiservices/pricing/uk2/v1.0/#{session_id}?apiKey=#{ENV['SKYSCANNER_API']}")
@@ -60,7 +57,6 @@ module Skyscanner
   end
 
   def get_first_five_results(data)
-
     legs = data["Legs"]
     places = data["Places"]
     query = data["Query"]
@@ -105,9 +101,6 @@ module Skyscanner
       j += 1
     end
 
-      return @first_five_results
+    return @first_five_results
   end
-
-
-
 end

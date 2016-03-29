@@ -30,7 +30,7 @@ class GreyhoundScraper
       Selenium::WebDriver::Firefox::Binary.path='/Applications/Firefox.app/Contents/MacOS/firefox'
       @browser = Watir::Browser.new:firefox
     else  # assume phantomjs
-      @browser = Watir::Browser.new :phantomjs, :args => ['--ignore-ssl-errors=true']
+      @browser = Watir::Browser.new:phantomjs, :args => ['--ignore-ssl-errors=true']
     end
     @depart_date = depart_date
     @depart_from = depart_from
@@ -293,4 +293,28 @@ class GreyhoundScraper
     result
   end
 
+  # FOR CACHING
+  def get_depart_data
+    try_action("Wait for #{@browser.url} to load", 0.2, 10) { @browser.label(index: 0).exists? } == "Error" ? (return "Error") : (puts "#{@browser.url} finished loading")
+    sleep 0.2
+    cost = @browser.label(index: 0).p(class: "ui-li-aside").span.text
+    cost[0] = '' if cost[0] = '$'
+    travel_time = @browser.label(index: 0).p(index: 1).span(index: 3).text
+
+    { cost: cost, travel_time: travel_time }
+  end
+
+  def run_depart
+    open_browser
+    puts enter_trip_type
+
+    enter_origin == "Error" ? (puts "Error - Couldn't find origin"; @browser.close; return "No schedules available.") : (puts "Found origin")
+    enter_destination == "Error" ? (puts "Error - Couldn't find destination"; @browser.close; return "No schedules available.") : (puts "Found destination")
+
+    enter_depart_date
+    enter_return_date
+    submit_page1 == "Error" ? (puts "Error - Couldnt submit form"; @browser.close; return "No greyhound bus schedules available.") : (puts "Form submitted successfully")
+
+    get_depart_data
+  end
 end

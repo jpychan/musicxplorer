@@ -1,4 +1,8 @@
 class CreateGenres < ActiveRecord::Migration
+<<<<<<< HEAD
+
+=======
+>>>>>>> 3c009229f304f14407c20786d2b1626b90221819
   def change
     create_table :genres do |t|
       t.string :name

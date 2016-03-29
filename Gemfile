@@ -43,12 +43,12 @@ gem 'geocoder'
 
 gem 'seed_dump'
 
-gem 'kaminari'
-
-# Greyhound Scraper:
-gem 'watir-webdriver'
+# Greyhound Scraper
+gem  'watir-webdriver'
 gem 'watir-scroll'
-# gem 'phantomjs'   # todo: figure out headless ghound scraping
+gem 'phantomjs'
+gem 'rails-jquery-autocomplete'
+gem 'kaminari'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

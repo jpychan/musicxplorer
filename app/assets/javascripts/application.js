@@ -13,6 +13,8 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui
+//= require autocomplete-rails
+//= require modal
 //= require jquery.soulmate
 //= require_tree .
 
