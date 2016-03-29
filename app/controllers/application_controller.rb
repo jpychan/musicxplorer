@@ -9,4 +9,5 @@ class ApplicationController < ActionController::Base
 
     @valid_search && @in_future
   end
+
 end
