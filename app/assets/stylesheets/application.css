@@ -22,37 +22,49 @@ body {
   width: 70%;
 }
 
-/* Favourite buttons */
-.remove-btn, 
-.remove-fave,
-.fave-btn {
-  border-radius: 5px;
-  color: #fff;
-  font-size: 12px;
+/* FESTIVAL COMPARISON MODAL */
+.modal {
+  width: 80%;
+  top: 3%;
+  left: 33%;
   font-family: helvetica;
-  padding:5px;
-}
-.remove-btn,
-.remove-fave {
-  border: 1px solid #ff6655;
-  background: #ff6655;
 }
 
-.fave-btn {
-  border: 1px solid #ffcc00;
-  background: #ffc100;
-}/* Favourite buttons */
+table {
+  text-align: center;
+}
+tbody { 
+  border: 1px solid #b8d20b;
+}
+thead { 
+  background: #b8d20b; 
+  color: #fff;
+}
+
+tr, td, th {
+  margin: 5px;
+  padding: 5px;
+}
+
+/* BUTTONS */
+i { margin-right: 3px; }
+
 .remove-btn, 
 .remove-fave,
-.fave-btn {
+.fave-btn,
+.close-btn {
   border-radius: 5px;
   color: #fff;
   font-size: 12px;
   font-family: helvetica;
   padding:5px;
 }
+
+.close-btn { float: right; }
+
 .remove-btn,
-.remove-fave {
+.remove-fave,
+.close-btn {
   border: 1px solid #ff6655;
   background: #ff6655;
 }

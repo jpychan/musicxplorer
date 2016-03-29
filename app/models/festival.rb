@@ -1,5 +1,4 @@
 class Festival < ActiveRecord::Base
-
   include Skyscanner
 
   has_many :performances, dependent: :destroy
@@ -8,7 +7,7 @@ class Festival < ActiveRecord::Base
   has_many :genres, through: :festival_genres
 
   validates :name, presence: true
-  
+
   def search_flights(params)
     session_id = create_skyscanner_session(params)
     data = get_itineraries(session_id)

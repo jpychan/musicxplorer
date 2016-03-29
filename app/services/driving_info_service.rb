@@ -41,7 +41,7 @@ class DrivingInfoService
       # filter the distance matrix
       trip['elements'].each do |ele|
         if ele['status'] == 'ZERO_RESULTS'
-          round_trip << {'distance' => {'value' => 0}, 'duration' => {'text' => "Can't drive there"}}
+          round_trip << {'distance' => {'value' => 0}, 'duration' => {'text' => "n/a"}}
         elsif ele['distance']['value'] != 0
           round_trip << ele
         end
