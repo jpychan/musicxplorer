@@ -61,7 +61,9 @@
                 br does not currently account for switching mode of transportation e.g. ferries
               p $#{display(@price_by_car)}
               p trip duration: #{@time_by_car}
-            
+
+            div[id="driving-map" data-latitude="#{@festival.latitude}" data-longitude="#{@festival.longitude}"]
+           
 
           div[id="bus" class="route-details hidden"]
             img[src="#{image_path('bus_loading.gif')}" width="460px" height="460px"]
@@ -82,7 +84,6 @@
           li #{artist.name}
 
 
-    div[id="driving-map" data-latitude="#{@festival.latitude}" data-longitude="#{@festival.longitude}"]
     div[class="flickr-imgs pure-g" data-name="#{@festival.name}"]
 
   script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1CqC9GEW-FdV8IsnwZaXTX6reVN7wYOo"
