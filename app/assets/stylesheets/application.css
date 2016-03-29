@@ -214,7 +214,7 @@ i { margin-right: 3px; }
   position: relative;
 }
 
-#search-results {
+.search-results {
   font-family: Helvetica;
   /*font-weight: lighter;*/
   font-size: 20px;
@@ -225,7 +225,7 @@ i { margin-right: 3px; }
   text-align: justify;
 }
 
-#results_container {
+.results_container {
   background-color: white;
   border-radius: 8px;
   box-shadow: 1px 1px 5px #333333;
@@ -242,7 +242,7 @@ i { margin-right: 3px; }
   /*z-index: -1;*/
 }
 
-/* #home*/ #map {
+/* #home*/ .map {
   box-shadow: 1px 1px 5px #333333;
   display: inline-block;
   height: 750px;

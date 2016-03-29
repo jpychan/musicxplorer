@@ -79,8 +79,6 @@ $(function() {
 
   loadDrivingMap: function() {
 
-
-
     map = new google.maps.Map(document.getElementById('driving-map'), {
       center: departure,
       scrollwheel: false,
