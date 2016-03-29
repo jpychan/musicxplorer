@@ -46,8 +46,9 @@ gem 'seed_dump'
 # Greyhound Scraper
 gem  'watir-webdriver'
 gem 'watir-scroll'
-
+gem 'phantomjs'
 gem 'rails-jquery-autocomplete'
+gem 'kaminari'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
@@ -61,6 +62,7 @@ gem 'rails-jquery-autocomplete'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
+  gem 'pry'
 end
 
 group :development do

@@ -20,7 +20,7 @@ $(function() {
     $(this).replaceWith('<button class="fave-btn">Add to Favourites</button>');
     $.ajax('/festival-unselect',
       { dataType: 'json',
-        type: 'DELETE', 
+        type: 'POST', 
         data: { festivalId: $('.music-festival').attr('data-id') }
       });
   });
@@ -245,4 +245,4 @@ function initMap() {
     var latLng = new google.maps.LatLng(49.8994, -97.1392); //should pan to specified location (based on card/div?)
     map.panTo(latLng);
   });
-}   
+} 
