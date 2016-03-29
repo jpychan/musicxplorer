@@ -19,7 +19,7 @@ class FestivalsController < ApplicationController
     fg = FestivalGridService.new
     @selected_festivals = fg.get_saved_festivals
     driving = DrivingInfoService.new(@festival)
-    @price_b_ycar = driving.calc_driving_cost
+    @price_by_car = driving.calc_driving_cost
     @time_by_car = driving.get_trip_time[0]
     # @usr_location = $redis.hgetall('user')
 
