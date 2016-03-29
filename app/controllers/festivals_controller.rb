@@ -129,15 +129,18 @@ class FestivalsController < ApplicationController
     @depart_from = { city: $redis.hget('user', 'location').split(', ')[0], state: $redis.hget('user', 'location').split(', ')[1]}
     @return_date = (@festival.end_date + 1).strftime
     @return_from = { city: @festival.location.split(', ')[0], state: @festival.location.split(', ')[1] }
-    @trip_type = "Round Trip"
-    if @depart_from == @return_from
+    trip_type = "Round Trip"
+    browser = "phantomjs"
+    if @festival.country != "CA" && @festival.country != "US"
+      @greyhound_data = "Sorry, bus schedules are currently only available for Canada and US"
+    elsif @depart_from == @return_from
       @greyhound_data = "Festival is located in your home city. You're already there!"
     elsif Date.today > @festival.end_date
       @greyhound_data = "Festival has already ended. No greyhound bus schedules available."
     elsif Date.today >= @festival.start_date
       @greyhound_data = "Festival already in progress. No greyhound bus schedules available."
     else
-      ghound = GreyhoundScraper.new(@depart_date, @depart_from, @return_date, @return_from, @trip_type)
+      ghound = GreyhoundScraper.new(@depart_date, @depart_from, @return_date, @return_from, trip_type, browser)
       @greyhound_data = ghound.run
     end
 

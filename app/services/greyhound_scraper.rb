@@ -22,15 +22,22 @@ class GreyhoundScraper
   attr_reader :return_from
   attr_reader :trip_type
 
-  def initialize(depart_date, depart_from, return_date, return_from, trip_type)
-    @browser = Watir::Browser.new:chrome
-    # @browser = Watir::Browser.start "www.google.com", :chrome
-    # @browser = Watir::Browser.new :phantomjs, :args => ['--ignore-ssl-errors=true']
+  def initialize(depart_date, depart_from, return_date, return_from, trip_type, browser_type)
+    if browser_type.downcase == "chrome"
+      @browser = Watir::Browser.new:chrome
+    # @browser = Watir::Browser.start "www.google.com", :chrome   #alt
+    elsif browser_type.downcase == "firefox"
+      Selenium::WebDriver::Firefox::Binary.path='/Applications/Firefox.app/Contents/MacOS/firefox'
+      @browser = Watir::Browser.new:firefox
+    else  # assume phantomjs
+      @browser = Watir::Browser.new :phantomjs, :args => ['--ignore-ssl-errors=true']
+    end
     @depart_date = depart_date
     @depart_from = depart_from
     @return_date = return_date
     @return_from = return_from
     @trip_type = trip_type
+    @browser_type = browser_type
   end
 
   def validate_depart_date
@@ -53,7 +60,8 @@ class GreyhoundScraper
     end
   end
 
-  def sureLoadLink(mytimeout)
+  # Todo - return success/fail msg
+  def sure_load_link(mytimeout)
     browser_loaded = 0
     while (browser_loaded == 0)
       begin
@@ -67,26 +75,61 @@ class GreyhoundScraper
         retry
       end
     end
+    puts "Homepage Successfully loaded"
+  end
+
+  def try_action(msg, wait_time, tries)
+    fails = 0
+    begin
+      yield
+    rescue
+      fails += 1
+      puts "#{msg}: fail #{fails}"
+      sleep wait_time
+      fails < tries ? retry : (puts "#{msg}: gave up"; return "Error")
+    end
+    return "#{msg}: action success"
+  end
+
+  # Todo - Dry this, make it call try_action
+  def try_click(msg)
+    fails = 0
+    begin
+      yield
+    rescue
+      fails += 1
+      puts "  #{msg}: fail #{fails}"
+      sleep 0.2
+      fails < 5 ? retry : (puts "  #{msg}: gave up"; return "Error")
+    end
+    return "  #{msg}: click success"
   end
 
 
   def open_browser
-    sureLoadLink(5){@browser.goto(FORM_URL)} 
-    # todo figure out how to minimize browser
+    # 5 seconds safe for Chrome, 7 seconds safe for phantomjs. Todo - conditional logic
+    if @browser_type == "chrome"
+      wait = 5
+    elsif @browser_type == "firefox"
+      wait = 7
+    else
+      wait = 7
+    end
+      sure_load_link(wait) { @browser.goto(FORM_URL) }
   end
 
   def enter_trip_type
     if @trip_type == "One Way"
-      @browser.span(text: 'One Way').when_present.click
+      return try_click("Select One Way") { @browser.span(text: 'One Way').when_present.click }
     else
-      @browser.span(text: 'Round Trip').when_present.click
+      return try_click("Select Round Trip") { @browser.span(text: 'Round Trip').when_present.click }
     end
     sleep 0.3
   end
 
   # placeholder must be "Leaving from..." or "Going to..."
   def enter_location(placeholder, location)
-    @browser.text_field(placeholder: placeholder).click
+    puts try_click("Select #{placeholder}") { @browser.text_field(placeholder: placeholder).click }
     sleep 0.2
     @browser.text_field(placeholder: placeholder).set(location[:city][0..3])
     seg2 = location[:city][4..(location[:city].length - 1)]
@@ -98,25 +141,22 @@ class GreyhoundScraper
     index = 0
     begin
       @browser.li(class: "ui-li ui-li-static ui-btn-up-x", index: index).wait_until_present(1)
-    # TODO Rescue error!
     rescue Watir::Wait::TimeoutError => e
       return "Error"  # todo - make nicer
     end
 
-    sleep 0.2
     # put 'ui-li ui-li-static ui-btn-up-x' this in scrapper config file along with the url
     while (@browser.li(class: "ui-li ui-li-static ui-btn-up-x", index: index).exists?)
-      if @browser.li(class: "ui-li ui-li-static ui-btn-up-x", index: index).text == (location[:city] + ', ' + location[:state]).upcase
-        @browser.li(class: "ui-li ui-li-static ui-btn-up-x", index: index).click
+      dropdown_match = (location[:city] + ', ' + location[:state]).upcase
+      if @browser.li(class: "ui-li ui-li-static ui-btn-up-x", index: index).text == dropdown_match
+        puts try_click("Click dropdown #{dropdown_match}") { @browser.li(class: "ui-li ui-li-static ui-btn-up-x", index: index).click }
         puts "Found " + location[:city] + ', ' + location[:state]
         sleep 0.3
-        return true
+        return true   # happy path ends here
       end
       index += 1
     end
-    # Throw an exception here because that means city doesn't exist. Make sure that users input cities in north america
-    puts "Throw Error: " + location[:city] + ', ' + location[:state] + " not found"
-    # TODO - throw error
+    puts "Error: " + location[:city] + ', ' + location[:state] + " not found"
     return "Error"
   end
 
@@ -146,8 +186,8 @@ class GreyhoundScraper
   end
 
   def submit_form(next_page)
-    @browser.scroll.to :bottom
-    @browser.button.when_present.click
+    @browser.scroll.to :bottom if @browser_type != "phantomjs"
+    puts try_click("Click 'View Schedules' to goto #{next_page}") { @browser.button.when_present.click }
     # Watir::Wait.until(6, "Couldn't load next page: " + next_page) { @browser.url.include? next_page }
     begin
       Watir::Wait.until(6) { @browser.url.include? next_page }
@@ -161,7 +201,7 @@ class GreyhoundScraper
   end
 
   def submit_page2
-    @browser.label(index: 0).when_present.click
+    puts try_click("Select the first schedule in p2") { @browser.label(index: 0).when_present.click }
     sleep 0.2
     submit_form("tix3.html")
   end
@@ -202,6 +242,8 @@ class GreyhoundScraper
     data = {}
     # for each departure/return entry, grab: start_time, end_time, travel_time, cost
     i = 0
+    try_action("Wait for #{@browser.url} to load", 0.2, 10) { @browser.label(index: i).exists? } == "Error" ? (return "Error") : (puts "#{@browser.url} finished loading")
+    sleep 0.2
     while (@browser.label(index: i).exists?)
       cost = @browser.label(index: i).p(class: "ui-li-aside").span.text
       cost[0] = '' if cost[0] = '$'   # remove $ sign
@@ -223,7 +265,7 @@ class GreyhoundScraper
 
   def run
     self.open_browser
-    self.enter_trip_type
+    puts self.enter_trip_type
 
     self.enter_origin == "Error" ? (puts "Error - Couldn't find origin"; @browser.close; return "No schedules available.") : (puts "Found origin")
     self.enter_destination == "Error" ? (puts "Error - Couldn't find destination"; @browser.close; return "No schedules available.") : (puts "Found destination")

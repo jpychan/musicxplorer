@@ -28,25 +28,29 @@ class DrivingInfoService
   end
 
   def get_trip
-    origin = @origin.split(' ').join('+')
-    dest = [@festival.latitude.to_f, @festival.longitude.to_f].join(',')
 
-    googl_dist = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=#{origin}|#{dest}&destinations=#{dest}|#{origin}&key=#{ENV['GOOGL_DIST_KEY']}&avoid=tolls"
-    googl_resp = HTTParty.get(googl_dist)
-    googl_data = JSON.parse(googl_resp.body)['rows']
+    # origin = @origin.split(' ').join('+')
+    # dest = [@festival.latitude.to_f, @festival.longitude.to_f].join(',')
 
-    round_trip = []
-    googl_data.each do |trip|
-      # filter the distance matrix
-      trip['elements'].each do |ele|
-        if ele['status'] == 'ZERO_RESULTS'
-          round_trip << {'distance' => {'value' => 0}, 'duration' => {'text' => "Can't drive there"}}
-        elsif ele['distance']['value'] != 0
-          round_trip << ele
-        end
-      end
-    end
-    round_trip
+    # url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=#{origin}%7C#{dest}&destinations=#{dest}%7C#{origin}&key=#{ENV['GOOGL_DIST_KEY']}&avoid=tolls"
+    # encode_url = URI.encode(url)
+    # googl_dist = URI.parse(encode_url)
+
+    # googl_resp = HTTParty.get(googl_dist)
+    # googl_data = JSON.parse(googl_resp.body)['rows']
+
+    # round_trip = []
+    # googl_data.each do |trip|
+    #   # filter the distance matrix
+    #   trip['elements'].each do |ele|
+    #     if ele['status'] == 'ZERO_RESULTS'
+    #       round_trip << {'distance' => {'value' => 0}, 'duration' => {'text' => "Can't drive there"}}
+    #     elsif ele['distance']['value'] != 0
+    #       round_trip << ele
+    #     end
+    #   end
+    # end
+    # round_trip
   end
 
   def get_trip_dist
