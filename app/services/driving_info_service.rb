@@ -40,6 +40,7 @@ class DrivingInfoService
     googl_data.each do |trip|
       # filter the distance matrix
       trip['elements'].each do |ele|
+        byebug
         if ele['status'] == 'ZERO_RESULTS'
           round_trip << {'distance' => {'value' => 0}, 'duration' => {'text' => "n/a"}}
         elsif ele['distance']['value'] != 0

@@ -23,6 +23,7 @@
   left: 33%;
   font-family: helvetica;
   position: relative;
+  display: none;
 }
 
 .modal.fade.in { position: fixed; }

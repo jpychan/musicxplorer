@@ -45,8 +45,6 @@ class FestivalsController < ApplicationController
     respond_to do |format|
       format.js {render layout: false}
     end
-
-    # render json: @festivals
   end
 
   # TODO: refactor
@@ -167,6 +165,7 @@ class FestivalsController < ApplicationController
     end
       
     respond_to do |format|
+      format.html { redirect_to :back }
       format.js {render layout: false}
     end
   end

@@ -239,22 +239,27 @@ class GreyhoundScraper
   # helper for get_depart_data, get_return_data
   # 2 possibilities for type: depart, return
   def get_trip_data
-    data = {}
-    # for each departure/return entry, grab: start_time, end_time, travel_time, cost
-    i = 0
-    try_action("Wait for #{@browser.url} to load", 0.2, 10) { @browser.label(index: i).exists? } == "Error" ? (return "Error") : (puts "#{@browser.url} finished loading")
-    sleep 0.2
-    while (@browser.label(index: i).exists?)
-      cost = @browser.label(index: i).p(class: "ui-li-aside").span.text
-      cost[0] = '' if cost[0] = '$'   # remove $ sign
-      start_time = @browser.label(index: i).h4.span.text
-      end_time = @browser.label(index: i).p(index: 1).span(index: 1).text
-      travel_time = @browser.label(index: i).p(index: 1).span(index: 3).text
+    begin
+      data = {}
+      # for each departure/return entry, grab: start_time, end_time, travel_time, cost
+      i = 0
+      try_action("Wait for #{@browser.url} to load", 0.2, 10) { @browser.label(index: i).exists? } == "Error" ? (return "Error") : (puts "#{@browser.url} finished loading")
+      sleep 0.2
+      while (@browser.label(index: i).exists?)
+        cost = @browser.label(index: i).p(class: "ui-li-aside").span.text
+        cost[0] = '' if cost[0] = '$'   # remove $ sign
+        start_time = @browser.label(index: i).h4.span.text
+        end_time = @browser.label(index: i).p(index: 1).span(index: 1).text
+        travel_time = @browser.label(index: i).p(index: 1).span(index: 3).text
 
-      data[i] = { cost: cost, start_time: start_time, end_time: end_time, travel_time: travel_time}
-      i += 1
+        data[i] = { cost: cost, start_time: start_time, end_time: end_time, travel_time: travel_time}
+        i += 1
+      end
+      puts "Found #{i} schedules"
+    rescue Watir::Exception::UnknownObjectException => e
+      puts "Page load error"
+      data = "No schedule found"
     end
-    puts "Found #{i} schedules"
     data
   end
 
