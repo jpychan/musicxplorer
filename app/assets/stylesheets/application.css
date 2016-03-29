@@ -12,13 +12,15 @@
  *
  *= require_tree .
  *= require soulmate
+ *= require modal
  *= require_self
  */
 
-body {
-  /*background-color: #DEE0FA;*/
+
+/*body {
+  background-color: #DEE0FA;
   font-family: Helvetica;
-}
+}*/
 
 #festival-show {
   margin: 0 15%;
@@ -44,9 +46,12 @@ body {
     cursor:pointer;
   }
 
-#tabs-nav li:hover,
-li.active {
-  background-color: #d5d5de;
+/* FESTIVAL COMPARISON MODAL */
+.modal {
+  width: 80%;
+  top: 3%;
+  left: 33%;
+  font-family: helvetica;
 }
 
 .content {
@@ -94,64 +99,55 @@ li.active {
   width: 100%;
   height: 100%;
   display: block;
+}
+
+table {
   text-align: center;
-  color: #ccc;
-  text-decoration: none;
-  box-sizing: border-box;
-  padding: 20%;
 }
-#travel-tabs a:hover {
-  background: #2c3e50;
+tbody { 
+  border: 1px solid #b8d20b;
 }
-#travel-tabs .route-details {
-  width: 70%;
-  color: #000;
-  float: left;
-  height: 100%;
-  margin-bottom: 10px;
-  box-sizing: border-box;
-  text-align: left;
-  font-size: 14px;
-  padding-left: 20px;
+thead { 
+  background: #b8d20b; 
+  color: #fff;
 }
+
 #festival-show #driving-map {
   width: 100%;
   height: 100%;
 }
 
-#travel-tabs .flight-search-details {
-  font-size: 20px;
+tr, td, th {
+  margin: 5px;
+  padding: 5px;
 }
 
-#travel-tabs a.pure-button {
-  padding: 10px;
-  display: inline-block;
-  text-align: center;
+/* BUTTONS */
+i { margin-right: 3px; }
+
+.remove-btn, 
+.remove-fave,
+.fave-btn,
+.close-btn {
+  border-radius: 5px;
   color: #fff;
-  background-color: green;
-  text-decoration: none;
-  box-sizing: border-box;
+  font-size: 12px;
+  font-family: helvetica;
+  padding:5px;
 }
 
-#travel-tabs a.pure-button:hover {
-  background: #000;
+.close-btn { float: right; }
+
+.remove-btn,
+.remove-fave,
+.close-btn {
+  border: 1px solid #ff6655;
+  background: #ff6655;
 }
 
-#travel-tabs .flight-result {
-  border: 1px solid green;
-  padding: 10px;
-}
-
-#flight {
-  overflow: auto;
-}
-
-.flight-departure {
-  border-bottom: 1px solid gray;
-}
-
-#travel-tabs .flight-result {
-  margin-bottom: 30px;
+.fave-btn {
+  border: 1px solid #ffcc00;
+  background: #ffc100;
 }
 
 .ui-datepicker { 
@@ -284,7 +280,6 @@ li.active {
   width: 430px;
   /*margin-top: 120px;*/ 
 }
-
 #fest_locations {
   /*display: inline-block;*/
   background-color: #B8D20B;
@@ -345,6 +340,27 @@ li.active {
 .pan_link {
   color: black;
 }
+
+#date {
+  margin-left: 50%;
+}
+#camping {
+  margin-left: 50%;
+}
+#artist {
+  margin-left: 50%;
+}
+#genre {
+  margin-left: 50%;
+}
+#search {
+  margin-left: 50%;
+}
+/*#button {
+  position: relative;
+  float: top;
+  margin-bottom: 50px;
+}*/
 
 #flight-search-form {
   display: none;

@@ -1,12 +1,13 @@
-h1 id="wel" class="head" MusicXplore
+.container
+
 
 = link_to 'festival comparison', festivals_compare_path
 
-div id="location"
-  = text_field_tag :location, '', id: 'get_location'
-  = button_tag 'Enter your location', id: 'edit_location'
-  div#usr_location
-    = @usr_location
+  h1 id="wel" class="head" MusicXplore
+
+  div id="search-results"
+
+  div id="map"
 
 = form_tag '/festival-list', remote: true,  method: :get, id: 'festival-search'
   div id="date"
@@ -52,3 +53,8 @@ div.pure.g
 / button class="pan_button pure button" Pan
 / button class="map_button pure button" Toggle Map
 
+  / div
+  / button class="pan_button pure button" Pan
+  / button class="map_button pure button" Toggle Map
+
+  script async="" defer="" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyApKknQ2HJDwP0l2NNQcdE6pPfpFKNtwto&callback=initMap"
