@@ -1,42 +1,10 @@
 .container
 
-
-/ = link_to 'festival comparison', festivals_compare_path
-
   h1 id="wel" class="head" MusicXplore
 
   div id="search-results"
 
   div id="map"
-
-= form_tag '/festival-list', remote: true,  method: :get, id: 'festival-search'
-  div id="date"
-    = label_tag :date, 'Select a date'
-    = text_field_tag :date, '', id: 'date-picker'
-
-  div id="camping"
-    = label_tag :camping, 'Camping style festivals?'
-    p
-      | no preference
-      = radio_button_tag :camping, '', true
-      | yes
-      = radio_button_tag :camping, 'yes'
-      | no
-      = radio_button_tag :camping, 'no'
-
-  div id="artist"
-    = label_tag :artist, 'Search by artist'
-    = text_field_tag :artist, '', id: 'search-artist', autocomplete: :off
-
-  div id="genre"
-    = label_tag :genre, 'Search by genre'
-    = select_tag :genre,
-        options_from_collection_for_select(@genres, 'name', 'name'),
-        include_blank: ''
-
-  div id="search"
-    = submit_tag 'Search!', id: 'submit-search'
-
 
 div id="fest_results"
   h3 Results:
