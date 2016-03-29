@@ -103,9 +103,8 @@ li.active {
 }
 
 #festival-show #festival-map {
-  width: 500px;
-  height: 500px;
-  border: 1px solid red;
+  width: 100%;
+  height: 300px;
 }
 
 #travel-tabs .flight-search-details {
