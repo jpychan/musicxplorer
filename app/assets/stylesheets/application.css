@@ -14,6 +14,7 @@
  *= require soulmate
  *= require modal
  *= require_self
+ *= require bus
  */
 
 
@@ -41,9 +42,11 @@ table {
 tbody { 
   border: 1px solid #b8d20b;
 }
+
 thead { 
   background: #b8d20b; 
   color: #fff;
+
 }
 
 
@@ -288,6 +291,49 @@ i { margin-right: 3px; }
   margin-bottom: 50px;
 }*/
 
+#card_description {
+  font-size: 14px;
+  padding: 12px;
+  text-align: center;
+}
+/*#location {
+  margin-left: 50%;
+}
+#date {
+  margin-left: 50%;
+}
+#camping {
+  margin-left: 50%;
+}
+#artist {
+  margin-left: 50%;
+}
+#genre {
+  margin-left: 50%;
+}
+#search {
+  margin-left: 50%;
+}*/
+/*#button {
+  position: relative;
+  float: top;
+  margin-bottom: 50px;
+}*/
+
 #flight-search-form {
   display: none;
+}
+
+.bus-schedule-header {
+  border:5px solid black;
+  width:100px;
+}
+
+#bus-depart ul, #bus-return ul {
+  background-color:lightblue;
+  color:black;
+}
+
+#bus-depart div {
+  width:100px;
 }

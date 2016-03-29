@@ -1,10 +1,11 @@
 $(function() {
-  function addSearched() {
-    for (var i = 0; i < searched.length; i++) {
-      var ele = searched[i];
-       $('#search-results').appendTo('#results_container'); 
-     };
-    };
+  // function addSearched() {
+  //   for (var i = 0; i < searched.length; i++) {
+  //     var ele = searched[i];
+  //      $('#search-results').appendTo('#results_container'); 
+  //    };
+  //   };
+
 
   // ADD OR REMOVE FESTIVALS FROM FAVORITES ON FESTIVAL SHOW PAGE
   $('.cache-btns').on('change', '.fave-btn', function(){
@@ -99,75 +100,55 @@ $(function() {
  //      }
  // }
 
+
 });
 
-// function initMap() {
-//   var myLatLng = {lat: 49.2827, lng: -123.1207};
-//   var map;
+function initMap() {
+  var myLatLng = {lat: 49.2827, lng: -123.1207};
+  var map;
 
-//   map = new google.maps.Map(document.getElementById('map'), {
-//     center: myLatLng,
-//     zoom: 7
-//   });
+  map = new google.maps.Map(document.getElementById('map'), {
+    center: myLatLng,
+    zoom: 7
+  });
 
-//   var marker = new google.maps.Marker({
-//     map: map,
-//     position: myLatLng,
-//     title: 'Hello World'
-//   });
+  var marker = new google.maps.Marker({
+    map: map,
+    position: myLatLng,
+    title: 'Hello World'
+  });
 
-//   $.getJSON("/festivals", function(data) {
-//     $.each(data, function(index, festival) {
-//       var marker = new google.maps.Marker({
-//         map: map, 
-//         position: {lat:festival.latitude, lng:festival.longitude}, 
-//         name: name
-//     });
-//     // var contentString = "This is a string";
-//     var infowindow = new google.maps.InfoWindow({
-//       content: (festival.name + ',' + ' ' + festival.date)
-//     });
-//     marker.addListener('click', function() {
-//       console.log("listener");
-//       infowindow.open(map, marker);
-//       infowindow.addListener('closeclick', function() {
-//         infowindow.close();
-//      });
-//     // setTimeout(function(){
-//     //   infowindow.close();
-//     // },3000)
-//     });
-//   });
-// });
+  $.getJSON("/festivals", function(data) {
+    $.each(data, function(index, festival) {
+      var marker = new google.maps.Marker({
+        map: map, 
+        position: {lat:festival.latitude, lng:festival.longitude}, 
+        name: name
+    });
+    // var contentString = "This is a string";
+    var infowindow = new google.maps.InfoWindow({
+      content: (festival.name + ',' + ' ' + festival.date)
+    });
+    marker.addListener('click', function() {
+      console.log("listener");
+      infowindow.open(map, marker);
+      infowindow.addListener('closeclick', function() {
+        infowindow.close();
+     });
+    // setTimeout(function(){
+    //   infowindow.close();
+    // },3000)
+    });
+  });
+});
 
-// // function initMap() {
-//   // $('.pan_link').on('click', function(){
-//   //   console.log("pan function");
-//   //   //should pan to specified location (based on card/div?)
-//   //   var latLng = new google.maps.LatLng(49.8994, -97.1392); 
-//   //   map.panTo(latLng);
-//   // });
-//     // };
+$(".map_button").click(function(){
+  $("#map").toggle(300);
+});
 
-
-  // $(".map_button").click(function(){
-  //   $("#map").toggle(300);
-  // });
-
-  var target = $('#wel');
-  var targetHeight = target.outerHeight();
-
-  $(window).scroll(function(){
-    var scrollPercent = (targetHeight - window.scrollY) / targetHeight;
-    if(scrollPercent >= 0){
-      target.css('opacity', scrollPercent);
-    }
-  }); 
- 
-
- //  $('.pan_button').on('click', function(){
- //    var latLng = new google.maps.LatLng(49.8994, -97.1392); //should pan to specified location (based on card/div?)
- //    map.panTo(latLng);
- //  });
- // }   
+$('.pan_button').on('click', function(){
+  var latLng = new google.maps.LatLng(49.8994, -97.1392); //should pan to specified location (based on card/div?)
+  map.panTo(latLng);
+});
+}
 

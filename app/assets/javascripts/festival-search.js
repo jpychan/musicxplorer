@@ -34,11 +34,11 @@ $(function() {
       // $(this).hide();
       inputBtn.show();
       $.ajax('/usr-info',
-          { dataType: 'json',
-            type: 'POST',
-            data: {usr_location: locationInput.val()},
-            success: function() { console.log('user location set'); },
-            error: function(xhr) { console.log(xhr.statusText); }
+        { dataType: 'json',
+          type: 'POST',
+          data: {usr_location: locationInput.val()},
+          success: function() { console.log('user location set'); },
+          error: function(xhr) { console.log(xhr.statusText); }
       });
 
     });

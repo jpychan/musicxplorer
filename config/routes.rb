@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   get '/festivals/compare' => 'festivals#festival_compare'
 
 
+
   post '/festival-select' => 'festivals#festival_select'
   post '/usr-info' => 'festivals#get_usr_info'
   post '/festival-unselect' => 'festivals#festival_unselect'
