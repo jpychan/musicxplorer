@@ -82,6 +82,7 @@ $(function() {
 
     data.forEach(function(festival) {
       var festivalDiv = $('<div class = "festival_card">').appendTo(results);
+      $('<div class = "festival_card_header">').appendTo(festivalDiv);
 
       $('<a class ="main_links">').attr('href', '/festivals/' + festival.id)
         .text(festival.name)
