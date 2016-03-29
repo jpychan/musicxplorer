@@ -1,3 +1,46 @@
 div
   - @festivals.each do |festival|
     p #{festival.name}
+
+  / div id="fest_results"
+  /   h3 Results:
+  / div id="fest_locations"
+  /   h3 Locations: 
+
+  div.pure.g
+    div[class="pure-u-2-2"]
+      div[class="results_container"]
+        div[class="festivals_card"]
+          p #{@search_results}
+          div[class="festival_card_header"]
+            div[class="search-results"]
+    div[class="pure-u-2-2"]
+      div[class="map"]
+
+
+      / div[class="flight-result pure-g"]
+      /   div[class="pure-u-4-5"]
+      /     div[class="flight departure pure-g"]
+      /       div[class="pure-u-1-4"]
+      /         p #{@first_five_results[5]["OutboundDate"]}
+
+      /       div[class="pure-u-1-2"]
+      /         p #{result[:outbound_departure_time]} - #{result[:outbound_arrival_time]}
+      /         p #{result[:departure_carrier]["Name"]}
+
+      /       div[class="pure-u-1-4"]
+      /         p #{result[:outbound_leg]["Duration"]} min
+      /         p 0 stops
+
+      /     div[class="flight-arrival pure-g"]
+      /       div[class="pure-u-1-4"]
+      /         p #{@first_five_results[5]["InboundDate"]}
+
+              
+      /       div[class="pure-u-1-2"]
+      /         p #{result[:inbound_departure_time]} - #{result[:inbound_arrival_time]}
+      /         p Returning Carrier
+
+      /       div[class="pure-u-1-4"]
+      /         p #{result[:inbound_leg]["Duration"]} min
+      /         p 0 stops

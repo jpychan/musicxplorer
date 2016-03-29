@@ -265,6 +265,3 @@ DEPENDENCIES
   watir-scroll
   watir-webdriver
   web-console (~> 2.0)
-
-BUNDLED WITH
-   1.11.2

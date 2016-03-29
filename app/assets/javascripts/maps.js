@@ -31,16 +31,12 @@ $(function() {
       map: drivingMap
     });
 
-
-
     // Set destination, origin and travel mode.
     var request = {
       destination: destination,
       origin: departure,
       travelMode: google.maps.TravelMode.DRIVING
     };
-
-    debugger;
 
     // Pass the directions request to the directions service.
     var directionsService = new google.maps.DirectionsService();
