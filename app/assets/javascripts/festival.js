@@ -201,8 +201,15 @@ $(function() {
       var imgs = data.photos.photo;
       imgs.forEach(function(img) { 
         var imgSrc = 'https://farm'+img.farm+'.staticflickr.com/'+img.server+'/'+img.id+'_'+img.secret+'.jpg';
-        $('<img>').attr('src', imgSrc).appendTo('.flickr-imgs');
+        var imageDiv = $('<div>').addClass('each-image').addClass('pure-u-2').appendTo('.flickr-imgs');
+        var img = $('<img>').attr('src', imgSrc);
+
+        imageDiv.appendTo('.flickr-imgs').append(img);
+
+
+        // $('<img>').attr('src', imgSrc).appendTo('.each-image');
       });
+
     });
   }
 

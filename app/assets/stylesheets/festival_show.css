@@ -142,3 +142,23 @@ li.active {
   height: 200px;
   overflow: auto;
 }
+
+.each-image {
+  width: 400px;
+  height: 250px;
+  overflow: hidden;
+  text-align:center;
+  position:relative;
+  margin: 20px;
+}
+
+.each-image img {
+  width: 400px;
+  height: auto;
+  position: absolute;
+  top: -9999px;
+  bottom: -9999px;
+  left: -9999px;
+  right: -9999px;
+  margin: auto;
+}
