@@ -92,7 +92,7 @@ $(function() {
                               .attr('data-id', festival.id)
                               .appendTo(festivalDiv);
                               
-      $('<div>').text('Location: ' + festival.location).appendTo(festivalDetails );
+      $('<a href class = "pan_link">').text('Location: ' + festival.location).appendTo(festivalDetails );
       $('<div>').text('Date: ' + festival.date).appendTo(festivalDetails);
 
       // formatResults('Price', festival.price, festivalDetails);
@@ -115,5 +115,5 @@ $(function() {
         error: function(xhr) { console.log(xhr.statusText); }
       });
   });
-
 });
+

@@ -287,6 +287,7 @@ li.active {
 }
 
 #fest_locations {
+  /*display: inline-block;*/
   position: absolute;
   background-color: #B8D20B;
   border-radius: 8px;
@@ -340,6 +341,10 @@ li.active {
   margin-bottom: 20px;
   width: 100%;
   /*z-index: -1;*/
+}
+
+.pan_link {
+  color: black;
 }
 
 #flight-search-form {

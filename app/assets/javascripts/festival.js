@@ -246,13 +246,16 @@ $(function() {
     });
   });
 
+// function initMap() {
+  $('#pan_link').on('click', function(){
+    //should pan to specified location (based on card/div?)
+    var latLng = new google.maps.LatLng(49.8994, -97.1392); 
+    map.panTo(latLng);
+  });
+    // };
+
   $(".map_button").click(function(){
     $("#map").toggle(300);
-  });
-
-  $('.pan_button').on('click', function(){
-    var latLng = new google.maps.LatLng(49.8994, -97.1392); //should pan to specified location (based on card/div?)
-    map.panTo(latLng);
   });
 
   var target = $('#wel');
@@ -264,6 +267,5 @@ $(function() {
       target.css('opacity', scrollPercent);
     }
   }); 
-
-
  }   
+
