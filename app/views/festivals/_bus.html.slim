@@ -1,0 +1,24 @@
+h2 Bus Schedules
+- if @greyhound_data.is_a? String || @greyhound_data.nil?
+  .error
+    h3 #{@greyhound_data}
+- elsif @greyhound_data.is_a? Hash
+  div[id="depart"]
+    h3 Leaving #{@depart_from[:city]}, #{@depart_from[:state]} on #{@depart_date}
+    - @greyhound_data[:depart].each do |key, schedule|
+      div
+        p = "Schedule #{key + 1}"
+        ul
+          li = "$#{schedule[:cost]}"
+          li = "Leaving #{@depart_from[:city]}: #{schedule[:start_time]}"
+          li = "Arriving #{@return_from[:city]}: #{schedule[:end_time]}"
+          li = "Total travel time: #{schedule[:travel_time]}"
+
+  div[id="return" style="display:inline-block;"]
+    h3 = "Returning from #{@return_from[:city]}, #{@return_from[:state]} on #{@return_date}"
+    - @greyhound_data[:return].each do |key, schedule|
+      p = 'Schedule ' + (key + 1).to_s
+      ul
+        li = "Leaving #{@return_from[:city]}: #{schedule[:start_time]}"
+        li = "Arriving #{@depart_from[:city]}: #{schedule[:end_time]}"
+        li = "Total travel time: #{schedule[:travel_time]}"

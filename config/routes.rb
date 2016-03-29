@@ -1,9 +1,26 @@
 Rails.application.routes.draw do
+  mount Soulmate::Server, at: '/soulmate'
+
+  get '/flickr_images/:festival' => 'festivals#flickr_images'
+  get '/festival-list' => 'festivals#festival_list'
+
+  post '/festival-select' => 'festivals#festival_select'
+  post '/usr-info' => 'festivals#get_usr_info'
+  post '/festival-unselect' => 'festivals#festival_unselect'
 
   root 'festivals#all'
 
-  resources :festivals, only: [:show, :all]
+  get '/festivals' => 'festivals#parse_all'
 
+  resources :festivals, only: [:show] do
+   get :autocomplete_airport_name, :on => :collection
+ end
+  
+  get '/search_flights' => 'festivals#search_flights', defaults: { format: 'js' }
+
+  get '/search_greyhound' => 'festivals#search_greyhound', defaults: { format: 'js' }
+
+  get 'autocomplete', to: 'festivals#autocomplete', defaults: {format: 'json'}
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -12,7 +29,7 @@ Rails.application.routes.draw do
   # root 'welcome#index'
 
   # Example of regular route:
-  #   get 'products/:id' => 'catalog#view'
+     #get 'products/:id' => 'catalog#view'
 
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
