@@ -267,16 +267,16 @@ class GreyhoundScraper
     self.open_browser
     puts self.enter_trip_type
 
-    self.enter_origin == "Error" ? (puts "Error - Couldn't find origin"; @browser.close; return "No schedules available.") : (puts "Found origin")
-    self.enter_destination == "Error" ? (puts "Error - Couldn't find destination"; @browser.close; return "No schedules available.") : (puts "Found destination")
+    form_error_handler(enter_origin, "Error - Couldn't find origin", "Found origin")
+    form_error_handler(enter_destination, "Error - Couldn't find destination.", "Found destination")
 
     self.enter_depart_date  # assume error free
     self.enter_return_date  # assume error free
-    self.submit_page1 == "Error" ? (puts "Error - Couldnt submit form"; @browser.close; return "No greyhound bus schedules available.") : (puts "Form submitted successfully")
+    form_error_handler(submit_page1, "Error - Couldn't submit form.", "Form submitted successfully")
 
     result = {}             # should be error free after this point
     result[:depart] = self.get_trip_data
-    self.submit_page2 == "Error" ? (puts "Error - Couldnt submit form"; @browser.close; return "No greyhound bus schedules available.") : (puts "Form submitted successfully")
+    form_error_handler(submit_page2, "Error - Couldn't submit form.", "Form submitted successfully")
     result[:return] = self.get_trip_data
 
     # errors = self.errors?
@@ -295,25 +295,40 @@ class GreyhoundScraper
 
   # FOR CACHING
   def get_depart_data
-    try_action("Wait for #{@browser.url} to load", 0.2, 10) { @browser.label(index: 0).exists? } == "Error" ? (return "Error") : (puts "#{@browser.url} finished loading")
-    sleep 0.2
-    cost = @browser.label(index: 0).p(class: "ui-li-aside").span.text
-    cost[0] = '' if cost[0] = '$'
-    travel_time = @browser.label(index: 0).p(index: 1).span(index: 3).text
-
+    # return something regardless of page load
+    begin
+      try_action("Wait for #{@browser.url} to load", 0.2, 10) { @browser.label(index: 0).exists? } == "Error" ? (return "Error") : (puts "#{@browser.url} finished loading")
+      sleep 0.2
+      cost = @browser.label(index: 0).p(class: "ui-li-aside").span.text
+      cost[0] = '' if cost[0] = '$'
+      travel_time = @browser.label(index: 0).p(index: 1).span(index: 3).text
+      close_browser
+    rescue Watir::Exception::UnknownObjectException => e
+      puts "Error"
+    end
     { cost: cost, travel_time: travel_time }
+  end
+
+  def form_error_handler(element, err_msg, success_msg)
+    if element == "Error"
+      puts err_msg
+      # @browser.close
+      return "No schedules available."
+    else
+      puts success_msg
+    end
   end
 
   def run_depart
     open_browser
     puts enter_trip_type
 
-    enter_origin == "Error" ? (puts "Error - Couldn't find origin"; @browser.close; return "No schedules available.") : (puts "Found origin")
-    enter_destination == "Error" ? (puts "Error - Couldn't find destination"; @browser.close; return "No schedules available.") : (puts "Found destination")
+    form_error_handler(enter_origin, "Error - Couldn't find origin", "Found origin")
+    form_error_handler(enter_destination, "Error - Couldn't find destination.", "Found destination")
 
-    enter_depart_date
-    enter_return_date
-    submit_page1 == "Error" ? (puts "Error - Couldnt submit form"; @browser.close; return "No greyhound bus schedules available.") : (puts "Form submitted successfully")
+    enter_date("depart", @depart_date)
+    enter_date("return", @return_date)
+    form_error_handler(submit_page1, "Error - Couldn't submit form.", "Form submitted successfully")
 
     get_depart_data
   end

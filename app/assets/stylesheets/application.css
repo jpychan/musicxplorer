@@ -22,7 +22,10 @@
   top: 3%;
   left: 33%;
   font-family: helvetica;
+  position: relative;
 }
+
+.modal.fade.in { position: fixed; }
 
 table {
   text-align: center;
@@ -61,11 +64,6 @@ i { margin-right: 3px; }
 .close-btn {
   border: 1px solid #ff6655;
   background: #ff6655;
-}
-
-.fave-btn {
-  border: 1px solid #ffcc00;
-  background: #ffc100;
 }
 
 .ui-datepicker { 
