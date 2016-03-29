@@ -28,7 +28,10 @@ body {
   top: 3%;
   left: 33%;
   font-family: helvetica;
+  position: relative;
 }
+
+.modal.fade.in { position: fixed; }
 
 table {
   text-align: center;

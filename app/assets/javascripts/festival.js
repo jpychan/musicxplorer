@@ -1,4 +1,4 @@
-$(function() {
+$(function() { 
 
   // ADD OR REMOVE FESTIVALS FROM FAVORITES ON FESTIVAL SHOW PAGE
   $('.cache-btns').on('click', '.fave-btn',function() {
