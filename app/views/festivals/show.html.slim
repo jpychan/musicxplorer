@@ -32,7 +32,7 @@
           p Camping: #{ display(@festival.camping) }
           = display(@festival.website) == 'n/a' ? '' : (link_to "Website", @festival.website)
 
-        div[class="pure-u-3-5" id="festival-map"]
+        div[class="pure-u-3-5"]
     
     .tabs-content
       div[id="travel" class="content hidden"]
@@ -60,8 +60,7 @@
                 br does not currently account for switching mode of transportation e.g. ferries
               p $#{display(@price_by_car)}
               p trip duration: #{@time_by_car}
-
-            div[id="driving-map" data-latitude="#{@festival.latitude}" data-longitude="#{@festival.longitude}"]
+            
 
           div[id="bus" class="route-details hidden"]
             p Tab-1
@@ -80,6 +79,9 @@
         - @festival.artists.each do |artist|
           li #{artist.name}
 
+
+    div[id="festival-map"]
+    div[id="driving-map" data-latitude="#{@festival.latitude}" data-longitude="#{@festival.longitude}"]
     div[class="flickr-imgs pure-g" data-name="#{@festival.name}"]
 
   script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1CqC9GEW-FdV8IsnwZaXTX6reVN7wYOo"

@@ -2,8 +2,10 @@ Rails.application.routes.draw do
   mount Soulmate::Server, at: '/soulmate'
 
   get '/flickr_images/:festival' => 'festivals#flickr_images'
+
   get '/festival-list' => 'festivals#festival_list', default: { format: 'js'}
   get '/festivals/compare' => 'festivals#festival_compare'
+
 
   post '/festival-select' => 'festivals#festival_select'
   post '/usr-info' => 'festivals#get_usr_info'
@@ -18,6 +20,8 @@ Rails.application.routes.draw do
  end
   
   get '/search_flights' => 'festivals#search_flights', defaults: { format: 'js' }
+
+  get '/search_greyhound' => 'festivals#search_greyhound', defaults: { format: 'js' }
 
   get 'autocomplete', to: 'festivals#autocomplete', defaults: {format: 'json'}
 

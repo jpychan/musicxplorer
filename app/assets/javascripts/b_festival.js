@@ -63,14 +63,14 @@ $(function() {
       });
   });
 
-  //Load Driving Directions on Festival Details page
+  // var carPrice = $('.driving-cost')[0].dataset.carPrice;
 
+  
+  //Load Driving Directions on Festival Details page
    
   var festivalMaps = {
 
   loadDrivingMap: function() {
-
-
 
     map = new google.maps.Map(document.getElementById('driving-map'), {
       center: departure,
@@ -110,7 +110,6 @@ $(function() {
       position: destination,
       map: map2
    });
-
   },
 
   resetDrivingMap: function() {
@@ -120,6 +119,8 @@ $(function() {
     },
   };
 
+  var carPrice = $('.driving-cost')[0].dataset.carPrice
+
   if ($('#festival-show').length > 0 && carPrice > 0) {
     festivalMaps.loadDrivingMap();
 
@@ -127,8 +128,7 @@ $(function() {
 
   if ($('#festival-show').length > 0) {
 
-    var carPrice = $('.driving-cost')[0].dataset.carPrice
-    var drivingMapDiv = $('#travel-tabs').find('#driving-map');
+    var drivingMapDiv = $('#driving-map');
     var destinationCoords = {
       lat: drivingMapDiv[0].dataset.latitude,
       long: drivingMapDiv[0].dataset.longitude
@@ -140,7 +140,6 @@ $(function() {
     var map;
     var map2;
     var festivalMarker;
-        debugger;
 
     festivalMaps.loadFestivalMap();
 
@@ -165,6 +164,7 @@ $(function() {
     if (carPrice > 0) {
 
       festivalMaps.resetDrivingMap();
+
     }
 
   });
@@ -233,8 +233,6 @@ $(function() {
  //        });
  //      }
  // }
-
-  
 });
 
   function initMap() {
@@ -246,18 +244,18 @@ $(function() {
       zoom: 7
     });
 
-    var marker = new google.maps.Marker({
-      map: map,
-      position: myLatLng,
-      title: 'Hello World'
-    });
+  var marker = new google.maps.Marker({
+    map: map,
+    position: myLatLng,
+    title: 'Hello World'
+  });
 
-    $.getJSON("/festivals", function(data) {
-      $.each(data, function(index, festival) {
-        var marker = new google.maps.Marker({
-          map: map, 
-          position: {lat:festival.latitude, lng:festival.longitude}, 
-          name: name
+  $.getJSON("/festivals", function(data) {
+    $.each(data, function(index, festival) {
+      var marker = new google.maps.Marker({
+        map: map, 
+        position: {lat:festival.latitude, lng:festival.longitude}, 
+        name: name
       });
       // var contentString = "This is a string";
       var infowindow = new google.maps.InfoWindow({
@@ -268,7 +266,7 @@ $(function() {
         infowindow.open(map, marker);
         infowindow.addListener('closeclick', function() {
           infowindow.close();
-       });
+        });
       // setTimeout(function(){
       //   infowindow.close();
       // },3000)
@@ -284,4 +282,4 @@ $(function() {
     var latLng = new google.maps.LatLng(49.8994, -97.1392); //should pan to specified location (based on card/div?)
     map.panTo(latLng);
   });
- }   
+} 
