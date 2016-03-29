@@ -1,0 +1,52 @@
+div[class="pure-menu pure-menu-horizontal"]
+
+  a[href="" class="pure-menu-heading pure-menu-link"]MusicXplore
+
+  ul.pure-menu-list
+    li[class="pure-menu-item" id="usr_location"]
+      | Your City is: 
+      input[type="text" id="get_location" placeholder="#{@usr_location}" class="input-locked pure-input-1-4" disabled]
+      button[id="edit_location"] Edit
+    li.pure-menu-item
+      a[href="#" class="pure-menu-link"]About
+    li.pure-menu-item
+      a[href="#" class="pure-menu-link" title="Search" id="search-btn"]
+        i[class="fa fa-search"]
+    li.pure-menu-item
+      a[href="/festivals/compare" class="pure-menu-link" title="Your Saved Festivals"]
+        i[class="fa fa-heart"]
+
+div[id="festival-search-form"]
+
+  = form_tag'/festival-list', remote: true,  method: :get, id: 'festival-search', class: "pure-form pure-form-stacked"
+
+  fieldset
+    legend Search Festivals
+
+  div[class="pure-g"]
+    div[class="pure-u-1 pure-u-md-1-3"]
+      = text_field_tag :date, '', id: 'date-picker', placeholder: "Date"
+
+    div[class="pure-u-1 pure-u-md-1-3"]
+
+      = label_tag :camping, 'Camping style festivals?', class: "pure-radio"
+        = radio_button_tag :camping, 'yes'
+        | Camping
+        = radio_button_tag :camping, 'no'
+        | No Camping
+        = radio_button_tag :camping, "", true
+        | Either
+
+    div[class="pure-u-1 pure-u-md-1-3"]
+
+      = label_tag :artist, 'Artists'
+      = text_field_tag :artist, '', id: 'search-artist', autocomplete: :off
+
+    div[class="pure-u-1 pure-u-md-1-3"]
+      = label_tag :genre, 'Genre'
+      = select_tag :genre,
+          options_from_collection_for_select(@genres, 'name', 'name'),
+          include_blank: ''
+
+    div[class="pure-u-1 pure-u-md-1-3"]
+      = submit_tag 'Search!', id: 'submit-search', class: "pure-button pure-button-primary"

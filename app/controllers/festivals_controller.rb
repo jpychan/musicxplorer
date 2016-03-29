@@ -4,19 +4,18 @@ class FestivalsController < ApplicationController
   
   SEARCH_RADIUS = 500
 
+  before_action :set_search_and_user_location
+
   def show
     @festival = Festival.find(params[:id])
 
     driving = DrivingInfoService.new(@festival)
     @price_by_car = driving.calc_driving_cost
     @time_by_car = driving.get_trip_time[0]
-    @usr_location = $redis.hgetall('user')
+    # @usr_location = $redis.hgetall('user')
   end
 
   def all
-    @artists = Artist.all.order(:name)
-    @genres = Genre.all.order(:name)
-    @usr_location = $redis.hget('user', 'location')
   end
 
   # PRE-CALCULATE COORDINATES & GET AIRPORT
@@ -29,16 +28,21 @@ class FestivalsController < ApplicationController
   # GET FESTIVAL SEARCH RESULTS
   def festival_list
     date = params[:date] == '' ? Date.today : params[:date]
-    festivals = Festival.joins("INNER JOIN performances AS p ON p.festival_id = festivals.id INNER JOIN artists AS a ON p.artist_id = a.id INNER JOIN festival_genres AS fg ON fg.festival_id = festivals.id INNER JOIN genres AS g ON fg.genre_id = g.id").where('start_date >= ? AND LOWER(camping) LIKE ? AND g.name LIKE ? AND a.name LIKE ?', date, "%#{params[:camping]}%", "%#{params[:genre]}%", "%#{params[:artist]}%").distinct
+    @festivals = Festival.joins("INNER JOIN performances AS p ON p.festival_id = festivals.id INNER JOIN artists AS a ON p.artist_id = a.id INNER JOIN festival_genres AS fg ON fg.festival_id = festivals.id INNER JOIN genres AS g ON fg.genre_id = g.id").where('start_date >= ? AND LOWER(camping) LIKE ? AND g.name LIKE ? AND a.name LIKE ?', date, "%#{params[:camping]}%", "%#{params[:genre]}%", "%#{params[:artist]}%").distinct
 
     d = DistanceService.new
     origin = $redis.hgetall('user')
-    @festivals = festivals.select do |f|
+    @festivals = @festivals.select do |f|
       dist_km = d.calc_distance(origin['lat'], origin['lng'], f)
       puts dist_km
       dist_km <= SEARCH_RADIUS
     end
-    render json: @festivals
+
+    respond_to do |format|
+      format.js {render layout: false}
+    end
+
+    # render json: @festivals
   end
 
   def festival_compare
@@ -49,16 +53,17 @@ class FestivalsController < ApplicationController
 
   # TODO: refactor
   def festival_select
-    festival_json = Festival.find(params[:festivalId]).as_json
+    festival = Festival.find(params[:festivalId])
+    festival_json = festival.as_json
     user = $redis.hgetall('user')
     f = FestivalGridService.new
-    flight = f.get_cheapest_flight(festival, user)
+    # flight = f.get_cheapest_flight(festival, user)
 
-    festival_json['price_car'] = params[:drivingPrice]
-    festival_json['time_car'] = params[:drivingTime]
-    festival_json['price_flight'] = flight['PricingOptions'][0]['Price']
-    festival_json['time_flight_in'] = flight[:inbound_leg]['Duration']
-    festival_json['time_flight_out'] = flight[:outbound_leg]['Duration']
+    # festival_json['price_car'] = params[:drivingPrice]
+    # festival_json['time_car'] = params[:drivingTime]
+    # festival_json['price_flight'] = flight['PricingOptions'][0]['Price']
+    # festival_json['time_flight_in'] = flight[:inbound_leg]['Duration']
+    # festival_json['time_flight_out'] = flight[:outbound_leg]['Duration']
  
     if festival
       $redis.hset('festivals', festival.id, festival_json.to_json)
@@ -128,5 +133,11 @@ class FestivalsController < ApplicationController
     respond_to do |format|
       format.js {render layout: false}
     end
+  end
+
+  def set_search_and_user_location
+    @artists = Artist.all.order(:name)
+    @genres = Genre.all.order(:name)
+    @usr_location = $redis.hget('user', 'location')
   end
 end
