@@ -247,16 +247,17 @@ $(function() {
   });
 
 // function initMap() {
-  $('#pan_link').on('click', function(){
-    //should pan to specified location (based on card/div?)
-    var latLng = new google.maps.LatLng(49.8994, -97.1392); 
-    map.panTo(latLng);
-  });
+  // $('.pan_link').on('click', function(){
+  //   console.log("pan function");
+  //   //should pan to specified location (based on card/div?)
+  //   var latLng = new google.maps.LatLng(49.8994, -97.1392); 
+  //   map.panTo(latLng);
+  // });
     // };
 
-  $(".map_button").click(function(){
-    $("#map").toggle(300);
-  });
+  // $(".map_button").click(function(){
+  //   $("#map").toggle(300);
+  // });
 
   var target = $('#wel');
   var targetHeight = target.outerHeight();

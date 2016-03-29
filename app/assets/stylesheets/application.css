@@ -178,45 +178,44 @@ li.active {
 #wel {
   /*position: fixed;*/
   background-color: #F77604;
-  text-align: center;
-  height: 60px;
-  /*margin-left: 20px;*/
-  margin-top: -10px;
-  font-size: 70px;
+  background-size: cover;
   color: white;
-  /*background-image: url('/header_image2.jpeg');*/
-  opacity: 0.75;
+  height: 60px;
+  font-family: Helvetica;
+  font-size: 70px;
+  font-weight: lighter;
+  /*margin-left: 20px;*/
   letter-spacing: 6px;
+  margin-top: -10px;
+  opacity: 0.75;
   padding: 100px;
   padding-bottom: 120px;
-  font-family: Helvetica;
-  font-weight: lighter;
-  background-size: cover;
+  text-align: center;
   /*width: 130%;*/
 }
 
 .pan_button {
   background: lightblue;
+  display: inline-block;
   font-family: Helvetica;
   font-size: 125%;
-  position: relative;
-  margin-top: 10px;
-  display: inline-block;
-  margin-left: 50%;
   margin-bottom: 30px;
+  margin-left: 50%;
+  margin-top: 10px;
+  position: relative;
 }
 
 .map_button {
   background: lightblue;
+  clear: left;
+  display: inline-block;
   font-family: Helvetica;
   font-size: 125%;
-  padding-right: 10px;
-  position: relative;
   margin-bottom: 30px;
-  display: inline-block;
   margin-left: 20px;
   margin-top: 10px;
-  clear: left;
+  padding-right: 10px;
+  position: relative;
 }
 
 #search-results {
@@ -251,11 +250,11 @@ li.active {
   box-shadow: 1px 1px 5px #333333;
   display: inline-block;
   height: 750px;
-  width: 650px;
   /*margin-top: 120px;*/
   margin-left: 20px;
   margin-right: 30px;
   margin-bottom: 100px;
+  width: 650px;
   /*margin-top: 50px;*/
   /*position: absolute;
   margin-top: 40px;
@@ -273,22 +272,21 @@ li.active {
   border-radius: 8px;
   box-shadow: 1px 1px 5px #333333;
   display: inline-block;
-  /*margin-left: 30px;*/
-  margin-bottom: 5px;
   font-family: Verdana;
   font-size: 20px;
+  /*margin-left: 30px;*/
+  margin-bottom: 5px;
+  margin-left: 30px;
+  margin-right: 47px;
   opacity: 0.9;
   padding-left: 20px;
   padding-right: 200px;
   width: 430px;
-  /*margin-top: 120px;*/
-  margin-left: 30px;
-  margin-right: 47px;
+  /*margin-top: 120px;*/ 
 }
 
 #fest_locations {
   /*display: inline-block;*/
-  position: absolute;
   background-color: #B8D20B;
   border-radius: 8px;
   box-shadow: 1px 1px 5px #333333;
@@ -299,6 +297,7 @@ li.active {
   /*margin-right: px;*/
   opacity: 0.9;
   padding-left: 20px;
+  position: absolute;
   width: 633px;
   /*margin-right: 610px;*/
 }
@@ -310,8 +309,8 @@ li.active {
 }
 
 .main_links {
-  font-size: 25px;
   color: #F56C57;
+  font-size: 25px;
   margin-left: 20px;
 }
 
@@ -335,10 +334,10 @@ li.active {
   border-top-right-radius: 8px;
   background-size: cover;
   background-repeat: no-repeat;
-  opacity: 0.8;
   float: right;
   height: 200px;
   margin-bottom: 20px;
+  opacity: 0.8;
   width: 100%;
   /*z-index: -1;*/
 }
