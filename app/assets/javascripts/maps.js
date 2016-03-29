@@ -8,29 +8,30 @@ $(function() {
       lat: drivingMapDiv[0].dataset.latitude,
       long: drivingMapDiv[0].dataset.longitude
     };
-
-    var departure = new google.maps.LatLng(49.246, -123.116);
+    
+    var departure = new google.maps.LatLng("49.246", "-123.116");
 
     var destination = new google.maps.LatLng(destinationCoords.lat, destinationCoords.long);
-    var map;
+    var drivingMap;
     var map2;
     var festivalMarker;
-
   }
 
   var festivalMaps = {
 
   loadDrivingMap: function() {
 
-    map = new google.maps.Map(document.getElementById('driving-map'), {
+    drivingMap = new google.maps.Map(document.getElementById('driving-map'), {
       center: departure,
       scrollwheel: false,
       zoom: 8
     });
 
     var directionsDisplay = new google.maps.DirectionsRenderer({
-      map: map
+      map: drivingMap
     });
+
+
 
     // Set destination, origin and travel mode.
     var request = {
@@ -67,9 +68,9 @@ $(function() {
   },
 
   resetDrivingMap: function() {
-    google.maps.event.trigger(map, "resize");
-    map.setCenter(departure);
-    map.setZoom(4);
+    google.maps.event.trigger(drivingMap, "resize");
+    drivingMap.setCenter(departure);
+    drivingMap.setZoom(4);
     },
   };
 
@@ -105,7 +106,6 @@ $(function() {
     }
 
   });
-
 
   //Travel tabs
   $('#festival-show').on('click', '#travel-tabs li', function(event){
