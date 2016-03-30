@@ -1,0 +1,47 @@
+/* Nav */
+
+.pure-menu {
+  padding: 20px 10px;
+  background-color: #231b12;
+  font-size: 20px;
+}
+
+.pure-menu-link:hover, .pure-menu-link:focus, .pure-menu-link:active {
+  background: none;
+  border-bottom: 3px solid #F77604;
+}
+
+.pure-menu, .pure-menu-heading, .pure-menu-item a {
+  color: #ffffff;
+}
+
+.input-locked {
+  border: none;
+  background: none;
+  color: #ffffff;
+  width: 150px;
+}
+
+.input-active {
+  border:none;
+  background: none;
+  color: #ffffff;
+  width: 150px;
+}
+
+input:focus {
+  outline:none;
+  border-bottom: 1px solid #ffffff;
+}
+
+#edit_location {
+  background: #F77604;
+  border-radius: 10%;
+  padding: 5px;
+  border: none;
+}
+
+#festival-search-form {
+  display:none;
+  padding: 10px;
+}

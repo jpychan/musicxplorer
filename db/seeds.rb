@@ -515,7 +515,32 @@ Airport.create!([
   {name: "Zhoushuizi Airport", latitude: 38.9656982422, longitude: "121.5390014648", float: nil, city: "Dalian", country: "CN", iata_code: "DLC"},
   {name: "Taoxian Airport", latitude: 41.6398010254, longitude: "123.483001709", float: nil, city: "Shenyang", country: "CN", iata_code: "SHE"}
 ])
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+Artist.create!([
+  {name: "Au"},
+  {name: "Bad90s"},
+  {name: "Bitch’n"},
+  {name: "Boyfriends"},
+  {name: "Boys"},
+  {name: "Conan"},
+  {name: "Couches"},
+  {name: "Crescendo"},
+  {name: "Décollage"},
+  {name: "Enemies"},
+  {name: "Flaural"},
+  {name: "Gems"},
+  {name: "Geographer"},
+  {name: "Helvetia"},
+  {name: "Hihazel"},
+  {name: "Hinds"},
+=======
+=======
+
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
 puts "Creating artists..."
 Artist.create!([
   {name: "Acid dad"},
@@ -637,6 +662,13 @@ Artist.create!([
   {name: "Prairie"},
   {name: "Prawn"},
   {name: "Quilt"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Rumtum"},
   {name: "Acid Mothers Temple"},
   {name: "Adult Books"},
@@ -795,6 +827,13 @@ Artist.create!([
   {name: "Baikal"},
   {name: "Barnt"},
   {name: "Bicep"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Cinnaman"},
   {name: "Dvs1"},
   {name: "Haeken"},
@@ -1111,6 +1150,13 @@ Artist.create!([
   {name: "Typhoon"},
   {name: "U2two"},
   {name: "Underworld"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Waxfiend"},
   {name: "D’angelo"},
   {name: "Circle J"},
@@ -1545,11 +1591,25 @@ Artist.create!([
   {name: "4b"},
   {name: "Bakermat"},
   {name: "Btsm"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Drezo"},
   {name: "Ephwurd"},
   {name: "Excision"},
   {name: "Ghastly"},
   {name: "Illenium"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Claude vonstroke"},
   {name: "Cut snake"},
   {name: "Dj snake"},
@@ -1565,6 +1625,13 @@ Artist.create!([
   {name: "Mk"},
   {name: "Snbrn"},
   {name: "Tritonal"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Marbs"},
   {name: "Porkchop"},
   {name: "Richie Hawtin"},
@@ -2391,6 +2458,13 @@ Artist.create!([
   {name: "Afrojack"},
   {name: "Alesso"},
   {name: "Alok"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Chapeleiro"},
   {name: "Ftampa"},
   {name: "Tropkillaz"},
@@ -2512,6 +2586,13 @@ Artist.create!([
   {name: "Lucidea"},
   {name: "Ludacris"},
   {name: "Minnesota"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Armin van buuren"},
   {name: "Axwell / ingrosso"},
   {name: "Chapeleiro"},
@@ -2727,6 +2808,7 @@ Artist.create!([
   {name: "Ployd"},
   {name: "Rebelution"},
   {name: "Ripe"},
+<<<<<<< HEAD
   {name: " Lord Huron"},
   {name: " Lost Frequencies"},
   {name: " Louis The Child"},
@@ -2758,6 +2840,43 @@ Artist.create!([
   {name: " Prayers"},
   {name: " Protoje"},
   {name: " Purity Ring"},
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> final-merge
+  {name: " Lord Huron"},
+  {name: " Lost Frequencies"},
+  {name: " Louis The Child"},
+  {name: " Lush"},
+  {name: " M83"},
+  {name: " Maceo Plex"},
+  {name: " Major Lazer"},
+  {name: " Marco Carola"},
+  {name: " Matoma"},
+  {name: " Matt And Kim"},
+  {name: " Matthew Dear"},
+  {name: " Mavis Staples"},
+  {name: " Mbongwana Star"},
+  {name: " Meg Myers"},
+  {name: " Melody’s Echo Chamber"},
+  {name: " Miami Horror"},
+  {name: " Miike Snow"},
+  {name: " Moon Taxi"},
+  {name: " Carmack"},
+  {name: " Nic Fanciulli"},
+  {name: " Nicole Moudaber"},
+  {name: " Nina Kraviz"},
+  {name: " Nina Las Vegas"},
+  {name: " Nora En Pure"},
+  {name: " Of Monsters And Men"},
+  {name: " Parov Stelar"},
+  {name: " Pete Yorn"},
+  {name: " Phases"},
+  {name: " Prayers"},
+  {name: " Protoje"},
+  {name: " Purity Ring"},
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Rae Sremmurd"},
   {name: " Rancid"},
   {name: " RÜfÜs Du Sol"},
@@ -2851,6 +2970,13 @@ Artist.create!([
   {name: "Slaughter"},
   {name: "Steelheart"},
   {name: "Tesla"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Robert delong"},
   {name: "Son of kick"},
   {name: "The 200s"},
@@ -2925,12 +3051,20 @@ Artist.create!([
   {name: "Asylums"},
   {name: "Autobahn"},
   {name: "Babeheaven"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Blaenavon"},
   {name: "Blossoms"},
   {name: "Carnabells"},
   {name: "Caro"},
   {name: "Estrons"},
   {name: "Fews"},
+<<<<<<< HEAD
   {name: "Flawes"},
   {name: "Formation"},
   {name: "Fronteers"},
@@ -3200,6 +3334,345 @@ Artist.create!([
   {name: " Imagination Movers"},
   {name: " Walter “Wolfman” Washington & The Roadmasters"},
   {name: " Beausoleil Avec Michael Doucet"},
+  {name: "Allah Las"},
+  {name: "Animal Collective"},
+  {name: "Black Mountain"},
+  {name: "Blondi’s Salvation"},
+  {name: "Brian Jonestown Massacre"},
+  {name: "Cellar Doors"},
+  {name: "Chicano Batman"},
+  {name: "Flavor Crystals"},
+  {name: "Flying Lotus"},
+  {name: "Heron Oblivion"},
+  {name: "Israel Nash"},
+  {name: "King Gizzard & The Wizard Lizard"},
+  {name: "La Mecanica Popular"},
+  {name: "Lee Ranaldo"},
+  {name: "Lee Scratch Perry"},
+  {name: "Nicolas Jaar"},
+  {name: "Oneohtrix Point Never"},
+  {name: "Parquet Courts"},
+  {name: "Promised Land Sound"},
+  {name: "Royal Trux"},
+  {name: "Super Furry Animals"},
+  {name: "The Black Angels"},
+  {name: "The Murlocs"},
+  {name: "Thurston Moore Band"},
+  {name: "Twin Peaks"},
+  {name: "Ty Segall"},
+  {name: "Ultimate Painting"},
+  {name: "Uncle Acid & The Deadbeats"},
+  {name: "3 Doors Down"},
+  {name: "Sixx:A.M."},
+  {name: "Collective Soul"},
+  {name: "Pop Evil"},
+  {name: "Bullet For My Valentine"},
+  {name: "Asking Alexandria"},
+  {name: "Escape The Fate"},
+  {name: "Parkway Drive"},
+  {name: "Miss May I"},
+  {name: "Red Sun Rising"},
+  {name: "Lacey Sturm"},
+  {name: "Monster Truck"},
+  {name: "Cane Hill"},
+  {name: "Rob Zombie"},
+  {name: "Zz Top"},
+  {name: "Five Finger Death Punch"},
+  {name: "A Day To Remember"},
+  {name: "Lamb Of God"},
+  {name: "Band of skulls"},
+  {name: "Barns courtney"},
+  {name: "Beach baby"},
+  {name: "Beaty heart"},
+  {name: "Benjamin frances leftwich"},
+  {name: "Blaenavon"},
+  {name: "Blood red shoes"},
+  {name: "Blossoms"},
+  {name: "Cameron ag"},
+  {name: "Cape cub"},
+  {name: "Carnabells"},
+  {name: "Caro"},
+  {name: "Catholic action"},
+  {name: "Cattle & cane"},
+  {name: "Chiara hunter"},
+  {name: "Circa waves"},
+  {name: "Clean cut kid"},
+  {name: "Dear friends"},
+  {name: "Declan mckenna"},
+  {name: "Estrons"},
+  {name: "Fews"},
+  {name: "Fighting caravans"},
+=======
+>>>>>>> final-merge
+  {name: "Flawes"},
+  {name: "Formation"},
+  {name: "Fronteers"},
+  {name: "Georgie"},
+  {name: "Ghostpoet"},
+  {name: "Haus"},
+  {name: "Inheaven"},
+  {name: "Kagoule"},
+  {name: "Kloe"},
+  {name: "Mabel"},
+  {name: "Miamigo"},
+  {name: "Mullally"},
+  {name: "Pumarosa"},
+  {name: "Raphaella"},
+  {name: "The Mantras"},
+  {name: "The Orange Constant"},
+  {name: "The Roots"},
+  {name: "Thrice Groove"},
+  {name: "Tokyo Police Club"},
+  {name: "Voodoo Visionary"},
+  {name: "Walking Astronomer"},
+  {name: "Café Tacuba"},
+  {name: "Carla Morrison"},
+  {name: "Cultura Profética"},
+  {name: "Enrique Bunbury"},
+  {name: "Goran Bregovic"},
+  {name: "Gustavo Cordera"},
+  {name: "Heavy Nopal"},
+  {name: "La Chiva Gantiva"},
+  {name: "León Larregui"},
+  {name: "Los Toreros Muertos"},
+  {name: "Lost Acapulco"},
+  {name: "Natalia Lafourcade"},
+  {name: "No Te Va Gustar"},
+  {name: "Of Monsters And Men"},
+  {name: "Plastilina Mosh"},
+  {name: "Sekta Core"},
+  {name: "Systema Solar"},
+  {name: "Two Door Cinema Club"},
+  {name: "Big & Rich"},
+  {name: "Big Smo"},
+  {name: "Chase Rice"},
+  {name: "Clay Walker"},
+  {name: "Lynyrd Skynard"},
+  {name: "86 Bullets"},
+  {name: "Bad Seed Rising"},
+  {name: "Britny Fox"},
+  {name: "Cinderella’s Tom Keifer"},
+  {name: "Enuff Z’nuff"},
+  {name: "Faster Pussycat"},
+  {name: "Gabbie Rae"},
+  {name: "Heaven’s Edge"},
+  {name: "Lynch Mob"},
+  {name: "Night Ranger"},
+  {name: "Quiet Riot"},
+  {name: "Vince Neil"},
+  {name: "Y&T"},
+  {name: "Band Of Skulls"},
+  {name: "Barns Courtney"},
+  {name: "Beach Baby"},
+  {name: "Beaty Heart"},
+  {name: "Benjamin Frances Leftwich"},
+  {name: "Blood Red Shoes"},
+  {name: "Cameron Ag"},
+  {name: "Cape Cub"},
+  {name: "Catholic Action"},
+  {name: "Cattle & Cane"},
+  {name: "Chiara Hunter"},
+  {name: "Circa Waves"},
+  {name: "Dear Friends"},
+  {name: "Declan Mckenna"},
+  {name: "Fighting Caravans"},
+  {name: "Fletcher Jackson"},
+  {name: "Forever Cult"},
+  {name: "George Cosby"},
+  {name: "George Taylor"},
+  {name: "Hannah Lou Clark"},
+  {name: "Hidden Charms"},
+  {name: "Holy Eqsue"},
+  {name: "Isaac Gracie"},
+  {name: "Izzy Bizu"},
+  {name: "James Tw"},
+  {name: "John Joseph Brill"},
+  {name: "Joseph J. Jones"},
+  {name: "Los Campesinos!"},
+  {name: "Loyle Carner"},
+  {name: "Meilyr Jones"},
+  {name: "Milk Teeth"},
+  {name: "Mystery Jets"},
+  {name: "Natalie Mccool"},
+  {name: "Rat Boy"},
+  {name: "Seramic"},
+  {name: "Slutface"},
+  {name: "Trash"},
+  {name: "Tusk"},
+  {name: "Vitamin"},
+  {name: "White"},
+  {name: "Zuzu"},
+  {name: "Beck"},
+  {name: "Weezer"},
+  {name: "Zedd"},
+  {name: "Train"},
+  {name: "Strange Bones"},
+  {name: "Sundara Karma"},
+  {name: "The Duke Spirit"},
+  {name: "The Indigo Project"},
+  {name: "The Sherlocks"},
+  {name: "Tiggs Da Author"},
+  {name: "Viola Beach"},
+  {name: "We Are Scientists"},
+  {name: "Where Fires Are"},
+  {name: "Willie J Healey"},
+  {name: "Paul Simon"},
+  {name: "Meghan Trainor"},
+  {name: "Jason Derulo"},
+  {name: "Modest Mouse"},
+  {name: "Panic! At The Disco"},
+  {name: "Yo Gotti"},
+  {name: "Barenaked Ladies"},
+  {name: "Young The Giant"},
+  {name: "The Arcs"},
+  {name: "Violent Femmes"},
+  {name: "Courtney Barnett"},
+  {name: "Jonny Land"},
+  {name: "Gin Blossoms"},
+  {name: "Trampled By Turtles"},
+  {name: "Moon Taxi"},
+  {name: "Lucinda Williams"},
+  {name: "Better Than Ezra"},
+  {name: "Los Lobos"},
+  {name: "Indigo Girls"},
+  {name: "The Front Bottoms"},
+  {name: "The Struts"},
+  {name: "Lunchmoney Lewis"},
+  {name: "Coleman Hell"},
+  {name: "Julien Baker"},
+  {name: "Ana Popovic"},
+  {name: "Bernard Allison"},
+  {name: "Luther Dickinson"},
+  {name: "Doyle Bramhall Ii"},
+  {name: "Those Pretty Wrongs"},
+  {name: "Amasa Hines"},
+  {name: "Will Tucker"},
+  {name: "Alex Da Ponte"},
+  {name: "John Németh"},
+  {name: "Magic Dick & Sun Ng"},
+  {name: "Charles Wilson"},
+  {name: "Jack Semple"},
+  {name: "Larry Mccray"},
+  {name: "John Primer"},
+  {name: "Brandon Santini"},
+  {name: "Barbara Blue"},
+  {name: "Duwayne Burnside"},
+  {name: " Stevie Wonder"},
+  {name: " Pearl Jam"},
+  {name: " Red Hot Chili Peppers"},
+  {name: " Neil Young + Promise Of The Real"},
+  {name: " Snoop Dogg"},
+  {name: " Paul Simon"},
+  {name: " Steely Dan"},
+  {name: " Beck"},
+  {name: " Van Morrison"},
+  {name: " Nick Jonas"},
+  {name: " Trombone Shorty & Orleans Avenue"},
+  {name: " Julio Iglesias"},
+  {name: " J. Cole"},
+  {name: " Flo Rida"},
+  {name: " My Morning Jacket"},
+  {name: " Gary Clark Jr."},
+  {name: " Bonnie Raitt"},
+  {name: " Maxwell"},
+  {name: " Irma Thomas"},
+  {name: " Janelle Monáe"},
+  {name: " Jonny Lang"},
+  {name: " Herbie Hancock & Wayne Shorter"},
+  {name: " Gov’t Mule"},
+  {name: " Dr. John & The Nite Trippers"},
+  {name: " Tedeschi Trucks Band & Friends"},
+  {name: " Arlo Guthrie"},
+  {name: " Boz Scaggs"},
+  {name: " Ms. Lauryn Hill"},
+  {name: " Michael Mcdonald"},
+  {name: " Buddy Guy"},
+  {name: " Preservation Hall Jazz Band"},
+  {name: " The Isley Brothers"},
+  {name: " Aaron Neville"},
+  {name: " Chris Botti"},
+  {name: " Grace Potter"},
+  {name: " Alpha Blondy"},
+  {name: " Elle King"},
+  {name: " Galactic"},
+  {name: " Brothers Osborne"},
+  {name: " Rhiannon Giddens"},
+  {name: " Jon Batiste & Stay Human"},
+  {name: " Ivan Neville’s Dumpstaphunk With Art Neville"},
+  {name: " Nathaniel Rateliff & The Night Sweats"},
+  {name: " Sharon Jones & The Dap Kings"},
+  {name: " Better Than Ezra"},
+  {name: " Los Lobos Perform La Pistola Y El Corazon"},
+  {name: " Hurray For The Riff Raff"},
+  {name: " Punch Brothers"},
+  {name: " Taj Mahal"},
+  {name: " Anders Osborne"},
+  {name: "Asteroid #4"},
+  {name: "Bayonne"},
+  {name: "Boogarins"},
+  {name: "Boris"},
+  {name: "Caribou"},
+  {name: "Dungen"},
+  {name: "Fantasmes"},
+  {name: "Imarhan"},
+  {name: "Jjuujjuu"},
+  {name: "Purson"},
+  {name: "Quraishi"},
+  {name: "Sleep"},
+  {name: "Slowdive"},
+  {name: "Woods"},
+  {name: "Disturbed"},
+  {name: "Shinedown"},
+  {name: "Pennywise"},
+  {name: "Hellyeah"},
+  {name: "Candlebox"},
+  {name: "Filter"},
+  {name: "Wilson"},
+  {name: "Megadeth"},
+  {name: " Kermit Ruffins & The Barbeque Swingers"},
+  {name: " Tribute To B.B. King"},
+  {name: " Tribute To Allen Toussaint"},
+  {name: " John Hammond"},
+  {name: " Elvin Bishop"},
+  {name: " Mystikal"},
+  {name: " Jazmine Sullivan"},
+  {name: " Buffy Sainte Marie"},
+  {name: " Tab Benoit"},
+  {name: " Terence Blanchard"},
+  {name: " Davell Crawford"},
+  {name: " Gregory Porter"},
+  {name: " Snarky Puppy"},
+  {name: " Rebirth Brass Band"},
+  {name: " Big Freedia"},
+  {name: " Ellis Marsalis"},
+  {name: " Arturo Sandoval"},
+  {name: " Roy Rogers & The Delta Rhythm Kings"},
+  {name: " Donald Harrison"},
+  {name: " The Dirty Dozen"},
+  {name: " The Black Lillies"},
+  {name: " Dédé Saint Prix Of Martinique"},
+  {name: " The Garifuna Collective Of Belize"},
+  {name: " Dejohnette·Coltrane·Garrison"},
+  {name: " Irvin Mayfield & The New Orleans Jazz Orchestra"},
+  {name: " The Soul Rebels"},
+  {name: " The Revivalists"},
+  {name: " John Boutté"},
+  {name: " The Mississippi Mass Choir"},
+  {name: " Nathan & The Zydeco Cha Chas"},
+  {name: " Ricky Dillard & New G"},
+  {name: " Dwayne Dopsie & The Zydeco Hellraisers"},
+  {name: " Glen David Andrews"},
+  {name: " Buckwheat Zydeco"},
+  {name: " Naturally 7"},
+  {name: " Cyril Neville & Swampfunk"},
+  {name: " George Porter"},
+  {name: " Jr. & Runnin’ Pardners"},
+  {name: " Leo Nocentelli"},
+  {name: " Zigaboo Modeliste’s Funk Revue"},
+  {name: " Henry Butler & Jambalaya"},
+  {name: " Imagination Movers"},
+  {name: " Walter “Wolfman” Washington & The Roadmasters"},
+  {name: " Beausoleil Avec Michael Doucet"},
   {name: "Allah Las"},
   {name: "Animal Collective"},
   {name: "Black Mountain"},
@@ -3544,6 +4017,13 @@ Artist.create!([
   {name: "Anthrax"},
   {name: "Clutch"},
   {name: "Yelawolf"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Issues"},
   {name: "Beartooth"},
   {name: "Avatar"},
@@ -3923,6 +4403,13 @@ Artist.create!([
   {name: "Hillsburn"},
   {name: "Ho99o9"},
   {name: "Hologramme"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "O.d."},
   {name: "We came as romans"},
   {name: "Memphis may fire"},
@@ -4408,6 +4895,13 @@ Artist.create!([
   {name: "Hormoans"},
   {name: "Howardhuge"},
   {name: "Huttch"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Iconoclast"},
   {name: "Bud Rice"},
   {name: "Busty And The Bass"},
@@ -4628,6 +5122,13 @@ Artist.create!([
   {name: "Sassyblack"},
   {name: "Sharkmuffin"},
   {name: "Sherlock"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "I am dive"},
   {name: "Iconoclast"},
   {name: "Ivory hours"},
@@ -4819,6 +5320,13 @@ Artist.create!([
   {name: "Skrat"},
   {name: "Sleepwreck"},
   {name: "Smino"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Sparrows"},
   {name: "Spindrifter"},
   {name: "Splitfist"},
@@ -4941,6 +5449,13 @@ Artist.create!([
   {name: "Foals"},
   {name: "Foxing"},
   {name: "Kylesa"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Sniper jackson"},
   {name: "Son of dov"},
   {name: "Sophie lowe"},
@@ -5127,6 +5642,123 @@ Artist.create!([
   {name: "Phosphorescent"},
   {name: "Polyenso"},
   {name: "Saintseneca"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+  {name: "The 1975"},
+  {name: "The Nolas"},
+  {name: "The Orielles"},
+  {name: "The Phantom Sound"},
+  {name: "The People The Poet"},
+  {name: "The Plugs"},
+  {name: "The Pom Poms"},
+  {name: "The Pulse"},
+  {name: "The Rathburns"},
+  {name: "The Rising Few"},
+  {name: "The Royal Foundry"},
+  {name: "The Royals"},
+  {name: "The Savilles"},
+  {name: "The Shrine"},
+  {name: "The Slow Night"},
+  {name: "The Spook School"},
+  {name: "The Statistics"},
+  {name: "The Strumbellas"},
+  {name: "The Tic Tac"},
+  {name: "The Tourist Company"},
+  {name: "The Turnback"},
+  {name: "The Van Arks"},
+  {name: "The Vanishers"},
+  {name: "The Vasts"},
+  {name: "The Velveteins"},
+  {name: "The Vidos"},
+  {name: "The Wet Secrets"},
+  {name: "The Wisers"},
+  {name: "The Wormwood Scrubs"},
+  {name: "The Zilis"},
+  {name: "Them Dang Rattlers"},
+  {name: "Them&Us"},
+  {name: "Third Place"},
+  {name: "This Drama"},
+  {name: "This Side Of Town"},
+  {name: "Thrifty Kids."},
+  {name: "Throwing Shade"},
+  {name: "Tia Brazda"},
+  {name: "Tom West"},
+  {name: "Tori Kelly"},
+  {name: "Tosin Abasi"},
+  {name: "Training Session"},
+  {name: "Trevor Alguire"},
+  {name: "V Serious"},
+  {name: "Valerie Broussard"},
+  {name: "Van Damsel"},
+  {name: "Victoria+Jean"},
+  {name: "Violet Skies"},
+  {name: "Wander Years"},
+  {name: "Wayne Kennedy"},
+  {name: "We Were Lovers"},
+  {name: "Weird Neighbours"},
+  {name: "Whisper Roaring"},
+  {name: "White Lung"},
+  {name: "Wild Rivers"},
+  {name: "Will Driving West"},
+  {name: "Willie Stratton"},
+  {name: "X Ambassadors"},
+  {name: "Yngwie J. Malmsteen"},
+  {name: "Zakk Wylde"},
+  {name: "Sixx: A.M."},
+  {name: "Drowning Pool"},
+  {name: "Like A Storm"},
+  {name: "The Veer Union"},
+  {name: "Against Me!"},
+  {name: "At The Drive In"},
+  {name: "Atlas Genius"},
+  {name: "Beach Slang"},
+  {name: "Bloc Party"},
+  {name: "Crystal Fighters"},
+  {name: "Day Wave"},
+  {name: "Diet Cig"},
+  {name: "Explosions In The Sky"},
+  {name: "Florence + The Machine"},
+  {name: "Frightened Rabbit"},
+  {name: "Hop Along"},
+  {name: "Huey Lewis And The News"},
+  {name: "Jane’s Addiction"},
+  {name: "July Talk"},
+  {name: "Matthew Logan Vasquez"},
+  {name: "Murder By Death"},
+  {name: "My Morning Jacket"},
+  {name: "Noah Gundersen"},
+  {name: "Silversun Pickups"},
+  {name: "Son Little"},
+  {name: "Strand Of Oaks"},
+  {name: "The Dear Hunter"},
+  {name: "The Head And The Heart"},
+  {name: "The Hip Abduction"},
+  {name: "The Kills"},
+  {name: "The Orwells"},
+  {name: "The Shelters"},
+  {name: "The Vaccines"},
+  {name: "Chevelle"},
+  {name: "Korn"},
+  {name: "Dumpstaphunk"},
+  {name: "Dakhabrakha"},
+  {name: "Sunsquabi"},
+  {name: "Wondem"},
+  {name: "Empresarios"},
+  {name: "Denmantau"},
+  {name: "Bearcoon"},
+  {name: "Trystates"},
+  {name: "Cuartero"},
+  {name: "Moms"},
+  {name: "Popof"},
+  {name: "Silversun pickups"},
+  {name: "Son little"},
+  {name: "St. paul and the broken bones"},
+  {name: "Strand of oaks"},
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "The 1975"},
   {name: "The Nolas"},
   {name: "The Orielles"},
@@ -5305,6 +5937,13 @@ Artist.create!([
   {name: "Wankelmut"},
   {name: "Einmusik"},
   {name: "Lexer"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Klymvx"},
   {name: "Skrillex"},
   {name: "Tortoise"},
@@ -5409,6 +6048,13 @@ Artist.create!([
   {name: "Dan Owen"},
   {name: "Dirty Frigs"},
   {name: "Dressmaker"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Teenage mutants"},
   {name: "Klymvx"},
   {name: "Hundred waters"},
@@ -5481,6 +6127,13 @@ Artist.create!([
   {name: "Eera"},
   {name: "Eska"},
   {name: "Exmagician"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Fakear"},
   {name: "Foxtrott"},
   {name: "Frances"},
@@ -5508,6 +6161,13 @@ Artist.create!([
   {name: "Rationale"},
   {name: "Riddles"},
   {name: "Rozelle"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Fai baba"},
   {name: "Fakear"},
   {name: "Fenne lily"},
@@ -5585,6 +6245,13 @@ Artist.create!([
   {name: "Shakka"},
   {name: "Shura"},
   {name: "Shvpes"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Starling"},
   {name: "Tangerines"},
   {name: "Telegram"},
@@ -5592,6 +6259,13 @@ Artist.create!([
   {name: "Trudy"},
   {name: "Vant"},
   {name: "Vodun"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Skinny girl diet"},
   {name: "Skinny living"},
   {name: "Slum sociable"},
@@ -5625,9 +6299,24 @@ Artist.create!([
   {name: "Will joseph cook"},
   {name: "Wyvern lingo"},
   {name: "Yes we mystic"},
+<<<<<<< HEAD
   {name: "Yungen"},
   {name: "Actress"},
   {name: "Adult."},
+=======
+<<<<<<< HEAD
+>>>>>>> 3c009229f304f14407c20786d2b1626b90221819
+  {name: "Yonaka"},
+  {name: "Yungen"},
+  {name: "Actress"},
+  {name: "Adult."},
+<<<<<<< HEAD
+=======
+  {name: "Yungen"},
+  {name: "Actress"},
+  {name: "Adult."},
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Antenes"},
   {name: "Drones Club"},
   {name: "Fai Baba"},
@@ -5824,6 +6513,13 @@ Artist.create!([
   {name: "Bully Lizzo"},
   {name: "Cage The Elephant"},
   {name: "Calvin Harris"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Afrikan sciences"},
   {name: "Amos gaynes"},
   {name: "Angus taylor"},
@@ -5960,6 +6656,23 @@ Artist.create!([
   {name: "Coasts"},
   {name: "Ellie goulding"},
   {name: "Fetty wap"},
+<<<<<<< HEAD
+   {name: "Flume"},
+=======
+<<<<<<< HEAD
+>>>>>>> 3c009229f304f14407c20786d2b1626b90221819
+  {name: "Flume"},
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
+  {name: "Givers"},
+  {name: "Grimes"},
+  {name: "Haim"},
+  {name: "Pell"},
+  {name: "Phases"},
+  {name: "Powers"},
+<<<<<<< HEAD
+=======
+=======
+=======
    {name: "Flume"},
   {name: "Givers"},
   {name: "Grimes"},
@@ -5967,6 +6680,8 @@ Artist.create!([
   {name: "Pell"},
   {name: "Phases"},
   {name: "Powers"},
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Half moon run"},
   {name: "Hippie sabotage"},
   {name: "Jack novak"},
@@ -6010,7 +6725,17 @@ Artist.create!([
   {name: "!!!"},
   {name: "Aer"},
   {name: "Alunageorge"},
+<<<<<<< HEAD
   {name: "Baels"},
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+  {name: "Baels"},
+=======
+=======
+  {name: "Baels"},
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Asap ferg"},
   {name: "Baels"},
   {name: "Big gigantic"},
@@ -6018,9 +6743,23 @@ Artist.create!([
   {name: "Chromeo"},
   {name: "Classixx"},
   {name: "Clerks"},
+<<<<<<< HEAD
   {name: "Esta"},
   {name: "Hxv"},
   {name: "Marshmello"},
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+  {name: "Esta"},
+  {name: "Hxv"},
+  {name: "Marshmello"},
+=======
+=======
+  {name: "Esta"},
+  {name: "Hxv"},
+  {name: "Marshmello"},
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Duke dumont"},
   {name: "Esta"},
   {name: "Hxv"},
@@ -6033,9 +6772,23 @@ Artist.create!([
   {name: "Nas"},
   {name: "Nghtmre"},
   {name: "Organik"},
+<<<<<<< HEAD
   {name: "Pomo"},
   {name: "Sango"},
   {name: "Strfkr"},
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+  {name: "Pomo"},
+  {name: "Sango"},
+  {name: "Strfkr"},
+=======
+=======
+  {name: "Pomo"},
+  {name: "Sango"},
+  {name: "Strfkr"},
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Party of 1"},
   {name: "Pomo"},
   {name: "Porter robinson (live)"},
@@ -6052,6 +6805,13 @@ Artist.create!([
   {name: "Barrasso"},
   {name: "Boids"},
   {name: "Dowsing"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Ringworm"},
   {name: "Wd40"},
   {name: "Ajeva"},
@@ -6272,6 +7032,13 @@ Artist.create!([
   {name: "Tremonti"},
   {name: "Fergie"},
   {name: "Avicii"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Full of hell"},
   {name: "Junior battles"},
   {name: "Mountain man"},
@@ -6469,7 +7236,17 @@ Artist.create!([
   {name: "Ivete"},
   {name: "Maroon 5"},
   {name: "Mika"},
+<<<<<<< HEAD
   {name: "Stereophonics"},
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+  {name: "Stereophonics"},
+=======
+=======
+  {name: "Stereophonics"},
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Rival sons"},
   {name: "Stereophonics"},
   {name: "Xutos & pontapes"},
@@ -6478,6 +7255,13 @@ Artist.create!([
   {name: "Common"},
   {name: "Prof"},
   {name: "Doomtree"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Lizzo"},
   {name: "Lice"},
   {name: "Raury"},
@@ -6582,6 +7366,13 @@ Artist.create!([
   {name: "Flutatious"},
   {name: "Levellers"},
   {name: "Moulettes"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Danny brown"},
   {name: "Lizzo"},
   {name: "Aesop rock & homeboy sandman"},
@@ -6698,6 +7489,13 @@ Artist.create!([
   {name: "Sheelanagig"},
   {name: "Skerryvore"},
   {name: "Squeeze"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Subhumans"},
   {name: "Talisman"},
   {name: "Terrorvision"},
@@ -7186,6 +7984,13 @@ Artist.create!([
   {name: "Rudimental"},
   {name: "Ruler"},
   {name: "Shamir"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Stiff little fingers"},
   {name: "Strontium dogs"},
   {name: "Subhumans"},
@@ -7764,6 +8569,13 @@ Artist.create!([
   {name: "Tamaryn"},
   {name: "Tangerine"},
   {name: "Telekinesis"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Hayden James"},
   {name: "River Tiber"},
   {name: "New Paso"},
@@ -7968,6 +8780,13 @@ Artist.create!([
   {name: "Tourist"},
   {name: "Buzzcocks"},
   {name: "Descendents"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "The cure"},
   {name: "The dip"},
   {name: "The internet"},
@@ -8135,6 +8954,13 @@ Artist.create!([
   {name: "Giuda"},
   {name: "Melted"},
   {name: "Millencolin"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Rayner"},
   {name: "+++"},
   {name: "Air"},
@@ -8254,6 +9080,13 @@ Artist.create!([
   {name: "Univers"},
   {name: "Unsane"},
   {name: "Venom"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Negative nancy’s"},
   {name: "Noi!se"},
   {name: "Off with their heads"},
@@ -8394,6 +9227,13 @@ Artist.create!([
   {name: "Dynohunter"},
   {name: "Evanoff"},
   {name: "Fractal"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Kaminanda"},
   {name: "Siren"},
   {name: "Sixis"},
@@ -8629,6 +9469,13 @@ Artist.create!([
   {name: "Diiv"},
   {name: "Deadmau5"},
   {name: "Brns"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Kalya scintilla + eve olution"},
   {name: "Kaminanda"},
   {name: "Lucid vision"},
@@ -8892,11 +9739,26 @@ Artist.create!([
   {name: "Rl grime"},
   {name: "Samo sound boy"},
   {name: "Sleepy tom"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 3c009229f304f14407c20786d2b1626b90221819
+  {name: "Zomboy"},
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Apocalyptica"},
   {name: "Eisbrecher"},
   {name: "Kreator"},
   {name: "Pain"},
   {name: "Rammstein"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Adyo"},
   {name: "Amaranthe"},
   {name: "Avantasia"},
@@ -9000,6 +9862,13 @@ Artist.create!([
   {name: "Behemoth"},
   {name: "Labrassbanda"},
   {name: "Nofx"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Adrian sherwood"},
   {name: "Adyo"},
   {name: "Ash koosha  live"},
@@ -9089,6 +9958,13 @@ Artist.create!([
   {name: "Slaves"},
   {name: "Steve’n’seagulls"},
   {name: "Wanda"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Zebrahead"},
   {name: "Feuerschwanz"},
   {name: "Schmutzki"},
@@ -9196,6 +10072,13 @@ Artist.create!([
   {name: "Hermitude"},
   {name: "Papadosio"},
   {name: "Waxahatchee"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Fort romeau"},
   {name: "Linda martini"},
   {name: "Sensible soccers"},
@@ -9324,6 +10207,13 @@ Artist.create!([
   {name: "Cast"},
   {name: "Faithless"},
   {name: "Feeder"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Reef"},
   {name: "Sigma"},
   {name: "Dead!"},
@@ -9575,6 +10465,13 @@ Artist.create!([
   {name: "Murals"},
   {name: "Palberta"},
   {name: "Posse"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Gabrielle aplin"},
   {name: "Joanne shaw taylor"},
   {name: "Reef"},
@@ -9864,6 +10761,13 @@ Artist.create!([
   {name: "Sales"},
   {name: "Samiyam"},
   {name: "Scully"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Stove"},
   {name: "Wall"},
   {name: "Washer"},
@@ -10092,6 +10996,13 @@ Artist.create!([
   {name: "Bonobo"},
   {name: "Cualli"},
   {name: "Defunk"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "South of france"},
   {name: "Spray paint"},
   {name: "Steep leans"},
@@ -10327,9 +11238,23 @@ Artist.create!([
   {name: "Euforquestra"},
   {name: "Filastine"},
   {name: "Fkj"},
+<<<<<<< HEAD
   {name: "Giraffage"},
   {name: "In33p"},
   {name: "Insightful"},
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+  {name: "Giraffage"},
+  {name: "In33p"},
+  {name: "Insightful"},
+=======
+=======
+  {name: "Giraffage"},
+  {name: "In33p"},
+  {name: "Insightful"},
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Fort knox five ft qdup"},
   {name: "Gipsy moon"},
   {name: "Giraffage"},
@@ -10374,6 +11299,13 @@ Artist.create!([
   {name: "Vibesquad"},
   {name: "Whitebear"},
   {name: "Zilla"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Arcturus"},
   {name: "Borknagar"},
   {name: "Firewind"},
@@ -10448,6 +11380,13 @@ Artist.create!([
   {name: "God Dethroned"},
   {name: "Grand Magus"},
   {name: "In The Woods"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Anti-flag"},
   {name: "Arcturus"},
   {name: "Borknagar"},
@@ -10463,6 +11402,13 @@ Artist.create!([
   {name: "Moonsorrow"},
   {name: "Moonspell"},
   {name: "Myrkur"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Oomph!"},
   {name: "Overkill"},
   {name: "Raven"},
@@ -10471,6 +11417,13 @@ Artist.create!([
   {name: "Agressor"},
   {name: "Arthemis"},
   {name: "Asphyx"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Norma jean"},
   {name: "Oomph!"},
   {name: "Overkill"},
@@ -10496,6 +11449,13 @@ Artist.create!([
   {name: "Behexen"},
   {name: "Brodequin"},
   {name: "Caliban"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Converge"},
   {name: "Cowards"},
   {name: "Crobot"},
@@ -10511,6 +11471,13 @@ Artist.create!([
   {name: "Fallujah"},
   {name: "Goatsnake"},
   {name: "Hatebreed"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Cattle decapitation"},
   {name: "Converge"},
   {name: "Corrosive elements"},
@@ -10540,9 +11507,23 @@ Artist.create!([
   {name: "Hermano"},
   {name: "Inquisition"},
   {name: "Insomnium"},
+<<<<<<< HEAD
   {name: "Kampfar"},
   {name: "Katatonia"},
   {name: "Kvelertak"},
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+  {name: "Kampfar"},
+  {name: "Katatonia"},
+  {name: "Kvelertak"},
+=======
+=======
+  {name: "Kampfar"},
+  {name: "Katatonia"},
+  {name: "Kvelertak"},
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Joe satriani"},
   {name: "Kadavar (ger)"},
   {name: "Kampfar"},
@@ -10553,12 +11534,27 @@ Artist.create!([
   {name: "Lecherous gaze"},
   {name: "Les sales majestes"},
   {name: "Ludwig von 88"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 3c009229f304f14407c20786d2b1626b90221819
+  {name: "Magma"},
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Mantar"},
   {name: "Marduk"},
   {name: "Melvins"},
   {name: "Mgla"},
   {name: "Monolord"},
   {name: "Moonreich"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Nightmare"},
   {name: "Otargos"},
   {name: "Primordial"},
@@ -10649,6 +11645,13 @@ Artist.create!([
   {name: "Bernhoft"},
   {name: "Digitalism"},
   {name: "Phlake"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Municipal waste"},
   {name: "Napalm death"},
   {name: "Nashville pussy"},
@@ -10749,6 +11752,13 @@ Artist.create!([
   {name: "Ásgeir"},
   {name: "Audacity"},
   {name: "Bewilder"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Koreless"},
   {name: "Low"},
   {name: "Sevdaliza"},
@@ -10867,6 +11877,13 @@ Artist.create!([
   {name: "Drexler"},
   {name: "Gangsigns"},
   {name: "Phlip"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Black box revelation"},
   {name: "Ezra furman"},
   {name: "Glass animals"},
@@ -11042,6 +12059,13 @@ Artist.create!([
   {name: "Kasbo"},
   {name: "Kepi"},
   {name: "Kirtay"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Motez"},
   {name: "Carmack"},
   {name: "Octabän"},
@@ -11523,6 +12547,13 @@ Artist.create!([
   {name: "Oneman"},
   {name: "Playaz"},
   {name: "Premise"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Le youth"},
   {name: "Lido (live)"},
   {name: "Motez"},
@@ -12000,6 +13031,13 @@ Artist.create!([
   {name: "Sinprint"},
   {name: "Tippa"},
   {name: "Viper"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Chisu"},
   {name: "Ellinoora"},
   {name: "Karjalainen"},
@@ -12355,6 +13393,13 @@ Artist.create!([
   {name: "Grimus"},
   {name: "Icicle"},
   {name: "Injektah"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Zed bias"},
   {name: "Air (fr)"},
   {name: "Anna abreu"},
@@ -12742,6 +13787,13 @@ Artist.create!([
   {name: "Loadstar"},
   {name: "Luisahhh!!!"},
   {name: "Macanache"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Madliquid"},
   {name: "Manudigital"},
   {name: "Mathei"},
@@ -12788,6 +13840,13 @@ Artist.create!([
   {name: "O0o00"},
   {name: "Anohni"},
   {name: "Kodaline"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Fatal Kaliber"},
   {name: "Gabriel And The Apocalypse"},
   {name: "Hollywood Vampires"},
@@ -12986,6 +14045,13 @@ Artist.create!([
   {name: "Bodyfarm"},
   {name: "Criminal"},
   {name: "Devourment"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Caro emerald"},
   {name: "Cc smugglers"},
   {name: "Freeborn brothers"},
@@ -13202,8 +14268,20 @@ Artist.create!([
   {name: "Gride"},
   {name: "Guineapig"},
   {name: "Gust"},
+<<<<<<< HEAD
   {name: "Korpse"},
   {name: "Krush"},
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+  {name: "Korpse"},
+  {name: "Krush"},
+=======
+=======
+  {name: "Korpse"},
+  {name: "Krush"},
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Insect warfare"},
   {name: "Korpse"},
   {name: "Krush"},
@@ -13216,9 +14294,23 @@ Artist.create!([
   {name: "Serrabulho"},
   {name: "ShacklΣs"},
   {name: "Sodom"},
+<<<<<<< HEAD
   {name: "Wretch"},
   {name: "Carcass"},
   {name: "Helmet"},
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+  {name: "Wretch"},
+  {name: "Carcass"},
+  {name: "Helmet"},
+=======
+=======
+  {name: "Wretch"},
+  {name: "Carcass"},
+  {name: "Helmet"},
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Speed noise hell"},
   {name: "Toxic holocaust"},
   {name: "Venomous concept"},
@@ -13232,6 +14324,13 @@ Artist.create!([
   {name: "Meshuggah"},
   {name: "Ministry"},
   {name: "Periphery"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Mo"},
   {name: "The Drink"},
   {name: "The Wave Pictures"},
@@ -13778,6 +14877,13 @@ Artist.create!([
   {name: "Cheezcake"},
   {name: "Sassafraz"},
   {name: "Tropidelic"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Silver snakes"},
   {name: "The devil wears prada"},
   {name: "Through fire"},
@@ -14298,6 +15404,13 @@ Artist.create!([
   {name: "Breach"},
   {name: "Ceri"},
   {name: "Detlef"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Spoony"},
   {name: "Mastodon"},
   {name: "Kataklysm"},
@@ -14426,6 +15539,13 @@ Artist.create!([
   {name: "Immolation"},
   {name: "Leprous"},
   {name: "Nile"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Dj s.k.t."},
   {name: "Grain (artwork)"},
   {name: "Groove armada"},
@@ -14609,6 +15729,13 @@ Artist.create!([
   {name: "Vektor"},
   {name: "Voivod"},
   {name: "Whiplash"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Catsax"},
   {name: "Fog"},
   {name: "Senyawa"},
@@ -14699,6 +15826,13 @@ Artist.create!([
   {name: "Biosphere"},
   {name: "Gundelach"},
   {name: "Neurosis"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Alpha consumer"},
   {name: "Andrew fitzpatrick"},
   {name: "Bon iver"},
@@ -14759,6 +15893,13 @@ Artist.create!([
   {name: "Afriquoi"},
   {name: "Afrocluster"},
   {name: "Angerfist"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Calibre"},
   {name: "Catjam"},
   {name: "Daytoner"},
@@ -14978,6 +16119,13 @@ Artist.create!([
   {name: "Chon"},
   {name: "Flowmotion"},
   {name: "Polecat"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Asian dub foundation"},
   {name: "Balkan hotsteppers"},
   {name: "Barbarellas bang bang"},
@@ -15198,9 +16346,24 @@ Artist.create!([
   {name: "Rising appalachia"},
   {name: "Snug harbor"},
   {name: "Trevor hall"},
+<<<<<<< HEAD
   {name: "Jain"},
   {name: "Kovacs"},
   {name: "Molotov"},
+=======
+<<<<<<< HEAD
+>>>>>>> 3c009229f304f14407c20786d2b1626b90221819
+  {name: "Datsik"},
+  {name: "Jain"},
+  {name: "Kovacs"},
+  {name: "Molotov"},
+<<<<<<< HEAD
+=======
+  {name: "Jain"},
+  {name: "Kovacs"},
+  {name: "Molotov"},
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Sum 41"},
   {name: "Unkle"},
   {name: "Equilibrium"},
@@ -15212,6 +16375,13 @@ Artist.create!([
   {name: "Golan"},
   {name: "Seafret"},
   {name: "Skero"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Naughty boy"},
   {name: "Oscar and the wolf"},
   {name: "Parov stelar band"},
@@ -15255,6 +16425,13 @@ Artist.create!([
   {name: "Turbobier"},
   {name: "Umse"},
   {name: "Wakrat"},
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "Hacktivist"},
   {name: "Doby"},
   {name: "Gnosis"},
@@ -16802,6 +17979,13 @@ Festival.create!([
   {name: "Metaldays 2016", latitude: 46.1857188, longitude: 13.7319838, start_date: "2016-07-24", date: "July 24-30, 2016", location: "Tolmin, Slovenia", website: "http://metaldays.net/Home", description: "The metaldays festival will present you a friendly and absolutely relaxed atmosphere, perfect for you to just forget about all worries and enjoy your most likely best holiday ever!   the festival is located at sotocje, which lies inbetween the two mountain rivers called tolminka and soca. metaldays has two \"festival-owned\" beaches for you to relax on. but the two rivers aren't the only reason sotocje  is that beautiful: tolmin is located only approx. 65 kilometers off the coast of the mediterranean sea, which really gives you that holiday feel. also the road you're travelling on will lead you through the alps, a scenerie that will astonish both full grown metalheads and families with children alike. the metaldays area is also part of the julijske alpe national parks, and the river soca is one of the cleanest in europe. \r\n", price: 109, camping: " Yes", end_date: "2016-07-30", city: "Tolmin", state: "Tolmin", country: "SI"},
   {name: "Philadelphia Folk Festival 2016", latitude: 40.2907756, longitude: -75.4402993, start_date: "2016-08-18", date: "August 18-21, 2016", location: "Upper Salford Township, PA", website: "http://www.pfs.org/folk-festival", description: "The philadelphia folk festival began in 1962 and is the largest and longest-running festival of its kind in the country. the event is unique in that it is presented by a non-profit arts education organization, the philadelphia folksong society, and is operated with the help of 2,500 dedicated volunteers.  since its inception, the philadelphia folk festival has been the primary fund raising event for the philadelphia folksong society. founded as a 501(c) 3 non-profit, educational organization in 1957, pfs provides programs of presentation, education, and participation.\r\n", price: 0, camping: " Yes", end_date: "2016-08-21", city: "Upper Salford Township", state: "PA", country: "US"}
 ])
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
   {name: "The bronx"},
   {name: "La dispute"},
   {name: "Heart of a coward"},
@@ -18710,6 +19894,15 @@ FestivalGenre.create!([
   {genre_id: 2, festival_id: 438},
   {genre_id: 2, festival_id: 439}
 ])
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+=======
+>>>>>>> final-merge
+>>>>>>> 31e36273c0bc293b124dc03a5e9c21615a5c7f9f
 puts "Creating genres..."
 Genre.create!([
   {name: "Electronic"},

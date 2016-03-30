@@ -14,29 +14,39 @@ $(function() {
   });
 
   // SET USER LOCATION
-  var locationInput = $('#get_location');
-  var usrLocation = $('#usr_location');
-  locationInput.hide();
+  var locationInput = $('#get_location'); //form input
+  // var usrLocation = $('#usr_location'); //displaying the user location
+  // locationInput.hide();
+  //#edit_location is the button
 
   $('#edit_location').on('click', function() {
     var inputBtn = $(this);
-    inputBtn.hide();
-    usrLocation.hide();
-    locationInput.show();    
+
+    locationInput.prop('disabled', false);
+    locationInput.prop('placeholder','');
+    locationInput.toggleClass('input-locked');
+    locationInput.toggleClass('input-active');
+
 
     locationInput.on('blur paste', function() {
-      usrLocation.text( locationInput.val() );
-      usrLocation.show();
-      $(this).hide();
+      // usrLocation.text( locationInput.val() );
+      // usrLocation.show();
+      // $(this).hide();
       inputBtn.show();
       $.ajax('/usr-info',
         { dataType: 'json',
           type: 'POST',
-          data: {usr_location: usrLocation.text()},
+          data: {usr_location: locationInput.val()},
           success: function() { console.log('user location set'); },
           error: function(xhr) { console.log(xhr.statusText); }
-        });
+      });
+
     });
+  });
+
+  $('#search-btn').on('click', function() {
+    $('#festival-search-form').slideToggle();
+
   });
   
   // SOULMATE AUTO-COMPLETE
@@ -81,9 +91,10 @@ $(function() {
     if (data.length === 0) { results.text('No results found'); }
 
     data.forEach(function(festival) {
-      var festivalDiv = $('<div>').appendTo(results);
+      var festivalDiv = $('<div class = "festival_card">').appendTo(results);
+      $('<div class = "festival_card_header">').appendTo(festivalDiv);
 
-      $('<a>').attr('href', '/festivals/' + festival.id)
+      $('<a class ="main_links">').attr('href', '/festivals/' + festival.id)
         .text(festival.name)
         .appendTo(festivalDiv);
 
@@ -91,13 +102,64 @@ $(function() {
                               .attr('data-id', festival.id)
                               .appendTo(festivalDiv);
                               
-      $('<div>').text('Location: ' + festival.location).appendTo(festivalDetails );
+      $('<a href class = "pan_link">').text('Location: ' + festival.location).appendTo(festivalDetails );
       $('<div>').text('Date: ' + festival.date).appendTo(festivalDetails);
 
-      formatResults('Price', festival.price, festivalDetails);
-      formatResults('Camping', festival.camping, festivalDetails);
-      formatResults('Description', festival.description, festivalDetails);
+      // formatResults('Price', festival.price, festivalDetails);
+      // formatResults('Camping', festival.camping, festivalDetails);
+      // formatResults('Description', festival.description, festivalDetails);
     });
   });
 
+  // // SELECT FESTIVALS
+  // // TODO: toggling selection
+  // $('#search-results').on('click', '.festival-result', function() {
+  //   var selectedId = { festivalId: $(this).attr('data-id') };
+
+  //   // TODO: maybe attach a condition to this...
+  //   $.ajax('/festival-select',
+  //     { dataType: 'json',
+  //       type: 'GET',
+  //       data: selectedId,
+  //       success: function() { console.log('festival selected'); },
+  //       error: function(xhr) { console.log(xhr.statusText); }
+  //     });
+  // });
+
+  // function formatResults(label,ele, div) {
+  //   if (ele === null || ele === 0) {
+  //     $('<div>').text(label + ': n/a').appendTo(div);
+  //   }
+  //   else {
+  //     $('<div>').text(label + ': ' + ele).appendTo(div);
+  //   }
+  // }
+
+  // $('#festival-search').on('ajax:success', function(event, data) {
+  //   var results = $('#search-results');
+  //   results.empty();
+
+  //   if (data.length === 0) { results.text('No results found'); }
+
+  //   data.forEach(function(festival) {
+  //     var festivalDiv = $('<div>').appendTo(results);
+
+  //     $('<a>').attr('href', '/festivals/' + festival.id)
+  //       .text(festival.name)
+  //       .appendTo(festivalDiv);
+
+  //     var festivalDetails = $('<div>').addClass('festival-result')
+  //                             .attr('data-id', festival.id)
+  //                             .appendTo(festivalDiv);
+                              
+  //     $('<div>').text('Location: ' + festival.location).appendTo(festivalDetails );
+  //     $('<div>').text('Date: ' + festival.date).appendTo(festivalDetails);
+
+  //     formatResults('Price', festival.price, festivalDetails);
+  //     formatResults('Camping', festival.camping, festivalDetails);
+  //     formatResults('Description', festival.description, festivalDetails);
+  //   });
+  // });
+
 });
+

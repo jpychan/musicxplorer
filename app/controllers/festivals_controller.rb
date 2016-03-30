@@ -2,22 +2,27 @@ class FestivalsController < ApplicationController
   autocomplete :airport, :name, :full => true, :extra_data => [:iata_code]
   SEARCH_RADIUS = 500
 
+  before_action :set_search_and_user_location
+  before_action :load_favourite_festivals, only: [:show, :all]
+
   def show
     @festival = Festival.find(params[:id])
-    fg = FestivalGridService.new
-    @selected_festivals = fg.get_saved_festivals
+    @usr_location = $redis.hget('user', 'location')
+    @usr_location_coord = {
+      lat: $redis.hgetall('user')["lat"],
+      long: $redis.hgetall('user')["lng"]
+    }
+    
     driving = DrivingInfoService.new(@festival)
     @price_by_car = driving.calc_driving_cost
     @time_by_car = driving.get_trip_time[0]
-    @usr_location = $redis.hgetall('user')
+    # @usr_location = $redis.hgetall('user')
   end
 
   def all
     @genres = Genre.all.order(:name)
     @usr_location = $redis.hget('user', 'location')
     @upcoming = Festival.includes(:genres).where('start_date > ?', Date.today).order(:start_date).limit(20)
-    fg = FestivalGridService.new
-    @selected_festivals = fg.get_saved_festivals
   end
 
   # PRE-CALCULATE COORDINATES FOR USER LOCATION
@@ -30,23 +35,29 @@ class FestivalsController < ApplicationController
   # GET FESTIVAL SEARCH RESULTS
   def festival_list
     date = params[:date] == '' ? Date.today : params[:date]
-    festivals = Festival.joins("INNER JOIN performances AS p ON p.festival_id = festivals.id INNER JOIN artists AS a ON p.artist_id = a.id INNER JOIN festival_genres AS fg ON fg.festival_id = festivals.id INNER JOIN genres AS g ON fg.genre_id = g.id").where('start_date >= ? AND LOWER(camping) LIKE ? AND g.name LIKE ? AND a.name LIKE ?', date, "%#{params[:camping]}%", "%#{params[:genre]}%", "%#{params[:artist]}%").distinct
+    @festivals = Festival.joins("INNER JOIN performances AS p ON p.festival_id = festivals.id INNER JOIN artists AS a ON p.artist_id = a.id INNER JOIN festival_genres AS fg ON fg.festival_id = festivals.id INNER JOIN genres AS g ON fg.genre_id = g.id").where('start_date >= ? AND LOWER(camping) LIKE ? AND g.name LIKE ? AND a.name LIKE ?', date, "%#{params[:camping]}%", "%#{params[:genre]}%", "%#{params[:artist]}%").distinct
 
     d = DistanceService.new
     origin = $redis.hgetall('user')
-    @festivals = festivals.select do |f|
+    @festivals = @festivals.select do |f|
       dist_km = d.calc_distance(origin['lat'], origin['lng'], f)
       puts dist_km
       dist_km <= SEARCH_RADIUS
     end
-    render json: @festivals
+
+    respond_to do |format|
+      format.js {render layout: false}
+    end
   end
 
-  # TODO: refactor
+  # TODO: refactor!
   def festival_select
     festival = Festival.find(params[:festivalId])
     festival_json = festival.as_json
     user = $redis.hgetall('user')
+
+    festival_json['price_car'] = params[:drivingPrice]
+    festival_json['time_car'] = params[:drivingTime]
 
     fg = FestivalGridService.new
     if flight_exists?(festival)
@@ -56,22 +67,31 @@ class FestivalsController < ApplicationController
       festival_json['time_flight_out'] = flight[:outbound_leg]['Duration']
     end
 
-    festival_json['price_car'] = params[:drivingPrice]
-
-    festival_json['time_car'] = params[:drivingTime]
     bus = fg.get_first_bus(festival)
-    festival_json['price_bus'] = bus[:cost]
-    festival_json['time_bus'] = bus[:travel_time]
+    if bus && bus.is_a?(Hash)
+      festival_json['price_bus'] = bus[:cost]
+      festival_json['time_bus'] = bus[:travel_time]
+    end
 
     if festival
       $redis.hset('festivals', festival.id, festival_json.to_json)
     end
-    redirect_to root_path
+
+    @selected_festivals = fg.get_saved_festivals
+
+    respond_to do |format|
+      format.js { render layout: false }
+    end
   end
   
   def festival_unselect
     $redis.hdel('festivals', params[:festivalId])
-    redirect_to root_path
+    fg = FestivalGridService.new
+    @selected_festivals = fg.get_saved_festivals
+
+     respond_to do |format|
+      format.js { render layout: false }
+    end
   end
 
   def autocomplete
@@ -86,8 +106,7 @@ class FestivalsController < ApplicationController
 
   def flickr_images 
     festival = params[:festival].gsub(/\s\d{4}/, '')
-    @festival = Festival.find_by(name: params[:festival])
-  img_src = "https://api.flickr.com/services/rest/?api_key=#{ENV['FLICKR_KEY']}&method=flickr.photos.search&tags=festival&text=#{festival}&sort=relevance&per_page=10&page=1&content_type=1&format=json&nojsoncallback=1"
+    img_src = "https://api.flickr.com/services/rest/?api_key=#{ENV['FLICKR_KEY']}&method=flickr.photos.search&tags=festival&text=#{festival}&sort=relevance&per_page=10&page=1&content_type=1&format=json&nojsoncallback=1"
     response = HTTParty.get(img_src).body
     @image = JSON.parse(response)
     render json: @image
@@ -155,13 +174,23 @@ class FestivalsController < ApplicationController
 
       # testing - test data
       # @greyhound_data = "some error"
-      # @greyhound_data = {:depart=>{0=>{:cost=>"79.00", :start_time=>"12:15AM", :end_time=>"07:40AM", :travel_time=>"7h 25m"}, 1=>{:cost=>"79.00", :start_time=>"06:30AM", :end_time=>"12:15PM", :travel_time=>"5h 45m"}, 2=>{:cost=>"88.00", :start_time=>"12:30PM", :end_time=>"05:30PM", :travel_time=>"5h 00m"}, 3=>{:cost=>"81.00", :start_time=>"02:30PM", :end_time=>"07:30PM", :travel_time=>"5h 00m"}, 4=>{:cost=>"81.00", :start_time=>"06:00PM", :end_time=>"11:45PM", :travel_time=>"5h 45m"}}, :return=>{0=>{:cost=>"", :start_time=>"08:00AM", :end_time=>"01:20PM", :travel_time=>"5h 20m"}, 1=>{:cost=>"", :start_time=>"09:15AM", :end_time=>"04:40PM", :travel_time=>"7h 25m"}, 2=>{:cost=>"", :start_time=>"12:01PM", :end_time=>"05:00PM", :travel_time=>"4h 59m"}, 3=>{:cost=>"", :start_time=>"03:30PM", :end_time=>"09:30PM", :travel_time=>"6h 00m"}, 4=>{:cost=>"", :start_time=>"11:15PM", :end_time=>"05:05AM", :travel_time=>"5h 50m"}}}
+      #@greyhound_data = {:depart=>{0=>{:cost=>"79.00", :start_time=>"12:15AM", :end_time=>"07:40AM", :travel_time=>"7h 25m"}, 1=>{:cost=>"79.00", :start_time=>"06:30AM", :end_time=>"12:15PM", :travel_time=>"5h 45m"}, 2=>{:cost=>"88.00", :start_time=>"12:30PM", :end_time=>"05:30PM", :travel_time=>"5h 00m"}, 3=>{:cost=>"81.00", :start_time=>"02:30PM", :end_time=>"07:30PM", :travel_time=>"5h 00m"}, 4=>{:cost=>"81.00", :start_time=>"06:00PM", :end_time=>"11:45PM", :travel_time=>"5h 45m"}}, :return=>{0=>{:cost=>"", :start_time=>"08:00AM", :end_time=>"01:20PM", :travel_time=>"5h 20m"}, 1=>{:cost=>"", :start_time=>"09:15AM", :end_time=>"04:40PM", :travel_time=>"7h 25m"}, 2=>{:cost=>"", :start_time=>"12:01PM", :end_time=>"05:00PM", :travel_time=>"4h 59m"}, 3=>{:cost=>"", :start_time=>"03:30PM", :end_time=>"09:30PM", :travel_time=>"6h 00m"}, 4=>{:cost=>"", :start_time=>"11:15PM", :end_time=>"05:05AM", :travel_time=>"5h 50m"}}}
     end
-
     respond_to do |format|
       format.js {render layout: false}
     end
   end
 
-  
+  protected 
+    def set_search_and_user_location
+      @artists = Artist.all.order(:name)
+      @genres = Genre.all.order(:name)
+      @usr_location = $redis.hget('user', 'location')
+    end
+
+    def load_favourite_festivals
+      fg = FestivalGridService.new
+      @selected_festivals = fg.get_saved_festivals
+    end
+
 end

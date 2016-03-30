@@ -14,13 +14,15 @@
  *= require soulmate
  *= require modal
  *= require_self
+ *= require bus
  */
 
 
-body {
-  margin: 0 15%;
-  width: 70%;
-}
+/*body {
+  background-color: #DEE0FA;
+  font-family: Helvetica;
+}*/
+
 
 /* FESTIVAL COMPARISON MODAL */
 .modal {
@@ -28,7 +30,11 @@ body {
   top: 3%;
   left: 33%;
   font-family: helvetica;
+  position: relative;
+  display: none;
 }
+
+.modal.fade.in { position: fixed; }
 
 table {
   text-align: center;
@@ -36,10 +42,14 @@ table {
 tbody { 
   border: 1px solid #b8d20b;
 }
+
 thead { 
   background: #b8d20b; 
   color: #fff;
+
 }
+
+
 
 tr, td, th {
   margin: 5px;
@@ -69,145 +79,6 @@ i { margin-right: 3px; }
   background: #ff6655;
 }
 
-.fave-btn {
-  border: 1px solid #ffcc00;
-  background: #ffc100;
-}
-
-/* Tabs */
-
-#tabs-nav {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  border-bottom: 1px solid #ccc;
-  overflow: auto;
-}
-
-#tabs-nav li {
-    float: left;
-    font-size: 14px;
-    font-weight:bold;
-    margin-right: 6px;
-    padding:6px 10px;
-    border:1px solid #d5d5de;
-    border-bottom:none;
-    cursor:pointer;
-  }
-
-#tabs-nav li:hover,
-li.active {
-  background-color: #d5d5de;
-}
-
-.content {
-  padding: 10px;
-  border: 1px solid #d5d5de;
-  border-top: none;
-}
-
-.hidden {
-  position: absolute;
-  left: -999em ;
-}
-
-.active {
-  position: relative;
-  left: 0;
-}
-
-/* Travel Details Tabs */
-
-#travel-tabs {
-  width: 90%;
-  max-width: 960px;
-  height: 500px;
-  margin: 0 auto;
-  font-size: 30px;
-}
-#travel-tabs ul {
-  float: left;
-  width: 30%;
-  background: #333;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  height: 100%;
-}
-#travel-tabs li {
-  height: 33%;
-  width: 100%;
-  box-sizing: border-box;
-}
-#travel-tabs li:not(:last-child) {
-  border-bottom: 2px solid #fff;
-}
-#travel-tabs a {
-  width: 100%;
-  height: 100%;
-  display: block;
-  text-align: center;
-  color: #ccc;
-  text-decoration: none;
-  box-sizing: border-box;
-  padding: 20%;
-}
-#travel-tabs a:hover {
-  background: #2c3e50;
-}
-#travel-tabs .route-details {
-  width: 70%;
-  color: #000;
-  float: left;
-  height: 100%;
-  margin-bottom: 10px;
-  box-sizing: border-box;
-  text-align: left;
-  font-size: 14px;
-  padding-left: 20px;
-}
-
-#festival-show #driving-map {
-  width: 100%;
-  height: 100%;
-
-}
-
-#travel-tabs .flight-search-details {
-  font-size: 20px;
-}
-
-#travel-tabs a.pure-button {
-  padding: 10px;
-  display: inline-block;
-  text-align: center;
-  color: #fff;
-  background-color: green;
-  text-decoration: none;
-  box-sizing: border-box;
-}
-
-#travel-tabs a.pure-button:hover {
-  background: #000;
-}
-
-#travel-tabs .flight-result {
-  border: 1px solid green;
-  padding: 10px;
-}
-
-#flight {
-  overflow: auto;
-}
-
-.flight-departure {
-  border-bottom: 1px solid gray;
-}
-
-#travel-tabs .flight-result {
-  margin-bottom: 30px;
-}
-
 .ui-datepicker { 
   background: #fff;
   font-family: Arial;
@@ -225,20 +96,91 @@ li.active {
   padding: 10px;
 }
 
-body {
-  background-color: #DEE0FA;
- }
-
  /*#map {
   box-shadow: 1px 1px 5px #333333;
 }*/
 
-/* #home*/ #map {
-  height: 500px;
-  width: 1000px;
-  margin-left: 250px;
+#wel {
+  /*position: fixed;*/
+  background-color: #F77604;
+  background-size: cover;
+  color: white;
+  height: 60px;
+  font-family: Helvetica;
+  font-size: 70px;
+  font-weight: lighter;
+  /*margin-left: 20px;*/
+  letter-spacing: 6px;
+  margin-top: -10px;
+  opacity: 0.75;
+  padding: 100px;
+  padding-bottom: 120px;
+  text-align: center;
+  /*width: 130%;*/
+}
+
+.pan_button {
+  background: lightblue;
+  display: inline-block;
+  font-family: Helvetica;
+  font-size: 125%;
   margin-bottom: 30px;
-  margin-top: 50px;
+  margin-left: 50%;
+  margin-top: 10px;
+  position: relative;
+}
+
+.map_button {
+  background: lightblue;
+  clear: left;
+  display: inline-block;
+  font-family: Helvetica;
+  font-size: 125%;
+  margin-bottom: 30px;
+  margin-left: 20px;
+  margin-top: 10px;
+  padding-right: 10px;
+  position: relative;
+}
+
+.search-results {
+  font-family: Helvetica;
+  /*font-weight: lighter;*/
+  font-size: 20px;
+  margin-left: 40px;
+  margin-bottom: 30px;
+  margin-right: 80px;
+  margin-top: 30px;
+  text-align: justify;
+}
+
+.results_container {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 1px 1px 5px #333333;
+  display: inline-block;
+  float: left;
+  height: 750px;
+  margin-bottom: 100px;
+  margin-left: 30px;
+  /*margin-top: 120px;*/
+  margin-right: 30px;
+  overflow-y: scroll;
+  position: relative;
+  width: 650px;
+  /*z-index: -1;*/
+}
+
+/* #home*/ .map {
+  box-shadow: 1px 1px 5px #333333;
+  display: inline-block;
+  height: 750px;
+  /*margin-top: 120px;*/
+  margin-left: 20px;
+  margin-right: 30px;
+  margin-bottom: 100px;
+  width: 650px;
+  /*margin-top: 50px;*/
   /*position: absolute;
   margin-top: 40px;
   top: 50%;
@@ -250,69 +192,104 @@ body {
   /*margin-top: 30px;*/
 }
 
-#wel {
-  /*position: fixed;*/
-  text-align: center;
-  height: 60px;
-  /*margin-left: 20px;*/
-  margin-top: -10px;
-  font-size: 70px;
-  color: white;
+#fest_results {
+  background-color: #B8D20B;
+  border-radius: 8px;
+  box-shadow: 1px 1px 5px #333333;
+  display: inline-block;
+  font-family: Verdana;
+  font-size: 20px;
+  /*margin-left: 30px;*/
+  margin-bottom: 5px;
+  margin-left: 30px;
+  margin-right: 47px;
+  opacity: 0.9;
+  padding-left: 20px;
+  padding-right: 200px;
+  width: 430px;
+  /*margin-top: 120px;*/ 
+}
+#fest_locations {
+  /*display: inline-block;*/
+  background-color: #B8D20B;
+  border-radius: 8px;
+  box-shadow: 1px 1px 5px #333333;
+  display: inline-block;
+  float: right;
+  font-family: Verdana;
+  font-size: 20px;
+  /*margin-right: px;*/
+  opacity: 0.9;
+  padding-left: 20px;
+  position: absolute;
+  width: 633px;
+  /*margin-right: 610px;*/
+}
+
+.festival-result {
+  margin: 20px;
+  margin-bottom: 50px;
+  /*padding: 10px;*/
+}
+
+.main_links {
+  color: #F56C57;
+  font-size: 25px;
+  margin-left: 20px;
+}
+
+.festival_card {
+  border-radius: 8px;
+  box-shadow: 1px 1px 5px #333333;
+  /*background-color: #ffe6e6;*/
+  margin-bottom: 15px;
+  /*padding-top: 80px;*/
+  padding-bottom: 50px;
+  /*padding-left: 50px;*/
+  /*padding-right: 100px;*/
+  /*margin-bottom: 5px;
+  margin-top: 5px;*/
+}
+
+.festival_card_header {
+  /*box-shadow: 1px 1px 5px #333333;*/
   background-image: url('/header_image2.jpeg');
-  opacity: 0.75;
-  letter-spacing: 6px;
-  padding: 100px;
-  padding-bottom: 200px;
-  font-family: Helvetica;
-  font-weight: lighter;
-  background-size: cover;
-}
-
-.pan_button {
-  background: lightblue;
-  font-family: Helvetica;
-  font-size: 125%;
-  position: relative;
-  margin-top: 10px;
-  /*display: inline-block;*/
-  margin-left: 48%;
-  margin-bottom: 30px;
-}
-
-.map_button {
-  background: lightblue;
-  font-family: Helvetica;
-  font-size: 125%;
-  padding-right: 10px;
-  position: relative;
-  margin-bottom: 30px;
-  /*display: inline-block;*/
-  /*margin-left: 20px;
-  margin-top: 10px;
-  clear: left;*/
-}
-
-.card {
-  /*background-image: url('/festival1.jpg');*/
-  background-color: #6666ff;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
   background-size: cover;
   background-repeat: no-repeat;
-  border-radius: 5px;
-  box-shadow: 1px 1px 5px #333333;
-  height: 340px;
-  margin: 40px;
-  opacity: 0.75;
-  width: 380px;  
+  float: right;
+  height: 200px;
+  margin-bottom: 20px;
+  opacity: 0.8;
+  width: 100%;
+  /*z-index: -1;*/
 }
 
-.card_header {
-  border-radius: 5px;
-  background-color: white;
-  font-family: Helvetica;
-  /*font-weight: lighter;*/
-  padding: 40px;
-  text-align: center;
+.pan_link {
+  color: black;
 }
+
+#date {
+  margin-left: 50%;
+}
+#camping {
+  margin-left: 50%;
+}
+#artist {
+  margin-left: 50%;
+}
+#genre {
+  margin-left: 50%;
+}
+#search {
+  margin-left: 50%;
+}
+/*#button {
+  position: relative;
+  float: top;
+  margin-bottom: 50px;
+}*/
 
 #card_description {
   font-size: 14px;
@@ -345,4 +322,18 @@ body {
 
 #flight-search-form {
   display: none;
+}
+
+.bus-schedule-header {
+  border:5px solid black;
+  width:100px;
+}
+
+#bus-depart ul, #bus-return ul {
+  background-color:lightblue;
+  color:black;
+}
+
+#bus-depart div {
+  width:100px;
 }
