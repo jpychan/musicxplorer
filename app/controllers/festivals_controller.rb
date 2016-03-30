@@ -28,9 +28,19 @@ class FestivalsController < ApplicationController
   def all
     @genres = Genre.all.order(:name)
     @usr_location = $redis.hget('user', 'location')
-    @upcoming = Festival.includes(:genres).where('start_date > ?', Date.today).order(:start_date).limit(20)
+    @festivals = Festival.includes(:genres).where('start_date > ?', Date.today).order(:start_date).limit(20)
     fg = FestivalGridService.new
     @selected_festivals = fg.get_saved_festivals
+
+    img_array = ['image1', 'image2', 'image3', 'image4', 'image5', 'image6', 'image7', 'image8', 'image9', 'image10']
+
+    @img_classes = []
+
+    @festivals.each do |l|
+      i = rand(img_array.length)
+      @img_classes << img_array[i]
+    end
+
   end
 
   # PRE-CALCULATE COORDINATES FOR USER LOCATION
