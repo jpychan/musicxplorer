@@ -4,9 +4,7 @@ Rails.application.routes.draw do
   get '/flickr_images/:festival' => 'festivals#flickr_images'
 
   get '/festival-list' => 'festivals#festival_list', default: { format: 'js'}
-  get '/festivals/compare' => 'festivals#festival_compare'
-
-
+  get '/festival-subscriptions' => 'festivals#festival_subscriptions'
 
   post '/festival-select' => 'festivals#festival_select'
   post '/usr-info' => 'festivals#get_usr_info'

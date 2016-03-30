@@ -323,7 +323,7 @@ class GreyhoundScraper
     if element == "Error"
       puts err_msg
       # @browser.close
-      return "No schedules available."
+      return "No schedules found"
     else
       puts success_msg
     end
@@ -333,8 +333,13 @@ class GreyhoundScraper
     open_browser
     puts enter_trip_type
 
-    form_error_handler(enter_origin, "Error - Couldn't find origin", "Found origin")
-    form_error_handler(enter_destination, "Error - Couldn't find destination.", "Found destination")
+    # quit right away if either one results in an error
+    if enter_origin == "Error" || enter_destination == "Error"
+      return { cost: nil, travel_time: nil }
+    else
+      enter_origin
+      enter_destination
+    end
 
     enter_date("depart", @depart_date)
     enter_date("return", @return_date)

@@ -93,20 +93,20 @@ $(function() {
 
   });
 
-  // SELECT FESTIVALS
-  // TODO: toggling selection
-  $('#search-results').on('click', '.festival-result', function() {
-    var selectedId = { festivalId: $(this).attr('data-id') };
+  // // SELECT FESTIVALS
+  // // TODO: toggling selection
+  // $('#search-results').on('click', '.festival-result', function() {
+  //   var selectedId = { festivalId: $(this).attr('data-id') };
 
-    // TODO: maybe attach a condition to this...
-    $.ajax('/festival-select',
-      { dataType: 'json',
-        type: 'POST',
-        data: selectedId,
-        success: function() { console.log('festival selected'); },
-        error: function(xhr) { console.log(xhr.statusText); }
-      });
-  });
+  //   // TODO: maybe attach a condition to this...
+  //   $.ajax('/festival-select',
+  //     { dataType: 'json',
+  //       type: 'GET',
+  //       data: selectedId,
+  //       success: function() { console.log('festival selected'); },
+  //       error: function(xhr) { console.log(xhr.statusText); }
+  //     });
+  // });
 
   // function formatResults(label,ele, div) {
   //   if (ele === null || ele === 0) {
