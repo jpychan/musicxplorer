@@ -143,7 +143,7 @@ i { margin-right: 3px; }
   position: relative;
 }
 
-.search-results {
+#search-results {
   font-family: Helvetica;
   /*font-weight: lighter;*/
   font-size: 20px;
@@ -154,7 +154,7 @@ i { margin-right: 3px; }
   text-align: justify;
 }
 
-.results_container {
+#results_container {
   background-color: white;
   border-radius: 8px;
   box-shadow: 1px 1px 5px #333333;
@@ -171,8 +171,9 @@ i { margin-right: 3px; }
   /*z-index: -1;*/
 }
 
-/* #home*/ .map {
+/* #home*/ #map {
   box-shadow: 1px 1px 5px #333333;
+  border-radius: 8px;
   display: inline-block;
   height: 750px;
   /*margin-top: 120px;*/
@@ -243,8 +244,10 @@ i { margin-right: 3px; }
   box-shadow: 1px 1px 5px #333333;
   /*background-color: #ffe6e6;*/
   margin-bottom: 15px;
-  /*padding-top: 80px;*/
-  padding-bottom: 50px;
+  margin-left: 20px;
+  margin-right: 20px;
+  padding-top: 80px;
+  padding-bottom: 20px;
   /*padding-left: 50px;*/
   /*padding-right: 100px;*/
   /*margin-bottom: 5px;
@@ -259,16 +262,16 @@ i { margin-right: 3px; }
   background-size: cover;
   background-repeat: no-repeat;
   float: right;
-  height: 200px;
+  height: 100px;
   margin-bottom: 20px;
   opacity: 0.8;
-  width: 100%;
+  width: 80%;
   /*z-index: -1;*/
 }
 
-.pan_link {
+/*.pan_link {
   color: black;
-}
+}*/
 
 #date {
   margin-left: 50%;
@@ -291,10 +294,22 @@ i { margin-right: 3px; }
   margin-bottom: 50px;
 }*/
 
-#card_description {
-  font-size: 14px;
-  padding: 12px;
-  text-align: center;
+.festival_name {
+  font-family: Verdana;
+  font-size: 26px;
+  font-weight: bold;
+  margin-top: 20px;
+  margin-left: 15px;
+}
+
+.festival_location {
+  font-family: Verdana;
+  margin-left: 15px;
+}
+
+.festival_date {
+  font-family: Verdana;
+  margin-left: 15px;
 }
 /*#location {
   margin-left: 50%;

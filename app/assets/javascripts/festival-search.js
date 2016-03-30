@@ -91,8 +91,8 @@ $(function() {
     if (data.length === 0) { results.text('No results found'); }
 
     data.forEach(function(festival) {
-      var festivalDiv = $('<div class = "festival_card">').appendTo(results);
-      $('<div class = "festival_card_header">').appendTo(festivalDiv);
+      var festivalDiv = $('<div>').appendTo(results);
+      $('<div>').appendTo(festivalDiv);
 
       $('<a class ="main_links">').attr('href', '/festivals/' + festival.id)
         .text(festival.name)
@@ -102,7 +102,7 @@ $(function() {
                               .attr('data-id', festival.id)
                               .appendTo(festivalDiv);
                               
-      $('<a href class = "pan_link">').text('Location: ' + festival.location).appendTo(festivalDetails );
+      $('<div>').text('Location: ' + festival.location).appendTo(festivalDetails );
       $('<div>').text('Date: ' + festival.date).appendTo(festivalDetails);
 
       // formatResults('Price', festival.price, festivalDetails);
