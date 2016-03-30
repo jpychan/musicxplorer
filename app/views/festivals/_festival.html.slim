@@ -1,9 +1,13 @@
 div
   - @festivals.each do |festival|
     div[class="festival_card"]
-      a[href ="/festivals/ #{festival.id}" class="festival_name"] #{festival.name} 
-      p[class="festival_location"] #{festival.location}
-      p[class="festival_date"]#{festival.date}
+      div[class="festival_card_header"]
+        a[href ="/festivals/ #{festival.id}" class="festival_name"] #{festival.name} 
+        p[class="festival_location"] #{festival.location}
+        p[class="festival_date"]#{festival.date}
+     
+      / div[class="festival_card_header"]
+
 /       div.pure.g
 /         / div[class="results_container pure-g"]
 /         div[class="festival-card"]

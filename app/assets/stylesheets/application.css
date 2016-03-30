@@ -242,11 +242,12 @@ i { margin-right: 3px; }
 .festival_card {
   border-radius: 8px;
   box-shadow: 1px 1px 5px #333333;
+  height: 300px;
   /*background-color: #ffe6e6;*/
   margin-bottom: 15px;
   margin-left: 20px;
   margin-right: 20px;
-  padding-top: 80px;
+  /*padding-top: 140px;*/
   padding-bottom: 20px;
   /*padding-left: 50px;*/
   /*padding-right: 100px;*/
@@ -261,11 +262,12 @@ i { margin-right: 3px; }
   border-top-right-radius: 8px;
   background-size: cover;
   background-repeat: no-repeat;
-  float: right;
-  height: 100px;
-  margin-bottom: 20px;
-  opacity: 0.8;
-  width: 80%;
+  float: top;
+  /*float: right;*/
+  height: 55%;
+  /*margin-bottom: 20px;*/
+  opacity: 0.75;
+  width: 100%;
   /*z-index: -1;*/
 }
 
@@ -295,21 +297,29 @@ i { margin-right: 3px; }
 }*/
 
 .festival_name {
+  position: absolute;
   color: #F77604;
+  float: bottom;
   font-family: Verdana;
   font-size: 26px;
   font-weight: bold;
   margin-top: 20px;
   margin-left: 15px;
+  padding-top: 160px;
 }
 
 .festival_location {
+  position: absolute;
   font-family: Verdana;
   margin-left: 15px;
+  padding-top: 205px;
 }
 
+
 .festival_date {
+  position: absolute;
   font-family: Verdana;
+  padding-top: 230px;
   margin-left: 15px;
 }
 
