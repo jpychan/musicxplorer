@@ -1,0 +1,42 @@
+#flight-search-form
+  = form_tag "/search_flights", method: "get", remote: true, class: "pure-form"
+
+    div[class="pure-g input-row"]
+        div[class="pure-u-1-2"]
+            = hidden_field_tag :festival_id, @festival.id
+            = label_tag :departure_airport, 'Departure'
+            br
+            = autocomplete_field_tag :departure_airport, @first_five_results[0][:departure_airport]["Name"], autocomplete_airport_name_festivals_path, :id_element => '#departure_airport_id'
+            = hidden_field_tag :departure_airport_id
+        
+        div[class="pure-u-1-2"]
+            = label_tag :arrival_airport, 'Arrival'
+            br
+            = autocomplete_field_tag :arrival_airport, @first_five_results[0][:arrival_airport]["Name"], autocomplete_airport_name_festivals_path, :id_element => '#arrival_airport_id'
+            = hidden_field_tag :arrival_airport_id
+
+    div[class='pure-g input-row']
+        div[class="pure-u-2-5"]
+            = label_tag :cabin_class, 'Class'
+            br 
+            = select_tag :cabin_class, options_for_select(@cabin_classes)
+
+        div[class="pure-u-1-5"]
+            = label_tag :adults, 'Adults'
+            br
+            = select_tag :adults, options_for_select(@passenger_numbers, selected = '1')
+
+        div[class="pure-u-1-5"]
+            = label_tag :children, 'Children'
+            br
+            = select_tag :children, options_for_select(@passenger_numbers)
+
+        div[class="pure-u-1-5"]
+            = label_tag :infants, 'Infants'
+            br
+            = select_tag :infants, options_for_select(@passenger_numbers)
+
+
+    div[class='pure-g']   
+        div[class="pure-5-5"]
+            = submit_tag "Submit", class: "pure-button"

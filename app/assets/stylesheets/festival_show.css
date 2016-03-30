@@ -17,7 +17,7 @@
 
 #tabs-nav li {
     float: left;
-    font-size: 14px;
+    font-size: 16px;
     font-weight:bold;
     margin-right: 6px;
     padding: 20px;
@@ -83,10 +83,14 @@ li.active {
   list-style: none;
   height: 100%;
 }
+
+
 #travel-tabs li {
   height: 33%;
   width: 100%;
   box-sizing: border-box;
+  margin: auto;
+  vertical-align: middle;
 }
 #travel-tabs li:not(:last-child) {
   border-bottom: 2px solid #fff;
@@ -100,6 +104,7 @@ li.active {
   text-decoration: none;
   box-sizing: border-box;
   padding: 20%;
+  font-weight: normal;
 }
 #travel-tabs a:hover {
   background: #2c3e50;
@@ -147,6 +152,7 @@ li.active {
 #travel-tabs .flight-result {
   border: 1px solid green;
   padding: 10px;
+  margin: 15px 0;
 }
 
 #flight {
@@ -156,14 +162,12 @@ li.active {
 
 #flight img {
   margin: auto;
+  text-align: center;
+  display: block;
 }
 
 .flight-departure {
   border-bottom: 1px solid gray;
-}
-
-#travel-tabs .flight-result {
-  margin-bottom: 30px;
 }
 
 #artist-list {
@@ -193,4 +197,50 @@ li.active {
 
 .note {
   font-size: 12px;
+}
+
+#flight-search-btn {
+  background-color: #F77604;
+  color: #eee;
+}
+
+.input-row {
+  margin: 10px 0px;
+}
+
+#flight-search-form input {
+  width: 90%;
+}
+
+#flight-search-form {
+  margin-top: 20px;
+}
+
+#flight-search-form .pure-button {
+  float: right;
+  color: #231B12;
+}
+
+#flight-search-details {
+  margin-top: 20px;
+}
+
+.flight-result {
+  margin-top: 10px 0;
+}
+
+/* AUTOCOMPLETE */
+
+#festival-show .ui-menu {
+    background:#ff8a00!important;
+    color:#000;
+    border-radius:0;
+}
+
+.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus {
+    background: #ff8a00;
+    border: none;
+    color:#000;
+    border-radius:0;
+    font-weight: normal;
 }

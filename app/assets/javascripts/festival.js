@@ -89,6 +89,12 @@ $(function() {
     });
   }
 
+  // BUTTON TOGGLE THE FLIGHT SEARCH FORM
+
+  $('#festival-show').on('click', '#flight-search-btn', function() {
+    $('#flight-search-form').slideToggle();
+  });
+
   
   
  // var map;

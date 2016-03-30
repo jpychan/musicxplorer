@@ -50,8 +50,10 @@ class FestivalsController < ApplicationController
     @festivals = @festivals.select do |f|
       dist_km = d.calc_distance(origin['lat'], origin['lng'], f)
       puts dist_km
-      dist_km <= SEARCH_RADIUS
+      dist_km <= SEARCH_RADIUS 
     end
+
+
 
     respond_to do |format|
       format.js {render layout: false}

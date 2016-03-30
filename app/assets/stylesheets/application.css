@@ -17,12 +17,18 @@
  *= require bus
  */
 
-.pure-g [class *="pure-u"] {
-font-family: 'Raleway', sans-serif;
+.pure-g [class *="pure-u"], body {
+  font-family: 'Raleway', sans-serif;
+  color: #333333;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Noto Serif', serif;
+}
+
+a {
+  color: #F56C57;
+  font-weight: bold;
 }
 
 
