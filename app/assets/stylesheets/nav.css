@@ -11,6 +11,10 @@
   border-bottom: 3px solid #F77604;
 }
 
+#usr_location {
+    color: #ffffff;
+}
+
 .pure-menu, .pure-menu-heading, .pure-menu-item a {
   color: #ffffff;
 }
@@ -39,6 +43,12 @@ input:focus {
   border-radius: 10%;
   padding: 5px;
   border: none;
+}
+
+#edit_location:hover {
+  background: #B8D20B;
+  box-shadow: 3px 5px 5px #aaaaaa;
+  transition: all 0.3s ease-in-out:
 }
 
 #festival-search-form {
@@ -90,4 +100,10 @@ input:focus {
 #logo .pure-menu-link a:hover {
   text-decoration:none;
   font-size: 28px;
+}
+
+#logo:hover a {
+  font-size: 30px;
+  color: #F56C57;
+  transition: all 0.3s ease-in-out:
 }

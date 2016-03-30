@@ -40,13 +40,14 @@
           a[href='#{result["PricingOptions"][0]["DeeplinkUrl"]}' class="pure-button pure-button-primary" target="_blank"] Book Now
 
 - elsif !@valid_search
-  div
+  div.error-message
     p Your departure and arrival airports are the same! Check out the driving or bus directions!
 
 - elsif !@in_future
   
-  div
+  div.error-message
     p This event has happened.
 
 - elsif @first_five_results == nil
+  div.error-message
     p Sorry, no results could be found.
