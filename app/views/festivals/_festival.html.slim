@@ -1,10 +1,11 @@
 div
-  - @festivals.each do |festival|
+  / - @festivals.each do |festival|
+  -for i in 0..@festivals.length - 1
     div[class="festival_card"]
-      div[class="festival_card_header"]
-        a[href ="/festivals/ #{festival.id}" class="festival_name"] #{festival.name} 
-        p[class="festival_location"] #{festival.location}
-        p[class="festival_date"]#{festival.date}
+      div[class="festival_card_header #{@img_classes[i]}"]
+        a[href ="/festivals/ #{@festivals[i].id}" class="festival_name"] #{@festivals[i].name} 
+        p[class="festival_location"] #{@festivals[i].location}
+        p[class="festival_date"]#{@festivals[i].date}
      
       / div[class="festival_card_header"]
 
@@ -13,37 +14,4 @@ div
 /         div[class="festival-card"]
 /           p #{@search_results}
 
-          /   div[class="pure-u-1-2"]
-          /     p #{result[:outbound_departure_time]} - #{result[:outbound_arrival_time]}
-          /     p #{result[:departure_carrier]["Name"]}
-
-          /   div[class="pure-u-1-4"]
-          /     p #{result[:outbound_leg]["Duration"]} min
-          /     p 0 stops
-
-          / div[class="flight-arrival pure-g"]
-          /   div[class="pure-u-1-4"]
-          /     p #{@first_five_results[5]["InboundDate"]}
-
-              
-          /   div[class="pure-u-1-2"]
-          /     p #{result[:inbound_departure_time]} - #{result[:inbound_arrival_time]}
-          /     p Returning Carrier
-
-          /   div[class="pure-u-1-4"]
-          /     p #{result[:inbound_leg]["Duration"]} min
-          /     p 0 stops
-
-
-  / div.pure.g
-  /   div[class="pure-u-2-2"]
-  /     div[class="results_container"]
-  /       div[class="festivals_card"]
-  /         p #{@search_results}
-  /         div[class="festival_card_header"]
-  /           div[class="search-results"]
-  /   div[class="pure-u-2-2"]
-  /     div[class="map"]
-
-
-     
+         

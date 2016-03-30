@@ -257,7 +257,6 @@ i { margin-right: 3px; }
 
 .festival_card_header {
   /*box-shadow: 1px 1px 5px #333333;*/
-  background-image: url('/header_image2.jpeg');
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
   background-size: cover;
@@ -269,6 +268,26 @@ i { margin-right: 3px; }
   opacity: 0.75;
   width: 100%;
   /*z-index: -1;*/
+}
+
+.image1 {
+  background-image: url('/festival1.jpg');
+}
+
+.image2 {
+  background-image: url('/festival2.jpg');
+}
+
+.image3 {
+  background-image: url('/festival3.jpg');
+}
+
+.image4 {
+  background-image: url('/festival4.jpg');
+}
+
+.image5 {
+  background-image: url('/festival5.jpeg');
 }
 
 /*.pan_link {
