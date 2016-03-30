@@ -2,7 +2,7 @@
 
 $heart-width:14px;
 $heart-height:24px;
-$heart-color:#CB3D3D;
+$heart-color:#F56C57;
 $hr:45deg;
 $hl:$hr - ($hr * 2);
 
@@ -15,6 +15,7 @@ $hl:$hr - ($hr * 2);
   transition-property:top,opacity;
   transition-duration:0.3s;
   transition-delay:.0s;
+  text-align: right;
 }
 #click[type='checkbox']:checked + label > .favourite{
   width:20px;
@@ -80,14 +81,14 @@ transition-delay: 1.2s;
   @extend %center;
   -webkit-animation:pop .6s;
   padding:20px;
-  box-shadow:0px 0px 0px 3px red;
-  color:red;
+  box-shadow:0px 0px 0px 3px #b8d20b;
+  color:#b8d20b;
   transition-property:width;
   transition-duration:.2s,.2s;
   -webkit-transition-timing-function: cubic-bezier(0.38, -0.35, 0.265, 1.15);
   &:hover{
     width:146px;
-    box-shadow:0px 0px 0px 3px red;
+    box-shadow:0px 0px 0px 3px #b8d20b;
   }
   &:hover > .favourite_heart .favourite_heart__left{
     transform:scale(1.1) rotate(-45deg);
@@ -114,10 +115,10 @@ transition-delay: 1.2s;
     opacity:0;
     position:relative;
     span{
-      color:red;
+      color:#b8d20b;
       text-transform:uppercase;
       font-weight:normal;
-      font-size:12px;
+      font-size:16px;
     }
   }
   &_heart{
@@ -162,7 +163,7 @@ transition-delay: 1.2s;
       transition-property:box-shadow,width;
       transition-duration:0s,.2s;
       transition-delay:0s,0s;
-      box-shadow:0px 0px 0px 3px red;
+      box-shadow:0px 0px 0px 3px #b8d20b;
 }
 /* Animations */
 
@@ -181,9 +182,9 @@ transition-delay: 1.2s;
 }
 /* Media quizzles */
 
-@media only screen and (max-height: 330px) { // Checks how the pen will look in featured iframe
+@media only screen and (max-height: 330px) { // Checks how the pen will look in featu#b8d20b iframe
   body{
-    //  background:Red;
+    //  background:#b8d20b;
   }
 }
 
