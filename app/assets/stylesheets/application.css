@@ -17,11 +17,19 @@
  *= require bus
  */
 
+.pure-g [class *="pure-u"], body {
+  font-family: 'Raleway', sans-serif;
+  color: #333333;
+}
 
-/*body {
-  background-color: #DEE0FA;
-  font-family: Helvetica;
-}*/
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Noto Serif', serif;
+}
+
+a {
+  color: #F56C57;
+  font-weight: bold;
+}
 
 
 /* FESTIVAL COMPARISON MODAL */
@@ -29,9 +37,9 @@
   width: 80%;
   top: 3%;
   left: 33%;
-  font-family: helvetica;
+  font-family: 'Raleway', sans-serif;
   position: relative;
-  display:none;
+  display: none;
 }
 
 .modal.fade.in { position: fixed; }
@@ -64,7 +72,7 @@ i { margin-right: 3px; }
   border-radius: 5px;
   color: #fff;
   font-size: 12px;
-  font-family: helvetica;
+  font-family: 'Raleway', sans-serif;
   padding:5px;
 }
 
@@ -79,7 +87,7 @@ i { margin-right: 3px; }
 
 .ui-datepicker { 
   background: #fff;
-  font-family: Arial;
+  font-family: 'Lora', serif;
   opacity: 0.9;
 }
 
@@ -116,7 +124,6 @@ i { margin-right: 3px; }
 .pan_button {
   background: lightblue;
   display: inline-block;
-  font-family: Helvetica;
   font-size: 125%;
   margin-bottom: 30px;
   margin-left: 50%;
@@ -128,7 +135,6 @@ i { margin-right: 3px; }
   background: lightblue;
   clear: left;
   display: inline-block;
-  font-family: Helvetica;
   font-size: 125%;
   margin-bottom: 30px;
   margin-left: 20px;
@@ -137,8 +143,8 @@ i { margin-right: 3px; }
   position: relative;
 }
 
-#results {
-  font-family: Helvetica;
+
+.search-results {
   /*font-weight: lighter;*/
   font-size: 20px;
   margin-left: 40px;
@@ -194,7 +200,6 @@ i { margin-right: 3px; }
   border-radius: 8px;
   box-shadow: 1px 1px 5px #333333;
   display: inline-block;
-  font-family: Verdana;
   font-size: 20px;
   /*margin-left: 30px;*/
   margin-bottom: 5px;
@@ -214,7 +219,6 @@ i { margin-right: 3px; }
   box-shadow: 1px 1px 5px #333333;
   display: inline-block;
   float: right;
-  font-family: Verdana;
   font-size: 20px;
   /*margin-right: px;*/
   opacity: 0.9;
@@ -307,25 +311,6 @@ i { margin-right: 3px; }
   background-image: url('/festival10.jpg');
 }
 
-/*.pan_link {
-  color: black;
-}*/
-/*
-#date {
-  margin-left: 50%;
-}
-#camping {
-  margin-left: 50%;
-}
-#artist {
-  margin-left: 50%;
-}
-#genre {
-  margin-left: 50%;
-}
-#search {
-  margin-left: 50%;
-}*/
 /*#button {
   position: relative;
   float: top;

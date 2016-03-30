@@ -10,29 +10,48 @@
   list-style: none;
   margin: 0;
   padding: 0;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid #f77604;
   overflow: auto;
+  width: 99%;
 }
 
 #tabs-nav li {
     float: left;
-    font-size: 14px;
+    font-size: 16px;
     font-weight:bold;
     margin-right: 6px;
-    padding:6px 10px;
-    border:1px solid #d5d5de;
+    padding: 20px;
+    border:1px solid #f77604;
     border-bottom:none;
     cursor:pointer;
+    border-top-left-radius: 5%;
+    border-top-right-radius: 5%;
   }
 
 #tabs-nav li:hover,
 li.active {
-  background-color: #d5d5de;
+  background-color: #f77604;
+}
+
+#tabs-nav li a {
+  text-decoration:none;
+  color: #231B12 ;
+}
+
+#tabs-nav a:hover {
+  color: #eeeeee;
+}
+
+#tabs-nav li.active a {
+  color: #eeeeee;
 }
 
 .content {
-  padding: 10px;
-  border: 1px solid #d5d5de;
+  padding: 20px;
+  border: 1px solid #f77604;
+  border-bottom-left-radius: 2%;
+  border-bottom-right-radius: 2%;
+  border-top-right-radius: 2%;
   border-top: none;
 }
 
@@ -57,17 +76,21 @@ li.active {
 }
 #travel-tabs ul {
   float: left;
-  width: 30%;
-  background: #333;
+  width: 20%;
+  background: #231B12;
   margin: 0;
   padding: 0;
   list-style: none;
   height: 100%;
 }
+
+
 #travel-tabs li {
   height: 33%;
   width: 100%;
   box-sizing: border-box;
+  margin: auto;
+  vertical-align: middle;
 }
 #travel-tabs li:not(:last-child) {
   border-bottom: 2px solid #fff;
@@ -81,12 +104,13 @@ li.active {
   text-decoration: none;
   box-sizing: border-box;
   padding: 20%;
+  font-weight: normal;
 }
 #travel-tabs a:hover {
   background: #2c3e50;
 }
 #travel-tabs .route-details {
-  width: 70%;
+  width: 80%;
   color: #000;
   float: left;
   height: 100%;
@@ -98,8 +122,8 @@ li.active {
 }
 
 #festival-show #driving-map {
-  width: 500px;
-  height: 500px;
+  width: 100%;
+  height: 80%;
 }
 
 #festival-show #festival-map {
@@ -128,18 +152,22 @@ li.active {
 #travel-tabs .flight-result {
   border: 1px solid green;
   padding: 10px;
+  margin: 15px 0;
 }
 
 #flight {
   overflow: auto;
+  text-align: center;
+}
+
+#flight img {
+  margin: auto;
+  text-align: center;
+  display: block;
 }
 
 .flight-departure {
   border-bottom: 1px solid gray;
-}
-
-#travel-tabs .flight-result {
-  margin-bottom: 30px;
 }
 
 #artist-list {
@@ -165,4 +193,47 @@ li.active {
   left: -9999px;
   right: -9999px;
   margin: auto;
+}
+
+.note {
+  font-size: 12px;
+}
+
+#flight-search-btn {
+  background-color: #F77604;
+  color: #eee;
+}
+
+.input-row {
+  margin: 10px 0px;
+}
+
+#flight-search-form input {
+  width: 90%;
+}
+
+#flight-search-form {
+  margin-top: 20px;
+}
+
+#flight-search-form .pure-button {
+  float: right;
+  color: #231B12;
+}
+
+#flight-search-details {
+  margin-top: 20px;
+}
+
+.flight-result {
+  margin-top: 10px 0;
+}
+
+.error-message {
+  color: #F56C57;
+  font-size: 30px;
+  text-align: center;
+  font-weight: bold;
+  display: block;
+  margin-top: 40%;
 }

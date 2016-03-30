@@ -26,6 +26,7 @@ $(function() {
     locationInput.prop('placeholder','');
     locationInput.toggleClass('input-locked');
     locationInput.toggleClass('input-active');
+    locationInput.focus();
 
 
     locationInput.on('blur paste', function() {
@@ -90,6 +91,7 @@ $(function() {
 
     if (data.length === 0) { results.text('No results found'); }
 
+<<<<<<< HEAD
     // data.forEach(function(festival) {
     //   var festivalDiv = $('<div>').appendTo(results);
     //   $('<div>').appendTo(festivalDiv);
@@ -109,22 +111,24 @@ $(function() {
       // formatResults('Camping', festival.camping, festivalDetails);
       // formatResults('Description', festival.description, festivalDetails);
     // });
+=======
+>>>>>>> final-merge
   });
 
-  // SELECT FESTIVALS
-  // TODO: toggling selection
-  $('#search-results').on('click', '.festival-result', function() {
-    var selectedId = { festivalId: $(this).attr('data-id') };
+  // // SELECT FESTIVALS
+  // // TODO: toggling selection
+  // $('#search-results').on('click', '.festival-result', function() {
+  //   var selectedId = { festivalId: $(this).attr('data-id') };
 
-    // TODO: maybe attach a condition to this...
-    $.ajax('/festival-select',
-      { dataType: 'json',
-        type: 'POST',
-        data: selectedId,
-        success: function() { console.log('festival selected'); },
-        error: function(xhr) { console.log(xhr.statusText); }
-      });
-  });
+  //   // TODO: maybe attach a condition to this...
+  //   $.ajax('/festival-select',
+  //     { dataType: 'json',
+  //       type: 'GET',
+  //       data: selectedId,
+  //       success: function() { console.log('festival selected'); },
+  //       error: function(xhr) { console.log(xhr.statusText); }
+  //     });
+  // });
 
   // function formatResults(label,ele, div) {
   //   if (ele === null || ele === 0) {

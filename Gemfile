@@ -48,7 +48,6 @@ gem  'watir-webdriver'
 gem 'watir-scroll'
 gem 'phantomjs'
 gem 'rails-jquery-autocomplete'
-gem 'kaminari'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

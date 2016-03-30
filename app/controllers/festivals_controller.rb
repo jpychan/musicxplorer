@@ -3,31 +3,29 @@ class FestivalsController < ApplicationController
   SEARCH_RADIUS = 500
 
   before_action :set_search_and_user_location
+  before_action :load_favourite_festivals, only: [:show, :all, :festival_subscriptions]
 
   def show
     @festival = Festival.find(params[:id])
-
-    # driving = DrivingInfoService.new(@festival)
-    # @price_by_car = driving.calc_driving_cost
-    # @time_by_car = driving.get_trip_time[0]
-
     @usr_location = $redis.hget('user', 'location')
     @usr_location_coord = {
       lat: $redis.hgetall('user')["lat"],
       long: $redis.hgetall('user')["lng"]
     }
-    fg = FestivalGridService.new
-    @selected_festivals = fg.get_saved_festivals
+    
     driving = DrivingInfoService.new(@festival)
-    @price_b_ycar = driving.calc_driving_cost
+    @price_by_car = driving.calc_driving_cost
     @time_by_car = driving.get_trip_time[0]
-    # @usr_location = $redis.hgetall('user')
 
   end
 
   def all
     @genres = Genre.all.order(:name)
     @usr_location = $redis.hget('user', 'location')
+<<<<<<< HEAD
+=======
+
+>>>>>>> final-merge
     @festivals = Festival.includes(:genres).where('start_date > ?', Date.today).order(:start_date).limit(20)
     fg = FestivalGridService.new
     @selected_festivals = fg.get_saved_festivals
@@ -60,9 +58,10 @@ class FestivalsController < ApplicationController
     @festivals = @festivals.select do |f|
       dist_km = d.calc_distance(origin['lat'], origin['lng'], f)
       puts dist_km
-      dist_km <= SEARCH_RADIUS
+      dist_km <= SEARCH_RADIUS 
     end
 
+<<<<<<< HEAD
     img_array = ['image1', 'image2', 'image3', 'image4', 'image5', 'image6', 'image7', 'image8', 'image9', 'image10']
 
     @img_classes = []
@@ -73,19 +72,28 @@ class FestivalsController < ApplicationController
     end
 
     # byebug
+=======
+
+>>>>>>> final-merge
 
     respond_to do |format|
       format.js {render layout: false}
     end
-
-    # render json: @festivals
   end
 
-  # TODO: refactor
+  # AUTO REFRESH
+  def festival_subscriptions
+    render json: @selected_festivals
+  end
+
+  # TODO: refactor!
   def festival_select
     festival = Festival.find(params[:festivalId])
     festival_json = festival.as_json
     user = $redis.hgetall('user')
+
+    festival_json['price_car'] = params[:drivingPrice]
+    festival_json['time_car'] = params[:drivingTime]
 
     fg = FestivalGridService.new
     if flight_exists?(festival)
@@ -96,18 +104,14 @@ class FestivalsController < ApplicationController
     end
 
     bus = fg.get_first_bus(festival)
-    festival_json['price_bus'] = bus[:cost]
-    festival_json['time_bus'] = bus[:travel_time]
+    if bus && bus.is_a?(Hash)
+      festival_json['price_bus'] = bus[:cost]
+      festival_json['time_bus'] = bus[:travel_time]
+    end
 
     if festival
       $redis.hset('festivals', festival.id, festival_json.to_json)
     end
-
-    redirect_to :back
-  end
-  
-  def festival_unselect
-    $redis.hdel('festivals', params[:festivalId])
     redirect_to root_path
   end
   
@@ -128,8 +132,9 @@ class FestivalsController < ApplicationController
 
   def flickr_images 
     festival = params[:festival].gsub(/\s\d{4}/, '')
-    @festival = Festival.find_by(name: params[:festival])
-  img_src = "https://api.flickr.com/services/rest/?api_key=#{ENV['FLICKR_KEY']}&method=flickr.photos.search&tags=festival&text=#{festival}&sort=relevance&per_page=10&page=1&content_type=1&format=json&nojsoncallback=1"
+    url = "https://api.flickr.com/services/rest/?api_key=#{ENV['FLICKR_KEY']}&method=flickr.photos.search&tags=festival&text=#{festival}&sort=relevance&per_page=10&page=1&content_type=1&format=json&nojsoncallback=1"
+    encode_url = URI.encode(url)
+    img_src = URI.parse(encode_url)
     response = HTTParty.get(img_src).body
     @image = JSON.parse(response)
     render json: @image
@@ -192,23 +197,27 @@ class FestivalsController < ApplicationController
     elsif Date.today >= @festival.start_date
       @greyhound_data = "Festival already in progress. No greyhound bus schedules available."
     else
-      # ghound = GreyhoundScraper.new(@depart_date, @depart_from, @return_date, @return_from, trip_type, browser)
-      # @greyhound_data = ghound.run
+      ghound = GreyhoundScraper.new(@depart_date, @depart_from, @return_date, @return_from, trip_type, browser)
+      @greyhound_data = ghound.run
 
       # testing - test data
       # @greyhound_data = "some error"
-      @greyhound_data = {:depart=>{0=>{:cost=>"79.00", :start_time=>"12:15AM", :end_time=>"07:40AM", :travel_time=>"7h 25m"}, 1=>{:cost=>"79.00", :start_time=>"06:30AM", :end_time=>"12:15PM", :travel_time=>"5h 45m"}, 2=>{:cost=>"88.00", :start_time=>"12:30PM", :end_time=>"05:30PM", :travel_time=>"5h 00m"}, 3=>{:cost=>"81.00", :start_time=>"02:30PM", :end_time=>"07:30PM", :travel_time=>"5h 00m"}, 4=>{:cost=>"81.00", :start_time=>"06:00PM", :end_time=>"11:45PM", :travel_time=>"5h 45m"}}, :return=>{0=>{:cost=>"", :start_time=>"08:00AM", :end_time=>"01:20PM", :travel_time=>"5h 20m"}, 1=>{:cost=>"", :start_time=>"09:15AM", :end_time=>"04:40PM", :travel_time=>"7h 25m"}, 2=>{:cost=>"", :start_time=>"12:01PM", :end_time=>"05:00PM", :travel_time=>"4h 59m"}, 3=>{:cost=>"", :start_time=>"03:30PM", :end_time=>"09:30PM", :travel_time=>"6h 00m"}, 4=>{:cost=>"", :start_time=>"11:15PM", :end_time=>"05:05AM", :travel_time=>"5h 50m"}}}
+      #@greyhound_data = {:depart=>{0=>{:cost=>"79.00", :start_time=>"12:15AM", :end_time=>"07:40AM", :travel_time=>"7h 25m"}, 1=>{:cost=>"79.00", :start_time=>"06:30AM", :end_time=>"12:15PM", :travel_time=>"5h 45m"}, 2=>{:cost=>"88.00", :start_time=>"12:30PM", :end_time=>"05:30PM", :travel_time=>"5h 00m"}, 3=>{:cost=>"81.00", :start_time=>"02:30PM", :end_time=>"07:30PM", :travel_time=>"5h 00m"}, 4=>{:cost=>"81.00", :start_time=>"06:00PM", :end_time=>"11:45PM", :travel_time=>"5h 45m"}}, :return=>{0=>{:cost=>"", :start_time=>"08:00AM", :end_time=>"01:20PM", :travel_time=>"5h 20m"}, 1=>{:cost=>"", :start_time=>"09:15AM", :end_time=>"04:40PM", :travel_time=>"7h 25m"}, 2=>{:cost=>"", :start_time=>"12:01PM", :end_time=>"05:00PM", :travel_time=>"4h 59m"}, 3=>{:cost=>"", :start_time=>"03:30PM", :end_time=>"09:30PM", :travel_time=>"6h 00m"}, 4=>{:cost=>"", :start_time=>"11:15PM", :end_time=>"05:05AM", :travel_time=>"5h 50m"}}}
     end
     respond_to do |format|
       format.js {render layout: false}
     end
   end
 
+  protected 
+    def set_search_and_user_location
+      @artists = Artist.all.order(:name)
+      @genres = Genre.all.order(:name)
+      @usr_location = $redis.hget('user', 'location')
+    end
 
-  def set_search_and_user_location
-    @artists = Artist.all.order(:name)
-    @genres = Genre.all.order(:name)
-    @usr_location = $redis.hget('user', 'location')
-  end
-
+    def load_favourite_festivals
+      fg = FestivalGridService.new
+      @selected_festivals = fg.get_saved_festivals
+    end
 end
