@@ -39,7 +39,7 @@ a {
   left: 33%;
   font-family: 'Raleway', sans-serif;
   position: relative;
-  display:none;
+  display: none;
 }
 
 .modal.fade.in { position: fixed; }
