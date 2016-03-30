@@ -53,14 +53,13 @@ class FestivalsController < ApplicationController
       dist_km <= SEARCH_RADIUS
     end
 
-    img_array = ['image1', 'image2', 'image3', 'image4', 'image5']
+    img_array = ['image1', 'image2', 'image3', 'image4', 'image5', 'image6', 'image7', 'image8', 'image9', 'image10']
 
     @img_classes = []
 
     @festivals.each do |l|
       i = rand(img_array.length)
       @img_classes << img_array[i]
-
     end
 
     # byebug

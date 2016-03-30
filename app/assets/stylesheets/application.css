@@ -49,8 +49,6 @@ thead {
 
 }
 
-
-
 tr, td, th {
   margin: 5px;
   padding: 5px;
@@ -95,10 +93,6 @@ i { margin-right: 3px; }
   cursor: pointer;
   padding: 10px;
 }
-
- /*#map {
-  box-shadow: 1px 1px 5px #333333;
-}*/
 
 #wel {
   /*position: fixed;*/
@@ -248,7 +242,7 @@ i { margin-right: 3px; }
   margin-left: 20px;
   margin-right: 20px;
   /*padding-top: 140px;*/
-  padding-bottom: 20px;
+  padding-bottom: 10px;
   /*padding-left: 50px;*/
   /*padding-right: 100px;*/
   /*margin-bottom: 5px;
@@ -263,8 +257,8 @@ i { margin-right: 3px; }
   background-repeat: no-repeat;
   float: top;
   /*float: right;*/
-  height: 55%;
-  /*margin-bottom: 20px;*/
+  height: 60%;
+ /* margin-bottom: 50px;*/
   opacity: 0.75;
   width: 100%;
   /*z-index: -1;*/
@@ -288,6 +282,26 @@ i { margin-right: 3px; }
 
 .image5 {
   background-image: url('/festival5.jpeg');
+}
+
+.image6 {
+  background-image: url('/festival6.jpg');
+}
+
+.image7 {
+  background-image: url('/festival7.jpg');
+}
+
+.image8 {
+  background-image: url('/festival8.jpg');
+}
+
+.image9 {
+  background-image: url('/festival9.jpg');
+}
+
+.image10 {
+  background-image: url('/festival10.jpg');
 }
 
 /*.pan_link {
@@ -322,7 +336,7 @@ i { margin-right: 3px; }
   font-family: Verdana;
   font-size: 26px;
   font-weight: bold;
-  margin-top: 20px;
+  margin-top: 30px;
   margin-left: 15px;
   padding-top: 160px;
 }
@@ -330,16 +344,19 @@ i { margin-right: 3px; }
 .festival_location {
   position: absolute;
   font-family: Verdana;
+  font-weight: bold;
   margin-left: 15px;
+  margin-top: 20px;
   padding-top: 205px;
 }
-
 
 .festival_date {
   position: absolute;
   font-family: Verdana;
+  font-weight: bold;
   padding-top: 230px;
   margin-left: 15px;
+  margin-top: 20px;
 }
 
 /*#location {
