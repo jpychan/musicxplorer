@@ -187,7 +187,7 @@ i { margin-right: 3px; }
   /*margin-top: 30px;*/
 }
 
-/*==== Main Page Cards: ====*/
+/*==== Cards: ====*/
 
 #fest_results {
   background-color: #B8D20B;
@@ -267,6 +267,10 @@ i { margin-right: 3px; }
   /*z-index: -1;*/
 }
 
+.festival_card_body {
+  margin-top: 35%;
+}
+
 .image1 {
   background-image: url('/festival1.jpg');
 }
@@ -337,7 +341,8 @@ i { margin-right: 3px; }
   color: #F77604;
   float: bottom;
   font-family: Verdana;
-  font-size: 26px;
+  font-size: 20px;
+  /*font-size: 2.5vw; */
   font-weight: bold;
   margin-top: 30px;
   margin-left: 15px;
@@ -395,17 +400,12 @@ i { margin-right: 3px; }
 }
 
 #upcoming_festivals .festival_name {
-  font-size: 18px;
+  font-size: 1.3em;
 }
 
 .festival_card:hover {
   box-shadow: 3px 5px 15px #333333;
   transition: box-shadow 0.3s ease-in-out:
-  -webkit-transform:scale(1.1); /* Safari and Chrome */
-  -moz-transform:scale(1.1); /* Firefox */
-  -ms-transform:scale(1.1); /* IE 9 */
-  -o-transform:scale(1.1); /* Opera */
-   transform:scale(1.1);
 }
 
 #flight-search-form {
