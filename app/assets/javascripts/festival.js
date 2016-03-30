@@ -89,8 +89,6 @@ $(function() {
     });
   }
 
-  
-  
  // var map;
  //      function initMap() {
  //        map = new google.maps.Map(document.getElementById('map'), {
@@ -99,7 +97,6 @@ $(function() {
  //        });
  //      }
  // }
-
 
 });
 
@@ -146,9 +143,18 @@ $(".map_button").click(function(){
   $("#map").toggle(300);
 });
 
-$('.pan_button').on('click', function(){
-  var latLng = new google.maps.LatLng(49.8994, -97.1392); //should pan to specified location (based on card/div?)
-  map.panTo(latLng);
-});
+// $('.pan_button').on('click', function(){
+//   var latLng = new google.maps.LatLng(49.8994, -97.1392); //should pan to specified location (based on card/div?)
+//   map.panTo(latLng);
+
+var target = $('#wel');
+var targetHeight = target.outerHeight();
+
+  $(window).scroll(function(){
+    var scrollPercent = (targetHeight - window.scrollY) / targetHeight;
+    if(scrollPercent >= 0){
+      target.css('opacity', scrollPercent);
+    }
+  }); 
 }
 

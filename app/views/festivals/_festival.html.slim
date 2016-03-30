@@ -1,7 +1,7 @@
 div
   - @festivals.each do |festival|
     div[class="festival_card"]
-      p[class="festival_name"] #{festival.name}
+      a[href ="/festivals/ #{festival.id}" class="festival_name"] #{festival.name} 
       p[class="festival_location"] #{festival.location}
       p[class="festival_date"]#{festival.date}
 /       div.pure.g

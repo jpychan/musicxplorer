@@ -272,7 +272,7 @@ i { margin-right: 3px; }
 /*.pan_link {
   color: black;
 }*/
-
+/*
 #date {
   margin-left: 50%;
 }
@@ -287,7 +287,7 @@ i { margin-right: 3px; }
 }
 #search {
   margin-left: 50%;
-}
+}*/
 /*#button {
   position: relative;
   float: top;
@@ -295,6 +295,7 @@ i { margin-right: 3px; }
 }*/
 
 .festival_name {
+  color: #F77604;
   font-family: Verdana;
   font-size: 26px;
   font-weight: bold;
@@ -311,6 +312,7 @@ i { margin-right: 3px; }
   font-family: Verdana;
   margin-left: 15px;
 }
+
 /*#location {
   margin-left: 50%;
 }
