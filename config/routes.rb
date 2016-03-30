@@ -8,9 +8,9 @@ Rails.application.routes.draw do
 
 
 
-  post '/festival-select' => 'festivals#festival_select'
+  get '/festival-select' => 'festivals#festival_select', default: { format: 'js' }
   post '/usr-info' => 'festivals#get_usr_info'
-  post '/festival-unselect' => 'festivals#festival_unselect'
+  get '/festival-unselect' => 'festivals#festival_unselect', default: { format: 'js' }
 
   root 'festivals#all'
 

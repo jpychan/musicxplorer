@@ -1,0 +1,30 @@
+- @selected_festivals.each do |festival|
+  tr[class="fave" data-id="#{festival['id']}"]
+    td #{link_to festival['name'], festival_path(festival['id'].to_i)}
+    td #{festival['date']}
+    td #{festival['location']}
+    td #{display(festival['price'])}
+    td #{display(festival['camping'])}
+
+    - if festival['price_car'] == 0
+      td #{festival['time_car']}
+      td $#{display(festival['price_car'])}
+    - else
+      td[colspan=2] n/a
+    
+    - if festival['price_bus']
+      td #{festival['time_bus']}
+      td $#{festival['price_bus']}
+    - else
+      td[colspan=2] n/a
+
+    - if festival['price_flight']
+      td #{display(festival['time_flight_in'])} -
+          #{display(festival['time_flight_out'])} mins
+      td $#{display(festival['price_flight'])}
+    - else
+      td[colspan=2] n/a
+    td
+      button.remove-fave
+        i[class="fa fa-star"] 
+        | Remove

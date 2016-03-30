@@ -6,7 +6,6 @@ $(function() {
   //    };
   //   };
 
-
   // ADD OR REMOVE FESTIVALS FROM FAVORITES ON FESTIVAL SHOW PAGE
   $('.cache-btns').on('change', '.fave-btn', function(){
     var checkbox = $('#click');
@@ -20,42 +19,18 @@ $(function() {
       };
       $.ajax('/festival-select',
         { dataType: 'json',
-          type: 'POST',
+          type: 'GET',
           data: tripCost
         });
     }
     else if (checkbox.prop("checked") == false){
       $.ajax('/festival-unselect',
       { dataType: 'json',
-        type: 'DELETE', 
+        type: 'GET', 
         data: { festivalId: $('.music-festival').attr('data-id') }
       });
       }
   });
-
-  // $('.cache-btns').on('click', '.fave-btn',function() {
-  //   var driving = $('.driving-cost');
-  //   var tripCost = {
-  //     festivalId: $('.music-festival').attr('data-id'),
-  //     drivingPrice: driving.attr('data-car-price'),
-  //     drivingTime: driving.attr('data-car-time')
-  //   };
-  //   $.ajax('/festival-select',
-  //     { dataType: 'json',
-  //       type: 'POST',
-  //       data: tripCost
-  //     });
-  //   $(this).replaceWith('<button class="remove-btn">Remove from Favourites</button>');
-  // });
-
-  // $('.cache-btns').on('click', '.remove-btn', function() {
-  //   $(this).replaceWith('<button class="fave-btn">Add to Favourites</button>');
-  //   $.ajax('/festival-unselect',
-  //     { dataType: 'json',
-  //       type: 'DELETE', 
-  //       data: { festivalId: $('.music-festival').attr('data-id') }
-  //     });
-  // });
 
   // REMOVE FESTIVALS FROM FESTIVAL FAVOURITES PAGE
   $('.remove-fave').on('click', function() {
@@ -72,7 +47,7 @@ $(function() {
   // FLICKR
   if ($('#festival-show').length > 0) {
 
-    var festival = $('.flickr-imgs').data('name');
+    var festival = $('.flickr-imgs').data('name').replace(/[^a-z0-9\s]/i, '');
     $.ajax('/flickr_images/' + festival, { dataType: 'json' }).done(function(data) { 
       if (data.stat != 'ok') { return console.log('error'); }
    
@@ -88,8 +63,6 @@ $(function() {
 
     });
   }
-
-  
   
  // var map;
  //      function initMap() {
@@ -99,7 +72,6 @@ $(function() {
  //        });
  //      }
  // }
-
 
 });
 
@@ -151,4 +123,5 @@ $('.pan_button').on('click', function(){
   map.panTo(latLng);
 });
 }
+
 
