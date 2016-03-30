@@ -26,6 +26,7 @@ $(function() {
     locationInput.prop('placeholder','');
     locationInput.toggleClass('input-locked');
     locationInput.toggleClass('input-active');
+    locationInput.focus();
 
 
     locationInput.on('blur paste', function() {
