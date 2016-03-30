@@ -11,6 +11,10 @@
   border-bottom: 3px solid #F77604;
 }
 
+#usr_location {
+    color: #ffffff;
+}
+
 .pure-menu, .pure-menu-heading, .pure-menu-item a {
   color: #ffffff;
 }
@@ -41,7 +45,65 @@ input:focus {
   border: none;
 }
 
+#edit_location:hover {
+  background: #B8D20B;
+  box-shadow: 3px 5px 5px #aaaaaa;
+  transition: all 0.3s ease-in-out:
+}
+
 #festival-search-form {
   display:none;
   padding: 10px;
+  background-color: #F56C57;
+}
+
+#festival-search-form .pure-g {
+  padding:10px;
+}
+
+#festival-search-form input {
+  margin-top: 10px;
+}
+
+#festival-search-form select {
+  margin-top: 10px;
+}
+#submit-search {
+  background-color: #231B12;
+  border-radius: 10px;
+}
+
+#festival-search-form .pure-button:hover{
+  background-color: #B8D20B;
+  border-radius: 10px;
+}
+
+#festival-search-form label {
+  font-weight: bold;
+  color: #eee;
+}
+
+
+.nav {
+  text-align: right;
+}
+
+.pure-menu-item {
+  padding: 10px 15px;
+}
+
+#logo {
+ font-family: 'Boogaloo', cursive;
+ font-size: 26px;
+}
+
+#logo .pure-menu-link a:hover {
+  text-decoration:none;
+  font-size: 28px;
+}
+
+#logo:hover a {
+  font-size: 30px;
+  color: #F56C57;
+  transition: all 0.3s ease-in-out:
 }

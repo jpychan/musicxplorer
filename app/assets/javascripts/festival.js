@@ -6,7 +6,6 @@ $(function() {
   //    };
   //   };
 
-
   // ADD OR REMOVE FESTIVALS FROM FAVORITES ON FESTIVAL SHOW PAGE
   $('.cache-btns').on('change', '.fave-btn', function(){
     var checkbox = $('#click');
@@ -89,6 +88,17 @@ $(function() {
     });
   }
 
+  // BUTTON TOGGLE THE FLIGHT SEARCH FORM
+
+  $('#festival-show').on('click', '#flight-search-btn', function() {
+    $('#flight-search-form').slideToggle();
+  });
+
+  //HIDE SEARCH FORM ON SEARCH
+
+  $("#festival-search-form").on('click', '#submit-search', function() {
+    $('#festival-search-form').toggle();
+  });
   
   
  // var map;
