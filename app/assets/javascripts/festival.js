@@ -19,14 +19,14 @@ $(function() {
       };
       $.ajax('/festival-select',
         { dataType: 'json',
-          type: 'GET',
+          type: 'POST',
           data: tripCost
         });
     }
     else if (checkbox.prop("checked") == false){
       $.ajax('/festival-unselect',
       { dataType: 'json',
-        type: 'GET', 
+        type: 'POST', 
         data: { festivalId: $('.music-festival').attr('data-id') }
       });
       }
@@ -34,7 +34,7 @@ $(function() {
 
   // REMOVE FESTIVALS FROM FESTIVAL FAVOURITES PAGE
   $('.remove-fave').on('click', function() {
-    var festivalDiv = $(this).closest('.fave-festival');
+    var festivalDiv = $(this).closest('.fave');
     var data = { festivalId: festivalDiv.attr('data-id') };
     $.ajax('/festival-unselect', 
       { dataType: 'json',
@@ -42,6 +42,51 @@ $(function() {
         data: data,
         complete: function() { festivalDiv.remove(); }
       });
+  });
+
+  // REFRESH FESTIVAL PARTIAL
+  function buildFestival(value, row) {
+    $('<td>').text(value).appendTo(row);
+  }
+
+  function displayCost(time, price, row) {
+    if (time) {
+      buildFestival(time, row);
+      buildFestival(price, row);
+    }
+    else {
+      $('<td>').attr('colspan', '2').text('n/a').appendTo(row);
+    }
+  }
+  function display(value) {
+    if (value && value != 0) {
+      value = 'n/a'
+    }
+  }
+
+  // TODO: refactor!!
+  $('.refresh-grid').on('click', function() {
+    $.ajax('/festival-subscriptions', 
+      { dataType: 'json',
+        success: function(data) {
+          data.forEach(function(f) {
+            var row = $('.new-fave');
+            row.empty();
+            var nameCol = $('<td>').appendTo(row);
+            var link = $('<a>').attr('href', '/festivals/' + f['id'])
+                               .text(f['name'])
+                               .appendTo(nameCol);
+            buildFestival(f['date'], row);
+            buildFestival(f['location'], row);
+            buildFestival( display(f['price']), row );
+            buildFestival( display(f['camping']), row );
+
+            displayCost(f['time_car'], f['price_car'], row);
+            displayCost(f['time_bus'], f['price_bus'], row);
+            displayCost(f['time_flight'], f['price_flight'], row);
+         });
+        }
+    });
   });
 
   // FLICKR

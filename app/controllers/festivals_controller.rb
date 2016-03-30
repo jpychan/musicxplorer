@@ -3,7 +3,7 @@ class FestivalsController < ApplicationController
   SEARCH_RADIUS = 500
 
   before_action :set_search_and_user_location
-  before_action :load_favourite_festivals, only: [:show, :all]
+  before_action :load_favourite_festivals, only: [:show, :all, :festival_subscriptions]
 
   def show
     @festival = Festival.find(params[:id])
@@ -16,7 +16,6 @@ class FestivalsController < ApplicationController
     driving = DrivingInfoService.new(@festival)
     @price_by_car = driving.calc_driving_cost
     @time_by_car = driving.get_trip_time[0]
-    # @usr_location = $redis.hgetall('user')
   end
 
   def all
@@ -50,6 +49,11 @@ class FestivalsController < ApplicationController
     end
   end
 
+  # AUTO REFRESH
+  def festival_subscriptions
+    render json: @selected_festivals
+  end
+
   # TODO: refactor!
   def festival_select
     festival = Festival.find(params[:festivalId])
@@ -76,22 +80,12 @@ class FestivalsController < ApplicationController
     if festival
       $redis.hset('festivals', festival.id, festival_json.to_json)
     end
-
-    @selected_festivals = fg.get_saved_festivals
-
-    respond_to do |format|
-      format.js { render layout: false }
-    end
+    redirect_to root_path
   end
   
   def festival_unselect
     $redis.hdel('festivals', params[:festivalId])
-    fg = FestivalGridService.new
-    @selected_festivals = fg.get_saved_festivals
-
-     respond_to do |format|
-      format.js { render layout: false }
-    end
+    redirect_to root_path
   end
 
   def autocomplete
@@ -106,7 +100,9 @@ class FestivalsController < ApplicationController
 
   def flickr_images 
     festival = params[:festival].gsub(/\s\d{4}/, '')
-    img_src = "https://api.flickr.com/services/rest/?api_key=#{ENV['FLICKR_KEY']}&method=flickr.photos.search&tags=festival&text=#{festival}&sort=relevance&per_page=10&page=1&content_type=1&format=json&nojsoncallback=1"
+    url = "https://api.flickr.com/services/rest/?api_key=#{ENV['FLICKR_KEY']}&method=flickr.photos.search&tags=festival&text=#{festival}&sort=relevance&per_page=10&page=1&content_type=1&format=json&nojsoncallback=1"
+    encode_url = URI.encode(url)
+    img_src = URI.parse(encode_url)
     response = HTTParty.get(img_src).body
     @image = JSON.parse(response)
     render json: @image
@@ -192,5 +188,4 @@ class FestivalsController < ApplicationController
       fg = FestivalGridService.new
       @selected_festivals = fg.get_saved_festivals
     end
-
 end
