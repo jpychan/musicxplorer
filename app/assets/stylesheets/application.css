@@ -57,8 +57,6 @@ thead {
 
 }
 
-
-
 tr, td, th {
   margin: 5px;
   padding: 5px;
@@ -104,10 +102,6 @@ i { margin-right: 3px; }
   padding: 10px;
 }
 
- /*#map {
-  box-shadow: 1px 1px 5px #333333;
-}*/
-
 #wel {
   /*position: fixed;*/
   background-color: #F77604;
@@ -149,6 +143,7 @@ i { margin-right: 3px; }
   position: relative;
 }
 
+
 .search-results {
   /*font-weight: lighter;*/
   font-size: 20px;
@@ -159,7 +154,7 @@ i { margin-right: 3px; }
   text-align: justify;
 }
 
-.results_container {
+#results_container {
   background-color: white;
   border-radius: 8px;
   box-shadow: 1px 1px 5px #333333;
@@ -176,8 +171,9 @@ i { margin-right: 3px; }
   /*z-index: -1;*/
 }
 
-/* #home*/ .map {
+/* #home*/ #map {
   box-shadow: 1px 1px 5px #333333;
+  border-radius: 8px;
   display: inline-block;
   height: 750px;
   /*margin-top: 120px;*/
@@ -197,6 +193,8 @@ i { margin-right: 3px; }
   /*margin-top: 30px;*/
 }
 
+/*==== Main Page Cards: ====*/
+
 #fest_results {
   background-color: #B8D20B;
   border-radius: 8px;
@@ -213,6 +211,7 @@ i { margin-right: 3px; }
   width: 430px;
   /*margin-top: 120px;*/ 
 }
+
 #fest_locations {
   /*display: inline-block;*/
   background-color: #B8D20B;
@@ -244,10 +243,13 @@ i { margin-right: 3px; }
 .festival_card {
   border-radius: 8px;
   box-shadow: 1px 1px 5px #333333;
+  height: 300px;
   /*background-color: #ffe6e6;*/
   margin-bottom: 15px;
-  /*padding-top: 80px;*/
-  padding-bottom: 50px;
+  margin-left: 20px;
+  margin-right: 20px;
+  /*padding-top: 140px;*/
+  padding-bottom: 10px;
   /*padding-left: 50px;*/
   /*padding-right: 100px;*/
   /*margin-bottom: 5px;
@@ -256,21 +258,57 @@ i { margin-right: 3px; }
 
 .festival_card_header {
   /*box-shadow: 1px 1px 5px #333333;*/
-  background-image: url('/header_image2.jpeg');
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
   background-size: cover;
   background-repeat: no-repeat;
-  float: right;
-  height: 200px;
-  margin-bottom: 20px;
-  opacity: 0.8;
+  float: top;
+  /*float: right;*/
+  height: 60%;
+ /* margin-bottom: 50px;*/
+  opacity: 0.75;
   width: 100%;
   /*z-index: -1;*/
 }
 
-.pan_link {
-  color: black;
+.image1 {
+  background-image: url('/festival1.jpg');
+}
+
+.image2 {
+  background-image: url('/festival2.jpg');
+}
+
+.image3 {
+  background-image: url('/festival3.jpg');
+}
+
+.image4 {
+  background-image: url('/festival4.jpg');
+}
+
+.image5 {
+  background-image: url('/festival5.jpeg');
+}
+
+.image6 {
+  background-image: url('/festival6.jpg');
+}
+
+.image7 {
+  background-image: url('/festival7.jpg');
+}
+
+.image8 {
+  background-image: url('/festival8.jpg');
+}
+
+.image9 {
+  background-image: url('/festival9.jpg');
+}
+
+.image10 {
+  background-image: url('/festival10.jpg');
 }
 
 /*#button {
@@ -279,11 +317,38 @@ i { margin-right: 3px; }
   margin-bottom: 50px;
 }*/
 
-#card_description {
-  font-size: 14px;
-  padding: 12px;
-  text-align: center;
+.festival_name {
+  position: absolute;
+  color: #F77604;
+  float: bottom;
+  font-family: Verdana;
+  font-size: 26px;
+  font-weight: bold;
+  margin-top: 30px;
+  margin-left: 15px;
+  /*overflow-x: scroll;*/
+ /* overflow: auto;*/
+  padding-top: 160px;
 }
+
+.festival_location {
+  position: absolute;
+  font-family: Verdana;
+  font-weight: bold;
+  margin-left: 15px;
+  margin-top: 20px;
+  padding-top: 205px;
+}
+
+.festival_date {
+  position: absolute;
+  font-family: Verdana;
+  font-weight: bold;
+  padding-top: 230px;
+  margin-left: 15px;
+  margin-top: 20px;
+}
+
 /*#location {
   margin-left: 50%;
 }
@@ -307,6 +372,26 @@ i { margin-right: 3px; }
   float: top;
   margin-bottom: 50px;
 }*/
+
+#upcoming_festivals .festival_card {
+  display: inline-block;
+ /* overflow-x: scroll;*/
+  width: 30%;
+}
+
+#upcoming_festivals .festival_name {
+  font-size: 18px;
+}
+
+.festival_card:hover {
+  box-shadow: 3px 5px 15px #333333;
+  transition: box-shadow 0.3s ease-in-out:
+  -webkit-transform:scale(1.1); /* Safari and Chrome */
+  -moz-transform:scale(1.1); /* Firefox */
+  -ms-transform:scale(1.1); /* IE 9 */
+  -o-transform:scale(1.1); /* Opera */
+   transform:scale(1.1);
+}
 
 #flight-search-form {
   display: none;
