@@ -26,6 +26,7 @@ $(function() {
     locationInput.prop('placeholder','');
     locationInput.toggleClass('input-locked');
     locationInput.toggleClass('input-active');
+    locationInput.focus();
 
 
     locationInput.on('blur paste', function() {
@@ -90,25 +91,6 @@ $(function() {
 
     if (data.length === 0) { results.text('No results found'); }
 
-    data.forEach(function(festival) {
-      var festivalDiv = $('<div class = "festival_card">').appendTo(results);
-      $('<div class = "festival_card_header">').appendTo(festivalDiv);
-
-      $('<a class ="main_links">').attr('href', '/festivals/' + festival.id)
-        .text(festival.name)
-        .appendTo(festivalDiv);
-
-      var festivalDetails = $('<div>').addClass('festival-result')
-                              .attr('data-id', festival.id)
-                              .appendTo(festivalDiv);
-                              
-      $('<a href class = "pan_link">').text('Location: ' + festival.location).appendTo(festivalDetails );
-      $('<div>').text('Date: ' + festival.date).appendTo(festivalDetails);
-
-      // formatResults('Price', festival.price, festivalDetails);
-      // formatResults('Camping', festival.camping, festivalDetails);
-      // formatResults('Description', festival.description, festivalDetails);
-    });
   });
 
   // // SELECT FESTIVALS

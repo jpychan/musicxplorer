@@ -16,12 +16,16 @@ class FestivalsController < ApplicationController
     driving = DrivingInfoService.new(@festival)
     @price_by_car = driving.calc_driving_cost
     @time_by_car = driving.get_trip_time[0]
+
   end
 
   def all
     @genres = Genre.all.order(:name)
     @usr_location = $redis.hget('user', 'location')
-    @upcoming = Festival.includes(:genres).where('start_date > ?', Date.today).order(:start_date).limit(20)
+
+    @festivals = Festival.includes(:genres).where('start_date > ?', Date.today).order(:start_date).limit(20)
+    fg = FestivalGridService.new
+    @selected_festivals = fg.get_saved_festivals
   end
 
   # PRE-CALCULATE COORDINATES FOR USER LOCATION
@@ -41,8 +45,10 @@ class FestivalsController < ApplicationController
     @festivals = @festivals.select do |f|
       dist_km = d.calc_distance(origin['lat'], origin['lng'], f)
       puts dist_km
-      dist_km <= SEARCH_RADIUS
+      dist_km <= SEARCH_RADIUS 
     end
+
+
 
     respond_to do |format|
       format.js {render layout: false}
