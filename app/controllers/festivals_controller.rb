@@ -170,7 +170,6 @@ class FestivalsController < ApplicationController
   end
 
   def search_greyhound
-
     @festival = Festival.find(params[:festival_id])
     usr_location = $redis.hget('user', 'location').split(', ')
     @depart_date = (@festival.start_date - 1).strftime

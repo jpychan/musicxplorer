@@ -12,6 +12,7 @@
  *
  *= require_tree .
  *= require soulmate
+ *= require pure-min
  *= require modal
  *= require_self
  */
@@ -47,12 +48,22 @@ a {
 
 /* FESTIVAL COMPARISON MODAL */
 .modal {
-  width: 80%;
-  top: 3%;
-  left: 33%;
   font-family: 'Raleway', sans-serif;
   position: relative;
   display: none;
+}
+
+#gridModal { 
+  width: 80%;
+  left: 33%;
+  top: 3%;
+}
+
+#locationModal { top: 10%; }
+
+.modal-body { 
+  text-align: center;
+  clear: both;
 }
 
 .modal.fade.in { position: fixed; }

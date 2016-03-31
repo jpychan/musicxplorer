@@ -130,13 +130,9 @@ $(function() {
     }
   }); 
 
-
-
-
   $(".map_button").click(function(){
     $("#map").toggle(300);
   });
-
 });
 
 function initMap() {
