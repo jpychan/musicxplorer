@@ -1,4 +1,5 @@
--for i in 0..@festivals.length - 
+-for i in 0..@festivals.length - 1
+  a[href ="/festivals/#{@festivals[i].id}"]
     div[class="festival_card"]
       div[class="festival_card_header #{@img_classes[i]}"]
         a[href ="/festivals/#{@festivals[i].id}" class="festival_name"] #{@festivals[i].name} 
