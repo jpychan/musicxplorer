@@ -43,6 +43,8 @@ class FestivalsController < ApplicationController
   # PRE-CALCULATE COORDINATES FOR USER LOCATION
   def get_usr_info
     d = DistanceService.new
+        byebug
+
     d.get_usr_location(params[:usr_location])
     redirect_to root_path
   end

@@ -6,6 +6,10 @@
   font-size: 20px;
 }
 
+#nav {
+  width: 100%;
+}
+
 .pure-menu-link:hover, .pure-menu-link:focus, .pure-menu-link:active {
   background: none;
   border-bottom: 3px solid #F77604;show

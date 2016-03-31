@@ -17,9 +17,23 @@
  *= require_self
  */
 
+
+html, body {        
+    margin: 0;
+    padding: 0;
+}
+
 .pure-g [class *="pure-u"], body {
   font-family: 'Raleway', sans-serif;
   color: #333333
+}
+
+body {
+  min-width: 320px;
+}
+
+.wrapper-container {
+  width: 100%;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -126,15 +140,13 @@ i { margin-right: 3px; }
   background-color: #F77604;
   background-size: cover;
   color: white;
-  height: 60px;
   font-family: 'Boogaloo', cursive;
-  font-size: 70px;
+  font-size: 4em;
   font-weight: lighter;
   letter-spacing: 6px;
   margin-top: 0;
   opacity: 0.75;
-  padding: 100px;
-  padding-bottom: 120px;
+  padding: 70px 30px;
   text-align: center;
 }
 
@@ -333,15 +345,20 @@ i { margin-right: 3px; }
   margin-top: 20px;
 }
 
+#upcoming_festivals {
+  margin: 0 auto;
+  text-align: center;
+}
 
 #upcoming_festivals .festival_card {
   display: inline-block;
-  width: 30%;
+  width: 300px;
 }
 
 #upcoming_festivals .festival_name {
   font-size: 1.3em;
 }
+
 
 .festival_card:hover {
   box-shadow: 3px 5px 15px #333333;
