@@ -1,6 +1,6 @@
 class DrivingInfoService
-  # right now this doesn't account for ferry prices/changing mode of transportation
-  # TODO: driving distance within same city doesn't currently work [because based on city's latitude/longitude rather than specific addresses]
+  # TODO: right now this doesn't account for ferry prices/changing mode of transportation
+
   attr_reader :origin
 
   def initialize(festival)
@@ -20,7 +20,7 @@ class DrivingInfoService
   end
 
   def get_avg_gas_price
-    origin = @origin['location'].gsub(',','').split(' ').join('%2C')
+    origin = @origin['location'] ? @origin['location'].gsub(',','').split(' ').join('%2C') : 'Vancouver%2CBC'
     gasbuddy = Nokogiri::HTML(open("http://gasbuddy.com/?search=#{origin}"))
     gasbuddy.css('.gb-price-lg')[0].text.gsub(/\s+/, '').to_f / 100
   end
