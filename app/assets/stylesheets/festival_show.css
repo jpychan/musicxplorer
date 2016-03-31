@@ -1,6 +1,5 @@
 #festival-show {
-  margin: 0 15%;
-  width: 70%;
+  margin: 0 10%;
   padding-top: 20px;
 }
 
@@ -49,9 +48,9 @@ li.active {
 .content {
   padding: 20px;
   border: 1px solid #f77604;
-  border-bottom-left-radius: 2%;
-  border-bottom-right-radius: 2%;
-  border-top-right-radius: 2%;
+  border-bottom-left-radius: 5%;
+  border-bottom-right-radius: 5%;
+  border-top-right-radius: 5%;
   border-top: none;
 }
 
@@ -140,17 +139,21 @@ li.active {
   display: inline-block;
   text-align: center;
   color: #fff;
-  background-color: green;
+  background-color: #231B12;
   text-decoration: none;
   box-sizing: border-box;
+  font-weight:bold;
+  font-size: 14px;
 }
 
 #travel-tabs a.pure-button:hover {
-  background: #000;
+/*  background: #000;*/
+  background-color: #B8D20B;
+  box-shadow: 3px 5px 5px #aaaaaa;
 }
 
 #travel-tabs .flight-result {
-  border: 1px solid green;
+  border: 1px solid #231B12;
   padding: 10px;
   margin: 15px 0;
 }
@@ -181,7 +184,7 @@ li.active {
   overflow: hidden;
   text-align:center;
   position:relative;
-  margin: 20px;
+  margin: 10px auto;
 }
 
 .each-image img {
@@ -201,9 +204,13 @@ li.active {
 
 #flight-search-btn {
   background-color: #F77604;
-  color: #eee;
+  color: #fff;
+  font-weight: bold;
 }
 
+#flight-search-btn:hover {
+    box-shadow: 3px 5px 5px #333;
+}
 .input-row {
   margin: 10px 0px;
 }
@@ -236,4 +243,11 @@ li.active {
   font-weight: bold;
   display: block;
   margin-top: 40%;
+}
+
+#more-info {
+  border: 1px solid #B8D20B;
+  border-radius: 5%;
+  padding: 20px;
+  margin: 20px 0;
 }
