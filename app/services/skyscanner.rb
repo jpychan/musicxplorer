@@ -18,7 +18,8 @@ module Skyscanner
     request["cache-control"] = 'no-cache'
     request.body = "country=CA&currency=CAD&locale=en-CA&adults=#{params[:adult]}&children=#{params[:children]}&infants=#{params[:infants]}&originplace=#{params[:departure_airport]}-iata&destinationplace=#{params[:arrival_airport]}-iata&outbounddate=#{outbound_date}&inbounddate=#{inbound_date}&locationschema=Iata&cabinclass=#{params[:cabin_class]}&groupPricing=true"
     response = http.request(request)
-    if response.code == "400"
+    byebug
+    if response.code != "201"
       session_id = nil
     else
       polling_url = response["location"]
