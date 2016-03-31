@@ -1,10 +1,4 @@
 $(function() {
-  // function addSearched() {
-  //   for (var i = 0; i < searched.length; i++) {
-  //     var ele = searched[i];
-  //      $('#search-results').appendTo('#results_container'); 
-  //    };
-  //   };
 
   // ADD OR REMOVE FESTIVALS FROM FAVORITES ON FESTIVAL SHOW PAGE
   $('.cache-btns').on('change', '.fave-btn', function(){
@@ -170,8 +164,4 @@ $.getJSON("/festivals", function(data) {
      });
     });
   });
-});
-
-$(".map_button").click(function(){
-  $("#map").toggle(300);
 });
