@@ -65,6 +65,7 @@ $(function() {
   }
 
   // TODO: refactor!!
+  // TODO: don't update if redis hasn't changed
   $('.refresh-grid').on('click', function() {
     $.ajax('/festival-subscriptions', 
       { dataType: 'json',
