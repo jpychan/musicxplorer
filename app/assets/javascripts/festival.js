@@ -33,7 +33,7 @@ $(function() {
   });
 
   // REMOVE FESTIVALS FROM FESTIVAL FAVOURITES PAGE
-  $('.remove-fave').on('click', function() {
+  $('.fave').on('click', '.remove-fave', function() {
     var festivalDiv = $(this).closest('.fave');
     var data = { festivalId: festivalDiv.attr('data-id') };
     $.ajax('/festival-unselect', 
@@ -59,20 +59,21 @@ $(function() {
     }
   }
   function display(value) {
-    if (value && value != 0) {
-      value = 'n/a'
-    }
+    value && value != 0 ? return value : return 'n/a';
   }
 
-  // TODO: refactor!!
-  // TODO: don't update if redis hasn't changed
+  // TODO: refactor!
   $('.refresh-grid').on('click', function() {
     $.ajax('/festival-subscriptions', 
       { dataType: 'json',
         success: function(data) {
+          var tbody = $('.fave-festivals'); 
+          tbody.empty();
+
           data.forEach(function(f) {
-            var row = $('.new-fave');
-            row.empty();
+            var row = $('<tr>').addClass('fave')
+                        .attr('data-id', f['id'])
+                        .appendTo(tbody);
             var nameCol = $('<td>').appendTo(row);
             var link = $('<a>').attr('href', '/festivals/' + f['id'])
                                .text(f['name'])
@@ -85,14 +86,16 @@ $(function() {
             displayCost(f['time_car'], f['price_car'], row);
             displayCost(f['time_bus'], f['price_bus'], row);
             displayCost(f['time_flight'], f['price_flight'], row);
-         });
+            
+            $('<td>').html('<button class="remove-fave"><i class="fa fa-star"></i> Remove</button>').appendTo(row);
+          });
         }
-    });
+      }
+    );
   });
 
   // FLICKR
   if ($('#festival-show').length > 0) {
-
     var festival = $('.flickr-imgs').data('name').replace(/[^a-z0-9\s]/i, '');
     $.ajax('/flickr_images/' + festival, { dataType: 'json' }).done(function(data) { 
       if (data.stat != 'ok') { return console.log('error'); }
@@ -104,9 +107,7 @@ $(function() {
         var img = $('<img>').attr('src', imgSrc);
 
         imageDiv.appendTo('.flickr-imgs').append(img);
-
       });
-
     });
   }
 
@@ -160,12 +161,12 @@ function initMap() {
   });
 }   
 
-  $.getJSON("/festivals", function(data) {
-    $.each(data, function(index, festival) {
-      var marker = new google.maps.Marker({
-        map: map, 
-        position: {lat:festival.latitude, lng:festival.longitude}, 
-        name: name
+$.getJSON("/festivals", function(data) {
+  $.each(data, function(index, festival) {
+    var marker = new google.maps.Marker({
+      map: map, 
+      position: {lat:festival.latitude, lng:festival.longitude}, 
+      name: name
     });
     // var contentString = "This is a string";
     var infowindow = new google.maps.InfoWindow({
@@ -177,9 +178,9 @@ function initMap() {
       infowindow.addListener('closeclick', function() {
         infowindow.close();
      });
-    // setTimeout(function(){
-    //   infowindow.close();
-    // },3000)
+  // setTimeout(function(){
+  //   infowindow.close();
+  // },3000)
     });
   });
 });
