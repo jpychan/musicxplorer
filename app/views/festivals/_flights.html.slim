@@ -1,4 +1,4 @@
-- if @valid_search && @first_five_results
+- if @valid_search && @first_five_results.length > 0
   div[id="flight-search-details"]
     p Flight from #{@first_five_results[0][:departure_airport]["Name"]} (#{@first_five_results[0][:departure_airport]["Code"]}) to #{@first_five_results[0][:arrival_airport]["Name"]} (#{@first_five_results[0][:arrival_airport]["Code"]})
     p #{@first_five_results[5]["OutboundDate"]} to #{@first_five_results[5]["InboundDate"]} | #{@first_five_results[5]["CabinClass"]}
@@ -6,6 +6,7 @@
     button[id="flight-search-btn" class="pure-button"] Change Your Search Settings
 
     = render 'flight_search_form'
+
 
     - @first_five_results[0..4].each do |result|
       div[class="flight-result pure-g"]
@@ -48,6 +49,6 @@
   div.error-message
     p This event has happened.
 
-- elsif @first_five_results == nil
-  div.error-message
-    p Sorry, no results could be found.
+- elsif @first_five_results.length == 0 
+    div.error-message
+      p Sorry, no results could be found.

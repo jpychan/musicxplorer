@@ -36,7 +36,6 @@ module Skyscanner
     request["accept"] = 'application/json'
     request["cache-control"] = 'no-cache'
     request.body = "country=CA&currency=CAD&locale=en-CA&adults=#{params[:adult]}&children=#{params[:children]}&infants=#{params[:infants]}&originplace=#{params[:departure_airport]}-iata&destinationplace=#{params[:arrival_airport]}-iata&outbounddate=#{outbound_date}&inbounddate=#{inbound_date}&locationschema=Iata&cabinclass=#{params[:cabin_class]}&groupPricing=true"
-    # byebug
     response = http.request(request)
     polling_url = response["location"]
     session_id = polling_url.split('/').last
@@ -67,55 +66,59 @@ module Skyscanner
     agents = data["Agents"]
     @first_five_results = JsonPath.on(data, '$..Itineraries[:4]')
 
-    @first_five_results << query
-    @first_five_results[5]["OutboundDate"] = Date.parse(@first_five_results[5]["OutboundDate"])
-    @first_five_results[5]["InboundDate"] = Date.parse(@first_five_results[5]["InboundDate"])
-    
-    j = 0
+    if @first_five_results.length == 5
 
-    while j <= @first_five_results.length - 2
-      outbound_leg_id = @first_five_results[j]["OutboundLegId"]
-      inbound_leg_id = @first_five_results[j]["InboundLegId"]
-      agent_id = @first_five_results[j]["PricingOptions"][0]["Agents"][0]
+      @first_five_results << query
+      @first_five_results[5]["OutboundDate"] = Date.parse(@first_five_results[5]["OutboundDate"])
+      @first_five_results[5]["InboundDate"] = Date.parse(@first_five_results[5]["InboundDate"])
+      
+      j = 0
 
-      @first_five_results[j][:outbound_leg] = legs.select { |leg| leg["Id"] == outbound_leg_id}[0]
+      while j <= @first_five_results.length - 2
+        outbound_leg_id = @first_five_results[j]["OutboundLegId"]
+        inbound_leg_id = @first_five_results[j]["InboundLegId"]
+        agent_id = @first_five_results[j]["PricingOptions"][0]["Agents"][0]
 
-      if @first_five_results[j][:outbound_leg]["Duration"].class == Fixnum
-        @first_five_results[j][:outbound_leg]["Duration"] = minutes_in_words(@first_five_results[j][:outbound_leg]["Duration"])
+        @first_five_results[j][:outbound_leg] = legs.select { |leg| leg["Id"] == outbound_leg_id}[0]
+
+        if @first_five_results[j][:outbound_leg]["Duration"].class == Fixnum
+          @first_five_results[j][:outbound_leg]["Duration"] = minutes_in_words(@first_five_results[j][:outbound_leg]["Duration"])
+        end
+
+        @first_five_results[j][:outbound_departure_time] = DateTime.parse(@first_five_results[j][:outbound_leg]["Departure"])
+        @first_five_results[j][:outbound_departure_time] = @first_five_results[j][:outbound_departure_time].strftime('%I:%M %p')
+        @first_five_results[j][:outbound_arrival_time] = DateTime.parse(@first_five_results[j][:outbound_leg]["Arrival"])
+        @first_five_results[j][:outbound_arrival_time] = @first_five_results[j][:outbound_arrival_time].strftime('%I:%M %p')
+
+        @first_five_results[j][:inbound_leg] = legs.select { |leg| leg["Id"] == inbound_leg_id}[0]
+
+
+        if @first_five_results[j][:inbound_leg]["Duration"].class == Fixnum
+          @first_five_results[j][:inbound_leg]["Duration"] = minutes_in_words(@first_five_results[j][:inbound_leg]["Duration"])
+        end
+        @first_five_results[j][:inbound_departure_time] = DateTime.parse(@first_five_results[j][:inbound_leg]["Departure"])
+        @first_five_results[j][:inbound_departure_time] = @first_five_results[j][:inbound_departure_time].strftime('%I:%M %p')
+        @first_five_results[j][:inbound_arrival_time] = DateTime.parse(@first_five_results[j][:inbound_leg]["Arrival"])
+        @first_five_results[j][:inbound_arrival_time] = @first_five_results[j][:inbound_arrival_time].strftime('%I:%M %p')
+
+        departure_airport_id = @first_five_results[j][:outbound_leg]["OriginStation"]
+        arrival_airport_id = @first_five_results[j][:outbound_leg]["DestinationStation"]
+
+        departure_carrier_id = @first_five_results[j][:outbound_leg]["Carriers"][0]
+        arrival_carrier_id = @first_five_results[j][:inbound_leg]["Carriers"][0]
+
+        @first_five_results[j][:departure_airport] = places.select { |place| place["Id"] == departure_airport_id }[0]
+        @first_five_results[j][:arrival_airport] = places.select { |place| place["Id"] == arrival_airport_id }[0]
+        @first_five_results[j][:departure_carrier] = carriers.select { |carrier| carrier["Id"] == departure_carrier_id }[0]
+        @first_five_results[j][:arrival_carrier] = carriers.select { |carrier| carrier["Id"] == arrival_carrier_id }[0]
+        @first_five_results[j][:agent] = agents.select { |agent| agent["Id"] == agent_id }[0]
+
+        j += 1
       end
-
-      @first_five_results[j][:outbound_departure_time] = DateTime.parse(@first_five_results[j][:outbound_leg]["Departure"])
-      @first_five_results[j][:outbound_departure_time] = @first_five_results[j][:outbound_departure_time].strftime('%I:%M %p')
-      @first_five_results[j][:outbound_arrival_time] = DateTime.parse(@first_five_results[j][:outbound_leg]["Arrival"])
-      @first_five_results[j][:outbound_arrival_time] = @first_five_results[j][:outbound_arrival_time].strftime('%I:%M %p')
-
-      @first_five_results[j][:inbound_leg] = legs.select { |leg| leg["Id"] == inbound_leg_id}[0]
-
-
-      if @first_five_results[j][:inbound_leg]["Duration"].class == Fixnum
-        @first_five_results[j][:inbound_leg]["Duration"] = minutes_in_words(@first_five_results[j][:inbound_leg]["Duration"])
-      end
-      @first_five_results[j][:inbound_departure_time] = DateTime.parse(@first_five_results[j][:inbound_leg]["Departure"])
-      @first_five_results[j][:inbound_departure_time] = @first_five_results[j][:inbound_departure_time].strftime('%I:%M %p')
-      @first_five_results[j][:inbound_arrival_time] = DateTime.parse(@first_five_results[j][:inbound_leg]["Arrival"])
-      @first_five_results[j][:inbound_arrival_time] = @first_five_results[j][:inbound_arrival_time].strftime('%I:%M %p')
-
-      departure_airport_id = @first_five_results[j][:outbound_leg]["OriginStation"]
-      arrival_airport_id = @first_five_results[j][:outbound_leg]["DestinationStation"]
-
-      departure_carrier_id = @first_five_results[j][:outbound_leg]["Carriers"][0]
-      arrival_carrier_id = @first_five_results[j][:inbound_leg]["Carriers"][0]
-
-      @first_five_results[j][:departure_airport] = places.select { |place| place["Id"] == departure_airport_id }[0]
-      @first_five_results[j][:arrival_airport] = places.select { |place| place["Id"] == arrival_airport_id }[0]
-      @first_five_results[j][:departure_carrier] = carriers.select { |carrier| carrier["Id"] == departure_carrier_id }[0]
-      @first_five_results[j][:arrival_carrier] = carriers.select { |carrier| carrier["Id"] == arrival_carrier_id }[0]
-      @first_five_results[j][:agent] = agents.select { |agent| agent["Id"] == agent_id }[0]
-
-      j += 1
     end
 
     return @first_five_results
+
   end
 
   def minutes_in_words(minutes)
