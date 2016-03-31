@@ -10,9 +10,13 @@
   width: 100%;
 }
 
+#nav .pure-menu-link:hover {
+  background: none;
+}
+
 .pure-menu-link:hover, .pure-menu-link:focus, .pure-menu-link:active {
   background: none;
-  border-bottom: 3px solid #F77604;show
+  border-bottom: 3px solid #F77604;
 }
 
 #usr_location {
