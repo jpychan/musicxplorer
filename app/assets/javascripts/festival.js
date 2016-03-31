@@ -141,34 +141,57 @@ $(function() {
     }
   }); 
 
+
+
+
+$(".map_button").click(function(){
+  $("#map").toggle(300);
 });
 
+// $('.pan_button').on('click', function(){
+//   var latLng = new google.maps.LatLng(49.8994, -97.1392); //should pan to specified location (based on card/div?)
+//   map.panTo(latLng);
+
+
+});
+
+  // alert('hello');
+
+
+
 function initMap() {
-  var myLatLng = {lat: 49.2827, lng: -123.1207};
+
+  var mapDiv = $('.container');
+  var myLatLng = {
+    lat: mapDiv[0].dataset.userlatitude,
+    long: mapDiv[0].dataset.userlongitude
+  };
+
+  var userLocation = new google.maps.LatLng(myLatLng.lat, myLatLng.long);
+  var mapCon = $('#map')[0];
   var map;
 
-  map = new google.maps.Map(document.getElementById('map'), {
-    center: myLatLng,
+  map = new google.maps.Map(mapCon, {
+    center: userLocation,
     zoom: 7
   });
 
   var marker = new google.maps.Marker({
     map: map,
-    position: myLatLng,
+    position: userLocation,
     title: 'Hello World'
   });
-}   
-
+  
   $.getJSON("/festivals", function(data) {
     $.each(data, function(index, festival) {
       var marker = new google.maps.Marker({
         map: map, 
         position: {lat:festival.latitude, lng:festival.longitude}, 
         name: name
-    });
+      });
     // var contentString = "This is a string";
-    var infowindow = new google.maps.InfoWindow({
-      content: (festival.name + ',' + ' ' + festival.date)
+      var infowindow = new google.maps.InfoWindow({
+        content: (festival.name + ',' + ' ' + festival.date)
     });
     marker.addListener('click', function() {
       console.log("listener");
@@ -181,16 +204,23 @@ function initMap() {
     // },3000)
     });
   });
-});
 
-$(".map_button").click(function(){
-  $("#map").toggle(300);
-});
+  });
+}
 
-// $('.pan_button').on('click', function(){
-//   var latLng = new google.maps.LatLng(49.8994, -97.1392); //should pan to specified location (based on card/div?)
-//   map.panTo(latLng);
+// var target = $( '.container' )[0];
 
+// var observer = new MutationObserver(function(mutations, observer) {
+//     // fired when a mutation occurs
+//     alert(mutations);
+//     // ...
+// });
 
+// // define what element should be observed by the observer
+// // and what types of mutations trigger the callback
+// observer.observe(target, {
+//     subtree: true,
+//     childList: true,
 
+// });
 

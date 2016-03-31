@@ -8,8 +8,14 @@ $(function() {
       lat: drivingMapDiv[0].dataset.latitude,
       long: drivingMapDiv[0].dataset.longitude
     };
+
+    var departureCoords = {
+      lat: drivingMapDiv[0].dataset.userlatitude,
+      long: drivingMapDiv[0].dataset.userlongitude
+    };
+
     
-    var departure = new google.maps.LatLng("49.246", "-123.116");
+    var departure = new google.maps.LatLng(departureCoords.lat, departureCoords.long);
 
     var destination = new google.maps.LatLng(destinationCoords.lat, destinationCoords.long);
     var drivingMap;

@@ -36,6 +36,11 @@ class FestivalsController < ApplicationController
       @img_classes << img_array[i]
     end
 
+    @usr_location_coord = {
+      lat: $redis.hgetall('user')["lat"],
+      long: $redis.hgetall('user')["lng"]
+    }
+
   end
 
   # PRE-CALCULATE COORDINATES FOR USER LOCATION
