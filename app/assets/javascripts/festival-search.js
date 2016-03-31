@@ -15,10 +15,6 @@ $(function() {
 
   // SET USER LOCATION
   var locationInput = $('#get_location'); //form input
-  // var usrLocation = $('#usr_location'); //displaying the user location
-  // locationInput.hide();
-  //#edit_location is the button
-
   $('#edit_location').on('click', function() {
     var inputBtn = $(this);
 
@@ -28,18 +24,22 @@ $(function() {
     locationInput.toggleClass('input-active');
     locationInput.focus();
 
-
     locationInput.on('blur paste', function() {
-      // usrLocation.text( locationInput.val() );
-      // usrLocation.show();
-      // $(this).hide();
-      inputBtn.show();
+      if (locationInput.val() === '') {
+        $('.location-header').text('Your default location is set to:');
+        $('.location-change').text('Vancouver, BC');
+      }
+      else {
+        $('.location-header').text('Your location has been changed:');
+        $('.location-change').text(locationInput.val());
+      }
+      
+      $('#locationModal').modal('show');
       $.ajax('/usr-info',
         { dataType: 'json',
           type: 'POST',
           data: {usr_location: locationInput.val()},
-          success: function() { console.log('user location set'); },
-          error: function(xhr) { console.log(xhr.statusText); }
+          complete: function(xhr) { console.log(xhr.statusText); }
       });
 
     });
