@@ -7,7 +7,6 @@ class FestivalsController < ApplicationController
 
   def show
     @festival = Festival.find(params[:id])
-    @usr_location = $redis.hget('user', 'location')
     @usr_location_coord = {
       lat: $redis.hgetall('user')["lat"],
       long: $redis.hgetall('user')["lng"]
@@ -204,7 +203,6 @@ class FestivalsController < ApplicationController
       @artists = Artist.all.order(:name)
       @genres = Genre.all.order(:name)
       @usr_location = $redis.hget('user', 'location')
-      
     end
 
     def load_favourite_festivals

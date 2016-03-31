@@ -15,9 +15,7 @@ class DistanceService
    
   def origin_point(location)
     origin = GeoNamesAPI::PlaceSearch.find_by_place_name(location).geonames[0]
-    
     departure_airport = get_nearest_airport(origin.lat, origin.lng, origin.country_code)
-
     $redis.hmset('user', 'location', location, 'lat', origin.lat, 'lng', origin.lng, 'country', origin.country_code, 'departure_airport', departure_airport)
   end
 
@@ -40,11 +38,9 @@ class DistanceService
   end
 
   def get_nearest_airport(latitude, longitude, country)
-
     airport_list = Airport.where("country = ?", country)
     
     @airport_distances = []
-
     latitude = latitude.to_s
     longitude = longitude.to_s
 
@@ -52,7 +48,11 @@ class DistanceService
       @airport_distances << calc_distance(latitude, longitude, f)
     end
 
-    departure_airport_index = @airport_distances.index(@airport_distances.min)
-    airport_list[departure_airport_index][:iata_code].downcase
+    if @airport_distances.empty?
+      'yvr'
+    else
+      departure_airport_index = @airport_distances.index(@airport_distances.min)
+      airport_list[departure_airport_index][:iata_code].downcase
+    end
   end
 end

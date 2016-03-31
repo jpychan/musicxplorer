@@ -68,7 +68,8 @@ i { margin-right: 3px; }
 .remove-btn, 
 .remove-fave,
 .fave-btn,
-.close-btn {
+.close-btn,
+.refresh-grid {
   border-radius: 5px;
   color: #fff;
   font-size: 12px;
@@ -76,7 +77,16 @@ i { margin-right: 3px; }
   padding:5px;
 }
 
-.close-btn { float: right; }
+.close-btn,
+.refresh-grid { 
+  float: right; 
+  margin: auto 5px;
+}
+
+.refresh-grid { 
+  background: #b8d20b;
+  border: 1px solid #b8d20b;
+}
 
 .remove-btn,
 .remove-fave,

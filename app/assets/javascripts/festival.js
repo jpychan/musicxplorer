@@ -123,16 +123,6 @@ $(function() {
     $('#festival-search-form').toggle();
   });
   
- // var map;
- //      function initMap() {
- //        map = new google.maps.Map(document.getElementById('map'), {
- //          center: {lat: -34.397, lng: 150.644},
- //          zoom: 8
- //        });
- //      }
- // }
-
-
   var target = $('#wel');
   var targetHeight = target.outerHeight();
 
@@ -178,9 +168,6 @@ $.getJSON("/festivals", function(data) {
       infowindow.addListener('closeclick', function() {
         infowindow.close();
      });
-  // setTimeout(function(){
-  //   infowindow.close();
-  // },3000)
     });
   });
 });
@@ -188,11 +175,3 @@ $.getJSON("/festivals", function(data) {
 $(".map_button").click(function(){
   $("#map").toggle(300);
 });
-
-// $('.pan_button').on('click', function(){
-//   var latLng = new google.maps.LatLng(49.8994, -97.1392); //should pan to specified location (based on card/div?)
-//   map.panTo(latLng);
-
-
-
-
