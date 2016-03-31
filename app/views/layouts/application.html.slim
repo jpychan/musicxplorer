@@ -14,9 +14,11 @@ html
    = csrf_meta_tags
  body
 
-  = render 'nav'
+  .container
 
-  = yield
-  = render 'festival_compare'
+    = render 'nav'
 
-  = render 'footer'
+    = yield
+    = render 'festival_compare'
+
+    = render 'footer'

@@ -139,9 +139,6 @@ $(function() {
 
 });
 
-
-
-
 function initMap() {
 
   var mapDiv = $('.container');
