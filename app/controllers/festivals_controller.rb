@@ -31,8 +31,6 @@ class FestivalsController < ApplicationController
 
     @img_classes = []
 
-    byebug
-
     @festivals.each do |l|
       i = rand(img_array.length)
       @img_classes << img_array[i]
