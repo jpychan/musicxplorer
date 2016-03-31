@@ -223,18 +223,6 @@ class GreyhoundScraper
     end
   end
 
-  # def get_costs
-  #   costs = []
-  #   i = 0
-  #   while (@browser.p(class: "ui-li-aside", index: i).span.exists?)
-  #     cost = @browser.p(class: "ui-li-aside", index: i).span.text
-  #     cost[0] = '' if cost[0] = '$'
-  #     costs << cost.to_f
-  #     i += 1
-  #   end
-  #   costs_min_max = [costs.min, costs.max]
-  #   return costs_min_max
-  # end
 
   # helper for get_depart_data, get_return_data
   # 2 possibilities for type: depart, return
@@ -289,16 +277,6 @@ class GreyhoundScraper
       return "No schedules found"
     end
 
-    # errors = self.errors?
-    # if errors != nil
-    #   result = errors
-    # else
-    #   result = {}
-    #   result[:depart] = self.get_trip_data
-    #   self.submit_page2
-    #   result[:return] = self.get_trip_data
-    # end
-
     self.close_browser
     result
   end
@@ -322,7 +300,6 @@ class GreyhoundScraper
   def form_error_handler(element, err_msg, success_msg)
     if element == "Error"
       puts err_msg
-      # @browser.close
       return "No schedules found"
     else
       puts success_msg

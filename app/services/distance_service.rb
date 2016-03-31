@@ -39,9 +39,7 @@ class DistanceService
 
   def get_nearest_airport(latitude, longitude, country)
     airport_list = Airport.where("country = ?", country)
-   
-    #latitude = latitude.to_s
-    #longitude = longitude.to_s 
+
     @airport_distances = airport_list.select do |f|
       calc_distance(latitude, longitude, f)
     end

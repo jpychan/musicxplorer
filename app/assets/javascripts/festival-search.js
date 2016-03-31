@@ -92,41 +92,5 @@ $(function() {
     if (data.length === 0) { results.text('No results found'); }
 
   });
-
-  // function formatResults(label,ele, div) {
-  //   if (ele === null || ele === 0) {
-  //     $('<div>').text(label + ': n/a').appendTo(div);
-  //   }
-  //   else {
-  //     $('<div>').text(label + ': ' + ele).appendTo(div);
-  //   }
-  // }
-
-  // $('#festival-search').on('ajax:success', function(event, data) {
-  //   var results = $('#search-results');
-  //   results.empty();
-
-  //   if (data.length === 0) { results.text('No results found'); }
-
-  //   data.forEach(function(festival) {
-  //     var festivalDiv = $('<div>').appendTo(results);
-
-  //     $('<a>').attr('href', '/festivals/' + festival.id)
-  //       .text(festival.name)
-  //       .appendTo(festivalDiv);
-
-  //     var festivalDetails = $('<div>').addClass('festival-result')
-  //                             .attr('data-id', festival.id)
-  //                             .appendTo(festivalDiv);
-                              
-  //     $('<div>').text('Location: ' + festival.location).appendTo(festivalDetails );
-  //     $('<div>').text('Date: ' + festival.date).appendTo(festivalDetails);
-
-  //     formatResults('Price', festival.price, festivalDetails);
-  //     formatResults('Camping', festival.camping, festivalDetails);
-  //     formatResults('Description', festival.description, festivalDetails);
-  //   });
-  // });
-
 });
 
