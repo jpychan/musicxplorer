@@ -19,7 +19,7 @@
 
 .pure-g [class *="pure-u"], body {
   font-family: 'Raleway', sans-serif;
-  color: #333333;
+  color: #333333
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -113,7 +113,6 @@ i { margin-right: 3px; }
 }
 
 #wel {
-  /*position: fixed;*/
   background-color: #F77604;
   background-size: cover;
   color: white;
@@ -121,14 +120,12 @@ i { margin-right: 3px; }
   font-family: 'Boogaloo', cursive;
   font-size: 70px;
   font-weight: lighter;
-  /*margin-left: 20px;*/
   letter-spacing: 6px;
   margin-top: 0;
   opacity: 0.75;
   padding: 100px;
   padding-bottom: 120px;
   text-align: center;
-  /*width: 130%;*/
 }
 
 .pan_button {
@@ -155,7 +152,6 @@ i { margin-right: 3px; }
 
 
 .search-results {
-  /*font-weight: lighter;*/
   font-size: 20px;
   margin-left: 40px;
   margin-bottom: 30px;
@@ -173,38 +169,21 @@ i { margin-right: 3px; }
   height: 750px;
   margin-bottom: 100px;
   margin-left: 30px;
-  /*margin-top: 120px;*/
   margin-right: 30px;
-  /*max-width: 700px;
-  overflow: hidden;*/
   overflow-y: scroll;
   position: relative;
   width: 650px;
-  /*z-index: -1;*/
 }
 
-/* #home*/ #map {
+#map {
   box-shadow: 1px 1px 5px #333333;
   border-radius: 8px;
   display: inline-block;
   height: 750px;
-  /*margin-top: 120px;*/
   margin-left: 20px;
   margin-right: 30px;
   margin-top: 80px;
-  /*overflow: hidden;*/
-  /*position: relative;*/
   width: 650px;
-  /*margin-top: 50px;*/
-  /*position: absolute;
-  margin-top: 40px;
-  top: 50%;
-  left: 50%;
-  margin: -100px 0 0 -150px;*/
- /* float: right;*/
-  /*border-radius: 20px;*/
-  /*margin-left: 50%;*/
-  /*margin-top: 30px;*/
 }
 
 /*==== Cards: ====*/
@@ -215,44 +194,32 @@ i { margin-right: 3px; }
   box-shadow: 1px 1px 5px #333333;
   display: inline-block;
   font-size: 20px;
-  /*margin-left: 30px;*/
   margin-bottom: 5px;
   margin-left: 30px;
   margin-right: 47px;
   opacity: 0.9;
- /* overflow: hidden;*/
   padding-left: 20px;
   padding-right: 200px;
   width: 430px;
-  /*margin-top: 120px;*/ 
 }
 
 #fest_locations {
-  /*display: inline-block;*/
   background-color: #B8D20B;
   border-radius: 8px;
   box-shadow: 1px 1px 5px #333333;
   display: inline-block;
   float: right;
   font-size: 20px;
-  /*margin-right: px;*/
   margin-left: 20px;
   opacity: 0.9;
-  /*overflow: hidden;*/
   padding-left: 20px;
   position: absolute;
   width: 633px;
-  /*margin-right: 610px;*/
 }
-
-/*.pure-u-1-2 {
-  overflow: hidden;
-}*/
 
 .festival-result {
   margin: 20px;
   margin-bottom: 50px;
-  /*padding: 10px;*/
 }
 
 .main_links {
@@ -265,31 +232,21 @@ i { margin-right: 3px; }
   border-radius: 8px;
   box-shadow: 1px 1px 5px #333333;
   height: 300px;
-  /*background-color: #ffe6e6;*/
   margin-bottom: 15px;
   margin-left: 20px;
   margin-right: 20px;
-  /*padding-top: 140px;*/
   padding-bottom: 10px;
-  /*padding-left: 50px;*/
-  /*padding-right: 100px;*/
-  /*margin-bottom: 5px;
-  margin-top: 5px;*/
 }
 
 .festival_card_header {
-  /*box-shadow: 1px 1px 5px #333333;*/
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
   background-size: cover;
   background-repeat: no-repeat;
   float: top;
-  /*float: right;*/
   height: 60%;
- /* margin-bottom: 50px;*/
   opacity: 0.75;
   width: 100%;
-  /*z-index: -1;*/
 }
 
 .festival_card_body {
@@ -336,24 +293,15 @@ i { margin-right: 3px; }
   background-image: url('/festival10.jpg');
 }
 
-/*#button {
-  position: relative;
-  float: top;
-  margin-bottom: 50px;
-}*/
-
 .festival_name {
   position: absolute;
   color: #F77604;
   float: bottom;
   font-family: Verdana;
   font-size: 20px;
-  /*font-size: 2.5vw; */
   font-weight: bold;
   margin-top: 30px;
   margin-left: 15px;
-  /*overflow-x: scroll;*/
- /* overflow: auto;*/
   padding-top: 160px;
 }
 
@@ -375,33 +323,9 @@ i { margin-right: 3px; }
   margin-top: 20px;
 }
 
-/*#location {
-  margin-left: 50%;
-}
-#date {
-  margin-left: 50%;
-}
-#camping {
-  margin-left: 50%;
-}
-#artist {
-  margin-left: 50%;
-}
-#genre {
-  margin-left: 50%;
-}
-#search {
-  margin-left: 50%;
-}*/
-/*#button {
-  position: relative;
-  float: top;
-  margin-bottom: 50px;
-}*/
 
 #upcoming_festivals .festival_card {
   display: inline-block;
- /* overflow-x: scroll;*/
   width: 30%;
 }
 
@@ -430,11 +354,6 @@ i { margin-right: 3px; }
 
 #bus-depart div {
   width:100px;
-}
-
-#bus-depart, #bus-return {
-  /*background-color:lightblue;
-  color:black;*/
 }
 
 #bus th, #bus td {

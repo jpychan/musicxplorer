@@ -2,25 +2,6 @@ module Skyscanner
 
   include ActionView::Helpers::DateHelper
 
-  # def nearest_airport(lat, long)
-  #   lat = lat.to_s
-  #   long = long.to_s
-
-  #   # LONG AND LAT
-  #   url = URI("https://airport.api.aero/airport/nearest/#{lat}/#{long}?user_key=#{ENV['AIRPORT_API_USERKEY']}")
-
-  #   http = Net::HTTP.new(url.host, url.port)
-  #   http.use_ssl = true
-  #   http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-  #   request = Net::HTTP::Get.new(url)
-  #   request["cache-control"] = 'no-cache'
-
-  #   response = http.request(request)
-  #   response = response.body
-  #   response = JSON.parse(response[/{.+}/])
-  # end
-
   def create_skyscanner_session(params)
     url = URI("http://partners.api.skyscanner.net/apiservices/pricing/v1.0?apiKey=#{ENV['SKYSCANNER_API']}")
 

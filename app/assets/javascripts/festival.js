@@ -12,17 +12,17 @@ $(function() {
       };
       $.ajax('/festival-select',
         { dataType: 'json',
-          type: 'POST',
-          data: tripCost
-        });
+        type: 'POST',
+        data: tripCost
+      });
     }
     else if (checkbox.prop("checked") == false){
       $.ajax('/festival-unselect',
-      { dataType: 'json',
+        { dataType: 'json',
         type: 'POST', 
         data: { festivalId: $('.music-festival').attr('data-id') }
       });
-      }
+    }
   });
 
   // REMOVE FESTIVALS FROM FESTIVAL FAVOURITES PAGE
@@ -31,10 +31,10 @@ $(function() {
     var data = { festivalId: festivalDiv.attr('data-id') };
     $.ajax('/festival-unselect', 
       { dataType: 'json',
-        type: 'POST',
-        data: data,
-        complete: function() { festivalDiv.remove(); }
-      });
+      type: 'POST',
+      data: data,
+      complete: function() { festivalDiv.remove(); }
+    });
   });
 
   // REFRESH FESTIVAL PARTIAL
@@ -64,31 +64,31 @@ $(function() {
   $('.refresh-grid').on('click', function() {
     $.ajax('/festival-subscriptions', 
       { dataType: 'json',
-        success: function(data) {
-          var tbody = $('.fave-festivals'); 
-          tbody.empty();
+      success: function(data) {
+        var tbody = $('.fave-festivals'); 
+        tbody.empty();
 
-          data.forEach(function(f) {
-            var row = $('<tr>').addClass('fave')
-                        .attr('data-id', f['id'])
-                        .appendTo(tbody);
-            var nameCol = $('<td>').appendTo(row);
-            var link = $('<a>').attr('href', '/festivals/' + f['id'])
-                               .text(f['name'])
-                               .appendTo(nameCol);
-            buildFestival(f['date'], row);
-            buildFestival(f['location'], row);
-            buildFestival(display(f['price']), row);
-            buildFestival(display(f['camping']), row);
+        data.forEach(function(f) {
+          var row = $('<tr>').addClass('fave')
+          .attr('data-id', f['id'])
+          .appendTo(tbody);
+          var nameCol = $('<td>').appendTo(row);
+          var link = $('<a>').attr('href', '/festivals/' + f['id'])
+          .text(f['name'])
+          .appendTo(nameCol);
+          buildFestival(f['date'], row);
+          buildFestival(f['location'], row);
+          buildFestival(display(f['price']), row);
+          buildFestival(display(f['camping']), row);
 
-            displayCost(f['time_car'], f['price_car'], row);
-            displayCost(f['time_bus'], f['price_bus'], row);
-            displayCost(f['time_flight_in'], f['price_flight'], row);
-            
-            $('<td>').html('<button class="remove-fave"><i class="fa fa-star"></i> Remove</button>').appendTo(row);
-          });
-        }
+          displayCost(f['time_car'], f['price_car'], row);
+          displayCost(f['time_bus'], f['price_bus'], row);
+          displayCost(f['time_flight_in'], f['price_flight'], row);
+
+          $('<td>').html('<button class="remove-fave"><i class="fa fa-star"></i> Remove</button>').appendTo(row);
+        });
       }
+    }
     );
   });
 
@@ -97,7 +97,7 @@ $(function() {
     var festival = $('.flickr-imgs').data('name').replace(/[^a-z0-9\s]/i, '');
     $.ajax('/flickr_images/' + festival, { dataType: 'json' }).done(function(data) { 
       if (data.stat != 'ok') { return console.log('error'); }
-   
+
       var imgs = data.photos.photo;
       imgs.forEach(function(img) { 
         var imgSrc = 'https://farm'+img.farm+'.staticflickr.com/'+img.server+'/'+img.id+'_'+img.secret+'.jpg';
@@ -133,18 +133,12 @@ $(function() {
 
 
 
-$(".map_button").click(function(){
-  $("#map").toggle(300);
-});
-
-// $('.pan_button').on('click', function(){
-//   var latLng = new google.maps.LatLng(49.8994, -97.1392); //should pan to specified location (based on card/div?)
-//   map.panTo(latLng);
-
+  $(".map_button").click(function(){
+    $("#map").toggle(300);
+  });
 
 });
 
-  // alert('hello');
 
 
 
@@ -181,7 +175,6 @@ function initMap() {
         position: {lat:festival.latitude, lng:festival.longitude}, 
         name: name
       });
-      // var contentString = "This is a string";
       var infowindow = new google.maps.InfoWindow({
         content: (festival.name + ',' + ' ' + festival.date)
       });
@@ -190,7 +183,7 @@ function initMap() {
         infowindow.open(map, marker);
         infowindow.addListener('closeclick', function() {
           infowindow.close();
-       });
+        });
       });
     });
   });
