@@ -1,5 +1,4 @@
 $(function() {
-
   // ADD OR REMOVE FESTIVALS FROM FAVORITES ON FESTIVAL SHOW PAGE
   $('.cache-btns').on('change', '.fave-btn', function(){
     var checkbox = $('#click');
@@ -53,7 +52,12 @@ $(function() {
     }
   }
   function display(value) {
-    value && value != 0 ? return value : return 'n/a';
+    if (value && value != 0) { 
+      return value;
+    }
+    else {
+      return 'n/a';
+    }
   }
 
   // TODO: refactor!

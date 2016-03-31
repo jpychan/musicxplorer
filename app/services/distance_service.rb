@@ -5,7 +5,7 @@ class DistanceService
   end
 
   def get_usr_location(usr_location)
-    location = usr_location == '' ? 'Vancouver BC' : usr_location
+    location = usr_location == '' ? 'Vancouver, BC' : usr_location
     if $redis.hget('user', 'location') == location
       $redis.hgetall('user')
     else
@@ -39,20 +39,14 @@ class DistanceService
 
   def get_nearest_airport(latitude, longitude, country)
     airport_list = Airport.where("country = ?", country)
-    
-    @airport_distances = []
-    latitude = latitude.to_s
-    longitude = longitude.to_s
-
-    @departure_airports = airport_list.select do |f|
-      @airport_distances << calc_distance(latitude, longitude, f)
+   
+    #latitude = latitude.to_s
+    #longitude = longitude.to_s 
+    @airport_distances = airport_list.select do |f|
+      calc_distance(latitude, longitude, f)
     end
 
-    if @airport_distances.empty?
-      'yvr'
-    else
       departure_airport_index = @airport_distances.index(@airport_distances.min)
       airport_list[departure_airport_index][:iata_code].downcase
-    end
   end
 end
