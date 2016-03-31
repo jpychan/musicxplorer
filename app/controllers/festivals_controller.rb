@@ -22,10 +22,7 @@ class FestivalsController < ApplicationController
   def all
     @genres = Genre.all.order(:name)
     @usr_location = $redis.hget('user', 'location')
-<<<<<<< HEAD
-=======
 
->>>>>>> final-merge
     @festivals = Festival.includes(:genres).where('start_date > ?', Date.today).order(:start_date).limit(20)
     fg = FestivalGridService.new
     @selected_festivals = fg.get_saved_festivals
@@ -61,7 +58,6 @@ class FestivalsController < ApplicationController
       dist_km <= SEARCH_RADIUS 
     end
 
-<<<<<<< HEAD
     img_array = ['image1', 'image2', 'image3', 'image4', 'image5', 'image6', 'image7', 'image8', 'image9', 'image10']
 
     @img_classes = []
@@ -70,11 +66,6 @@ class FestivalsController < ApplicationController
       i = rand(img_array.length)
       @img_classes << img_array[i]
     end
-
-    # byebug
-=======
-
->>>>>>> final-merge
 
     respond_to do |format|
       format.js {render layout: false}
