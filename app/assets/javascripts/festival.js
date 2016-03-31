@@ -146,25 +146,30 @@ function initMap() {
     position: myLatLng,
     title: 'Hello World'
   });
-}   
 
-$.getJSON("/festivals", function(data) {
-  $.each(data, function(index, festival) {
-    var marker = new google.maps.Marker({
-      map: map, 
-      position: {lat:festival.latitude, lng:festival.longitude}, 
-      name: name
-    });
-    // var contentString = "This is a string";
-    var infowindow = new google.maps.InfoWindow({
-      content: (festival.name + ',' + ' ' + festival.date)
-    });
-    marker.addListener('click', function() {
-      console.log("listener");
-      infowindow.open(map, marker);
-      infowindow.addListener('closeclick', function() {
-        infowindow.close();
-     });
+  $.getJSON("/festivals", function(data) {
+    $.each(data, function(index, festival) {
+      console.log("wat");
+      console.log(google);
+      console.log("the hekk");
+      var marker = new google.maps.Marker({
+        map: map, 
+        position: {lat:festival.latitude, lng:festival.longitude}, 
+        name: name
+      });
+      // var contentString = "This is a string";
+      var infowindow = new google.maps.InfoWindow({
+        content: (festival.name + ',' + ' ' + festival.date)
+      });
+      marker.addListener('click', function() {
+        console.log("listener");
+        infowindow.open(map, marker);
+        infowindow.addListener('closeclick', function() {
+          infowindow.close();
+       });
+      });
     });
   });
-});
+}   
+
+
