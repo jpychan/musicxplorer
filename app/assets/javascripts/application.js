@@ -11,8 +11,8 @@
 // about supported directives.
 //
 //= require jquery
+//= require jquery-ui.min
 //= require jquery_ujs
-//= require jquery-ui
 //= require autocomplete-rails
 //= require modal
 //= require jquery.soulmate

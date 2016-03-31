@@ -12,6 +12,7 @@
  *
  *= require_tree .
  *= require soulmate
+ *= require pure-min
  *= require modal
  *= require_self
  */
