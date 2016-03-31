@@ -343,7 +343,7 @@ class GreyhoundScraper
 
     enter_date("depart", @depart_date)
     enter_date("return", @return_date)
-    form_error_handler(submit_page1, "Error - Couldn't submit form.", "Form submitted successfully")
+    form_error_handler(submit_page1, "Error - Couldn't submit form.", "Form submitted")
 
     get_depart_data
   end
