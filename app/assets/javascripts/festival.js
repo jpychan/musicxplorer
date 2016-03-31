@@ -1,11 +1,4 @@
 $(function() {
-  // function addSearched() {
-  //   for (var i = 0; i < searched.length; i++) {
-  //     var ele = searched[i];
-  //      $('#search-results').appendTo('#results_container'); 
-  //    };
-  //   };
-
   // ADD OR REMOVE FESTIVALS FROM FAVORITES ON FESTIVAL SHOW PAGE
   $('.cache-btns').on('change', '.fave-btn', function(){
     var checkbox = $('#click');
@@ -33,7 +26,7 @@ $(function() {
   });
 
   // REMOVE FESTIVALS FROM FESTIVAL FAVOURITES PAGE
-  $('.remove-fave').on('click', function() {
+  $('.fave-festivals').on('click', '.remove-fave', function() {
     var festivalDiv = $(this).closest('.fave');
     var data = { festivalId: festivalDiv.attr('data-id') };
     $.ajax('/festival-unselect', 
@@ -52,46 +45,55 @@ $(function() {
   function displayCost(time, price, row) {
     if (time) {
       buildFestival(time, row);
-      buildFestival(price, row);
+      buildFestival('$'+price, row);
     }
     else {
       $('<td>').attr('colspan', '2').text('n/a').appendTo(row);
     }
   }
   function display(value) {
-    if (value && value != 0) {
-      value = 'n/a'
+    if (value && value != 0) { 
+      return value;
+    }
+    else {
+      return 'n/a';
     }
   }
 
-  // TODO: refactor!!
+  // TODO: refactor!
   $('.refresh-grid').on('click', function() {
     $.ajax('/festival-subscriptions', 
       { dataType: 'json',
         success: function(data) {
+          var tbody = $('.fave-festivals'); 
+          tbody.empty();
+
           data.forEach(function(f) {
-            var row = $('.new-fave');
-            row.empty();
+            var row = $('<tr>').addClass('fave')
+                        .attr('data-id', f['id'])
+                        .appendTo(tbody);
             var nameCol = $('<td>').appendTo(row);
             var link = $('<a>').attr('href', '/festivals/' + f['id'])
                                .text(f['name'])
                                .appendTo(nameCol);
             buildFestival(f['date'], row);
             buildFestival(f['location'], row);
-            buildFestival( display(f['price']), row );
-            buildFestival( display(f['camping']), row );
+            buildFestival(display(f['price']), row);
+            buildFestival(display(f['camping']), row);
 
             displayCost(f['time_car'], f['price_car'], row);
             displayCost(f['time_bus'], f['price_bus'], row);
-            displayCost(f['time_flight'], f['price_flight'], row);
-         });
+            displayCost(f['time_flight_in'], f['price_flight'], row);
+            
+            $('<td>').html('<button class="remove-fave"><i class="fa fa-star"></i> Remove</button>').appendTo(row);
+          });
         }
-    });
+      }
+    );
   });
 
   // FLICKR
   if ($('#festival-show').length > 0) {
-
     var festival = $('.flickr-imgs').data('name').replace(/[^a-z0-9\s]/i, '');
     $.ajax('/flickr_images/' + festival, { dataType: 'json' }).done(function(data) { 
       if (data.stat != 'ok') { return console.log('error'); }
@@ -103,14 +105,11 @@ $(function() {
         var img = $('<img>').attr('src', imgSrc);
 
         imageDiv.appendTo('.flickr-imgs').append(img);
-
       });
-
     });
   }
 
   // BUTTON TOGGLE THE FLIGHT SEARCH FORM
-
   $('#festival-show').on('click', '#flight-search-btn', function() {
     $('#flight-search-form').slideToggle();
   });
@@ -121,16 +120,6 @@ $(function() {
     $('#festival-search-form').toggle();
   });
   
- // var map;
- //      function initMap() {
- //        map = new google.maps.Map(document.getElementById('map'), {
- //          center: {lat: -34.397, lng: 150.644},
- //          zoom: 8
- //        });
- //      }
- // }
-
-
   var target = $('#wel');
   var targetHeight = target.outerHeight();
 
@@ -181,46 +170,29 @@ function initMap() {
     position: userLocation,
     title: 'Hello World'
   });
-  
+
   $.getJSON("/festivals", function(data) {
     $.each(data, function(index, festival) {
+      console.log("wat");
+      console.log(google);
+      console.log("the hekk");
       var marker = new google.maps.Marker({
         map: map, 
         position: {lat:festival.latitude, lng:festival.longitude}, 
         name: name
       });
-    // var contentString = "This is a string";
+      // var contentString = "This is a string";
       var infowindow = new google.maps.InfoWindow({
         content: (festival.name + ',' + ' ' + festival.date)
-    });
-    marker.addListener('click', function() {
-      console.log("listener");
-      infowindow.open(map, marker);
-      infowindow.addListener('closeclick', function() {
-        infowindow.close();
-     });
-    // setTimeout(function(){
-    //   infowindow.close();
-    // },3000)
+      });
+      marker.addListener('click', function() {
+        console.log("listener");
+        infowindow.open(map, marker);
+        infowindow.addListener('closeclick', function() {
+          infowindow.close();
+       });
+      });
     });
   });
-
-  });
-}
-
-// var target = $( '.container' )[0];
-
-// var observer = new MutationObserver(function(mutations, observer) {
-//     // fired when a mutation occurs
-//     alert(mutations);
-//     // ...
-// });
-
-// // define what element should be observed by the observer
-// // and what types of mutations trigger the callback
-// observer.observe(target, {
-//     subtree: true,
-//     childList: true,
-
-// });
+}   
 

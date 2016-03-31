@@ -12,8 +12,12 @@ Dotenv::Railtie.load
 
 module MusicFestival
   class Application < Rails::Application
-
-    config.cache_store = :redis_store, 'redis://localhost:6379/0/cache', { expires_in: 2.hours }
+    if Rails.env.production?
+        redis_url = ENV["REDIS_URL"]
+    else
+        redis_url = "redis://localhost:6379"
+    end
+    config.cache_store = :redis_store, redis_url, { expires_in: 2.hours }
     config.encoding = 'utf-8'
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers

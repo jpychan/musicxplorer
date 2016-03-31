@@ -38,6 +38,7 @@ div[id="festival-search-form"]
     div[class="pure-u-1-5"]
       = label_tag :genre, 'GENRE'
       br
+
       = select_tag :genre, options_from_collection_for_select(@genres, 'name', 'name'), include_blank: '', class: "pure-input-2-3"
     div[class="pure-u-1-5"]
       = label_tag :camping, 'CAMPING?'
@@ -45,3 +46,4 @@ div[id="festival-search-form"]
       = select_tag :camping, options_for_select([['Yes', 'yes'], ['No', 'no']]), include_blank: '', class: "pure-input-2-3"
     div[class="pure-u-1-5"]
       = submit_tag 'Search!', id: 'submit-search', class: "pure-button pure-button-primary" 
+

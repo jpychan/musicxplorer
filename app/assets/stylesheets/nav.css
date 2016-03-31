@@ -48,7 +48,7 @@ input:focus {
 #edit_location:hover {
   background: #B8D20B;
   box-shadow: 3px 5px 5px #aaaaaa;
-  transition: all 0.3s ease-in-out:
+  transition: all 0.3s ease-in-out;
 }
 
 #festival-search-form {
@@ -116,7 +116,7 @@ input:focus {
 #logo:hover a {
   font-size: 30px;
   color: #F56C57;
-  transition: all 0.3s ease-in-out:
+  transition: all 0.3s ease-in-out;
 }
 
 #festival-search-form .pure-1-3 {
