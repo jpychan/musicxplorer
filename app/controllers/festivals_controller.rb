@@ -14,7 +14,6 @@ class FestivalsController < ApplicationController
     driving = DrivingInfoService.new(@festival)
     @price_by_car = driving.calc_driving_cost
     @time_by_car = driving.get_trip_time[0]
-
   end
 
   def all

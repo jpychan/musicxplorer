@@ -6,9 +6,9 @@
     td #{display(festival['price'])}
     td #{display(festival['camping'])}
 
-    - if festival['price_car'] == 0
+    - if festival['price_car']
       td #{festival['time_car']}
-      td $#{display(festival['price_car'])}
+      td $#{festival['price_car']}
     - else
       td[colspan=2] n/a
     

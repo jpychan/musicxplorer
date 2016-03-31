@@ -26,7 +26,7 @@ $(function() {
   });
 
   // REMOVE FESTIVALS FROM FESTIVAL FAVOURITES PAGE
-  $('.fave').on('click', '.remove-fave', function() {
+  $('.fave-festivals').on('click', '.remove-fave', function() {
     var festivalDiv = $(this).closest('.fave');
     var data = { festivalId: festivalDiv.attr('data-id') };
     $.ajax('/festival-unselect', 
@@ -45,7 +45,7 @@ $(function() {
   function displayCost(time, price, row) {
     if (time) {
       buildFestival(time, row);
-      buildFestival(price, row);
+      buildFestival('$'+price, row);
     }
     else {
       $('<td>').attr('colspan', '2').text('n/a').appendTo(row);
@@ -78,12 +78,12 @@ $(function() {
                                .appendTo(nameCol);
             buildFestival(f['date'], row);
             buildFestival(f['location'], row);
-            buildFestival( display(f['price']), row );
-            buildFestival( display(f['camping']), row );
+            buildFestival(display(f['price']), row);
+            buildFestival(display(f['camping']), row);
 
             displayCost(f['time_car'], f['price_car'], row);
             displayCost(f['time_bus'], f['price_bus'], row);
-            displayCost(f['time_flight'], f['price_flight'], row);
+            displayCost(f['time_flight_in'], f['price_flight'], row);
             
             $('<td>').html('<button class="remove-fave"><i class="fa fa-star"></i> Remove</button>').appendTo(row);
           });
@@ -110,7 +110,6 @@ $(function() {
   }
 
   // BUTTON TOGGLE THE FLIGHT SEARCH FORM
-
   $('#festival-show').on('click', '#flight-search-btn', function() {
     $('#flight-search-form').slideToggle();
   });
