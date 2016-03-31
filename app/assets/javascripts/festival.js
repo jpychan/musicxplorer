@@ -1,10 +1,4 @@
 $(function() {
-  // function addSearched() {
-  //   for (var i = 0; i < searched.length; i++) {
-  //     var ele = searched[i];
-  //      $('#search-results').appendTo('#results_container'); 
-  //    };
-  //   };
 
   // ADD OR REMOVE FESTIVALS FROM FAVORITES ON FESTIVAL SHOW PAGE
   $('.cache-btns').on('change', '.fave-btn', function(){
@@ -131,6 +125,16 @@ $(function() {
  //        });
  //      }
  // }
+var target = $('#wel');
+var targetHeight = target.outerHeight();
+
+  $(window).scroll(function(){
+    // debugger;
+    var scrollPercent = (targetHeight - window.scrollY) / targetHeight;
+    if(scrollPercent >= 0){
+      target.css('opacity', scrollPercent);
+    }
+  }); 
 
 
   var target = $('#wel');
@@ -178,21 +182,11 @@ $.getJSON("/festivals", function(data) {
       infowindow.addListener('closeclick', function() {
         infowindow.close();
      });
-  // setTimeout(function(){
-  //   infowindow.close();
-  // },3000)
     });
   });
 });
 
-$(".map_button").click(function(){
-  $("#map").toggle(300);
-});
 
-// $('.pan_button').on('click', function(){
-//   var latLng = new google.maps.LatLng(49.8994, -97.1392); //should pan to specified location (based on card/div?)
-//   map.panTo(latLng);
-
-
+}
 
 
