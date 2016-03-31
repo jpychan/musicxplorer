@@ -8,34 +8,34 @@
 
 .pure-menu-link:hover, .pure-menu-link:focus, .pure-menu-link:active {
   background: none;
-  border-bottom: 3px solid #F77604;
+  border-bottom: 3px solid #F77604;show
 }
 
 #usr_location {
-    color: #ffffff;
+    color: #eee;
 }
 
 .pure-menu, .pure-menu-heading, .pure-menu-item a {
-  color: #ffffff;
+  color: #eee;
 }
 
 .input-locked {
   border: none;
   background: none;
-  color: #ffffff;
+  color: #eee;
   width: 150px;
 }
 
 .input-active {
   border:none;
   background: none;
-  color: #ffffff;
+  color: #eee;
   width: 150px;
 }
 
 input:focus {
   outline:none;
-  border-bottom: 1px solid #ffffff;
+  border-bottom: 1px solid #eee;
 }
 
 #edit_location {
@@ -53,8 +53,9 @@ input:focus {
 
 #festival-search-form {
   display:none;
-  padding: 10px;
+  padding: 20px 40px;
   background-color: #F56C57;
+  border-bottom: 4px solid #231B12;
 }
 
 #festival-search-form .pure-g {
@@ -68,9 +69,19 @@ input:focus {
 #festival-search-form select {
   margin-top: 10px;
 }
-#submit-search {
+#festival-search-form  #submit-search {
   background-color: #231B12;
-  border-radius: 10px;
+  border-radius: 10px; 
+  font-size: 20px;
+  padding: 10px 20px;
+  margin-top: 20px;
+}
+
+
+#festival-search-form #submit-search:hover {
+  background: #B8D20B;
+  box-shadow: 3px 3px 3px #eee;
+  transition: all 0.3s ease-in-out:
 }
 
 #festival-search-form .pure-button:hover{
@@ -80,7 +91,7 @@ input:focus {
 
 #festival-search-form label {
   font-weight: bold;
-  color: #eee;
+  color: #231B12;
 }
 
 
@@ -106,4 +117,8 @@ input:focus {
   font-size: 30px;
   color: #F56C57;
   transition: all 0.3s ease-in-out;
+}
+
+#festival-search-form .pure-1-3 {
+  padding: 20px;
 }
