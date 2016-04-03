@@ -87,13 +87,14 @@
           h2 Description
           p #{@festival.description}
       
-      div
-        h2 Performers
+      - if @festival.artists.length > 0 
+        div
+          h2 Performers
 
-        #artist-list
-          ul
-          - @festival.artists.each do |artist|
-            li #{artist.name}
+          #artist-list
+            ul
+            - @festival.artists.each do |artist|
+              li #{artist.name}
 
     div[id="flickr-imgs" class="flickr-imgs pure-g" data-name="#{@festival.name}"]
 
