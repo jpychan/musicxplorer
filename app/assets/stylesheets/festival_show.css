@@ -94,7 +94,7 @@ li.active {
 #travel-tabs li:not(:last-child) {
   border-bottom: 2px solid #fff;
 }
-#travel-tabs a {
+#travel-tabs li a {
   width: 100%;
   height: 100%;
   display: block;
@@ -105,7 +105,7 @@ li.active {
   padding: 20%;
   font-weight: normal;
 }
-#travel-tabs a:hover {
+#travel-tabs li a:hover {
   background: #2c3e50;
 }
 #travel-tabs .route-details {

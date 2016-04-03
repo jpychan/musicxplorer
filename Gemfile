@@ -43,6 +43,9 @@ gem 'geocoder'
 
 gem 'seed_dump'
 
+#Paginate
+gem 'kaminari'
+
 # Greyhound Scraper
 gem  'watir-webdriver'
 gem 'watir-scroll'

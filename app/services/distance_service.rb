@@ -39,12 +39,12 @@ class DistanceService
 
   def get_nearest_airport(latitude, longitude, country)
     airport_list = Airport.where("country = ?", country)
-    puts airport_list
 
     @airport_distances = airport_list.map do |f|
       calc_distance(latitude, longitude, f)
     end
-      departure_airport_index = @airport_distances.index(@airport_distances.min)
-      airport_list[departure_airport_index][:iata_code].downcase
+
+    departure_airport_index = @airport_distances.index(@airport_distances.min)
+    nearest_airport = airport_list[departure_airport_index][:iata_code].downcase
   end
 end
