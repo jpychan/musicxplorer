@@ -87,6 +87,9 @@ GEM
     json (1.8.3)
     jsonpath (0.5.8)
       multi_json
+    kaminari (0.16.3)
+      actionpack (>= 3.0.0)
+      activesupport (>= 3.0.0)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
     mail (2.6.4)
@@ -243,6 +246,7 @@ DEPENDENCIES
   jquery-rails
   jquery-ui-rails
   jsonpath
+  kaminari
   nokogiri
   pg
   phantomjs
@@ -262,3 +266,6 @@ DEPENDENCIES
   watir-scroll
   watir-webdriver
   web-console (~> 2.0)
+
+BUNDLED WITH
+   1.11.2

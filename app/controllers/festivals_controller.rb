@@ -19,8 +19,7 @@ class FestivalsController < ApplicationController
   def all
     @genres = Genre.all.order(:name)
     @usr_location = $redis.hget('user', 'location')
-
-    @festivals = Festival.includes(:genres).where('start_date > ?', Date.today).order(:start_date).limit(20)
+    @festivals = Festival.upcoming
     fg = FestivalGridService.new
     @selected_festivals = fg.get_saved_festivals
 
@@ -138,6 +137,7 @@ class FestivalsController < ApplicationController
   end
 
   def search_flights
+
     @festival = Festival.find(params[:festival_id])
  
     if params[:default]
@@ -156,7 +156,8 @@ class FestivalsController < ApplicationController
     end
 
     if flight_exists?(@festival)
-      @first_five_results = @festival.search_flights(params)
+      @results = @festival.search_flights(params)
+      @results = Kaminari.paginate_array(@results).page(params[:page]).per(10)
     end
 
     @cabin_classes = [['Economy', 'Economy'], ['Premium Economy', 'PremiumEconomy'], ['Business', 'Business'], ['First Class', 'First']]

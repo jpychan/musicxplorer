@@ -9,13 +9,15 @@ class Festival < ActiveRecord::Base
   validates :name, presence: true
 
   def search_flights(params)
-    session_id = create_skyscanner_session(params)
-    if session_id
-      data = get_itineraries(session_id)
-      @results = get_first_five_results(data)
 
-    else
-      @results = []
+    Rails.cache.fetch("flights/#{params["festival_id"]}/#{params["departure_airport"]}/#{params["arrival_airport"]}", expires_in: 30.minutes) do
+      session_id = create_skyscanner_session(params)
+      if session_id
+        data = get_itineraries(session_id)
+        @results = get_first_five_results(data)
+      else
+        @results = []
+      end
     end
   end
 
@@ -30,5 +32,10 @@ class Festival < ActiveRecord::Base
     departure != arrival
   end
 
+  def self.upcoming
+    Rails.cache.fetch("upcoming_festivals", expires_in: 1.hours) do
+      Festival.includes(:genres).where('start_date > ?', Date.today).order(:start_date).limit(20)
+    end
+  end
 end
   
