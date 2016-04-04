@@ -162,7 +162,6 @@ class FestivalsController < ApplicationController
     @search_info = @results.shift
     @search_info[:departure_airport] = params[:departure_airport]
     @search_info[:arrival_airport] = params[:arrival_airport]
-      byebug
     @results = Kaminari.paginate_array(@results).page(params[:page]).per(10)
 
     @cabin_classes = [['Economy', 'Economy'], ['Premium Economy', 'PremiumEconomy'], ['Business', 'Business'], ['First Class', 'First']]
