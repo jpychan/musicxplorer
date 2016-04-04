@@ -19,8 +19,8 @@
 
 
 html, body {        
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 .pure-g [class *="pure-u"], body {
@@ -43,6 +43,10 @@ h1, h2, h3, h4, h5, h6 {
 a {
   color: #F56C57;
   font-weight: bold;
+}
+
+p {
+  font-size: 15px;
 }
 
 
@@ -230,13 +234,11 @@ i { margin-right: 3px; }
   border-radius: 8px;
   box-shadow: 1px 1px 5px #333333;
   display: inline-block;
-  float: right;
-  font-size: 20px;
+  font-size: 1.5em;
   margin-left: 20px;
   opacity: 0.9;
   padding-left: 20px;
   position: absolute;
-  width: 633px;
 }
 
 .festival-result {
@@ -272,7 +274,14 @@ i { margin-right: 3px; }
 }
 
 .festival_card_body {
-  margin-top: 35%;
+  clear:both;
+  overflow: hidden;
+  text-align: left;
+  margin-left: 10px;
+}
+
+.festival_name {
+  color: #F77604;
 }
 
 .image1 {
@@ -355,36 +364,31 @@ i { margin-right: 3px; }
   background-image: url('/festival20.jpg');
 }
 
-.festival_name {
+
+/*.festival_name {
   position: absolute;
   color: #F77604;
-  float: bottom;
-  font-family: Verdana;
-  font-size: 20px;
+  font-size: 1.2em;
   font-weight: bold;
   margin-top: 30px;
-  margin-left: 15px;
   padding-top: 160px;
 }
 
 .festival_location {
   position: absolute;
-  font-family: Verdana;
   font-weight: bold;
-  margin-left: 15px;
+  margin-left: 20px;
   margin-top: 20px;
   padding-top: 205px;
 }
 
 .festival_date {
   position: absolute;
-  font-family: Verdana;
-  font-weight: bold;
   padding-top: 230px;
   margin-left: 15px;
   margin-top: 20px;
 }
-
+*/
 #upcoming_festivals {
   margin: 0 auto;
   text-align: center;
