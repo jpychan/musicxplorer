@@ -43,7 +43,13 @@ class FestivalsController < ApplicationController
   def get_usr_info
     d = DistanceService.new
     d.get_usr_location(params[:usr_location])
-    redirect_to root_path
+    @user_info = $redis.hgetall('user')
+    render json: @user_info
+    # byebug
+    # respond_to do |format|
+    #   format.js {render layout: false}
+    # end
+
   end
 
   # GET FESTIVAL SEARCH RESULTS
@@ -146,8 +152,6 @@ class FestivalsController < ApplicationController
       params[:children] = 0
       params[:infants] = 0
       params[:departure_airport] = $redis.hget('user', 'departure_airport')
-
-      d = DistanceService.new
       params[:arrival_airport] = DistanceService.new.get_nearest_airport(@festival.latitude, @festival.longitude, @festival.country)
 
     else

@@ -1,4 +1,5 @@
 $(function() {
+
   // DATE PICKER
   // set max date to account for greyhound search limit
   function maxDay() {
@@ -24,7 +25,8 @@ $(function() {
     locationInput.toggleClass('input-active');
     locationInput.focus();
 
-    locationInput.on('blur paste', function() {
+    locationInput.on('blur', function() {
+      // debugger;
       if (locationInput.val() === '') {
         $('.location-header').text('Your default location is set to:');
         $('.location-change').text('Vancouver, BC');
@@ -36,10 +38,15 @@ $(function() {
       
       $('#locationModal').modal('show');
       $.ajax('/usr-info',
-        { dataType: 'json',
-          type: 'POST',
+        { type: 'GET',
           data: {usr_location: locationInput.val()},
-          complete: function(xhr) { console.log(xhr.statusText); }
+          success: function(xhr) { 
+            debugger;
+            console.log(xhr);
+            $('.container').attr("data-userlatitude", xhr.lat);
+            $('.container').attr("data-userlongitude", xhr.lng);
+            alert("success"); 
+          }
       });
 
     });
