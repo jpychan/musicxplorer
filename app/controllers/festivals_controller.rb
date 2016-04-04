@@ -23,8 +23,8 @@ class FestivalsController < ApplicationController
     fg = FestivalGridService.new
     @selected_festivals = fg.get_saved_festivals
 
-    img_array = ['image1', 'image2', 'image3', 'image4', 'image5', 'image6', 'image7', 'image8', 'image9', 'image10']
-
+    img_array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+    
     @img_classes = []
 
     @festivals.each do |l|
