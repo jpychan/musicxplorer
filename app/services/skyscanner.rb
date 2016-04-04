@@ -39,7 +39,6 @@ module Skyscanner
     request["cache-control"] = 'no-cache'
 
     response = http.request(request)
-    byebug
     response = response.body
     response = JSON.parse(response)
     return response    
@@ -52,7 +51,6 @@ module Skyscanner
     carriers = data["Carriers"]
     agents = data["Agents"]
     @results = data["Itineraries"]
-
     if @results.length > 0
 
       @results.unshift(query)

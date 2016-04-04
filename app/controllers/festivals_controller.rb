@@ -148,17 +148,21 @@ class FestivalsController < ApplicationController
       params[:departure_airport] = $redis.hget('user', 'departure_airport')
 
       d = DistanceService.new
-      params[:arrival_airport] = d.get_nearest_airport(@festival.latitude, @festival.longitude, @festival.country)
+      params[:arrival_airport] = DistanceService.new.get_nearest_airport(@festival.latitude, @festival.longitude, @festival.country)
 
     else
-      params[:departure_airport] = Airport.find(params[:departure_airport_id])[:iata_code].downcase
-      params[:arrival_airport] = Airport.find(params[:arrival_airport_id])[:iata_code].downcase
+      params[:departure_airport] = params[:departure_airport_iata].downcase
+      params[:arrival_airport] =  params[:arrival_airport_iata].downcase
     end
 
     if flight_exists?(@festival)
       @results = @festival.search_flights(params)
-      @results = Kaminari.paginate_array(@results).page(params[:page]).per(10)
     end
+
+    @search_info = @results.shift
+    @search_info[:departure_airport] = params[:departure_airport]
+    @search_info[:arrival_airport] = params[:arrival_airport]
+    @results = Kaminari.paginate_array(@results).page(params[:page]).per(10)
 
     @cabin_classes = [['Economy', 'Economy'], ['Premium Economy', 'PremiumEconomy'], ['Business', 'Business'], ['First Class', 'First']]
     @passenger_numbers = [['0', 0], [ '1', 1], ['2', 2], ['3', 3], ['4', 4], ['5', 5]]

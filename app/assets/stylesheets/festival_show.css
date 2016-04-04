@@ -251,3 +251,13 @@ li.active {
   padding: 20px;
   margin: 20px 0;
 }
+
+.results-info {
+  text-align: right;
+  margin: 20px 0;
+}
+
+.pagination {
+  text-align: center;
+  font-size: 1.3em;
+}

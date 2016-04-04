@@ -9,7 +9,6 @@ class Festival < ActiveRecord::Base
   validates :name, presence: true
 
   def search_flights(params)
-
     Rails.cache.fetch("flights/#{params["festival_id"]}/#{params["departure_airport"]}/#{params["arrival_airport"]}", expires_in: 30.minutes) do
       session_id = create_skyscanner_session(params)
       if session_id

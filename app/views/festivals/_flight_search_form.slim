@@ -6,14 +6,14 @@
             = hidden_field_tag :festival_id, @festival.id
             = label_tag :departure_airport, 'Departure'
             br
-            = autocomplete_field_tag :departure_airport, @first_five_results[0][:departure_airport]["Name"], autocomplete_airport_name_festivals_path, :id_element => '#departure_airport_id'
-            = hidden_field_tag :departure_airport_id
-        
+            = autocomplete_field_tag :departure_airport_name, @results[1][:departure_airport]["Name"], autocomplete_airport_name_festivals_path, update_elements: {iata_code: '#departure_airport'}
+            = hidden_field_tag :departure_airport, @search_info[:departure_airport]
+
         div[class="pure-u-1-2"]
             = label_tag :arrival_airport, 'Arrival'
             br
-            = autocomplete_field_tag :arrival_airport, @first_five_results[0][:arrival_airport]["Name"], autocomplete_airport_name_festivals_path, :id_element => '#arrival_airport_id'
-            = hidden_field_tag :arrival_airport_id
+            = autocomplete_field_tag :arrival_airport_name, @results[1][:arrival_airport]["Name"], autocomplete_airport_name_festivals_path, update_elements: {iata_code: '#arrival_airport'}
+            = hidden_field_tag :arrival_airport, @search_info[:arrival_airport]
 
     div[class='pure-g input-row']
         div[class="pure-u-2-5"]
