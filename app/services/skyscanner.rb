@@ -52,7 +52,7 @@ module Skyscanner
     carriers = data["Carriers"]
     agents = data["Agents"]
     @results = data["Itineraries"]
-
+    byebug
     if @results.length > 0
 
       @results.unshift(query)
