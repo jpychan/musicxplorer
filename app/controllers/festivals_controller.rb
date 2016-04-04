@@ -139,8 +139,7 @@ class FestivalsController < ApplicationController
   def search_flights
 
     @festival = Festival.find(params[:festival_id])
-    byebug
- 
+
     if params[:default]
       params[:cabin_class] = "Economy"
       params[:adult] = 1
