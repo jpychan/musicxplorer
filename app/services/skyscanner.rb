@@ -39,6 +39,7 @@ module Skyscanner
     request["cache-control"] = 'no-cache'
 
     response = http.request(request)
+    byebug
     response = response.body
     response = JSON.parse(response)
     return response    

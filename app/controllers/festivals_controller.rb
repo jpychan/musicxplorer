@@ -139,6 +139,7 @@ class FestivalsController < ApplicationController
   def search_flights
 
     @festival = Festival.find(params[:festival_id])
+    byebug
  
     if params[:default]
       params[:cabin_class] = "Economy"
@@ -158,10 +159,12 @@ class FestivalsController < ApplicationController
     if flight_exists?(@festival)
       @results = @festival.search_flights(params)
     end
+    if @results.length > 0 
+      @search_info = @results.shift
 
-    @search_info = @results.shift
-    @search_info[:departure_airport] = params[:departure_airport]
-    @search_info[:arrival_airport] = params[:arrival_airport]
+      @search_info[:departure_airport] = params[:departure_airport]
+      @search_info[:arrival_airport] = params[:arrival_airport]
+    end
     @results = Kaminari.paginate_array(@results).page(params[:page]).per(10)
 
     @cabin_classes = [['Economy', 'Economy'], ['Premium Economy', 'PremiumEconomy'], ['Business', 'Business'], ['First Class', 'First']]
