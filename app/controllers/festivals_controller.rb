@@ -151,8 +151,8 @@ class FestivalsController < ApplicationController
       params[:arrival_airport] = DistanceService.new.get_nearest_airport(@festival.latitude, @festival.longitude, @festival.country)
 
     else
-      params[:departure_airport] = Airport.find(params[:departure_airport_id])[:iata_code].downcase
-      params[:arrival_airport] = Airport.find(params[:arrival_airport_id])[:iata_code].downcase
+      params[:departure_airport] = params[:departure_airport_iata].downcase
+      params[:arrival_airport] =  params[:arrival_airport_iata].downcase
     end
 
     if flight_exists?(@festival)
@@ -160,7 +160,9 @@ class FestivalsController < ApplicationController
     end
 
     @search_info = @results.shift
-
+    @search_info[:departure_airport] = params[:departure_airport]
+    @search_info[:arrival_airport] = params[:arrival_airport]
+      byebug
     @results = Kaminari.paginate_array(@results).page(params[:page]).per(10)
 
     @cabin_classes = [['Economy', 'Economy'], ['Premium Economy', 'PremiumEconomy'], ['Business', 'Business'], ['First Class', 'First']]
