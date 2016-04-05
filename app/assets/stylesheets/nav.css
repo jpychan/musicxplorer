@@ -89,7 +89,7 @@ input:focus {
 #festival-search-form #submit-search:hover {
   background: #B8D20B;
   box-shadow: 3px 3px 3px #eee;
-  transition: all 0.3s ease-in-out:
+  transition: all 0.3s ease-in-out;
 }
 
 #festival-search-form .pure-button:hover{
