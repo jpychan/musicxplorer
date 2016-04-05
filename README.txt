@@ -1,1 +1,1 @@
-Try out the demo version: http://music-festival-app-test.herokuapp.com/
+Try out the demo version: https://tranquil-tor-40216.herokuapp.com/
