@@ -18,6 +18,7 @@ test:
 # CZ: custom:
 production:
   adapter: postgresql
+  host: ec2-54-243-207-88.compute-1.amazonaws.com
   database: <%= ENV['DATABASE_URL'] %>
   pool: 5
 
