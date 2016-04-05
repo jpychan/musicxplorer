@@ -141,8 +141,10 @@ class FestivalsController < ApplicationController
       params[:children] = 0
       params[:infants] = 0
       params[:departure_airport] = $redis.hget('user', 'departure_airport')
+      puts "Departing from: #{params[:departure_airport]}"
       params[:arrival_airport] = DistanceService.new.get_nearest_airport(@festival.latitude, @festival.longitude, @festival.country)
-
+      puts "Landing at: #{params[:arrival_airport]}"
+    
     else
       params[:departure_airport] = params[:departure_airport_iata].downcase
       params[:arrival_airport] =  params[:arrival_airport_iata].downcase
