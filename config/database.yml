@@ -1,7 +1,7 @@
 default: &default
   adapter: postgresql
-  username: <%= ENV['DBUSER'] %>
-  password: <%= ENV['DBPW'] %>
+  username: jenny
+  password: password
   pool: 5
 
 development:

@@ -160,9 +160,6 @@ function initMap() {
 
   $.getJSON("/festivals", function(data) {
     $.each(data, function(index, festival) {
-      console.log("wat");
-      console.log(google);
-      console.log("the hekk");
       var marker = new google.maps.Marker({
         map: map, 
         position: {lat:festival.latitude, lng:festival.longitude}, 
