@@ -41,11 +41,7 @@ $(function() {
         { type: 'GET',
           data: {usr_location: locationInput.val()},
           success: function(xhr) { 
-            debugger;
             console.log(xhr);
-            $('.container').attr("data-userlatitude", xhr.lat);
-            $('.container').attr("data-userlongitude", xhr.lng);
-            alert("success"); 
           }
       });
 

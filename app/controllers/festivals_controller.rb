@@ -24,7 +24,7 @@ class FestivalsController < ApplicationController
     @selected_festivals = fg.get_saved_festivals
 
     img_array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
-    
+
     @img_classes = []
 
     @festivals.each do |l|
@@ -45,11 +45,6 @@ class FestivalsController < ApplicationController
     d.get_usr_location(params[:usr_location])
     @user_info = $redis.hgetall('user')
     render json: @user_info
-    # byebug
-    # respond_to do |format|
-    #   format.js {render layout: false}
-    # end
-
   end
 
   # GET FESTIVAL SEARCH RESULTS
