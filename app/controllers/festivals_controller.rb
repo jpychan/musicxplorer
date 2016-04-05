@@ -19,7 +19,9 @@ class FestivalsController < ApplicationController
   def all
     @genres = Genre.all.order(:name)
     @usr_location = $redis.hget('user', 'location')
+
     @festivals = Festival.upcoming
+
     fg = FestivalGridService.new
     @selected_festivals = fg.get_saved_festivals
 
@@ -50,15 +52,7 @@ class FestivalsController < ApplicationController
   # GET FESTIVAL SEARCH RESULTS
   def festival_list
     date = params[:date] == '' ? Date.today : params[:date]
-    @festivals = Festival.joins("INNER JOIN performances AS p ON p.festival_id = festivals.id INNER JOIN artists AS a ON p.artist_id = a.id INNER JOIN festival_genres AS fg ON fg.festival_id = festivals.id INNER JOIN genres AS g ON fg.genre_id = g.id").where('start_date >= ? AND LOWER(camping) LIKE ? AND g.name LIKE ? AND a.name LIKE ?', date, "%#{params[:camping]}%", "%#{params[:genre]}%", "%#{params[:artist]}%").distinct
-
-    d = DistanceService.new
-    origin = $redis.hgetall('user')
-    @festivals = @festivals.select do |f|
-      dist_km = d.calc_distance(origin['lat'], origin['lng'], f)
-      puts dist_km
-      dist_km <= SEARCH_RADIUS 
-    end
+    @festivals = Festival.search(params, date)
 
     img_array = ['image1', 'image2', 'image3', 'image4', 'image5', 'image6', 'image7', 'image8', 'image9', 'image10']
 

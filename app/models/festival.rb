@@ -1,6 +1,8 @@
 class Festival < ActiveRecord::Base
   include Skyscanner
 
+  SEARCH_RADIUS = 500
+
   has_many :performances, dependent: :destroy
   has_many :artists, through: :performances
   has_many :festival_genres, dependent: :destroy
@@ -35,6 +37,18 @@ class Festival < ActiveRecord::Base
   def self.upcoming
     Rails.cache.fetch("upcoming_festivals", expires_in: 1.hours) do
       Festival.includes(:genres).where('start_date > ?', Date.today).order(:start_date).limit(20)
+    end
+  end
+
+  def self.search(params, date)
+    @festivals = self.joins("INNER JOIN performances AS p ON p.festival_id = festivals.id INNER JOIN artists AS a ON p.artist_id = a.id INNER JOIN festival_genres AS fg ON fg.festival_id = festivals.id INNER JOIN genres AS g ON fg.genre_id = g.id").where('start_date >= ? AND LOWER(camping) LIKE ? AND g.name LIKE ? AND a.name LIKE ?', date, "%#{params[:camping]}%", "%#{params[:genre]}%", "%#{params[:artist]}%").distinct
+
+    d = DistanceService.new
+    origin = $redis.hgetall('user')
+    @festivals = @festivals.select do |f|
+      dist_km = d.calc_distance(origin['lat'], origin['lng'], f)
+      puts dist_km
+      dist_km <= SEARCH_RADIUS 
     end
   end
 end
