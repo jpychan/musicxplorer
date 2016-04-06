@@ -1,31 +1,65 @@
 /* Nav */
-
-.pure-menu {
-  padding: 20px 10px;
-  background-color: #231b12;
-  font-size: 20px;
-}
-
-#nav {
+nav {
+  background: #231b12;
+  padding: 15px 0;
   width: 100%;
-  white-space: nowrap;
+  position: relative;
 }
 
-#nav .pure-menu-link:hover {
-  background: none;
+nav > div {
+  width: 33%;
+  display: inline-block;
 }
 
-.pure-menu-link:hover, .pure-menu-link:focus, .pure-menu-link:active {
-  background: none;
+nav ul {
+  list-style: none;
+  text-align: right;
+  padding: 0;
+  margin: 0;
+  display: inline-block;
+}
+
+nav a {
+  text-decoration:none;
+  color: #eee;
+  cursor: pointer;
+}
+
+nav li {
+  display: inline-block;
+  padding: 20px;
+}
+
+nav li a:hover {
   border-bottom: 3px solid #F77604;
+  transition: .1s all;
+}
+
+nav #logo {
+  font-size: 36px;
+  font-family: 'Boogaloo', sans-serif;
+  display: inline-block;
+  padding-left: 20px;
+}
+
+nav #logo:hover a {
+  font-size: 42px;
+  color: #F56C57;
+  transition: all 0.3s ease-in-out;
 }
 
 #usr_location {
-    color: #eee;
+  color: #eee;
+  display: inline-block;
 }
 
-.pure-menu, .pure-menu-heading, .pure-menu-item a {
-  color: #eee;
+#nav-items {
+  text-align: right;
+  margin-right: 20px;
+}
+
+#usr_location, #nav-items {
+  font-size: 26px;
 }
 
 .input-locked {
@@ -59,6 +93,26 @@ input:focus {
   box-shadow: 3px 5px 5px #aaaaaa;
   transition: all 0.3s ease-in-out;
 }
+
+/* Mobile Styles for Nav */
+
+@media all and (max-width: 850px) {
+
+  nav > div {
+    width: 100%;
+  }
+
+  #usr_location {
+    padding: 10px 20px;
+  }
+
+  #nav-items {
+    text-align: left;
+  }
+
+}
+
+/* Search Form */
 
 #festival-search-form {
   display:none;
@@ -103,30 +157,6 @@ input:focus {
   color: #231B12;
 }
 
-
-.nav {
-  text-align: right;
-}
-
-.pure-menu-item {
-  padding: 10px 15px;
-}
-
-#logo {
- font-family: 'Boogaloo', cursive;
- font-size: 26px;
-}
-
-#logo .pure-menu-link a:hover {
-  text-decoration:none;
-  font-size: 28px;
-}
-
-#logo:hover a {
-  font-size: 30px;
-  color: #F56C57;
-  transition: all 0.3s ease-in-out;
-}
 
 #festival-search-form .pure-1-3 {
   padding: 20px;

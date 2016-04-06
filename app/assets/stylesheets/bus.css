@@ -1,0 +1,29 @@
+.bus-schedule-header {
+  border:5px solid black;
+  width:100px;
+}
+
+#bus-depart ul, #bus-return ul {
+  background-color:lightblue;
+  color:black;
+}
+
+#bus-depart div {
+  width:100px;
+}
+
+#bus th, #bus td {
+  width: 85px;
+}
+
+#bus h3 {
+  margin-bottom: 8px;
+}
+
+#bus tr:nth-child(odd) {
+  background-color:lightgray;
+}
+
+#bus {
+  overflow: auto;
+}

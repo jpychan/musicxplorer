@@ -221,6 +221,7 @@ li.active {
 
 #flight-search-form {
   margin-top: 20px;
+  display:none;
 }
 
 #flight-search-form .pure-button {

@@ -13,6 +13,7 @@
  *= require_tree .
  *= require soulmate
  *= require pure-min
+ *= require pure-grids-min
  *= require modal
  *= require_self
  */
@@ -23,17 +24,19 @@ html, body {
   padding: 0;
 }
 
-.pure-g [class *="pure-u"], body {
+/*.pure-g [class *="pure-u"], body {
   font-family: 'Raleway', sans-serif;
   color: #333333
-}
+}*/
 
 body {
   min-width: 320px;
 }
 
 .wrapper-container {
-  width: 100%;
+/*  width: 100%;*/
+  font-family: 'Raleway', sans-serif;
+  color: #333333
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -335,34 +338,10 @@ i { margin-right: 3px; }
   background-image: url('/festival20.jpg');
 }
 
-
-/*.festival_name {
-  position: absolute;
-  color: #F77604;
-  font-size: 1.2em;
-  font-weight: bold;
-  margin-top: 30px;
-  padding-top: 160px;
-}
-
-.festival_location {
-  position: absolute;
-  font-weight: bold;
-  margin-left: 20px;
-  margin-top: 20px;
-  padding-top: 205px;
-}
-
-.festival_date {
-  position: absolute;
-  padding-top: 230px;
-  margin-left: 15px;
-  margin-top: 20px;
-}
-*/
 #upcoming_festivals {
   margin: 0 auto;
   text-align: center;
+  padding: 0 20px;
 }
 
 #upcoming_festivals .festival_card, .results_container .festival_card {
@@ -374,44 +353,9 @@ i { margin-right: 3px; }
   font-size: 1.3em;
 }
 
-
 .festival_card:hover {
   box-shadow: 3px 5px 15px #333333;
   transition: box-shadow 0.3s ease-in-out;
-}
-
-#flight-search-form {
-  display: none;
-}
-
-.bus-schedule-header {
-  border:5px solid black;
-  width:100px;
-}
-
-#bus-depart ul, #bus-return ul {
-  background-color:lightblue;
-  color:black;
-}
-
-#bus-depart div {
-  width:100px;
-}
-
-#bus th, #bus td {
-  width: 85px;
-}
-
-#bus h3 {
-  margin-bottom: 8px;
-}
-
-#bus tr:nth-child(odd) {
-  background-color:lightgray;
-}
-
-#bus {
-  overflow: auto;
 }
 
 #footer {
@@ -427,3 +371,22 @@ i { margin-right: 3px; }
   display: flex;
   justify-content: center;
 }
+
+
+/* Mobile Styles */
+/*
+@media all and (max-width: 480px) {
+
+  nav > div {
+    width: 100%;
+  }
+
+  #usr_location {
+    padding: 10px 20px;
+  }
+
+  #nav_items {
+    text-align: center;
+  }
+
+}*/
