@@ -188,16 +188,14 @@ i { margin-right: 3px; }
 
 
 .search-results {
-  font-size: 20px;
   text-align: center;
-  margin: 0 10%;
-  margin-bottom: 20px;
+  margin: 20px 0;
 }
 
-.results_container {
+/*.results_container {
   display: inline-block;
   text-align: center;
-}
+}*/
 
 .results-list {
   overflow: auto;
