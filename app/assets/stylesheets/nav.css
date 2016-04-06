@@ -76,6 +76,10 @@ nav #logo:hover a {
   width: 150px;
 }
 
+#usr_location input {
+  width: 50%;
+}
+
 input:focus {
   outline:none;
   border-bottom: 1px solid #eee;

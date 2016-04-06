@@ -5,7 +5,7 @@ nav
   div[id="usr-location-wrapper"]
     div[id="usr_location"]
       | Your City is: 
-      input[type="text" id="get_location" placeholder="#{@usr_location}" class="input-locked pure-input-1-4" disabled]
+      input[type="text" id="get_location" placeholder="#{@usr_location}" class="input-locked" disabled]
       button[id="edit_location"] Edit
   div[id="nav-items-wrapper"]
     div[id="nav-items"]
@@ -25,7 +25,7 @@ div[id="festival-search-form"]
 
   div[class="pure-g"]
 
-    div[class="pure-u-1-5"]
+    div[class="pure-u-1-5"]    
       = label_tag :date, 'DATE'
       br
       = text_field_tag :date, '', id: 'date-picker', placeholder: "Date", autocomplete: :off, class: "pure-input-2-3"
