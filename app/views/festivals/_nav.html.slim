@@ -1,7 +1,8 @@
 nav
   div[id="logo-wrapper"]
-    div[id="logo"]
-      a[href="/"]MusicXplore
+    div
+      h2[id="logo"]
+        a[href="/"]MusicXplore
   div[id="usr-location-wrapper"]
     div[id="usr_location"]
       | Your City is: 
@@ -21,29 +22,24 @@ nav
 
 div[id="festival-search-form"]
 
-  = form_tag'/festival-list', remote: true,  method: :get, id: 'festival-search', class: "pure-form"
+  = form_tag'/festival-list', remote: true,  method: :get, id: 'festival-search'
 
-  div[class="pure-g"]
+  div[class="row"]
 
-    div[class="pure-u-1-5"]    
+    div[class="two columns"]    
       = label_tag :date, 'DATE'
-      br
-      = text_field_tag :date, '', id: 'date-picker', placeholder: "Date", autocomplete: :off, class: "pure-input-2-3"
+      = text_field_tag :date, '', id: 'date-picker', placeholder: "Date", autocomplete: :off, class: "u-full-width"
 
-    div[class="pure-u-1-5"]
+    div[class="two columns"]
       = label_tag :artist, 'ARTIST'
-      br
-      = text_field_tag :artist, '', id: 'search-artist', placeholder: "Artist", autocomplete: :off, class: "pure-input-2-3"
+      = text_field_tag :artist, '', id: 'search-artist', placeholder: "Artist", autocomplete: :off, class: "u-full-width"
 
-    div[class="pure-u-1-5"]
+    div[class="two columns"]
       = label_tag :genre, 'GENRE'
-      br
+      = select_tag :genre, options_from_collection_for_select(@genres, 'name', 'name'), include_blank: '', class: "u-full-width"
 
-      = select_tag :genre, options_from_collection_for_select(@genres, 'name', 'name'), include_blank: '', class: "pure-input-2-3"
-    div[class="pure-u-1-5"]
+    div[class="two columns"]
       = label_tag :camping, 'CAMPING?'
-      br
-      = select_tag :camping, options_for_select([['Yes', 'yes'], ['No', 'no']]), include_blank: '', class: "pure-input-2-3"
-    div[class="pure-u-1-5"]
-      = submit_tag 'Search!', id: 'submit-search', class: "pure-button pure-button-primary" 
-
+      = select_tag :camping, options_for_select([['Yes', 'yes'], ['No', 'no']]), include_blank: '', class: "u-full-width"
+    div[class="two columns"]
+      = submit_tag 'Search!', id: 'submit-search'

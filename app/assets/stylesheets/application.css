@@ -11,9 +11,11 @@
  * file per style scope.
  *
  *= require_tree .
+ *= requre normalize
  *= require soulmate
  *= require pure-min
  *= require pure-grids-min
+ *= require skeleton
  *= require modal
  *= require_self
  */
@@ -34,9 +36,12 @@ body {
 }
 
 .wrapper-container {
-/*  width: 100%;*/
   font-family: 'Raleway', sans-serif;
   color: #333333
+}
+
+.container {
+  margin: 0 auto;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -48,10 +53,9 @@ a {
   font-weight: bold;
 }
 
-p {
-  font-size: 15px;
+a:hover {
+  color: #B8D20B
 }
-
 
 /* FESTIVAL COMPARISON MODAL */
 .modal {
@@ -146,15 +150,18 @@ i { margin-right: 3px; }
 #wel {
   background-color: #F77604;
   background-size: cover;
+  margin-top: 0;
+  opacity: 0.75;
+  padding: 70px 30px;
+  text-align: center;
+}
+
+.head {
   color: white;
   font-family: 'Boogaloo', cursive;
   font-size: 4em;
   font-weight: lighter;
   letter-spacing: 6px;
-  margin-top: 0;
-  opacity: 0.75;
-  padding: 70px 30px;
-  text-align: center;
 }
 
 .pan_button {
@@ -220,10 +227,10 @@ i { margin-right: 3px; }
   margin-bottom: 50px;
 }
 
-.main_links {
-  color: #F56C57;
-  font-size: 25px;
-  margin-left: 20px;
+.festival_name {
+  font-size: 1.8rem;
+  font-family: 'Noto Serif', serif;
+  margin-top: 10px;
 }
 
 .festival_card {
@@ -254,10 +261,9 @@ i { margin-right: 3px; }
   margin-left: 10px;
 }
 
-.festival_name {
-  color: #F77604;
+.festival_card_body p {
+  margin-bottom: 1rem;
 }
-
 .image1 {
   background-image: url('/festival1.jpg');
 }
@@ -339,19 +345,21 @@ i { margin-right: 3px; }
 }
 
 #upcoming_festivals {
-  margin: 0 auto;
+  margin: 10px auto;
   text-align: center;
   padding: 0 20px;
 }
 
-#upcoming_festivals .festival_card, .results_container .festival_card {
+#upcoming_festivals h1 {
+  margin: 30px 0;
+  font-size: 3.0rem;
+}
+
+.festival_card {
   display: inline-block;
   width: 300px;
 }
 
-#upcoming_festivals .festival_name {
-  font-size: 1.3em;
-}
 
 .festival_card:hover {
   box-shadow: 3px 5px 15px #333333;
@@ -365,28 +373,3 @@ i { margin-right: 3px; }
   color: #eeeeee;
   text-align: center;
 }
-
-.festival-row {
-  text-align: center;
-  display: flex;
-  justify-content: center;
-}
-
-
-/* Mobile Styles */
-/*
-@media all and (max-width: 480px) {
-
-  nav > div {
-    width: 100%;
-  }
-
-  #usr_location {
-    padding: 10px 20px;
-  }
-
-  #nav_items {
-    text-align: center;
-  }
-
-}*/
