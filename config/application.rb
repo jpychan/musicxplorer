@@ -17,7 +17,11 @@ module MusicFestival
     else
         redis_url = "redis://localhost:6379"
     end
+
     config.cache_store = :redis_store, redis_url, { expires_in: 2.hours }
+    config.session_store = :redis_store, redis_url, { 'foo': 'bar'}
+
+
     config.encoding = 'utf-8'
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
