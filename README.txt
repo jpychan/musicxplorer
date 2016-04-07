@@ -7,7 +7,7 @@ Tech Stack:
 - Redis
 - Postgres
 - PhantomJS
-- Pure (Front-end CSS framework)
+- Skeleton (front-end framework)
 
 
 APIs Used:
@@ -33,3 +33,7 @@ My contribution to the project
 - imported airport data into database to find closest airports to the location of the user and festival
 - Google maps - festival location and driving directions
 - database cleanup - separated location data from one column to multiple columns of city, state and country, capitalized artist names, etc.
+
+Updates:
+- converted from Pure CSS framework to Skeleton for a responsive mobile experience.
+
