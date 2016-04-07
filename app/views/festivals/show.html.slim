@@ -76,10 +76,14 @@
            
 
           div[id="bus" class="route-details hidden"]
+            - if !@bus_available
+              div.error-message
+                p Sorry, bus schedules are currently only available for Canada and US.
+            - else
               img[src="#{image_path('bus_loading.gif')}"]
 
           div[id="flight" class="route-details hidden"]
-            img[src="#{image_path('plane_loading.gif')}" width="460px" height="460px"]
+            img[src="#{image_path('plane_loading.gif')}"]
     
     div#more-info
       div 

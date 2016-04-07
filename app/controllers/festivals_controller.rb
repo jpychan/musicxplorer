@@ -8,17 +8,20 @@ class FestivalsController < ApplicationController
   def show
     @festival = Festival.find(params[:id])
     @usr_location_coord = {
-      lat: $redis.hgetall('user')["lat"],
-      long: $redis.hgetall('user')["lng"]
+      lat: $redis.hgetall(session.id)["lat"],
+      long: $redis.hgetall(session.id)["lng"]
     }
+    @bus_available = bus_available($redis.hget(session.id, 'country'))
+    byebug
     driving = DrivingInfoService.new(@festival)
     @price_by_car = driving.calc_driving_cost
     @time_by_car = driving.get_trip_time[0]
+
   end
 
   def all
     @genres = Genre.all.order(:name)
-    @usr_location = $redis.hget('user', 'location')
+    @usr_location = $redis.hget(session.id, 'location')
     @festivals = Festival.upcoming
     fg = FestivalGridService.new
     @selected_festivals = fg.get_saved_festivals
@@ -33,17 +36,17 @@ class FestivalsController < ApplicationController
     end
 
     @usr_location_coord = {
-      lat: $redis.hgetall('user')["lat"],
-      long: $redis.hgetall('user')["lng"]
+      lat: $redis.hgetall(session.id)["lat"],
+      long: $redis.hgetall(session.id)["lng"]
     }
 
   end
 
-  # PRE-CALCULATE COORDINATES FOR USER LOCATION
+  # PRE-CALCULATE COORDINATES FOR Arvo LOCATION
   def get_usr_info
     d = DistanceService.new
-    d.get_usr_location(params[:usr_location])
-    @user_info = $redis.hgetall('user')
+    d.get_usr_location(params[:usr_location], session.id)
+    @user_info = $redis.hgetall(session.id)
     render json: @user_info
   end
 
@@ -75,7 +78,7 @@ class FestivalsController < ApplicationController
   def festival_select
     festival = Festival.find(params[:festivalId])
     festival_json = festival.as_json
-    user = $redis.hgetall('user')
+    user = $redis.hgetall(session.id)
 
     festival_json['price_car'] = params[:drivingPrice]
     festival_json['time_car'] = params[:drivingTime]
@@ -138,7 +141,7 @@ class FestivalsController < ApplicationController
       params[:adult] = 1
       params[:children] = 0
       params[:infants] = 0
-      params[:departure_airport] = $redis.hget('user', 'departure_airport')
+      params[:departure_airport] = $redis.hget(session.id, 'departure_airport')
       puts "Departing from: #{params[:departure_airport]}"
       params[:arrival_airport] = DistanceService.new.get_nearest_airport(@festival.latitude, @festival.longitude, @festival.country)
       puts "Landing at: #{params[:arrival_airport]}"
@@ -149,6 +152,7 @@ class FestivalsController < ApplicationController
     end
 
     if flight_exists?(@festival)
+      byebug
       @results = @festival.search_flights(params)
     end
     if @results.length > 0 
@@ -169,7 +173,7 @@ class FestivalsController < ApplicationController
 
   def search_greyhound
     @festival = Festival.find(params[:festival_id])
-    usr_location = $redis.hget('user', 'location').split(', ')
+    usr_location = $redis.hget(session.id, 'location').split(', ')
     @depart_date = (@festival.start_date - 1).strftime
     @depart_from = { city: usr_location[0], state: usr_location[1]}
     @return_date = (@festival.end_date + 1).strftime
@@ -201,11 +205,19 @@ class FestivalsController < ApplicationController
     def set_search_and_user_location
       @artists = Artist.all.order(:name)
       @genres = Genre.all.order(:name)
-      @usr_location = $redis.hget('user', 'location')
+      @usr_location = $redis.hget(session.id, 'location') || 'Vancouver, BC'
     end
 
     def load_favourite_festivals
       fg = FestivalGridService.new
       @selected_festivals = fg.get_saved_festivals
+    end
+
+    def bus_available(country)
+      if country == 'CA' || country == 'US'
+        true
+      else
+        false
+      end
     end
 end
