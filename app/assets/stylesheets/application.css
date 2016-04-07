@@ -11,12 +11,6 @@
  * file per style scope.
  *
  *= require_tree .
- *= requre normalize
- *= require soulmate
- *= require pure-min
- *= require pure-grids-min
- *= require skeleton
- *= require modal
  *= require_self
  */
 

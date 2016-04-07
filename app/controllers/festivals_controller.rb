@@ -11,9 +11,8 @@ class FestivalsController < ApplicationController
       lat: $redis.hgetall(session.id)["lat"],
       long: $redis.hgetall(session.id)["lng"]
     }
-    @bus_available = bus_available($redis.hget(session.id, 'country'))
-    byebug
-    driving = DrivingInfoService.new(@festival)
+    @inNA = bus_available($redis.hget(session.id, 'country'))
+    driving = DrivingInfoService.new(@festival, session.id)
     @price_by_car = driving.calc_driving_cost
     @time_by_car = driving.get_trip_time[0]
 
@@ -23,8 +22,6 @@ class FestivalsController < ApplicationController
     @genres = Genre.all.order(:name)
     @usr_location = $redis.hget(session.id, 'location')
     @festivals = Festival.upcoming
-    fg = FestivalGridService.new
-    @selected_festivals = fg.get_saved_festivals
 
     img_array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
 
@@ -53,7 +50,7 @@ class FestivalsController < ApplicationController
   # GET FESTIVAL SEARCH RESULTS
   def festival_list
     date = params[:date] == '' ? Date.today : params[:date]
-    @festivals = Festival.search(params, date)
+    @festivals = Festival.search(params, date, session.id)
 
     img_array = ['image1', 'image2', 'image3', 'image4', 'image5', 'image6', 'image7', 'image8', 'image9', 'image10']
 
@@ -91,21 +88,21 @@ class FestivalsController < ApplicationController
       festival_json['time_flight_out'] = flight[:outbound_leg]['Duration']
     end
 
-    bus = fg.get_first_bus(festival)
+    bus = fg.get_first_bus(festival, session.id)
     if bus && bus.is_a?(Hash)
       festival_json['price_bus'] = bus[:cost]
       festival_json['time_bus'] = bus[:travel_time]
     end
 
     if festival
-      $redis.hset('festivals', festival.id, festival_json.to_json)
+      $redis.hset('#{session.id}_saved', festival.id, festival_json.to_json)
     end
     redirect_to root_path
   end
   
   def festival_unselect
-    $redis.hdel('festivals', params[:festivalId])
-    redirect_to root_path
+    $redis.hdel('#{session.id}_saved', params[:festivalId])
+    render :nothing
   end
 
   def autocomplete
@@ -152,7 +149,7 @@ class FestivalsController < ApplicationController
     end
 
     if flight_exists?(@festival)
-      byebug
+      # byebug
       @results = @festival.search_flights(params)
     end
     if @results.length > 0 

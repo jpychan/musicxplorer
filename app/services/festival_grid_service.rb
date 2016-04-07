@@ -5,8 +5,8 @@ class FestivalGridService
   end
 
   def get_saved_festivals
-    $redis.hkeys('festivals').map do |key|
-      JSON.parse($redis.hget('festivals', key))
+    $redis.hkeys('#{session.id}_saved').map do |key|
+      JSON.parse($redis.hget('#{session.id}_saved', key))
     end
   end
 
@@ -25,8 +25,8 @@ class FestivalGridService
   end
   
   # TODO: refactor  
-  def get_first_bus(festival)
-    usr_location = $redis.hget('user', 'location').split(', ')
+  def get_first_bus(festival, sessionId)
+    usr_location = $redis.hget(sessionId, 'location').split(', ')
     depart_date = (festival.start_date - 1).strftime
     depart_from = { city: usr_location[0], state: usr_location[1] }
     return_date = (festival.end_date + 1).strftime

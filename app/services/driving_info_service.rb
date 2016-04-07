@@ -3,9 +3,9 @@ class DrivingInfoService
 
   attr_reader :origin
 
-  def initialize(festival)
+  def initialize(festival, sessionId)
     @festival = festival
-    @origin = $redis.hgetall('user')
+    @origin = $redis.hgetall(sessionId)
   end
 
   def get_fuel_consumption
@@ -21,10 +21,10 @@ class DrivingInfoService
 
 
   def get_avg_gas_price
-    # byebug
+
     origin = @origin['location'] ? @origin['location'].gsub(',','').split(' ').join('%2C') : 'Vancouver%2CBC'
     gasbuddy = Nokogiri::HTML(open("http://gasbuddy.com/?search=#{origin}"))
-    gasbuddy.css('.gb-price-lg')[0].text.gsub(/\s+/, '').to_f / 100
+    gas_price = gasbuddy.css('.gb-price-lg')[0].text.gsub(/\s+/, '').to_f / 100
   end
 
   def get_trip

@@ -4,19 +4,19 @@ class DistanceService
   def initialize
   end
 
-  def get_usr_location(usr_location, session_id)
+  def get_usr_location(usr_location, sessionId)
     location = usr_location == '' ? 'Vancouver, BC' : usr_location
-    if $redis.hget(session_id, 'location') == location
-      $redis.hgetall(session_id)
+    if $redis.hget(sessionId, 'location') == location
+      $redis.hgetall(sessionId)
     else
-      origin_point(location, session_id)
+      origin_point(location, sessionId)
     end
   end
    
-  def origin_point(location, session_id)
+  def origin_point(location, sessionId)
     origin = GeoNamesAPI::PlaceSearch.find_by_place_name(location).geonames[0]
     departure_airport = get_nearest_airport(origin.lat, origin.lng, origin.country_code)
-    user_location = $redis.hmset(session_id, 'location', location, 'lat', origin.lat, 'lng', origin.lng, 'country', origin.country_code, 'departure_airport', departure_airport)
+    user_location = $redis.hmset(sessionId, 'location', location, 'lat', origin.lat, 'lng', origin.lng, 'country', origin.country_code, 'departure_airport', departure_airport)
     return user_location
   end
 
