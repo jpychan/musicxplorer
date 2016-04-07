@@ -1,4 +1,4 @@
-- if @valid_search && @results.length > 0
+- if @valid_search && @results && @results.length > 0
 
   div[id="flight-search-details"]
   p Flight from #{@results[1][:departure_airport]["Name"]} (#{@results[1][:departure_airport]["Code"]}) to #{@results[1][:arrival_airport]["Name"]} (#{@results[1][:arrival_airport]["Code"]})
@@ -37,7 +37,7 @@
 
       div[class="booking row"]
         div[class="seven columns"]
-          p.flight-price $#{result["PricingOptions"][0]["Price"]}
+          p.flight-price $#{result["PricingOptions"][0]["Price"]} CAD
 
         div[class="five columns center"]
           a[href='#{result["PricingOptions"][0]["DeeplinkUrl"]}' class="button" target="_blank"] Book Now
