@@ -19,13 +19,16 @@ class DrivingInfoService
     sum_all_cars / all_cars.length
   end
 
+
   def get_avg_gas_price
+    # byebug
     origin = @origin['location'] ? @origin['location'].gsub(',','').split(' ').join('%2C') : 'Vancouver%2CBC'
     gasbuddy = Nokogiri::HTML(open("http://gasbuddy.com/?search=#{origin}"))
     gasbuddy.css('.gb-price-lg')[0].text.gsub(/\s+/, '').to_f / 100
   end
 
   def get_trip
+    # byebug
     origin = [@origin['lat'], @origin['lng']].join(',')
     dest = [@festival.latitude, @festival.longitude].join(',')
 
@@ -67,6 +70,6 @@ class DrivingInfoService
   def calc_driving_cost
     # use trip distance as a multiplier for fuel consumption
     litres_needed = get_fuel_consumption * ( get_trip_dist / 100 )
-    ( litres_needed * get_avg_gas_price ).round(2)
+    (litres_needed * get_avg_gas_price ).round(2)
   end
 end

@@ -161,6 +161,8 @@ GEM
     redis-activesupport (4.1.5)
       activesupport (>= 3, < 5)
       redis-store (~> 1.1.0)
+    redis-namespace (1.5.2)
+      redis (~> 3.0, >= 3.0.4)
     redis-rack (1.5.0)
       rack (~> 1.5)
       redis-store (~> 1.1.0)
@@ -263,6 +265,7 @@ DEPENDENCIES
   rails-jquery-autocomplete
   rails_12factor
   redis
+  redis-namespace
   redis-rails
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)

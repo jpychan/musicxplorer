@@ -65,14 +65,12 @@ nav #logo:hover a {
   border: none;
   background: none;
   color: #eee;
-  width: 150px;
 }
 
 #usr_location .input-active {
   border:none;
   background: none;
   color: #eee;
-  width: 150px;
 }
 
 #usr_location input {
@@ -86,9 +84,11 @@ input:focus {
 
 #edit_location {
   background: #F77604;
-  border-radius: 10%;
-  padding: 5px;
   border: none;
+  color: #eee;
+  padding: 0 5px;
+  height: auto;
+  font-size: 1.5rem;
 }
 
 #edit_location:hover {

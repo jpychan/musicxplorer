@@ -19,9 +19,7 @@ class FestivalsController < ApplicationController
   def all
     @genres = Genre.all.order(:name)
     @usr_location = $redis.hget('user', 'location')
-
     @festivals = Festival.upcoming
-
     fg = FestivalGridService.new
     @selected_festivals = fg.get_saved_festivals
 

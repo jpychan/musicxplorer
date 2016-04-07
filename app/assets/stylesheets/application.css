@@ -62,12 +62,7 @@ a:hover {
   font-family: 'Raleway', sans-serif;
   position: relative;
   display: none;
-}
-
-#gridModal { 
   width: 80%;
-  left: 33%;
-  top: 3%;
 }
 
 #locationModal { top: 10%; }
@@ -107,9 +102,8 @@ i { margin-right: 3px; }
 .refresh-grid {
   border-radius: 5px;
   color: #fff;
-  font-size: 12px;
+  font-size: 1.2rem;
   font-family: 'Raleway', sans-serif;
-  padding:5px;
 }
 
 .close-btn,
@@ -190,6 +184,10 @@ i { margin-right: 3px; }
 .search-results {
   text-align: center;
   margin: 20px 0;
+}
+
+.search-results .festival-card{
+  width: 90%;
 }
 
 /*.results_container {
@@ -370,4 +368,31 @@ i { margin-right: 3px; }
   font-size: 16px;
   color: #eeeeee;
   text-align: center;
+}
+
+.center {
+  text-align: center;
+}
+
+/* Modals */
+
+.modal-header {
+  margin-top: 10px;
+}
+
+.modal-header h1 {
+  font-size: 3.0rem;
+}
+
+.modal button:hover {
+  border: none;
+}
+
+.modal a {
+  text-decoration: none;
+}
+
+.modal {
+  margin: 0 10%;
+  left: 0;
 }

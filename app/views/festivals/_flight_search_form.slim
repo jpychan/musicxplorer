@@ -1,42 +1,34 @@
 #flight-search-form
   = form_tag "/search_flights", method: "get", remote: true, class: "pure-form"
 
-    div[class="pure-g input-row"]
-        div[class="pure-u-1-2"]
+    div[class="row input-row"]
+        div[class="one-half column"]
             = hidden_field_tag :festival_id, @festival.id
             = label_tag :departure_airport, 'Departure'
-            br
             = autocomplete_field_tag :departure_airport_name, @results[1][:departure_airport]["Name"], autocomplete_airport_name_festivals_path, update_elements: {iata_code: '#departure_airport'}
             = hidden_field_tag :departure_airport, @search_info[:departure_airport]
 
-        div[class="pure-u-1-2"]
+        div[class="one-half column"]
             = label_tag :arrival_airport, 'Arrival'
-            br
             = autocomplete_field_tag :arrival_airport_name, @results[1][:arrival_airport]["Name"], autocomplete_airport_name_festivals_path, update_elements: {iata_code: '#arrival_airport'}
             = hidden_field_tag :arrival_airport, @search_info[:arrival_airport]
 
-    div[class='pure-g input-row']
-        div[class="pure-u-2-5"]
+    div[class='row input-row']
+        div[class="five columns"]
             = label_tag :cabin_class, 'Class'
-            br 
-            = select_tag :cabin_class, options_for_select(@cabin_classes)
+            = select_tag :cabin_class, options_for_select(@cabin_classes), class: "u-full-width"
 
-        div[class="pure-u-1-5"]
+        div[class="two columns"]
             = label_tag :adults, 'Adults'
-            br
-            = select_tag :adults, options_for_select(@passenger_numbers, selected = '1')
+            = select_tag :adults, options_for_select(@passenger_numbers, selected = '1'), class: "u-full-width"
 
-        div[class="pure-u-1-5"]
+        div[class="three columns"]
             = label_tag :children, 'Children'
-            br
-            = select_tag :children, options_for_select(@passenger_numbers)
+            = select_tag :children, options_for_select(@passenger_numbers), class: "u-full-width"
 
-        div[class="pure-u-1-5"]
+        div[class="two columns"]
             = label_tag :infants, 'Infants'
-            br
-            = select_tag :infants, options_for_select(@passenger_numbers)
+            = select_tag :infants, options_for_select(@passenger_numbers), class: "u-full-width"
 
-
-    div[class='pure-g']   
-        div[class="pure-5-5"]
-            = submit_tag "Submit", class: "pure-button"
+    div
+        = submit_tag "Submit", id: "flight-search-submit", class: "center"

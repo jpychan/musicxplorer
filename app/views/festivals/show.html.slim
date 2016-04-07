@@ -1,11 +1,11 @@
 .container
   
   #festival-show
-    div[class="music-festival pure-g" data-id="#{@festival.id}"]
-      div[class="pure-u-1-2"]
+    div[class="music-festival row" data-id="#{@festival.id}"]
+      div[class="seven columns"]
         h1 #{@festival.name}
 
-      div[class="cache-btns pure-u-1-2"]
+      div[class="cache-btns five columns"]
         div.fave-btn 
           - if $redis.hget('festivals', @festival.id)
             input[id="click" type='checkbox' checked]
@@ -21,8 +21,8 @@
           a[href="#travel" id="travel-tab"] Travel
 
     .tabs-content
-      div[id="overview" class="content pure-g"]
-        div[class="pure-u-2-5"]
+      div[id="overview" class="content row"]
+        div[class="one-third column"]
           p 
             strong Date:
           p #{@festival.date}
@@ -40,7 +40,7 @@
           p #{ display(@festival.camping) }
           = display(@festival.website) == 'n/a' ? '' : (link_to "Website", @festival.website)
 
-        div[class="pure-u-3-5"]
+        div[class="two-thirds column"]
           div[id="festival-map"]
 
     .tabs-content
@@ -76,10 +76,10 @@
            
 
           div[id="bus" class="route-details hidden"]
-            img[src="#{image_path('bus_loading.gif')}" width="460px" height="460px"]
+              img[src="#{image_path('bus_loading.gif')}"]
 
           div[id="flight" class="route-details hidden"]
-            img[style="margin-left:auto; margin-right:auto;" src="#{image_path('plane_loading.gif')}" width="460px" height="460px"]
+            img[src="#{image_path('plane_loading.gif')}" width="460px" height="460px"]
     
     div#more-info
       div 
@@ -93,10 +93,10 @@
 
           #artist-list
             ul
-            - @festival.artists.each do |artist|
-              li #{artist.name}
+              - @festival.artists.each do |artist|
+                li #{artist.name}
 
-    div[id="flickr-imgs" class="flickr-imgs pure-g" data-name="#{@festival.name}"]
+    div[id="flickr-imgs" class="flickr-imgs row" data-name="#{@festival.name}"]
 
 
   script src="https://maps.googleapis.com/maps/api/js?key=#{ENV['GOOGLE_KEY']}"

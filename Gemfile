@@ -30,6 +30,7 @@ gem 'bullet'
 gem 'pg'
 gem 'redis'
 gem 'redis-rails'
+gem 'redis-namespace'
 gem 'rack-contrib'
 gem 'soulmate', require: 'soulmate/server'
 
