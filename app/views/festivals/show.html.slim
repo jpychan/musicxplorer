@@ -63,7 +63,7 @@
           div[id="car" class="route-details active"]
 
             div.driving-cost data-car-price="#{@price_by_car}" data-car-time="#{@time_by_car}"
-              - if @price_by_car > 0
+              - if @price_by_car
                 p Price: $#{display(@price_by_car)} (CDN)
                 p Trip duration: #{@time_by_car}
                 p.note Note: Starting off with empty tank of gas and not including switching modes of transportation
@@ -76,10 +76,14 @@
            
 
           div[id="bus" class="route-details hidden"]
+            - if !@inNA
+              div.error-message
+                p Sorry, bus schedules are currently only available for Canada and US.
+            - else
               img[src="#{image_path('bus_loading.gif')}"]
 
           div[id="flight" class="route-details hidden"]
-            img[src="#{image_path('plane_loading.gif')}" width="460px" height="460px"]
+            img[src="#{image_path('plane_loading.gif')}"]
     
     div#more-info
       div 

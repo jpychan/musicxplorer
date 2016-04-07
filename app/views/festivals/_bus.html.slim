@@ -1,7 +1,6 @@
 h2 Bus Schedules
 - if @greyhound_data.is_a? String || @greyhound_data.nil?
-  .error
-    h3 #{@greyhound_data}
+  p.error-message #{@greyhound_data}
 
 - elsif @greyhound_data.is_a? Hash
 

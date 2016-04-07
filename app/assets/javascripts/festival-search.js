@@ -42,6 +42,10 @@ $(function() {
           data: {usr_location: locationInput.val()},
           success: function(xhr) { 
             console.log(xhr);
+            console.log(xhr.lat);
+            console.log(xhr.lng);
+            $('.container').attr('data-userlatitude', xhr.lat);
+            $('.container').attr('data-userlongitude', xhr.lng);
           }
       });
 
