@@ -1,7 +1,6 @@
 /* Nav */
 nav {
   background: #231b12;
-  padding: 15px 0;
   width: 100%;
   position: relative;
 }
@@ -33,18 +32,18 @@ nav li {
 nav li a:hover {
   border-bottom: 3px solid #F77604;
   transition: .1s all;
+  color: #eee;
 }
 
 nav #logo {
-  font-size: 36px;
   font-family: 'Boogaloo', sans-serif;
   display: inline-block;
   padding-left: 20px;
 }
 
 nav #logo:hover a {
-  font-size: 42px;
   color: #F56C57;
+  font-size: 5.0rem;
   transition: all 0.3s ease-in-out;
 }
 
@@ -59,19 +58,23 @@ nav #logo:hover a {
 }
 
 #usr_location, #nav-items {
-  font-size: 26px;
+  font-size: 2.5rem;
 }
 
-.input-locked {
+#usr_location .input-locked {
   border: none;
   background: none;
   color: #eee;
 }
 
-.input-active {
+#usr_location .input-active {
   border:none;
   background: none;
   color: #eee;
+}
+
+#usr_location input {
+  width: 50%;
 }
 
 input:focus {
@@ -134,15 +137,14 @@ input:focus {
 }
 #festival-search-form  #submit-search {
   background-color: #231B12;
-  border-radius: 10px; 
-  font-size: 20px;
-  padding: 10px 20px;
-  margin-top: 20px;
+  color: #eee;
+  border:none;
+  margin-top: 35px;
+  font-size: 1.5rem;
 }
 
-
 #festival-search-form #submit-search:hover {
-  background: #B8D20B;
+  background-color: #B8D20B;
   box-shadow: 3px 3px 3px #eee;
   transition: all 0.3s ease-in-out;
 }
