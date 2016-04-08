@@ -168,10 +168,15 @@ class FestivalsController < ApplicationController
       params[:arrival_airport] = @arrival_airport.iata_code
       params[:arrival_airport_id] = @arrival_airport.id
       puts "Landing at: #{params[:arrival_airport]}"
+      @departure_airport = Airport.find($redis.hget(session.id, 'departure_airport_id'))
+      @arrival_airport = DistanceService.new.get_nearest_airport(@festival.latitude, @festival.longitude, @festival.country)
     
     else
-      params[:departure_airport] = params[:departure_airport].downcase
-      params[:arrival_airport] =  params[:arrival_airport].downcase
+
+      @departure_airport = Airport.find(params[:departure_airport_id])
+      @arrival_airport = Airport.find(params[:arrival_airport_id])
+      params[:departure_airport] = @departure_airport.iata_code.downcase
+      params[:arrival_airport] =  @arrival_airport.iata_code.downcase
     end
 
 
