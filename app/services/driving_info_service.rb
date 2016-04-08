@@ -3,9 +3,9 @@ class DrivingInfoService
 
   attr_reader :origin
 
-  def initialize(festival, sessionId)
+  def initialize(festival, session_id)
     @festival = festival
-    @origin = $redis.hgetall(sessionId)
+    @origin = $redis.hgetall(session_id)
   end
 
   def get_fuel_consumption

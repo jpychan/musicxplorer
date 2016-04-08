@@ -1,7 +1,7 @@
 - if @valid_search && @results && @results.length > 0
 
   div[id="flight-search-details"]
-  p Flight from #{@results[1][:departure_airport]["Name"]} (#{@results[1][:departure_airport]["Code"]}) to #{@results[1][:arrival_airport]["Name"]} (#{@results[1][:arrival_airport]["Code"]})
+  p Flight from #{@departure_airport.name} (#{@departure_airport.iata_code}) to #{@arrival_airport.name} (#{@arrival_airport.iata_code}))
   p #{@search_info["OutboundDate"]} to #{@search_info["InboundDate"]} | #{@search_info["CabinClass"]}
 
   button[id="flight-search-btn"] Change Your Search Settings
@@ -11,7 +11,7 @@
   div.results-info
     == page_entries_info @results, entry_name: 'result'
 
-  - @results[1..@results.length - 1].each do |result|
+  - @results[0..@results.length - 1].each do |result|
     div[class="flight-result"]
       div[class="row"]
         div[class="four columns"]
@@ -58,3 +58,9 @@
 - elsif @results.length == 0 
     div.error-message
       p Sorry, no results could be found.
+
+    div
+
+      button[id="flight-search-btn"] Change Your Search Settings
+
+      = render 'flight_search_form'

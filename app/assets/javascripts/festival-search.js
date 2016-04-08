@@ -16,8 +16,8 @@ $(function() {
 
   // SET USER LOCATION
   var locationInput = $('#get_location'); //form input
+  var userInput = {};
   $('#edit_location').on('click', function() {
-    var inputBtn = $(this);
 
     locationInput.prop('disabled', false);
     locationInput.prop('placeholder','');
@@ -25,31 +25,45 @@ $(function() {
     locationInput.toggleClass('input-active');
     locationInput.focus();
 
-    locationInput.on('blur', function() {
-      // debugger;
-      if (locationInput.val() === '') {
+    locationInput
+      .geocomplete({types: ['(cities)']})
+      .bind("geocode:result", function(event, result){
+
+        var addresses = result.address_components;
+        userInput.formatted_address = result.formatted_address;
+        userInput.lat = result.geometry.location.lat();
+        userInput.lng = result.geometry.location.lng();
+
+        addresses.forEach(setAddress);
+
+        if (locationInput.val() === '') {
         $('.location-header').text('Your default location is set to:');
         $('.location-change').text('Vancouver, BC');
-      }
-      else {
-        $('.location-header').text('Your location has been changed:');
-        $('.location-change').text(locationInput.val());
-      }
-      
-      $('#locationModal').modal('show');
-      $.ajax('/usr-info',
-        { type: 'GET',
-          data: {usr_location: locationInput.val()},
-          success: function(xhr) { 
-            console.log(xhr);
-            console.log(xhr.lat);
-            console.log(xhr.lng);
-            $('.container').attr('data-userlatitude', xhr.lat);
-            $('.container').attr('data-userlongitude', xhr.lng);
+        }
+        else {
+          $('.location-header').text('Your location has been changed:');
+          $('.location-change').text(userInput.formatted_address);
+        };
+
+        $('.container').attr('data-userlatitude', userInput.lat);
+        $('.container').attr('data-userlongitude', userInput.lng);
+
+        locationInput.removeClass('input-active');
+        locationInput.addClass('input-locked');
+        locationInput.prop('disabled', true);
+        
+        $('#locationModal').modal('show');
+        $.ajax('/usr-info',
+          { type: 'GET',
+            data: {usr_location: userInput},
+            success: function(xhr) { 
+              console.log('ok');
           }
       });
 
     });
+
+
   });
 
   $('#search-btn').on('click', function() {
@@ -99,5 +113,21 @@ $(function() {
     if (data.length === 0) { results.text('No results found'); }
 
   });
+
+  function setAddress(element, index, array) {
+    // debugger;
+    if (element.types.includes("locality")) {
+      userInput.city = element.long_name;
+    }
+    else if (element.types.includes("administrative_area_level_1")) {
+      userInput.state = element.short_name;
+    }
+    else if (element.types.includes("country")) {
+       userInput.country = element.short_name;
+    }
+
+  };
+
+
 });
 

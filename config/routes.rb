@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   get '/festival-subscriptions' => 'festivals#festival_subscriptions'
 
   post '/festival-select' => 'festivals#festival_select'
-  get '/usr-info' => 'festivals#get_usr_info', default: { format: 'json'}
+  get '/usr-info' => 'festivals#set_usr_info', default: { format: 'json'}
   post '/festival-unselect' => 'festivals#festival_unselect'
 
   root 'festivals#all'

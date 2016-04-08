@@ -62,19 +62,18 @@ nav #logo:hover a {
 }
 
 #usr_location .input-locked {
-  border: none;
-  background: none;
-  color: #eee;
+  opacity: 0.5;
 }
 
 #usr_location .input-active {
-  border:none;
-  background: none;
-  color: #eee;
+  opacity: 1.0;
 }
 
 #usr_location input {
   width: 50%;
+  border:none;
+  background: none;
+  color: #eee;
 }
 
 input:focus {

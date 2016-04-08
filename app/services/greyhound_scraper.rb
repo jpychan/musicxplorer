@@ -300,7 +300,7 @@ class GreyhoundScraper
   def form_error_handler(element, err_msg, success_msg)
     if element == "Error"
       puts err_msg
-      return "No schedules found"
+      return nil
     else
       puts success_msg
     end

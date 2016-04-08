@@ -51,8 +51,8 @@
               a[href="#car" id="car-tab" data-div="#car"]
                 i[class="fa fa-car"]
                 br Car
-            li 
-              a[href="/search_greyhound?default=true&festival_id=#{@festival.id}" id="bus-tab" data-div="#bus" data-remote="true"]
+            li
+              a[href="#{@busLink}" id="bus-tab" data-div="#bus" data-remote="true"]
                 i[class="fa fa-bus"]
                 br Bus
             li 
@@ -101,7 +101,3 @@
                 li #{artist.name}
 
     div[id="flickr-imgs" class="flickr-imgs row" data-name="#{@festival.name}"]
-
-
-  script src="https://maps.googleapis.com/maps/api/js?key=#{ENV['GOOGLE_KEY']}"
-

@@ -59,7 +59,9 @@ a:hover {
   width: 80%;
 }
 
-#locationModal { top: 10%; }
+#locationModal { 
+  top: 10%; 
+}
 
 .modal-body { 
   text-align: center;

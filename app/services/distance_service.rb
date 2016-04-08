@@ -4,24 +4,16 @@ class DistanceService
   def initialize
   end
 
-  def get_usr_location(usr_location, sessionId)
-    location = usr_location == '' ? 'Vancouver, BC' : usr_location
-    if $redis.hget(sessionId, 'location') == location
-      $redis.hgetall(sessionId)
-    else
-      origin_point(location, sessionId)
-    end
-  end
-   
-  def origin_point(location, sessionId)
-    origin = GeoNamesAPI::PlaceSearch.find_by_place_name(location).geonames[0]
-    departure_airport = get_nearest_airport(origin.lat, origin.lng, origin.country_code)
-    user_location = $redis.hmset(sessionId, 'location', location, 'lat', origin.lat, 'lng', origin.lng, 'country', origin.country_code, 'departure_airport', departure_airport)
-    return user_location
+  def set_usr_location(usr_location, session_id)
+    # byebug
+    departure_airport = get_nearest_airport(usr_location[:lat], usr_location[:lng], usr_location[:country])
+    departure_airport_id = departure_airport.id
+    departure_airport_iata = departure_airport.iata_code.downcase
+    user_location = $redis.hmset(session_id, 'lat', usr_location[:lat], 'lng', usr_location[:lng], 'city', usr_location[:city], 'state', usr_location[:state], 'country', usr_location[:country], 'departure_airport_id', departure_airport_id, 'departure_airport_iata', departure_airport_iata)
+
   end
 
-  def to_radians(deg)
-    deg.to_f/180.0 * Math::PI
+  def to_radians(deg)    deg.to_f/180.0 * Math::PI
   end
 
   def calc_distance(o_lat, o_long, destination)
@@ -46,6 +38,6 @@ class DistanceService
     end
 
     departure_airport_index = @airport_distances.index(@airport_distances.min)
-    nearest_airport = airport_list[departure_airport_index][:iata_code].downcase
+    nearest_airport = airport_list[departure_airport_index]
   end
 end

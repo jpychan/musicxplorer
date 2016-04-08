@@ -1,5 +1,5 @@
 class FestivalsController < ApplicationController
-  autocomplete :airport, :name, :full => true, :extra_data => [:iata_code]
+  autocomplete :airport, :name, :full => true, :extra_data => [:id, :iata_code]
   SEARCH_RADIUS = 500
 
   before_action :set_search_and_user_location
@@ -12,6 +12,13 @@ class FestivalsController < ApplicationController
       long: $redis.hgetall(session.id)["lng"]
     }
     @inNA = bus_available($redis.hget(session.id, 'country'))
+
+    if @inNA
+      @busLink = "/search_greyhound?default=true&festival_id=#{@festival.id}"
+    else
+      @busLink = "#"
+    end
+
     driving = DrivingInfoService.new(@festival, session.id)
     @price_by_car = driving.calc_driving_cost
     @time_by_car = driving.get_trip_time[0]
@@ -20,7 +27,6 @@ class FestivalsController < ApplicationController
 
   def all
     @genres = Genre.all.order(:name)
-    @usr_location = $redis.hget(session.id, 'location')
     @festivals = Festival.upcoming
 
     img_array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
@@ -39,12 +45,11 @@ class FestivalsController < ApplicationController
 
   end
 
-  # PRE-CALCULATE COORDINATES FOR Arvo LOCATION
-  def get_usr_info
+  # PRE-CALCULATE COORDINATES FOR LOCATION
+  def set_usr_info
     d = DistanceService.new
-    d.get_usr_location(params[:usr_location], session.id)
-    @user_info = $redis.hgetall(session.id)
-    render json: @user_info
+    d.set_usr_location(params[:usr_location], session.id)
+    head :ok
   end
 
   # GET FESTIVAL SEARCH RESULTS
@@ -73,36 +78,52 @@ class FestivalsController < ApplicationController
 
   # TODO: refactor!
   def festival_select
-    festival = Festival.find(params[:festivalId])
+    # byebug
+    festival = Festival.find(params[:festivalId].to_i)
     festival_json = festival.as_json
     user = $redis.hgetall(session.id)
-
-    festival_json['price_car'] = params[:drivingPrice]
-    festival_json['time_car'] = params[:drivingTime]
-
     fg = FestivalGridService.new
-    if flight_exists?(festival)
-      flight = fg.get_cheapest_flight(festival, user)
-      festival_json['price_flight'] = flight['PricingOptions'][0]['Price']
-      festival_json['time_flight_in'] = flight[:inbound_leg]['Duration']
-      festival_json['time_flight_out'] = flight[:outbound_leg]['Duration']
+
+    bus = $redis.hgetall("#{session.id}_#{festival.id}_bus")
+
+    if bus == {}
+       bus = fg.get_first_bus(festival, session.id)
+        if bus && bus.is_a?(Hash)
+          festival_json['price_bus'] = bus[:cost]
+          festival_json['time_bus'] = bus[:travel_time]
+        end
+    else
+      festival_json['price_bus'] = bus["cost"]
+      festival_json['time_bus'] = bus["time"]
     end
 
-    bus = fg.get_first_bus(festival, session.id)
-    if bus && bus.is_a?(Hash)
-      festival_json['price_bus'] = bus[:cost]
-      festival_json['time_bus'] = bus[:travel_time]
+    flight = $redis.hgetall("#{session.id}_#{festival.id}_flight")
+    
+    if flight == {}
+      result = fg.get_cheapest_flight(festival, user)
+      if result
+        festival_json['price_flight'] = flight['PricingOptions'][0]['Price']
+        festival_json['time_flight_in'] = flight[:inbound_leg]['Duration']
+        festival_json['time_flight_out'] = flight[:outbound_leg]['Duration']
+      end
+    else
+      festival_json['price_flight'] = flight['cost']
+      festival_json['time_flight_in'] = flight['outbound_time']
+      festival_json['time_flight_out'] = flight['inbound_time']
     end
+
+    festival_json['price_car'] = params["drivingPrice"]
+    festival_json['time_car'] = params["drivingTime"]
 
     if festival
-      $redis.hset('#{session.id}_saved', festival.id, festival_json.to_json)
+      $redis.hmset("#{session.id}_saved", festival.id, festival_json.to_json)
     end
-    redirect_to root_path
+    head :created
   end
   
   def festival_unselect
-    $redis.hdel('#{session.id}_saved', params[:festivalId])
-    render :nothing
+    $redis.hdel("#{session.id}_saved", params[:festivalId])
+    head :ok
   end
 
   def autocomplete
@@ -130,39 +151,56 @@ class FestivalsController < ApplicationController
   end
 
   def search_flights
-
+    # byebug
     @festival = Festival.find(params[:festival_id])
-
+    @departure_airport = Airport.find($redis.hget(session.id, 'departure_airport_id'))
+    @arrival_airport = DistanceService.new.get_nearest_airport(@festival.latitude, @festival.longitude, @festival.country)
+    
     if params[:default]
       params[:cabin_class] = "Economy"
       params[:adult] = 1
       params[:children] = 0
       params[:infants] = 0
-      params[:departure_airport] = $redis.hget(session.id, 'departure_airport')
+      params[:departure_airport] = $redis.hget(session.id, 'departure_airport_iata')
+      params[:departure_airport_id] = $redis.hget(session.id, 'departure_airport_id')
       puts "Departing from: #{params[:departure_airport]}"
-      params[:arrival_airport] = DistanceService.new.get_nearest_airport(@festival.latitude, @festival.longitude, @festival.country)
+      # byebug
+      params[:arrival_airport] = @arrival_airport.iata_code
+      params[:arrival_airport_id] = @arrival_airport.id
       puts "Landing at: #{params[:arrival_airport]}"
     
     else
-      params[:departure_airport] = params[:departure_airport_iata].downcase
-      params[:arrival_airport] =  params[:arrival_airport_iata].downcase
+      params[:departure_airport] = params[:departure_airport].downcase
+      params[:arrival_airport] =  params[:arrival_airport].downcase
     end
+
 
     if flight_exists?(@festival)
       @results = @festival.search_flights(params)
     end
 
-    if @results && @results.length > 0 
+    if @results && @results.length > 1
       @search_info = @results.shift
-
-      @search_info[:departure_airport] = params[:departure_airport]
-      @search_info[:arrival_airport] = params[:arrival_airport]
+    
+      lowest_cost = @results[0]["PricingOptions"][0]["Price"]
+      outbound_time = @results[0][:outbound_leg]["Duration"]
+      inbound_time = @results[0][:inbound_leg]["Duration"]
       @results = Kaminari.paginate_array(@results).page(params[:page]).per(10)
-    end
 
+      $redis.hmset("#{session.id}_#{@festival.id}_flight", 'cost', lowest_cost)
+      $redis.hmset("#{session.id}_#{@festival.id}_flight", 'outbound_time', outbound_time)
+      $redis.hmset("#{session.id}_#{@festival.id}_flight", 'inbound_time', inbound_time)
+
+    else
+      $redis.hmset("#{session.id}_#{@festival.id}_flight", 'cost', 'n/a')
+      $redis.hmset("#{session.id}_#{@festival.id}_flight", 'outbound_time', 'n/a')
+      $redis.hmset("#{session.id}_#{@festival.id}_flight", 'inbound_time', 'n/a')
+    end
+    # byebug
     @cabin_classes = [['Economy', 'Economy'], ['Premium Economy', 'PremiumEconomy'], ['Business', 'Business'], ['First Class', 'First']]
     @passenger_numbers = [['0', 0], [ '1', 1], ['2', 2], ['3', 3], ['4', 4], ['5', 5]]
- 
+    @search_params = params
+
     respond_to do |format|
       format.js {render layout: false}
     end
@@ -170,9 +208,10 @@ class FestivalsController < ApplicationController
 
   def search_greyhound
     @festival = Festival.find(params[:festival_id])
-    usr_location = $redis.hget(session.id, 'location').split(', ')
+    usr_city = $redis.hget(session.id, 'city')
+    usr_state = $redis.hget(session.id, 'state')
     @depart_date = (@festival.start_date - 1).strftime
-    @depart_from = { city: usr_location[0], state: usr_location[1]}
+    @depart_from = { city: usr_city, state: usr_state}
     @return_date = (@festival.end_date + 1).strftime
     @return_from = { city: @festival.city, state: @festival.state }
     trip_type = "Round Trip"
@@ -186,13 +225,34 @@ class FestivalsController < ApplicationController
     elsif Date.today >= @festival.start_date
       @greyhound_data = "Festival already in progress. No greyhound bus schedules available."
     else
-      ghound = GreyhoundScraper.new(@depart_date, @depart_from, @return_date, @return_from, trip_type, browser)
-      @greyhound_data = ghound.run
+      # ghound = GreyhoundScraper.new(@depart_date, @depart_from, @return_date, @return_from, trip_type, browser)
+      # @greyhound_data = ghound.run
+
 
       # testing - test data
       # @greyhound_data = "some error"
-      #@greyhound_data = {:depart=>{0=>{:cost=>"79.00", :start_time=>"12:15AM", :end_time=>"07:40AM", :travel_time=>"7h 25m"}, 1=>{:cost=>"79.00", :start_time=>"06:30AM", :end_time=>"12:15PM", :travel_time=>"5h 45m"}, 2=>{:cost=>"88.00", :start_time=>"12:30PM", :end_time=>"05:30PM", :travel_time=>"5h 00m"}, 3=>{:cost=>"81.00", :start_time=>"02:30PM", :end_time=>"07:30PM", :travel_time=>"5h 00m"}, 4=>{:cost=>"81.00", :start_time=>"06:00PM", :end_time=>"11:45PM", :travel_time=>"5h 45m"}}, :return=>{0=>{:cost=>"", :start_time=>"08:00AM", :end_time=>"01:20PM", :travel_time=>"5h 20m"}, 1=>{:cost=>"", :start_time=>"09:15AM", :end_time=>"04:40PM", :travel_time=>"7h 25m"}, 2=>{:cost=>"", :start_time=>"12:01PM", :end_time=>"05:00PM", :travel_time=>"4h 59m"}, 3=>{:cost=>"", :start_time=>"03:30PM", :end_time=>"09:30PM", :travel_time=>"6h 00m"}, 4=>{:cost=>"", :start_time=>"11:15PM", :end_time=>"05:05AM", :travel_time=>"5h 50m"}}}
+      @greyhound_data = {:depart=>{0=>{:cost=>"79.00", :start_time=>"12:15AM", :end_time=>"07:40AM", :travel_time=>"7h 25m"}, 1=>{:cost=>"79.00", :start_time=>"06:30AM", :end_time=>"12:15PM", :travel_time=>"5h 45m"}, 2=>{:cost=>"88.00", :start_time=>"12:30PM", :end_time=>"05:30PM", :travel_time=>"5h 00m"}, 3=>{:cost=>"81.00", :start_time=>"02:30PM", :end_time=>"07:30PM", :travel_time=>"5h 00m"}, 4=>{:cost=>"81.00", :start_time=>"06:00PM", :end_time=>"11:45PM", :travel_time=>"5h 45m"}}, :return=>{0=>{:cost=>"", :start_time=>"08:00AM", :end_time=>"01:20PM", :travel_time=>"5h 20m"}, 1=>{:cost=>"", :start_time=>"09:15AM", :end_time=>"04:40PM", :travel_time=>"7h 25m"}, 2=>{:cost=>"", :start_time=>"12:01PM", :end_time=>"05:00PM", :travel_time=>"4h 59m"}, 3=>{:cost=>"", :start_time=>"03:30PM", :end_time=>"09:30PM", :travel_time=>"6h 00m"}, 4=>{:cost=>"", :start_time=>"11:15PM", :end_time=>"05:05AM", :travel_time=>"5h 50m"}}}
     end
+
+    if @greyhound_data.is_a? Hash
+
+      @greyhound_data[:depart].each do |key, schedule|
+        @lowest_cost = []
+        @lowest_cost << schedule[:cost].to_f
+        @lowest_cost = @lowest_cost.min
+      end
+
+      bus_time = @greyhound_data[:depart][0][:travel_time]
+
+      $redis.hmset("#{session.id}_#{@festival.id}_bus", 'cost', @lowest_cost)
+      $redis.hmset("#{session.id}_#{@festival.id}_bus", 'time', bus_time)
+
+    else
+      $redis.hmset("#{session.id}_#{@festival.id}_bus", 'cost', 'n/a')
+      $redis.hmset("#{session.id}_#{@festival.id}_bus", 'time', 'n/a')
+
+    end
+    # byebug
     respond_to do |format|
       format.js {render layout: false}
     end
@@ -202,12 +262,14 @@ class FestivalsController < ApplicationController
     def set_search_and_user_location
       @artists = Artist.all.order(:name)
       @genres = Genre.all.order(:name)
-      @usr_location = $redis.hget(session.id, 'location') || 'Vancouver, BC'
+      usr_city = $redis.hget(session.id, 'city')
+      usr_state = $redis.hget(session.id, 'state')
+      @usr_location = "#{usr_city}, #{usr_state}" || 'Vancouver, BC'
     end
 
     def load_favourite_festivals
       fg = FestivalGridService.new
-      @selected_festivals = fg.get_saved_festivals
+      @selected_festivals = fg.get_saved_festivals(session.id)
     end
 
     def bus_available(country)
