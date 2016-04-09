@@ -1,6 +1,6 @@
 MusicXplorer is a web app that helps you find music festivals around the world and show you how much it would be for you to get there. This was the final group project for the Lighthouse Labs Web Dev bootcamp. There were 4 people.
 
-Try out the demo version: https://tranquil-tor-40216.herokuapp.com/
+Try out the demo version: https://musicxplorer.herokuapp.com/
 
 Tech Stack:
 - Rails
