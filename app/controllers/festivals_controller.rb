@@ -153,26 +153,22 @@ class FestivalsController < ApplicationController
   def search_flights
     # byebug
     @festival = Festival.find(params[:festival_id])
-    @departure_airport = Airport.find($redis.hget(session.id, 'departure_airport_id'))
-    @arrival_airport = DistanceService.new.get_nearest_airport(@festival.latitude, @festival.longitude, @festival.country)
     
     if params[:default]
+
+      @departure_airport = Airport.find($redis.hget(session.id, 'departure_airport_id'))
+      @arrival_airport = DistanceService.new.get_nearest_airport(@festival.latitude, @festival.longitude, @festival.country)
+    
       params[:cabin_class] = "Economy"
       params[:adult] = 1
       params[:children] = 0
       params[:infants] = 0
-      params[:departure_airport] = $redis.hget(session.id, 'departure_airport_iata')
-      params[:departure_airport_id] = $redis.hget(session.id, 'departure_airport_id')
+      params[:departure_airport] = @departure_airport.iata_code.downcase
       puts "Departing from: #{params[:departure_airport]}"
-      # byebug
-      params[:arrival_airport] = @arrival_airport.iata_code
-      params[:arrival_airport_id] = @arrival_airport.id
+      params[:arrival_airport] = @arrival_airport.iata_code.downcase
       puts "Landing at: #{params[:arrival_airport]}"
-      @departure_airport = Airport.find($redis.hget(session.id, 'departure_airport_id'))
-      @arrival_airport = DistanceService.new.get_nearest_airport(@festival.latitude, @festival.longitude, @festival.country)
-    
+      
     else
-
       @departure_airport = Airport.find(params[:departure_airport_id])
       @arrival_airport = Airport.find(params[:arrival_airport_id])
       params[:departure_airport] = @departure_airport.iata_code.downcase
