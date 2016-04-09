@@ -2,7 +2,7 @@ doctype html
 html
   head
     title Music Festival
-    meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'
+
 
     meta charset= "utf-8"
     link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"
@@ -10,9 +10,11 @@ html
     = javascript_include_tag "https://maps.googleapis.com/maps/api/js?libraries=places&key=#{ENV['GOOGLE_KEY']}"
 
     = stylesheet_link_tag  "application", media: 'all'
+
+    meta name='viewport' content='width=device-width, initial-scale=1.0'
     = javascript_include_tag "application"
     = csrf_meta_tags
-  
+
   body
 
     .wrapper-container

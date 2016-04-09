@@ -5,14 +5,13 @@ nav {
   position: relative;
 }
 
-nav > div {
+/*nav > div {
   width: 33%;
   display: inline-block;
-}
+}*/
 
 nav ul {
   list-style: none;
-  text-align: right;
   padding: 0;
   margin: 0;
   display: inline-block;
@@ -26,7 +25,7 @@ nav a {
 
 nav li {
   display: inline-block;
-  padding: 20px;
+  padding: 0 20px;
 }
 
 nav li a:hover {
@@ -35,13 +34,13 @@ nav li a:hover {
   color: #eee;
 }
 
-nav #logo {
+#logo {
   font-family: 'Boogaloo', sans-serif;
-  display: inline-block;
   padding-left: 20px;
+  padding-top: 10px;
 }
 
-nav #logo:hover a {
+#logo:hover a {
   color: #F56C57;
   font-size: 5.0rem;
   transition: all 0.3s ease-in-out;
@@ -50,19 +49,16 @@ nav #logo:hover a {
 #usr_location {
   color: #eee;
   display: inline-block;
-}
-
-#nav-items {
-  text-align: right;
-  margin-right: 20px;
+  width: 100%;
+  margin-left: 20px;
 }
 
 #usr_location, #nav-items {
-  font-size: 2.5rem;
+  font-size: 2.0rem;
 }
 
 #usr_location .input-locked {
-  opacity: 0.5;
+  opacity: 0.75;
 }
 
 #usr_location .input-active {
@@ -70,10 +66,10 @@ nav #logo:hover a {
 }
 
 #usr_location input {
-  width: 50%;
   border:none;
   background: none;
   color: #eee;
+  width: 50%;
 }
 
 input:focus {
@@ -88,6 +84,7 @@ input:focus {
   padding: 0 5px;
   height: auto;
   font-size: 1.5rem;
+
 }
 
 #edit_location:hover {
@@ -98,20 +95,40 @@ input:focus {
 
 /* Mobile Styles for Nav */
 
-@media all and (max-width: 850px) {
+@media only screen and (min-width: 550px) {
 
-  nav > div {
-    width: 100%;
+  #nav-items, #usr_location{
+    text-align:right;
+  }
+
+  #logo {
+    padding-top: 30px;
+  }
+
+  #edit_location {
+    margin-right: 20px;
+  }
+
+  nav li {
+    padding: 20px;
+  }
+
+  #usr_location input {
+    width: 25%;
   }
 
   #usr_location {
-    padding: 10px 20px;
+    margin-left: 0;
   }
+}
 
-  #nav-items {
-    text-align: left;
+
+@media only screen and (min-width: 1000px) {
+
+  nav .row {
+    width: 85%;
+    margin: auto;
   }
-
 }
 
 /* Search Form */

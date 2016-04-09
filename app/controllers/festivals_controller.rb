@@ -26,6 +26,7 @@ class FestivalsController < ApplicationController
   end
 
   def all
+    # byebug
     @genres = Genre.all.order(:name)
     @festivals = Festival.upcoming
 
@@ -220,7 +221,7 @@ class FestivalsController < ApplicationController
     if @festival.country != "CA" && @festival.country != "US"
       @greyhound_data = "Sorry, bus schedules are currently only available for Canada and US"
     elsif @depart_from == @return_from
-      @greyhound_data = "Festival is located in your home city. You're already there!"
+      @greyhound_data = "Festival isres located in your home city. You're already there!"
     elsif Date.today > @festival.end_date
       @greyhound_data = "Festival has already ended. No greyhound bus schedules available."
     elsif Date.today >= @festival.start_date
@@ -263,8 +264,20 @@ class FestivalsController < ApplicationController
     def set_search_and_user_location
       @artists = Artist.all.order(:name)
       @genres = Genre.all.order(:name)
-      usr_city = $redis.hget(session.id, 'city')
-      usr_state = $redis.hget(session.id, 'state')
+
+      @usr_location = $redis.hgetall(session.id)
+      # byebug
+      if @usr_location
+        usr_city = @usr_location["city"]
+        usr_state = @usr_location["state"]
+      # else
+        # usr_ip = request.remote_ip
+        # url = "http://ip-api.com/json/#{usr_ip}"
+        # http = Net::HTTP.new(url.host, url.port)
+        # request = Net::HTTP::Post.new(url)
+        # response = http.request(request)
+        # puts response
+      end
       @usr_location = "#{usr_city}, #{usr_state}" || 'Vancouver, BC'
     end
 

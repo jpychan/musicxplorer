@@ -15,19 +15,18 @@
  */
 
 
-html, body {        
-  margin: 0;
-  padding: 0;
+html,body
+{
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+    overflow-x: hidden; 
 }
 
 /*.pure-g [class *="pure-u"], body {
   font-family: 'Raleway', sans-serif;
   color: #333333
 }*/
-
-body {
-  min-width: 320px;
-}
 
 .wrapper-container {
   font-family: 'Raleway', sans-serif;
@@ -70,11 +69,25 @@ a:hover {
 
 .modal.fade.in { position: fixed; }
 
-table {
+.modal table, .modal th, .modal tr, .modal td {
   text-align: center;
 }
-tbody { 
+.modal tbody { 
   border: 1px solid #b8d20b;
+}
+
+.modal button {
+  padding: 0 10px;
+  margin-bottom: 0;
+  line-height: 0;
+}
+
+.modal td:first-child {
+  padding-left: 10px;
+}
+
+.modal td:last-child {
+  padding-right: 10px;
 }
 
 thead { 
