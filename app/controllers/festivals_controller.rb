@@ -2,47 +2,31 @@ class FestivalsController < ApplicationController
   autocomplete :airport, :name, :full => true, :extra_data => [:id, :iata_code]
   SEARCH_RADIUS = 500
 
-  before_action :set_search_and_user_location
+  before_action :set_search_and_user_location, only: [:show, :all, :festival_subscriptions]
   before_action :load_favourite_festivals, only: [:show, :all, :festival_subscriptions]
-
-  def show
-    @festival = Festival.find(params[:id])
-    @usr_location_coord = {
-      lat: $redis.hgetall(session.id)["lat"],
-      long: $redis.hgetall(session.id)["lng"]
-    }
-    @inNA = bus_available($redis.hget(session.id, 'country'))
-
-    if @inNA
-      @busLink = "/search_greyhound?default=true&festival_id=#{@festival.id}"
-    else
-      @busLink = "#"
-    end
-
-    driving = DrivingInfoService.new(@festival, session.id)
-    @price_by_car = driving.calc_driving_cost
-    @time_by_car = driving.get_trip_time[0]
-
-  end
 
   def all
     # byebug
     @genres = Genre.all.order(:name)
     @festivals = Festival.upcoming
 
-    img_array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+    @img_classes = Festival.set_background(@festivals.length)
+  
+  end
 
-    @img_classes = []
+  def show
+    @festival = Festival.find(params[:id])
+    @inNA = bus_available(@usr_location["country"])
 
-    @festivals.each do |l|
-      i = rand(img_array.length)
-      @img_classes << img_array[i]
+    if @inNA
+      @busLink = "/search_greyhound?default=true&festival_id=#{@festival.id}"
+    else
+      @busLink = "#"
     end
-
-    @usr_location_coord = {
-      lat: $redis.hgetall(session.id)["lat"],
-      long: $redis.hgetall(session.id)["lng"]
-    }
+    
+    driving = DrivingInfoService.new(@festival, session.id)
+    @price_by_car = driving.calc_driving_cost
+    @time_by_car = driving.get_trip_time[0]
 
   end
 
@@ -58,14 +42,7 @@ class FestivalsController < ApplicationController
     date = params[:date] == '' ? Date.today : params[:date]
     @festivals = Festival.search(params, date, session.id)
 
-    img_array = ['image1', 'image2', 'image3', 'image4', 'image5', 'image6', 'image7', 'image8', 'image9', 'image10']
-
-    @img_classes = []
-
-    @festivals.each do |l|
-      i = rand(img_array.length)
-      @img_classes << img_array[i]
-    end
+    @img_classes = Festival.set_background(@festivals.length)
 
     respond_to do |format|
       format.js {render layout: false}
@@ -127,23 +104,23 @@ class FestivalsController < ApplicationController
     head :ok
   end
 
-  def autocomplete
-    input = params["query"]
-    @results = Festival.autocomplete(input)
-    @results = @results["airports"].to_json
+  # def autocomplete
+  #   input = params["query"]
+  #   @results = Festival.autocomplete(input)
+  #   @results = @results["airports"].to_json
 
-    respond_to do |format|
-      format.json { render json: @results }
-    end
-  end
+  #   respond_to do |format|
+  #     format.json { render json: @results }
+  #   end
+  # end
 
   def flickr_images 
+
     festival = params[:festival].gsub(/\s\d{4}/, '')
-    url = "https://api.flickr.com/services/rest/?api_key=#{ENV['FLICKR_KEY']}&method=flickr.photos.search&tags=festival&text=#{festival}&sort=relevance&per_page=10&page=1&content_type=1&format=json&nojsoncallback=1"
-    encode_url = URI.encode(url)
-    img_src = URI.parse(encode_url)
-    response = HTTParty.get(img_src).body
-    @image = JSON.parse(response)
+
+    @image = Festival.get_flickr_images(festival)
+
+
     render json: @image
   end
 
@@ -154,54 +131,20 @@ class FestivalsController < ApplicationController
   def search_flights
     # byebug
     @festival = Festival.find(params[:festival_id])
-    
-    if params[:default]
-
-      @departure_airport = Airport.find($redis.hget(session.id, 'departure_airport_id'))
-      @arrival_airport = DistanceService.new.get_nearest_airport(@festival.latitude, @festival.longitude, @festival.country)
-    
-      params[:cabin_class] = "Economy"
-      params[:adult] = 1
-      params[:children] = 0
-      params[:infants] = 0
-      params[:departure_airport] = @departure_airport.iata_code.downcase
-      puts "Departing from: #{params[:departure_airport]}"
-      params[:arrival_airport] = @arrival_airport.iata_code.downcase
-      puts "Landing at: #{params[:arrival_airport]}"
-      
-    else
-      @departure_airport = Airport.find(params[:departure_airport_id])
-      @arrival_airport = Airport.find(params[:arrival_airport_id])
-      params[:departure_airport] = @departure_airport.iata_code.downcase
-      params[:arrival_airport] =  @arrival_airport.iata_code.downcase
-    end
-
+    @search_params = params
+    @airports = Airport.set_airports(params, session.id, @festival)
+    @search_params = Festival.set_flight_search_params(@search_params, session.id, @airports)
 
     if flight_exists?(@festival)
       @results = @festival.search_flights(params)
     end
 
-    if @results && @results.length > 1
-      @search_info = @results.shift
-    
-      lowest_cost = @results[0]["PricingOptions"][0]["Price"]
-      outbound_time = @results[0][:outbound_leg]["Duration"]
-      inbound_time = @results[0][:inbound_leg]["Duration"]
-      @results = Kaminari.paginate_array(@results).page(params[:page]).per(10)
+    @results = Kaminari.paginate_array(@results).page(params[:page]).per(10)
 
-      $redis.hmset("#{session.id}_#{@festival.id}_flight", 'cost', lowest_cost)
-      $redis.hmset("#{session.id}_#{@festival.id}_flight", 'outbound_time', outbound_time)
-      $redis.hmset("#{session.id}_#{@festival.id}_flight", 'inbound_time', inbound_time)
+    @festival.save_flight_results(@results[0], session.id, @festival.id)
 
-    else
-      $redis.hmset("#{session.id}_#{@festival.id}_flight", 'cost', 'n/a')
-      $redis.hmset("#{session.id}_#{@festival.id}_flight", 'outbound_time', 'n/a')
-      $redis.hmset("#{session.id}_#{@festival.id}_flight", 'inbound_time', 'n/a')
-    end
-    # byebug
     @cabin_classes = [['Economy', 'Economy'], ['Premium Economy', 'PremiumEconomy'], ['Business', 'Business'], ['First Class', 'First']]
     @passenger_numbers = [['0', 0], [ '1', 1], ['2', 2], ['3', 3], ['4', 4], ['5', 5]]
-    @search_params = params
 
     respond_to do |format|
       format.js {render layout: false}
@@ -210,10 +153,8 @@ class FestivalsController < ApplicationController
 
   def search_greyhound
     @festival = Festival.find(params[:festival_id])
-    usr_city = $redis.hget(session.id, 'city')
-    usr_state = $redis.hget(session.id, 'state')
     @depart_date = (@festival.start_date - 1).strftime
-    @depart_from = { city: usr_city, state: usr_state}
+    @depart_from = { city: @usr_location["city"], state: @usr_location["state"]}
     @return_date = (@festival.end_date + 1).strftime
     @return_from = { city: @festival.city, state: @festival.state }
     trip_type = "Round Trip"
@@ -223,9 +164,9 @@ class FestivalsController < ApplicationController
     elsif @depart_from == @return_from
       @greyhound_data = "Festival isres located in your home city. You're already there!"
     elsif Date.today > @festival.end_date
-      @greyhound_data = "Festival has already ended. No greyhound bus schedules available."
+      @greyhound_data = "Festival has already ended."
     elsif Date.today >= @festival.start_date
-      @greyhound_data = "Festival already in progress. No greyhound bus schedules available."
+      @greyhound_data = "Festival already in progress."
     else
       ghound = GreyhoundScraper.new(@depart_date, @depart_from, @return_date, @return_from, trip_type, browser)
       @greyhound_data = ghound.run
@@ -267,9 +208,6 @@ class FestivalsController < ApplicationController
 
       @usr_location = $redis.hgetall(session.id)
       # byebug
-      if @usr_location
-        usr_city = @usr_location["city"]
-        usr_state = @usr_location["state"]
       # else
         # usr_ip = request.remote_ip
         # url = "http://ip-api.com/json/#{usr_ip}"
@@ -277,8 +215,13 @@ class FestivalsController < ApplicationController
         # request = Net::HTTP::Post.new(url)
         # response = http.request(request)
         # puts response
-      end
-      @usr_location = "#{usr_city}, #{usr_state}" || 'Vancouver, BC'
+
+      @usr_location_city = "#{@usr_location["city"]}, #{@usr_location["state"]}" || 'Vancouver, BC'
+
+      @usr_location_coord = {
+      lat: @usr_location["lat"],
+      long: @usr_location["lng"]
+    }
     end
 
     def load_favourite_festivals

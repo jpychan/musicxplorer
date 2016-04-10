@@ -5,15 +5,15 @@
         div[class="one-half column"]
             = hidden_field_tag :festival_id, @festival.id
             = label_tag :departure_airport, 'Departure'
-            = autocomplete_field_tag :departure_airport_name, @departure_airport.name, autocomplete_airport_name_festivals_path, update_elements: {id: '#departure_airport_id'}
-            = hidden_field_tag :departure_airport, @departure_airport.iata_code
-            = hidden_field_tag :departure_airport_id, @departure_airport.id
+            = autocomplete_field_tag :departure_airport_name, @airports[:departure].name, autocomplete_airport_name_festivals_path, update_elements: {id: '#departure_airport_id'}
+            = hidden_field_tag :departure_airport, @airports[:departure].iata_code
+            = hidden_field_tag :departure_airport_id, @airports[:departure].id
 
         div[class="one-half column"]
             = label_tag :arrival_airport, 'Arrival'
-            = autocomplete_field_tag :arrival_airport_name, @arrival_airport.name, autocomplete_airport_name_festivals_path, update_elements: {id: '#arrival_airport_id'}
-            = hidden_field_tag :arrival_airport, @arrival_airport.iata_code
-            = hidden_field_tag :arrival_airport_id, @arrival_airport.id
+            = autocomplete_field_tag :arrival_airport_name, @airports[:arrival].name, autocomplete_airport_name_festivals_path, update_elements: {id: '#arrival_airport_id'}
+            = hidden_field_tag :arrival_airport, @airports[:arrival].iata_code
+            = hidden_field_tag :arrival_airport_id, @airports[:arrival].id
 
     div[class='row input-row']
         div[class="five columns"]

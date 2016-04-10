@@ -51,5 +51,67 @@ class Festival < ActiveRecord::Base
       dist_km <= SEARCH_RADIUS 
     end
   end
+
+  def self.set_background(num_of_festivals)
+
+    img_array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+
+    @img_classes = []
+
+    num_of_festivals.times do
+      i = rand(img_array.length)
+      @img_classes << img_array[i]
+    end
+
+    @img_classes
+
+  end
+
+  def self.set_flight_search_params(params, session_id, airports)
+    festival = Festival.find(params[:festival_id])
+    if params[:default]
+ 
+      params[:cabin_class] = "Economy"
+      params[:adult] = 1
+      params[:children] = 0
+      params[:infants] = 0
+      params[:departure_airport] = airports[:departure].iata_code.downcase
+      params[:arrival_airport] = airports[:arrival].iata_code.downcase
+      params[:outbound_date] = festival.start_date - 1
+      params[:inbound_date] = festival.end_date + 1
+    else
+      params[:departure_airport] = airports[:departure].iata_code.downcase
+      params[:arrival_airport] =  airports[:arrival].iata_code.downcase
+      params[:outbound_date] = festival.start_date - 1
+      params[:inbound_date] = festival.end_date + 1
+    end
+    return params
+  end
+
+  def save_flight_results(cheapest_result, session_id, festival_id)
+
+    if cheapest_result
+
+      lowest_cost = cheapest_result["PricingOptions"][0]["Price"]
+      outbound_time = cheapest_result[:outbound_leg]["Duration"]
+      inbound_time = cheapest_result[:inbound_leg]["Duration"]
+
+      $redis.hmset("#{session_id}_#{festival_id}_flight", 'searched?', 'true', 'cost', lowest_cost, 'outbound_time', outbound_time, 'inbound_time', inbound_time)
+    else
+      $redis.hmset("#{session_id}_#{festival_id}_flight", 'searched?', 'true')
+    end
+  end
+
+  def self.get_flickr_images(festival)
+    url = "https://api.flickr.com/services/rest/?api_key=#{ENV['FLICKR_KEY']}&method=flickr.photos.search&tags=festival&text=#{festival}&sort=relevance&per_page=10&page=1&content_type=1&format=json&nojsoncallback=1"
+    encode_url = URI.encode(url)
+    img_src = URI.parse(encode_url)
+    response = HTTParty.get(img_src).body
+    @image = JSON.parse(response)
+  end
+
+
 end
   
+
+

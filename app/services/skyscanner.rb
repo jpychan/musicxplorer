@@ -5,18 +5,13 @@ module Skyscanner
   def create_skyscanner_session(params)
     url = URI("http://partners.api.skyscanner.net/apiservices/pricing/v1.0?apiKey=#{ENV['SKYSCANNER_API']}")
 
-    festival = Festival.find(params[:festival_id])
-
-    outbound_date = festival.start_date - 1
-    inbound_date = festival.end_date + 1
-
     http = Net::HTTP.new(url.host, url.port)
 
     request = Net::HTTP::Post.new(url)
     request["content-type"] = 'application/x-www-form-urlencoded'
     request["accept"] = 'application/json'
     request["cache-control"] = 'no-cache'
-    request.body = "country=CA&currency=CAD&locale=en-CA&adults=#{params[:adult]}&children=#{params[:children]}&infants=#{params[:infants]}&originplace=#{params[:departure_airport]}-iata&destinationplace=#{params[:arrival_airport]}-iata&outbounddate=#{outbound_date}&inbounddate=#{inbound_date}&locationschema=Iata&cabinclass=#{params[:cabin_class]}&groupPricing=true"
+    request.body = "country=CA&currency=CAD&locale=en-CA&adults=#{params[:adult]}&children=#{params[:children]}&infants=#{params[:infants]}&originplace=#{params[:departure_airport]}-iata&destinationplace=#{params[:arrival_airport]}-iata&outbounddate=#{params[:outbound_date]}&inbounddate=#{params[:inbound_date]}&locationschema=Iata&cabinclass=#{params[:cabin_class]}&groupPricing=true"
     puts request.body
     response = http.request(request)
     puts response
@@ -58,13 +53,14 @@ module Skyscanner
 
     if @results.length > 0
 
-      @results.unshift(query)
-      @results[0]["OutboundDate"] = Date.parse(@results[0]["OutboundDate"])
-      @results[0]["InboundDate"] = Date.parse(@results[0]["InboundDate"])
+      # @results.unshift(query)
+      # @results[0]["OutboundDate"] = Date.parse(@results[0]["OutboundDate"])
+      # @results[0]["InboundDate"] = Date.parse(@results[0]["InboundDate"])
       
-      j = 1
+      j = 0
 
       while j <= @results.length - 1
+
         outbound_leg_id = @results[j]["OutboundLegId"]
         inbound_leg_id = @results[j]["InboundLegId"]
         agent_id = @results[j]["PricingOptions"][0]["Agents"][0]

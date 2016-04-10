@@ -1,8 +1,8 @@
 - if @valid_search && @results && @results.length > 0
 
   div[id="flight-search-details"]
-  p Flight from #{@departure_airport.name} (#{@departure_airport.iata_code}) to #{@arrival_airport.name} (#{@arrival_airport.iata_code}))
-  p #{@search_info["OutboundDate"]} to #{@search_info["InboundDate"]} | #{@search_info["CabinClass"]}
+  p Flight from #{@airports[:departure].name} (#{@airports[:departure].iata_code}) to #{@airports[:arrival].name} (#{@airports[:arrival].iata_code})
+  p #{@search_params[:outbound_date]} to #{@search_params[:inbound_date]} | #{@search_params[:cabin_class]}
 
   button[id="flight-search-btn"] Change Your Search Settings
 
