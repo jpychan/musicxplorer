@@ -18,6 +18,7 @@ class FestivalsController < ApplicationController
     @festival = Festival.find(params[:id])
     @inNA = bus_available(@usr_location["country"])
 
+    @festival_saved = $redis.hget("#{session.id}_saved", "#{@festival.id}")
     if @inNA
       @busLink = "/search_greyhound?default=true&festival_id=#{@festival.id}"
     else
@@ -27,6 +28,8 @@ class FestivalsController < ApplicationController
     driving = DrivingInfoService.new(@festival, session.id)
     @price_by_car = driving.calc_driving_cost
     @time_by_car = driving.get_trip_time[0]
+
+
   end
 
   # PRE-CALCULATE COORDINATES FOR LOCATION
@@ -208,7 +211,7 @@ class FestivalsController < ApplicationController
         if status == "fail"
 
           puts "failed"
-          
+
         else
           departure_airport = DistanceService.new.get_nearest_airport(response["lat"], response["lon"], response["countryCode"])
           departure_airport_id = departure_airport.id

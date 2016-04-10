@@ -7,7 +7,7 @@
 
       div[class="cache-btns five columns"]
         div.fave-btn 
-          - if $redis.hget('festivals', @festival.id)
+          - if @festival_saved
             input[id="click" type='checkbox' checked]
           - else
             input[id="click" type='checkbox']
