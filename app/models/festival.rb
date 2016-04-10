@@ -96,7 +96,7 @@ class Festival < ActiveRecord::Base
     @fg = FestivalGridService.new
 
     bus = $redis.hgetall("#{session_id}_#{festival.id}_bus")
-    byebug
+    # byebug
     if bus['searched?'] == 'true'
       festival_json['price_bus'] = bus["cost"]
       festival_json['time_bus'] = bus["time"]
