@@ -2,10 +2,13 @@ class FestivalsController < ApplicationController
   autocomplete :airport, :name, :full => true, :extra_data => [:id, :iata_code]
   SEARCH_RADIUS = 500
 
-  before_action :set_search_and_user_location, only: [:show, :all, :festival_subscriptions]
+  before_action :set_search_and_user_location, only: [:show, :festival_subscriptions]
   before_action :load_favourite_festivals, only: [:show, :all, :festival_subscriptions]
 
   def all
+
+    set_search_and_user_location
+
     @genres = Genre.all.order(:name)
     @festivals = Festival.upcoming
     @img_classes = Festival.set_background(@festivals.length)
@@ -189,21 +192,47 @@ class FestivalsController < ApplicationController
       @genres = Genre.all.order(:name)
 
       @usr_location = $redis.hgetall(session.id)
-      # byebug
-      # else
-        # usr_ip = request.remote_ip
-        # url = "http://ip-api.com/json/#{usr_ip}"
-        # http = Net::HTTP.new(url.host, url.port)
-        # request = Net::HTTP::Post.new(url)
-        # response = http.request(request)
-        # puts response
 
-      @usr_location_city = "#{@usr_location["city"]}, #{@usr_location["state"]}" || 'Vancouver, BC'
+      if @usr_location == {}
 
-      @usr_location_coord = {
-      lat: @usr_location["lat"],
-      long: @usr_location["lng"]
-    }
+        # usr_ip = '207.81.151.23'
+        usr_ip = request.remote_ip
+        url = URI("http://ip-api.com/json/#{usr_ip}")
+        http = Net::HTTP.new(url.host, url.port)
+        request = Net::HTTP::Post.new(url)
+        response = http.request(request)
+        response = JSON.parse(response.body)
+        status = response["status"]
+        puts response
+
+        if status == "fail"
+
+          puts "failed"
+          
+        else
+          departure_airport = DistanceService.new.get_nearest_airport(response["lat"], response["lon"], response["countryCode"])
+          departure_airport_id = departure_airport.id
+          departure_airport_iata = departure_airport.iata_code.downcase
+
+          @usr_location = $redis.hmset(session.id, 'lat', response["lat"], 'lng', response["lon"], 'city', response["city"], 'state', response["region"], 'country', response["countryCode"], 'departure_airport_id', departure_airport_id, 'departure_airport_iata', departure_airport_iata)
+        end
+
+        @usr_location_city = "#{response["city"]}, #{response["region"]}"
+
+        @usr_location_coord = {
+        lat: response["lat"],
+        long: response["lon"]
+        }
+
+      else
+
+        @usr_location_city = "#{@usr_location["city"]}, #{@usr_location["state"]}"
+
+        @usr_location_coord = {
+        lat: @usr_location["lat"],
+        long: @usr_location["lng"]
+        }
+      end
     end
 
     def load_favourite_festivals
