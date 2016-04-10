@@ -60,6 +60,39 @@ class Festival < ActiveRecord::Base
 
   end
 
+  def validate_bus_search(festival, usr_location)
+
+    depart_from = { city: usr_location["city"], state: usr_location["state"]}
+    return_from = { city: festival.city, state: festival.state }
+
+    if festival.country != "CA" && festival.country != "US"
+      return "Sorry, bus schedules are currently only available for Canada and US"
+    elsif depart_from == return_from
+      return "Festival is located in your home city. You're already there!"
+    elsif Date.today > festival.end_date
+      return "Festival has already ended."
+    elsif Date.today >= festival.start_date
+      return "Festival already in progress."
+    else
+      return nil
+    end
+  end
+
+  def validate_flight_search(festival, usr_location, session_id)
+
+    departure_airport = $redis.hget(session_id, 'departure_airport_iata')
+    arrival_airport = DistanceService.new.get_nearest_airport(festival.latitude, festival.longitude, festival.country).iata_code.downcase
+    
+    if departure_airport == arrival_airport
+      return "Festival is located in your home city. Try the driving directions!"
+    elsif Date.today > festival.end_date
+      return "Festival has already ended."
+    elsif Date.today >= festival.start_date
+      return "Festival already in progress."
+    else
+      return nil
+    end
+  end
 
   def save_bus_data(greyhound_data, festival_id, session_id)
     if greyhound_data.is_a? Hash
@@ -72,12 +105,13 @@ class Festival < ActiveRecord::Base
 
       bus_time = greyhound_data[:depart][0][:travel_time]
 
-      $redis.hmset("#{session_id}_#{festival_id}_bus", 'searched?', 'true', 'cost', @lowest_cost, 'time', bus_time)
+      redis_key = "#{session_id}_#{festival_id}_bus"
 
-    else
-      $redis.hmset("#{session_id}_#{festival_id}_bus", 'searched?', 'true')
-
+      $redis.hmset("#{redis_key}", 'searched?', 'true', 'cost', @lowest_cost, 'time', bus_time)
+     else
+      $redis.hmset("#{redis_key}", 'searched?', 'true')
     end
+    $redis.expire("#{redis_key}", 1800)
   end
 
 
@@ -88,7 +122,6 @@ class Festival < ActiveRecord::Base
     response = HTTParty.get(img_src).body
     @image = JSON.parse(response)
   end
-
 
   def get_festival_travel_data(session_id, festival, user_location, params)
     festival_json = festival.as_json
@@ -126,6 +159,7 @@ class Festival < ActiveRecord::Base
     festival_json['time_car'] = params["drivingTime"]
     festival_json
   end
+
 
 end
   

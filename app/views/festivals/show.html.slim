@@ -52,13 +52,23 @@
                 i[class="fa fa-car"]
                 br Car
             li
-              a[href="#{@busLink}" id="bus-tab" data-div="#bus" data-remote="true"]
-                i[class="fa fa-bus"]
-                br Bus
+              -if @bus_error
+                a[href="#" id="bus-tab" data-div="#bus" data-remote="true"]
+                  i[class="fa fa-bus"]
+                  br Bus
+              -else
+                a[href="/search_greyhound?default=true&festival_id=#{@festival.id}" id="bus-tab" data-div="#bus" data-remote="true"]
+                  i[class="fa fa-bus"]
+                  br Bus
             li 
-              a[href="/search_flights?default=true&festival_id=#{@festival.id}" id="flight-tab" data-div="#flight" data-remote="true"]                 
-                i[class="fa fa-plane"]
-                br Plane
+              -if @flight_error            
+                a[href="#" id="flight-tab" data-div="#flight" data-remote="true"]                 
+                  i[class="fa fa-plane"]
+                  br Plane
+              -else
+                a[href="/search_flights?default=true&festival_id=#{@festival.id}" id="flight-tab" data-div="#flight" data-remote="true"]                 
+                  i[class="fa fa-plane"]
+                  br Plane
 
           div[id="car" class="route-details active"]
 
@@ -76,14 +86,18 @@
            
 
           div[id="bus" class="route-details hidden"]
-            - if !@inNA
+            -if @bus_error
               div.error-message
-                p Sorry, bus schedules are currently only available for Canada and US.
-            - else
+                p #{@bus_error}
+            -else
               img[src="#{image_path('bus_loading.gif')}"]
 
           div[id="flight" class="route-details hidden"]
-            img[src="#{image_path('plane_loading.gif')}"]
+            -if @flight_error
+              div.error-message
+                p #{@flight_error}
+            -else
+              img[src="#{image_path('plane_loading.gif')}"]
     
     div#more-info
       div 

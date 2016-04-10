@@ -133,7 +133,9 @@ module Skyscanner
       distance_of_time_in_words(Time.at(0), Time.at(minutes * 60))
   end
 
-  def save_flight_results(cheapest_result, session_id, festival_id)
+  def save_flight_results(cheapest_result, session_id, festival_id, airports)
+
+    redis_key = "#{session_id}_#{festival_id}_flight_#{airports[:departure].iata_code}_#{airports[:arrival].iata_code}"
 
     if cheapest_result
 
@@ -141,10 +143,14 @@ module Skyscanner
       outbound_time = cheapest_result[:outbound_leg]["Duration"]
       inbound_time = cheapest_result[:inbound_leg]["Duration"]
 
-      $redis.hmset("#{session_id}_#{festival_id}_flight", 'searched?', 'true', 'cost', lowest_cost, 'outbound_time', outbound_time, 'inbound_time', inbound_time)
+      $redis.hmset("#{redis_key}", 'searched?', 'tre', 'cost', lowest_cost, 'outbound_time', outbound_time, 'inbound_time', inbound_time)
     else
-      $redis.hmset("#{session_id}_#{festival_id}_flight", 'searched?', 'true')
+      $redis.hmset("#{redis_key}", 'searched?', 'true')
     end
+
+    $redis.expire("#{redis_key}", 1800)
+
+
   end
 
 end

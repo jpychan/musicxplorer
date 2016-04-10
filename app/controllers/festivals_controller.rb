@@ -1,5 +1,5 @@
 class FestivalsController < ApplicationController
-  autocomplete :airport, :name, :full => true, :extra_data => [:id, :iata_code]
+  autocomplete :airport, :city, :full => true
   SEARCH_RADIUS = 500
 
   before_action :set_search_and_user_location, only: [:show, :festival_subscriptions]
@@ -16,20 +16,15 @@ class FestivalsController < ApplicationController
 
   def show
     @festival = Festival.find(params[:id])
-    @inNA = bus_available(@usr_location["country"])
+
+    @bus_error = @festival.validate_bus_search(@festival, @usr_location)
+    @flight_error = @festival.validate_flight_search(@festival, @usr_location, session.id)
 
     @festival_saved = $redis.hget("#{session.id}_saved", "#{@festival.id}")
-    if @inNA
-      @busLink = "/search_greyhound?default=true&festival_id=#{@festival.id}"
-    else
-      @busLink = "#"
-    end
 
     driving = DrivingInfoService.new(@festival, session.id)
     @price_by_car = driving.calc_driving_cost
     @time_by_car = driving.get_trip_time[0]
-
-
   end
 
   # PRE-CALCULATE COORDINATES FOR LOCATION
@@ -144,7 +139,7 @@ class FestivalsController < ApplicationController
 
     @results = Kaminari.paginate_array(@results).page(params[:page]).per(10)
 
-    @festival.save_flight_results(@results[0], session.id, @festival.id)
+    @festival.save_flight_results(@results[0], session.id, @festival.id, @airports)
 
     @cabin_classes = [['Economy', 'Economy'], ['Premium Economy', 'PremiumEconomy'], ['Business', 'Business'], ['First Class', 'First']]
     @passenger_numbers = [['0', 0], [ '1', 1], ['2', 2], ['3', 3], ['4', 4], ['5', 5]]
@@ -163,22 +158,22 @@ class FestivalsController < ApplicationController
     @return_from = { city: @festival.city, state: @festival.state }
     trip_type = "Round Trip"
     browser = "phantomjs"
-    if @festival.country != "CA" && @festival.country != "US"
-      @greyhound_data = "Sorry, bus schedules are currently only available for Canada and US"
-    elsif @depart_from == @return_from
-      @greyhound_data = "Festival is located in your home city. You're already there!"
-    elsif Date.today > @festival.end_date
-      @greyhound_data = "Festival has already ended."
-    elsif Date.today >= @festival.start_date
-      @greyhound_data = "Festival already in progress."
-    else
+    # if @festival.country != "CA" && @festival.country != "US"
+    #   @greyhound_data = "Sorry, bus schedules are currently only available for Canada and US"
+    # elsif @depart_from == @return_from
+    #   @greyhound_data = "Festival is located in your home city. You're already there!"
+    # elsif Date.today > @festival.end_date
+    #   @greyhound_data = "Festival has already ended."
+    # elsif Date.today >= @festival.start_date
+    #   @greyhound_data = "Festival already in progress."
+    # else
       ghound = GreyhoundScraper.new(@depart_date, @depart_from, @return_date, @return_from, trip_type, browser)
       @greyhound_data = ghound.run
 
       # testing - test data
       # @greyhound_data = "some error"
       # @greyhound_data = {:depart=>{0=>{:cost=>"79.00", :start_time=>"12:15AM", :end_time=>"07:40AM", :travel_time=>"7h 25m"}, 1=>{:cost=>"79.00", :start_time=>"06:30AM", :end_time=>"12:15PM", :travel_time=>"5h 45m"}, 2=>{:cost=>"88.00", :start_time=>"12:30PM", :end_time=>"05:30PM", :travel_time=>"5h 00m"}, 3=>{:cost=>"81.00", :start_time=>"02:30PM", :end_time=>"07:30PM", :travel_time=>"5h 00m"}, 4=>{:cost=>"81.00", :start_time=>"06:00PM", :end_time=>"11:45PM", :travel_time=>"5h 45m"}}, :return=>{0=>{:cost=>"", :start_time=>"08:00AM", :end_time=>"01:20PM", :travel_time=>"5h 20m"}, 1=>{:cost=>"", :start_time=>"09:15AM", :end_time=>"04:40PM", :travel_time=>"7h 25m"}, 2=>{:cost=>"", :start_time=>"12:01PM", :end_time=>"05:00PM", :travel_time=>"4h 59m"}, 3=>{:cost=>"", :start_time=>"03:30PM", :end_time=>"09:30PM", :travel_time=>"6h 00m"}, 4=>{:cost=>"", :start_time=>"11:15PM", :end_time=>"05:05AM", :travel_time=>"5h 50m"}}}
-    end
+    # end
 
 
     @festival.save_bus_data(@greyhound_data, @festival.id, session.id)

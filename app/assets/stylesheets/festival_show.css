@@ -203,7 +203,7 @@ li.active {
 }
 
 #artist-list {
-  height: 200px;
+  max-height: 200px;
   overflow: auto;
 }
 
