@@ -2,6 +2,27 @@ module Skyscanner
 
   include ActionView::Helpers::DateHelper
 
+    def set_flight_search_params(params, session_id, airports)
+    festival = Festival.find(params[:festival_id])
+    if params[:default]
+ 
+      params[:cabin_class] = "Economy"
+      params[:adult] = 1
+      params[:children] = 0
+      params[:infants] = 0
+      params[:departure_airport] = airports[:departure].iata_code.downcase
+      params[:arrival_airport] = airports[:arrival].iata_code.downcase
+      params[:outbound_date] = festival.start_date - 1
+      params[:inbound_date] = festival.end_date + 1
+    else
+      params[:departure_airport] = airports[:departure].iata_code.downcase
+      params[:arrival_airport] =  airports[:arrival].iata_code.downcase
+      params[:outbound_date] = festival.start_date - 1
+      params[:inbound_date] = festival.end_date + 1
+    end
+    return params
+  end
+
   def create_skyscanner_session(params)
     url = URI("http://partners.api.skyscanner.net/apiservices/pricing/v1.0?apiKey=#{ENV['SKYSCANNER_API']}")
 
@@ -15,6 +36,7 @@ module Skyscanner
     puts request.body
     response = http.request(request)
     puts response
+    puts response.body
 
     if response.code != "201"
       session_id = nil
@@ -109,6 +131,20 @@ module Skyscanner
 
   def minutes_in_words(minutes)
       distance_of_time_in_words(Time.at(0), Time.at(minutes * 60))
+  end
+
+  def save_flight_results(cheapest_result, session_id, festival_id)
+
+    if cheapest_result
+
+      lowest_cost = cheapest_result["PricingOptions"][0]["Price"]
+      outbound_time = cheapest_result[:outbound_leg]["Duration"]
+      inbound_time = cheapest_result[:inbound_leg]["Duration"]
+
+      $redis.hmset("#{session_id}_#{festival_id}_flight", 'searched?', 'true', 'cost', lowest_cost, 'outbound_time', outbound_time, 'inbound_time', inbound_time)
+    else
+      $redis.hmset("#{session_id}_#{festival_id}_flight", 'searched?', 'true')
+    end
   end
 
 end

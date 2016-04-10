@@ -6,12 +6,9 @@ class FestivalsController < ApplicationController
   before_action :load_favourite_festivals, only: [:show, :all, :festival_subscriptions]
 
   def all
-    # byebug
     @genres = Genre.all.order(:name)
     @festivals = Festival.upcoming
-
     @img_classes = Festival.set_background(@festivals.length)
-  
   end
 
   def show
@@ -23,11 +20,10 @@ class FestivalsController < ApplicationController
     else
       @busLink = "#"
     end
-    
+
     driving = DrivingInfoService.new(@festival, session.id)
     @price_by_car = driving.calc_driving_cost
     @time_by_car = driving.get_trip_time[0]
-
   end
 
   # PRE-CALCULATE COORDINATES FOR LOCATION
@@ -58,44 +54,46 @@ class FestivalsController < ApplicationController
   def festival_select
     # byebug
     festival = Festival.find(params[:festivalId].to_i)
-    festival_json = festival.as_json
-    user = $redis.hgetall(session.id)
-    fg = FestivalGridService.new
+    # festival_json = festival.as_json
+    @usr_location = $redis.hgetall(session.id)
 
-    bus = $redis.hgetall("#{session.id}_#{festival.id}_bus")
+    festival_json = festival.get_festival_travel_data(session.id, festival, @usr_location, params)
 
-    if bus == {}
-       bus = fg.get_first_bus(festival, session.id)
-        if bus && bus.is_a?(Hash)
-          festival_json['price_bus'] = bus[:cost]
-          festival_json['time_bus'] = bus[:travel_time]
-        end
-    else
-      festival_json['price_bus'] = bus["cost"]
-      festival_json['time_bus'] = bus["time"]
-    end
+    # bus = $redis.hget("#{session.id}_#{festival.id}_bus", 'searched?')
 
-    flight = $redis.hgetall("#{session.id}_#{festival.id}_flight")
+    # if bus == 'true'
+    #   festival_json['price_bus'] = bus["cost"]
+    #   festival_json['time_bus'] = bus["time"]
+    # else
+    #   bus = fg.get_first_bus(festival, session.id)
+    #   if bus && bus.is_a?(Hash)
+    #     festival_json['price_bus'] = bus[:cost]
+    #     festival_json['time_bus'] = bus[:travel_time]
+    #   end
+    # end
+
+    # flight = $redis.hgetall("#{session.id}_#{festival.id}_flight", 'searched?')
     
-    if flight == {}
-      result = fg.get_cheapest_flight(festival, user)
-      if result
-        festival_json['price_flight'] = flight['PricingOptions'][0]['Price']
-        festival_json['time_flight_in'] = flight[:inbound_leg]['Duration']
-        festival_json['time_flight_out'] = flight[:outbound_leg]['Duration']
-      end
-    else
-      festival_json['price_flight'] = flight['cost']
-      festival_json['time_flight_in'] = flight['outbound_time']
-      festival_json['time_flight_out'] = flight['inbound_time']
-    end
+    # if flight == 'true'
+    #   festival_json['price_flight'] = flight['cost']
+    #   festival_json['time_flight_in'] = flight['outbound_time']
+    #   festival_json['time_flight_out'] = flight['inbound_time']
+    # else
+    #   result = fg.get_cheapest_flight(festival, @usr_location)
+    #   if result
+    #     festival_json['price_flight'] = flight['PricingOptions'][0]['Price']
+    #     festival_json['time_flight_in'] = flight[:inbound_leg]['Duration']
+    #     festival_json['time_flight_out'] = flight[:outbound_leg]['Duration']
+    #   end
+    # end
 
-    festival_json['price_car'] = params["drivingPrice"]
-    festival_json['time_car'] = params["drivingTime"]
+    # festival_json['price_car'] = params["drivingPrice"]
+    # festival_json['time_car'] = params["drivingTime"]
 
     if festival
       $redis.hmset("#{session.id}_saved", festival.id, festival_json.to_json)
     end
+
     head :created
   end
   
@@ -120,7 +118,6 @@ class FestivalsController < ApplicationController
 
     @image = Festival.get_flickr_images(festival)
 
-
     render json: @image
   end
 
@@ -133,7 +130,7 @@ class FestivalsController < ApplicationController
     @festival = Festival.find(params[:festival_id])
     @search_params = params
     @airports = Airport.set_airports(params, session.id, @festival)
-    @search_params = Festival.set_flight_search_params(@search_params, session.id, @airports)
+    @search_params = @festival.set_flight_search_params(@search_params, session.id, @airports)
 
     if flight_exists?(@festival)
       @results = @festival.search_flights(params)
@@ -153,6 +150,7 @@ class FestivalsController < ApplicationController
 
   def search_greyhound
     @festival = Festival.find(params[:festival_id])
+    @usr_location = $redis.hgetall(session.id)
     @depart_date = (@festival.start_date - 1).strftime
     @depart_from = { city: @usr_location["city"], state: @usr_location["state"]}
     @return_date = (@festival.end_date + 1).strftime
@@ -168,33 +166,17 @@ class FestivalsController < ApplicationController
     elsif Date.today >= @festival.start_date
       @greyhound_data = "Festival already in progress."
     else
-      ghound = GreyhoundScraper.new(@depart_date, @depart_from, @return_date, @return_from, trip_type, browser)
-      @greyhound_data = ghound.run
-
+      # ghound = GreyhoundScraper.new(@depart_date, @depart_from, @return_date, @return_from, trip_type, browser)
+      # @greyhound_data = ghound.run
 
       # testing - test data
       # @greyhound_data = "some error"
-      # @greyhound_data = {:depart=>{0=>{:cost=>"79.00", :start_time=>"12:15AM", :end_time=>"07:40AM", :travel_time=>"7h 25m"}, 1=>{:cost=>"79.00", :start_time=>"06:30AM", :end_time=>"12:15PM", :travel_time=>"5h 45m"}, 2=>{:cost=>"88.00", :start_time=>"12:30PM", :end_time=>"05:30PM", :travel_time=>"5h 00m"}, 3=>{:cost=>"81.00", :start_time=>"02:30PM", :end_time=>"07:30PM", :travel_time=>"5h 00m"}, 4=>{:cost=>"81.00", :start_time=>"06:00PM", :end_time=>"11:45PM", :travel_time=>"5h 45m"}}, :return=>{0=>{:cost=>"", :start_time=>"08:00AM", :end_time=>"01:20PM", :travel_time=>"5h 20m"}, 1=>{:cost=>"", :start_time=>"09:15AM", :end_time=>"04:40PM", :travel_time=>"7h 25m"}, 2=>{:cost=>"", :start_time=>"12:01PM", :end_time=>"05:00PM", :travel_time=>"4h 59m"}, 3=>{:cost=>"", :start_time=>"03:30PM", :end_time=>"09:30PM", :travel_time=>"6h 00m"}, 4=>{:cost=>"", :start_time=>"11:15PM", :end_time=>"05:05AM", :travel_time=>"5h 50m"}}}
+      @greyhound_data = {:depart=>{0=>{:cost=>"79.00", :start_time=>"12:15AM", :end_time=>"07:40AM", :travel_time=>"7h 25m"}, 1=>{:cost=>"79.00", :start_time=>"06:30AM", :end_time=>"12:15PM", :travel_time=>"5h 45m"}, 2=>{:cost=>"88.00", :start_time=>"12:30PM", :end_time=>"05:30PM", :travel_time=>"5h 00m"}, 3=>{:cost=>"81.00", :start_time=>"02:30PM", :end_time=>"07:30PM", :travel_time=>"5h 00m"}, 4=>{:cost=>"81.00", :start_time=>"06:00PM", :end_time=>"11:45PM", :travel_time=>"5h 45m"}}, :return=>{0=>{:cost=>"", :start_time=>"08:00AM", :end_time=>"01:20PM", :travel_time=>"5h 20m"}, 1=>{:cost=>"", :start_time=>"09:15AM", :end_time=>"04:40PM", :travel_time=>"7h 25m"}, 2=>{:cost=>"", :start_time=>"12:01PM", :end_time=>"05:00PM", :travel_time=>"4h 59m"}, 3=>{:cost=>"", :start_time=>"03:30PM", :end_time=>"09:30PM", :travel_time=>"6h 00m"}, 4=>{:cost=>"", :start_time=>"11:15PM", :end_time=>"05:05AM", :travel_time=>"5h 50m"}}}
     end
 
-    if @greyhound_data.is_a? Hash
 
-      @greyhound_data[:depart].each do |key, schedule|
-        @lowest_cost = []
-        @lowest_cost << schedule[:cost].to_f
-        @lowest_cost = @lowest_cost.min
-      end
+    @festival.save_bus_data(@greyhound_data, @festival.id, session.id)
 
-      bus_time = @greyhound_data[:depart][0][:travel_time]
-
-      $redis.hmset("#{session.id}_#{@festival.id}_bus", 'cost', @lowest_cost)
-      $redis.hmset("#{session.id}_#{@festival.id}_bus", 'time', bus_time)
-
-    else
-      $redis.hmset("#{session.id}_#{@festival.id}_bus", 'cost', 'n/a')
-      $redis.hmset("#{session.id}_#{@festival.id}_bus", 'time', 'n/a')
-
-    end
     # byebug
     respond_to do |format|
       format.js {render layout: false}

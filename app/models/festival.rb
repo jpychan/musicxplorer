@@ -23,13 +23,6 @@ class Festival < ActiveRecord::Base
     end
   end
 
-  def airport(latitude, longitude)
-    arrival_airport = nearest_airport(latitude, longitude)
-    arrival_airport = arrival_airport["airports"][0]["code"]
-
-    return arrival_airport
-  end
-
   def self.different_airport?(departure, arrival)
     departure != arrival
   end
@@ -67,40 +60,26 @@ class Festival < ActiveRecord::Base
 
   end
 
-  def self.set_flight_search_params(params, session_id, airports)
-    festival = Festival.find(params[:festival_id])
-    if params[:default]
- 
-      params[:cabin_class] = "Economy"
-      params[:adult] = 1
-      params[:children] = 0
-      params[:infants] = 0
-      params[:departure_airport] = airports[:departure].iata_code.downcase
-      params[:arrival_airport] = airports[:arrival].iata_code.downcase
-      params[:outbound_date] = festival.start_date - 1
-      params[:inbound_date] = festival.end_date + 1
-    else
-      params[:departure_airport] = airports[:departure].iata_code.downcase
-      params[:arrival_airport] =  airports[:arrival].iata_code.downcase
-      params[:outbound_date] = festival.start_date - 1
-      params[:inbound_date] = festival.end_date + 1
+
+  def save_bus_data(greyhound_data, festival_id, session_id)
+    if greyhound_data.is_a? Hash
+
+      greyhound_data[:depart].each do |key, schedule|
+        @lowest_cost = []
+        @lowest_cost << schedule[:cost].to_f
+        @lowest_cost = @lowest_cost.min
     end
-    return params
-  end
 
-  def save_flight_results(cheapest_result, session_id, festival_id)
+      bus_time = greyhound_data[:depart][0][:travel_time]
 
-    if cheapest_result
+      $redis.hmset("#{session_id}_#{festival_id}_bus", 'searched?', 'true', 'cost', @lowest_cost, 'time', bus_time)
 
-      lowest_cost = cheapest_result["PricingOptions"][0]["Price"]
-      outbound_time = cheapest_result[:outbound_leg]["Duration"]
-      inbound_time = cheapest_result[:inbound_leg]["Duration"]
-
-      $redis.hmset("#{session_id}_#{festival_id}_flight", 'searched?', 'true', 'cost', lowest_cost, 'outbound_time', outbound_time, 'inbound_time', inbound_time)
     else
-      $redis.hmset("#{session_id}_#{festival_id}_flight", 'searched?', 'true')
+      $redis.hmset("#{session_id}_#{festival_id}_bus", 'searched?', 'true')
+
     end
   end
+
 
   def self.get_flickr_images(festival)
     url = "https://api.flickr.com/services/rest/?api_key=#{ENV['FLICKR_KEY']}&method=flickr.photos.search&tags=festival&text=#{festival}&sort=relevance&per_page=10&page=1&content_type=1&format=json&nojsoncallback=1"
@@ -110,6 +89,43 @@ class Festival < ActiveRecord::Base
     @image = JSON.parse(response)
   end
 
+
+  def get_festival_travel_data(session_id, festival, user_location, params)
+    festival_json = festival.as_json
+
+    @fg = FestivalGridService.new
+
+    bus = $redis.hgetall("#{session_id}_#{festival.id}_bus")
+    byebug
+    if bus['searched?'] == 'true'
+      festival_json['price_bus'] = bus["cost"]
+      festival_json['time_bus'] = bus["time"]
+    else
+      bus = @fg.get_first_bus(festival, session_id)
+      if bus && bus.is_a?(Hash)
+        festival_json['price_bus'] = bus[:cost]
+        festival_json['time_bus'] = bus[:travel_time]
+      end
+    end
+
+    flight = $redis.hgetall("#{session_id}_#{festival.id}_flight")
+    
+    if flight['searched?'] == 'true'
+      festival_json['price_flight'] = flight['cost']
+      festival_json['time_flight_in'] = flight['outbound_time']
+      festival_json['time_flight_out'] = flight['inbound_time']
+    else
+      result = @fg.get_cheapest_flight(festival, user_location)
+      if result
+        festival_json['price_flight'] = flight['PricingOptions'][0]['Price']
+        festival_json['time_flight_in'] = flight[:inbound_leg]['Duration']
+        festival_json['time_flight_out'] = flight[:outbound_leg]['Duration']
+      end
+    end
+    festival_json['price_car'] = params["drivingPrice"]
+    festival_json['time_car'] = params["drivingTime"]
+    festival_json
+  end
 
 end
   

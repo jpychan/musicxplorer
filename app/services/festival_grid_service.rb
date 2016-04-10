@@ -25,8 +25,8 @@ class FestivalGridService
   end
   
   # TODO: refactor  
-  def get_first_bus(festival, sessionId)
-    usr_location = $redis.hget(sessionId, 'location').split(', ')
+  def get_first_bus(festival, session_id)
+    usr_location = $redis.hget(session_id, 'location').split(', ')
     depart_date = (festival.start_date - 1).strftime
     depart_from = { city: usr_location[0], state: usr_location[1] }
     return_date = (festival.end_date + 1).strftime
