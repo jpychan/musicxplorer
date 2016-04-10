@@ -243,9 +243,14 @@ i { margin-right: 3px; }
   box-shadow: 1px 1px 5px #333333;
   height: 350px;
   margin-bottom: 15px;
-  margin-left: 20px;
-  margin-right: 20px;
   padding-bottom: 10px;
+  display: inline-block;
+  width: 250px;
+}
+
+.festival_card:hover {
+  box-shadow: 3px 5px 15px #333333;
+  transition: box-shadow 0.3s ease-in-out;
 }
 
 .festival_card_header {
@@ -352,7 +357,6 @@ i { margin-right: 3px; }
 #upcoming_festivals {
   margin: 10px auto;
   text-align: center;
-  padding: 0 20px;
 }
 
 #upcoming_festivals h1 {
@@ -360,16 +364,7 @@ i { margin-right: 3px; }
   font-size: 3.0rem;
 }
 
-.festival_card {
-  display: inline-block;
-  width: 300px;
-}
 
-
-.festival_card:hover {
-  box-shadow: 3px 5px 15px #333333;
-  transition: box-shadow 0.3s ease-in-out;
-}
 
 #footer {
   padding: 20px 10px;
@@ -404,4 +399,17 @@ i { margin-right: 3px; }
 .modal {
   margin: 0 10%;
   left: 0;
+}
+
+@media only screen and (min-width: 550px) {
+
+  #upcoming_festivals {
+    padding: 0 20px;
+  }
+
+  .festival_card {
+    width: 300px;
+    margin-left: 20px;
+    margin-right: 20px;
+  }
 }
