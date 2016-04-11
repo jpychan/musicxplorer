@@ -1,4 +1,4 @@
-MusicXplorer is a web app that helps you find music festivals around the world and show you how much it would be for you to get there. Though this was a final group project for the Lighthouse Labs Web Dev bootcamp, I spent 10 extra days adding features, making the site mobile responsive, and refactoring code after the project was over.
+MusicXplorer is a web app that helps you find music festivals around the world and show you how much it would be for you to get there. This was a final group project for the Lighthouse Labs Web Dev bootcamp, and I spent 10 extra days adding features, making the site mobile responsive, and refactoring code.
 
 Try it here: https://musicxplorer.herokuapp.com/
 
@@ -13,20 +13,21 @@ APIs Used:
 - Google (Maps, Distance Services, Directions, Places Autocomplete)
 - Skyscanner
 - Flickr
+- Greyhound (headless browser searching and scraping bus schedules)
 
 Features
 - Save festivals and compare the cost in an easy-to-read table
-- Can set your default location
-- Search database for festivals
+- Detects your default location by your IP, user-editable
+- Search through the 450 festivals around the world
 - Shows you how much it is to drive, bus or fly to each festival
-- Save your favourite festivals and compare the cost and travel time to each event
 
 Data Source
-Scraped a popular music festival website: musicfestivalwizard.com. ~450 festivals
+Festival data: musicfestivalwizard.com.
+Gas price: Gasbuddy
 
 My updates
 - made the site completely mobile responsive (converted from PureCSS to Skeleton)
-- fixed caching - saving data according to their session ID, rather than overwriting the same row by different users 
+- fixed caching - saving data according to user's session ID, rather than overwriting the same row by different users 
 - added caching to save bus and flight data to avoid API being called multiple times for the same search (expires after 30 min)
 - added default location setting by user's IP
 - added Google Places Autocomplete API for users to set their default location
