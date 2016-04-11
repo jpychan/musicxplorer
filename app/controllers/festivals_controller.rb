@@ -153,7 +153,13 @@ class FestivalsController < ApplicationController
     @festival = Festival.find(params[:festival_id])
     @usr_location = $redis.hgetall(session.id)
     @depart_date = (@festival.start_date - 1).strftime
-    @depart_from = { city: @usr_location["city"], state: @usr_location["state"]}
+
+    if @usr_location["state"] == "BC"
+      @depart_from = { city: "Vancouver", state: "BC" }
+    else
+      @depart_from = { city: @usr_location["city"], state: @usr_location["state"]}
+    end
+    
     @return_date = (@festival.end_date + 1).strftime
     @return_from = { city: @festival.city, state: @festival.state }
     trip_type = "Round Trip"

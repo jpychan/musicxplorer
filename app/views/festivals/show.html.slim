@@ -38,7 +38,7 @@
           p 
             strong Camping:
           p #{ display(@festival.camping) }
-          = display(@festival.website) == 'n/a' ? '' : (link_to "Website", @festival.website)
+          = display(@festival.website) == 'n/a' ? '' : (link_to "Website", @festival.website, target:'_blank')
 
         div[class="two-thirds column"]
           div[id="festival-map"]
@@ -80,7 +80,6 @@
               - elsif @price_by_car == 0
                   div.error-message 
                     p Too far to drive!!
-
 
             div[id="driving-map" data-latitude="#{@festival.latitude}" data-longitude="#{@festival.longitude}" data-userlatitude="#{@usr_location_coord[:lat]}" data-userlongitude="#{@usr_location_coord[:long]}"]
            

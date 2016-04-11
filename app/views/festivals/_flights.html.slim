@@ -4,7 +4,7 @@
   p Flight from #{@airports[:departure].name} (#{@airports[:departure].iata_code}) to #{@airports[:arrival].name} (#{@airports[:arrival].iata_code})
   p #{@search_params[:outbound_date]} to #{@search_params[:inbound_date]} | #{@search_params[:cabin_class]}
 
-  button[id="flight-search-btn"] Change Your Search Settings
+  button[id="flight-search-btn"] Edit Search
 
   = render 'flight_search_form'
 
@@ -61,6 +61,6 @@
 
     div.center
 
-      button[id="flight-search-btn"] Change Your Search Settings
+      button[id="flight-search-btn"] Edit Search
 
       = render 'flight_search_form'
