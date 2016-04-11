@@ -137,15 +137,18 @@ class Festival < ActiveRecord::Base
       festival_json['price_bus'] = bus["cost"]
       festival_json['time_bus'] = bus["time"]
     else
-      bus = @fg.get_first_bus(festival, session_id)
+      bus = @fg.get_first_bus(festival, session_id, user_location)
       if bus && bus.is_a?(Hash)
         festival_json['price_bus'] = bus[:cost]
         festival_json['time_bus'] = bus[:travel_time]
       end
     end
 
-    flight = $redis.hgetall("#{session_id}_#{festival_id}_flight_#{airports[:departure].iata_code}_#{airports[:arrival].iata_code}")
-    
+    arrival_airport = DistanceService.new.get_nearest_airport(festival.latitude, festival.longitude, festival.country)
+    arrival_airport = arrival_airport.iata_code.downcase
+
+    flight = $redis.hgetall("#{session_id}_#{festival.id}_flight_#{user_location["departure_airport_iata"]}_#{arrival_airport}")
+
     if flight['searched?'] == 'true'
       festival_json['price_flight'] = flight['cost']
       festival_json['time_flight_in'] = flight['outbound_time']

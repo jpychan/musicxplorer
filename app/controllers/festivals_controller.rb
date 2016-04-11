@@ -150,6 +150,7 @@ class FestivalsController < ApplicationController
   end
 
   def search_greyhound
+
     @festival = Festival.find(params[:festival_id])
     @usr_location = $redis.hgetall(session.id)
     @depart_date = (@festival.start_date - 1).strftime
@@ -159,7 +160,7 @@ class FestivalsController < ApplicationController
     else
       @depart_from = { city: @usr_location["city"], state: @usr_location["state"]}
     end
-    
+
     @return_date = (@festival.end_date + 1).strftime
     @return_from = { city: @festival.city, state: @festival.state }
     trip_type = "Round Trip"
@@ -173,13 +174,16 @@ class FestivalsController < ApplicationController
     # elsif Date.today >= @festival.start_date
     #   @greyhound_data = "Festival already in progress."
     # else
+
+    key = "bus/#{@festival.id}/#{@depart_from}"
+    Rails.cache.fetch(key, expires_in: 30.minutes) do
       ghound = GreyhoundScraper.new(@depart_date, @depart_from, @return_date, @return_from, trip_type, browser)
       @greyhound_data = ghound.run
 
       # testing - test data
       # @greyhound_data = "some error"
       # @greyhound_data = {:depart=>{0=>{:cost=>"79.00", :start_time=>"12:15AM", :end_time=>"07:40AM", :travel_time=>"7h 25m"}, 1=>{:cost=>"79.00", :start_time=>"06:30AM", :end_time=>"12:15PM", :travel_time=>"5h 45m"}, 2=>{:cost=>"88.00", :start_time=>"12:30PM", :end_time=>"05:30PM", :travel_time=>"5h 00m"}, 3=>{:cost=>"81.00", :start_time=>"02:30PM", :end_time=>"07:30PM", :travel_time=>"5h 00m"}, 4=>{:cost=>"81.00", :start_time=>"06:00PM", :end_time=>"11:45PM", :travel_time=>"5h 45m"}}, :return=>{0=>{:cost=>"", :start_time=>"08:00AM", :end_time=>"01:20PM", :travel_time=>"5h 20m"}, 1=>{:cost=>"", :start_time=>"09:15AM", :end_time=>"04:40PM", :travel_time=>"7h 25m"}, 2=>{:cost=>"", :start_time=>"12:01PM", :end_time=>"05:00PM", :travel_time=>"4h 59m"}, 3=>{:cost=>"", :start_time=>"03:30PM", :end_time=>"09:30PM", :travel_time=>"6h 00m"}, 4=>{:cost=>"", :start_time=>"11:15PM", :end_time=>"05:05AM", :travel_time=>"5h 50m"}}}
-    # end
+    end
 
 
     @festival.save_bus_data(@greyhound_data, @festival.id, session.id)
