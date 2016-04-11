@@ -150,7 +150,6 @@ module Skyscanner
 
     $redis.expire("#{redis_key}", 1800)
 
-
   end
 
 end
