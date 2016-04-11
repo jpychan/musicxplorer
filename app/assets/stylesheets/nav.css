@@ -45,7 +45,7 @@ nav li a:hover {
   color: #eee;
   display: inline-block;
   width: 100%;
-  margin-left: 20px;
+  padding-left: 20px;
 }
 
 #usr_location, #nav-items {
