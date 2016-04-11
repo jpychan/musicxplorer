@@ -1,5 +1,5 @@
 class FestivalsController < ApplicationController
-  autocomplete :airport, :city, :full => true
+  autocomplete :airport, :name, :full => true
   SEARCH_RADIUS = 500
 
   before_action :set_search_and_user_location, only: [:show, :festival_subscriptions]

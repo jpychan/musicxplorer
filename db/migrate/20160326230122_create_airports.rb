@@ -3,8 +3,7 @@ class CreateAirports < ActiveRecord::Migration
     create_table :airports do |t|
       t.string :name
       t.float :latitude
-      t.string :longitude
-      t.string :float
+      t.float :longitude
       t.string :city
       t.string :country
       t.string :iata_code

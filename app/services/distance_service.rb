@@ -10,7 +10,6 @@ class DistanceService
     departure_airport_id = departure_airport.id
     departure_airport_iata = departure_airport.iata_code.downcase
     user_location = $redis.hmset(session_id, 'lat', usr_location[:lat], 'lng', usr_location[:lng], 'city', usr_location[:city], 'state', usr_location[:state], 'country', usr_location[:country], 'departure_airport_id', departure_airport_id, 'departure_airport_iata', departure_airport_iata)
-
   end
 
   def to_radians(deg)    deg.to_f/180.0 * Math::PI

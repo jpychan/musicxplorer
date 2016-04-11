@@ -12,6 +12,7 @@ class Festival < ActiveRecord::Base
 
   def search_flights(params)
     key = "flights/#{params["festival_id"]}/#{params["departure_airport"]}/#{params["arrival_airport"]}"
+
     Rails.cache.fetch(key, expires_in: 30.minutes) do
       session_id = create_skyscanner_session(params)
       if session_id
