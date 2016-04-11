@@ -19,6 +19,7 @@ Features
 - Can set your default location
 - Search database for festivals
 - Shows you how much it is to drive, bus or fly to each festival
+- Save your favourite festivals and compare the cost and travel time to each event
 
 Data Source
 Scraped a popular music festival website: musicfestivalwizard.com. ~450 festivals
