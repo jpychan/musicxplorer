@@ -53,7 +53,7 @@ class FestivalsController < ApplicationController
 
   # TODO: refactor!
   def festival_select
-    # byebug
+  # byebug
     festival = Festival.find(params[:festivalId].to_i)
     # festival_json = festival.as_json
     @usr_location = $redis.hgetall(session.id)

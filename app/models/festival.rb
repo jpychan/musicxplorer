@@ -144,7 +144,7 @@ class Festival < ActiveRecord::Base
       end
     end
 
-    flight = $redis.hgetall("#{session_id}_#{festival.id}_flight")
+    flight = $redis.hgetall("#{session_id}_#{festival_id}_flight_#{airports[:departure].iata_code}_#{airports[:arrival].iata_code}")
     
     if flight['searched?'] == 'true'
       festival_json['price_flight'] = flight['cost']
