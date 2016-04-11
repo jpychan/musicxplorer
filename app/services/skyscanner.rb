@@ -139,7 +139,7 @@ module Skyscanner
       outbound_time = cheapest_result[:outbound_leg]["Duration"]
       inbound_time = cheapest_result[:inbound_leg]["Duration"]
 
-      $redis.hmset("#{redis_key}", 'searched?', 'tre', 'cost', lowest_cost, 'outbound_time', outbound_time, 'inbound_time', inbound_time)
+      $redis.hmset("#{redis_key}", 'searched?', 'true', 'cost', lowest_cost, 'outbound_time', outbound_time, 'inbound_time', inbound_time)
     else
       $redis.hmset("#{redis_key}", 'searched?', 'true')
     end
