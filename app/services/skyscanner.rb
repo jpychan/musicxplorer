@@ -74,10 +74,6 @@ module Skyscanner
     @results = data["Itineraries"]
 
     if @results.length > 0
-
-      # @results.unshift(query)
-      # @results[0]["OutboundDate"] = Date.parse(@results[0]["OutboundDate"])
-      # @results[0]["InboundDate"] = Date.parse(@results[0]["InboundDate"])
       
       j = 0
 
