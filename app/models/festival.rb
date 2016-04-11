@@ -95,13 +95,16 @@ class Festival < ActiveRecord::Base
   end
 
   def save_bus_data(greyhound_data, festival_id, session_id)
+
+    puts greyhound_data
+    
     if greyhound_data.is_a? Hash
 
       greyhound_data[:depart].each do |key, schedule|
         @lowest_cost = []
         @lowest_cost << schedule[:cost].to_f
         @lowest_cost = @lowest_cost.min
-    end
+      end
 
       bus_time = greyhound_data[:depart][0][:travel_time]
 

@@ -338,6 +338,7 @@ li.active {
   padding: 0;
   list-style: none;
   height: 100%;
+  font-size: 3.0rem;
 }
 
 
@@ -350,6 +351,7 @@ li.active {
 }
 #travel-tabs li:not(:last-child) {
   border-bottom: 2px solid #fff;
+  border-right: none;
 }
 #travel-tabs li a {
   width: 100%;
@@ -372,7 +374,7 @@ li.active {
 /*  box-sizing: border-box;
   text-align: left;*/
   font-size: 14px;
-/*  padding-left: 20px;*/
+  padding-left: 20px;
 /*  position: relative;
   overflow: auto;*/
 }
