@@ -1,6 +1,6 @@
-MusicXplorer is a web app that helps you find music festivals around the world and show you how much it would be for you to get there. This was the final group project for the Lighthouse Labs Web Dev bootcamp. There were 4 people.
+MusicXplorer is a web app that helps you find music festivals around the world and show you how much it would be for you to get there. This was a final group project for the Lighthouse Labs Web Dev bootcamp, and I spent 10 extra days adding features, making the site mobile responsive, and refactoring code.
 
-Try out the demo version: https://musicxplorer.herokuapp.com/
+Try it here: https://musicxplorer.herokuapp.com/
 
 Tech Stack:
 - Rails
@@ -9,31 +9,37 @@ Tech Stack:
 - PhantomJS
 - Skeleton (front-end framework)
 
-
 APIs Used:
-- Google (Maps, Distance Services, Directions, GeoNames)
+- Google (Maps, Distance Services, Directions, Places Autocomplete)
 - Skyscanner
 - Flickr
-- Gasbuddy
+- Greyhound (headless browser searching and scraping bus schedules)
 
 Features
 - Save festivals and compare the cost in an easy-to-read table
-- Can set your default location
-- Search database for festivals
+- Detects your default location by your IP, user-editable
+- Search through the 450 festivals around the world
 - Shows you how much it is to drive, bus or fly to each festival
 
-How It was Built
-
 Data Source
-Scraped a popular music festival website: musicfestivalwizard.com. ~450 festivals
+Festival data: musicfestivalwizard.com.
+Gas price: Gasbuddy
+
+My updates
+- made the site completely mobile responsive (converted from PureCSS to Skeleton)
+- fixed caching - saving data according to user's session ID, rather than overwriting the same row by different users 
+- added caching to save bus and flight data to avoid API being called multiple times for the same search (expires after 30 min)
+- added default location setting by user's IP
+- added Google Places Autocomplete API for users to set their default location
+- refactored controller
+- validation for bus and flight search when the festival#show page renders rather than making a request to the database (i.e. when festival is in the past or the user is in the same city as the festival)
 
 My contribution to the project
 - front-end design - Festival Details page and general page layout
 - integration with Skyscanner API to allow users to book flights directly from our site
-- imported airport data into database to find closest airports to the location of the user and festival
+- found data for the 500 busiest airport and imported into the database to find calculate the closest airports to the locations of the user and festival
 - Google maps - festival location and driving directions
 - database cleanup - separated location data from one column to multiple columns of city, state and country, capitalized artist names, etc.
 
-Updates:
-- converted from Pure CSS framework to Skeleton for a responsive mobile experience.
+
 
