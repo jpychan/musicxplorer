@@ -132,7 +132,6 @@ li.active {
   box-sizing: border-box;
   text-align: left;
   font-size: 14px;
-  position: relative;
   overflow: auto;
 }
 
