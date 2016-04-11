@@ -16,12 +16,10 @@ Rails.application.routes.draw do
 
   resources :festivals do
     get :autocomplete_festival_name, :on => :collection
+    get :autocomplete_airport_name, :on => :collection
   end
 
-  resources :festivals, only: [:show] do
-   get :autocomplete_airport_name, :on => :collection
- end
-  
+ 
   get '/search_flights' => 'festivals#search_flights', defaults: { format: 'js' }
 
   get '/search_greyhound' => 'festivals#search_greyhound', defaults: { format: 'js' }
