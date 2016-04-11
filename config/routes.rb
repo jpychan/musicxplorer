@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   get '/flickr_images/:festival' => 'festivals#flickr_images'
 
-  get '/festival-list' => 'festivals#festival_list', default: { format: 'js'}
+  get '/festival-list' => 'festivals#festival_list'
   get '/festival-subscriptions' => 'festivals#festival_subscriptions'
 
   post '/festival-select' => 'festivals#festival_select'
@@ -14,6 +14,10 @@ Rails.application.routes.draw do
 
   get '/festivals' => 'festivals#parse_all'
 
+  resources :festivals do
+    get :autocomplete_festival_name, :on => :collection
+  end
+
   resources :festivals, only: [:show] do
    get :autocomplete_airport_name, :on => :collection
  end
@@ -22,7 +26,7 @@ Rails.application.routes.draw do
 
   get '/search_greyhound' => 'festivals#search_greyhound', defaults: { format: 'js' }
 
-  get 'autocomplete', to: 'festivals#autocomplete', defaults: {format: 'json'}
+  # get 'autocomplete', to: 'festivals#autocomplete', defaults: {format: 'json'}
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

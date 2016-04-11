@@ -1,5 +1,6 @@
 class FestivalsController < ApplicationController
   autocomplete :airport, :name, :full => true
+  autocomplete :festival, :name, :full => true
   SEARCH_RADIUS = 500
 
   before_action :set_search_and_user_location, only: [:show, :festival_subscriptions]
@@ -36,8 +37,21 @@ class FestivalsController < ApplicationController
 
   # GET FESTIVAL SEARCH RESULTS
   def festival_list
-    date = params[:date] == '' ? Date.today : params[:date]
-    @festivals = Festival.search(params, date, session.id)
+    @festivals = []
+
+    if params[:festival_name] == ''
+      params[:festival_id] = ''
+    end
+
+    if params[:festival_id].length > 0
+      id = params[:festival_id].to_i
+      @festivals << Festival.find(id)
+    else
+
+      date = params[:date] == '' ? Date.today : params[:date]
+
+      @festivals = Festival.search(params, date, session.id)
+    end
 
     @img_classes = Festival.set_background(@festivals.length)
 
@@ -81,7 +95,8 @@ class FestivalsController < ApplicationController
   end
 
   def parse_all
-    render json: Festival.all, content_type: "application/json"
+    @festivals = Festival.where('start_date > ?', Date.today).order(:start_date)
+    render json: @festivals, content_type: "application/json"
   end
 
   def search_flights
@@ -145,8 +160,8 @@ class FestivalsController < ApplicationController
 
   protected 
     def set_search_and_user_location
-      @artists = Artist.all.order(:name)
       @genres = Genre.all.order(:name)
+      @all_festivals = Festival.all.order(:name)
 
       @usr_location = $redis.hgetall(session.id)
 
@@ -163,7 +178,7 @@ class FestivalsController < ApplicationController
 
         if status == "fail"
 
-          puts "failed"
+          @usr_location = $redis.hmset(session.id, 'lat', '49.246292', 'lng', '-123.116226', 'city', 'Vancouver', 'state', 'BC', 'country', 'CA', 'departure_airport_id', '7', 'departure_airport_iata', 'yvr')
 
         else
           departure_airport = DistanceService.new.get_nearest_airport(response["lat"], response["lon"], response["countryCode"])
@@ -181,7 +196,6 @@ class FestivalsController < ApplicationController
         }
 
       else
-
         @usr_location_city = "#{@usr_location["city"]}, #{@usr_location["state"]}"
 
         @usr_location_coord = {
@@ -196,11 +210,4 @@ class FestivalsController < ApplicationController
       @selected_festivals = fg.get_saved_festivals(session.id)
     end
 
-    def bus_available(country)
-      if country == 'CA' || country == 'US'
-        true
-      else
-        false
-      end
-    end
 end

@@ -13,7 +13,6 @@
   list-style: none;
   margin: 0;
   padding: 0;
-  border-bottom: 1px solid #f77604;
   overflow: auto;
   width: 99%;
 }
@@ -29,7 +28,7 @@
     border-bottom:none;
     cursor:pointer;
     border-top-left-radius: 5%;
-    border-top-right-radius: 5%;
+    border-top-right-radius: 5%;  
   }
 
 #tabs-nav li:hover,
@@ -56,7 +55,6 @@ li.active {
   border-bottom-left-radius: 5%;
   border-bottom-right-radius: 5%;
   border-top-right-radius: 5%;
-  border-top: none;
 }
 
 .tabs-content p {

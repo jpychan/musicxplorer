@@ -26,6 +26,19 @@ div[id="festival-search-form"]
 
   div[class="row"]
 
+    div [class="four columns"]
+      = label_tag :festival_name, 'FESTIVAL NAME'
+      = autocomplete_field_tag :festival_name, '', autocomplete_festival_name_festivals_path, update_elements: {id: '#festival_id'}, class: 'u-full-width'
+      = hidden_field_tag :festival_id
+
+    div[class="four columns"]
+      = label_tag :search_location, 'LOCATION'
+      = text_field_tag :search_location, @usr_location_city, placeholder: @usr_location_city, class: 'u-full-width'
+      = hidden_field_tag :search_lat, @usr_location_coord[:lat]
+      = hidden_field_tag :search_long, @usr_location_coord[:long]
+
+  div[class="row"]
+
     div[class="two columns"]    
       = label_tag :date, 'DATE'
       = text_field_tag :date, '', id: 'date-picker', placeholder: "Date", autocomplete: :off, class: "u-full-width"

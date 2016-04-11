@@ -47,6 +47,9 @@ $(function() {
 
         $('.container').attr('data-userlatitude', userInput.lat);
         $('.container').attr('data-userlongitude', userInput.lng);
+        $('search_location').attr('value', userInput.formatted_address);
+        $('#search_lat').attr('value', userInput.lat);
+        $('#search_long').attr('value', userInput.lng);
 
         locationInput.removeClass('input-active');
         locationInput.addClass('input-locked');
@@ -60,10 +63,25 @@ $(function() {
               console.log('ok');
           }
       });
+    });
+  });
 
+  //Set Search Form Location
+  var searchLocationInput = $('#search_location');
+
+  searchLocationInput
+    .geocomplete({types: ['(cities)']})
+    .bind("geocode:result", function(event, result){
+
+      var addresses = result.address_components;
+      userInput.formatted_address = result.formatted_address;
+      userInput.lat = result.geometry.location.lat();
+      userInput.lng = result.geometry.location.lng();
+
+      $('#search_lat').attr('value', userInput.lat);
+      $('#search_long').attr('value', userInput.lng);
     });
 
-  });
 
   $('#search-btn').on('click', function() {
     $('#festival-search-form').slideToggle();
@@ -71,7 +89,7 @@ $(function() {
   });
   
   // SOULMATE AUTO-COMPLETE
-  var render, select;
+  var render, select, festivalRender, festivalSelect;
   render = function(term, data, type) {
     return term;
   };
@@ -82,7 +100,7 @@ $(function() {
 
   $('#search-artist').soulmate({
     url: '/soulmate/search',
-    types: ['artists'],
+    types: ['artist'],
     renderCallback: render,
     selectCallback: select,
     minQueryLength: 2,

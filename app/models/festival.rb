@@ -34,14 +34,13 @@ class Festival < ActiveRecord::Base
     end
   end
 
-  def self.search(params, date, sessionId)
-    @festivals = self.joins("INNER JOIN performances AS p ON p.festival_id = festivals.id INNER JOIN artists AS a ON p.artist_id = a.id INNER JOIN festival_genres AS fg ON fg.festival_id = festivals.id INNER JOIN genres AS g ON fg.genre_id = g.id").where('start_date >= ? AND LOWER(camping) LIKE ? AND g.name LIKE ? AND a.name LIKE ?', date, "%#{params[:camping]}%", "%#{params[:genre]}%", "%#{params[:artist]}%").distinct
+  def self.search(params, date, session_id)
 
+    @festivals = self.joins("INNER JOIN performances AS p ON p.festival_id = festivals.id INNER JOIN artists AS a ON p.artist_id = a.id INNER JOIN festival_genres AS fg ON fg.festival_id = festivals.id INNER JOIN genres AS g ON fg.genre_id = g.id").where('start_date >= ? AND LOWER(camping) LIKE ? AND g.name LIKE ? AND a.name LIKE ?', date, "%#{params[:camping]}%", "%#{params[:genre]}%", "%#{params[:artist]}%").distinct
+    
     d = DistanceService.new
-    origin = $redis.hgetall(sessionId)
     @festivals = @festivals.select do |f|
-      dist_km = d.calc_distance(origin['lat'], origin['lng'], f)
-      puts dist_km
+      dist_km = d.calc_distance(params["search_lat"], params["search_long"], f)
       dist_km <= SEARCH_RADIUS 
     end
   end

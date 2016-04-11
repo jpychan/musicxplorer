@@ -138,24 +138,23 @@ $(function() {
 
 function initMap() {
 
-  var mapDiv = $('.container');
   var myLatLng = {
-    lat: mapDiv[0].dataset.userlatitude,
-    long: mapDiv[0].dataset.userlongitude
+    lat: $('#search_lat').val(),
+    long: $('#search_long').val()
   };
 
-  var userLocation = new google.maps.LatLng(myLatLng.lat, myLatLng.long);
+  var searchLocation = new google.maps.LatLng(myLatLng.lat, myLatLng.long);
   var mapCon = $('#map')[0];
   var map;
 
   map = new google.maps.Map(mapCon, {
-    center: userLocation,
+    center: searchLocation,
     zoom: 7
   });
 
   var marker = new google.maps.Marker({
     map: map,
-    position: userLocation,
+    position: searchLocation,
     title: 'Hello World'
   });
 
@@ -167,10 +166,12 @@ function initMap() {
         name: name
       });
       var infowindow = new google.maps.InfoWindow({
-        content: (festival.name + ',' + ' ' + festival.date)
+        content: ('<p>' + festival.name + '<br>' +
+                festival.date + '<br>' + 
+                festival.city + ', ' + festival.state + '</p>' +
+                '<a href="/festivals/' + festival.id + '">More info</a>')
       });
       marker.addListener('click', function() {
-        console.log("listener");
         infowindow.open(map, marker);
         infowindow.addListener('closeclick', function() {
           infowindow.close();
