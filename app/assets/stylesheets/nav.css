@@ -5,11 +5,6 @@ nav {
   position: relative;
 }
 
-/*nav > div {
-  width: 33%;
-  display: inline-block;
-}*/
-
 nav ul {
   list-style: none;
   padding: 0;

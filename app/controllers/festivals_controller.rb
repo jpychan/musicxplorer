@@ -55,41 +55,9 @@ class FestivalsController < ApplicationController
   def festival_select
   # byebug
     festival = Festival.find(params[:festivalId].to_i)
-    # festival_json = festival.as_json
     @usr_location = $redis.hgetall(session.id)
 
     festival_json = festival.get_festival_travel_data(session.id, festival, @usr_location, params)
-
-    # bus = $redis.hget("#{session.id}_#{festival.id}_bus", 'searched?')
-
-    # if bus == 'true'
-    #   festival_json['price_bus'] = bus["cost"]
-    #   festival_json['time_bus'] = bus["time"]
-    # else
-    #   bus = fg.get_first_bus(festival, session.id)
-    #   if bus && bus.is_a?(Hash)
-    #     festival_json['price_bus'] = bus[:cost]
-    #     festival_json['time_bus'] = bus[:travel_time]
-    #   end
-    # end
-
-    # flight = $redis.hgetall("#{session.id}_#{festival.id}_flight", 'searched?')
-    
-    # if flight == 'true'
-    #   festival_json['price_flight'] = flight['cost']
-    #   festival_json['time_flight_in'] = flight['outbound_time']
-    #   festival_json['time_flight_out'] = flight['inbound_time']
-    # else
-    #   result = fg.get_cheapest_flight(festival, @usr_location)
-    #   if result
-    #     festival_json['price_flight'] = flight['PricingOptions'][0]['Price']
-    #     festival_json['time_flight_in'] = flight[:inbound_leg]['Duration']
-    #     festival_json['time_flight_out'] = flight[:outbound_leg]['Duration']
-    #   end
-    # end
-
-    # festival_json['price_car'] = params["drivingPrice"]
-    # festival_json['time_car'] = params["drivingTime"]
 
     if festival
       $redis.hmset("#{session.id}_saved", festival.id, festival_json.to_json)
@@ -102,16 +70,6 @@ class FestivalsController < ApplicationController
     $redis.hdel("#{session.id}_saved", params[:festivalId])
     head :ok
   end
-
-  # def autocomplete
-  #   input = params["query"]
-  #   @results = Festival.autocomplete(input)
-  #   @results = @results["airports"].to_json
-
-  #   respond_to do |format|
-  #     format.json { render json: @results }
-  #   end
-  # end
 
   def flickr_images 
 
@@ -165,16 +123,7 @@ class FestivalsController < ApplicationController
     @return_from = { city: @festival.city, state: @festival.state }
     trip_type = "Round Trip"
     browser = "phantomjs"
-    # if @festival.country != "CA" && @festival.country != "US"
-    #   @greyhound_data = "Sorry, bus schedules are currently only available for Canada and US"
-    # elsif @depart_from == @return_from
-    #   @greyhound_data = "Festival is located in your home city. You're already there!"
-    # elsif Date.today > @festival.end_date
-    #   @greyhound_data = "Festival has already ended."
-    # elsif Date.today >= @festival.start_date
-    #   @greyhound_data = "Festival already in progress."
-    # else
-
+  
     key = "bus/#{@festival.id}/#{@depart_from}"
     Rails.cache.fetch(key, expires_in: 30.minutes) do
       ghound = GreyhoundScraper.new(@depart_date, @depart_from, @return_date, @return_from, trip_type, browser)
@@ -202,7 +151,6 @@ class FestivalsController < ApplicationController
       @usr_location = $redis.hgetall(session.id)
 
       if @usr_location == {}
-
         # usr_ip = '207.81.151.23'
         usr_ip = request.remote_ip
         url = URI("http://ip-api.com/json/#{usr_ip}")
