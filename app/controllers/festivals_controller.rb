@@ -47,7 +47,6 @@ class FestivalsController < ApplicationController
       id = params[:festival_id].to_i
       @festivals << Festival.find(id)
     else
-
       date = params[:date] == '' ? Date.today : params[:date]
 
       @festivals = Festival.search(params, date, session.id)
@@ -55,6 +54,24 @@ class FestivalsController < ApplicationController
 
     @img_classes = Festival.set_background(@festivals.length)
 
+    @festivals_hash = []
+
+    @festivals.each do |festival|
+      hash = {
+        id: festival.id,
+        name: festival.name,
+        date: festival.date,
+        city: festival.city,
+        state: festival.state, 
+        lat: festival.latitude, 
+        lng: festival.longitude 
+      }
+
+      @festivals_hash << hash
+    end
+
+    gon.festivals = @festivals_hash
+    
     respond_to do |format|
       format.js {render layout: false}
     end
@@ -92,11 +109,6 @@ class FestivalsController < ApplicationController
     @image = Festival.get_flickr_images(festival)
 
     render json: @image
-  end
-
-  def parse_all
-    @festivals = Festival.where('start_date > ?', Date.today).order(:start_date)
-    render json: @festivals, content_type: "application/json"
   end
 
   def search_flights
@@ -140,18 +152,15 @@ class FestivalsController < ApplicationController
     browser = "phantomjs"
   
     key = "bus/#{@festival.id}/#{@depart_from}"
-    Rails.cache.fetch(key, expires_in: 30.minutes) do
-      ghound = GreyhoundScraper.new(@depart_date, @depart_from, @return_date, @return_from, trip_type, browser)
-      @greyhound_data = ghound.run
-      puts @greyhound_data
+    ghound = GreyhoundScraper.new(@depart_date, @depart_from, @return_date, @return_from, trip_type, browser)
+    @greyhound_data = ghound.run
 
       # testing - test data
       # @greyhound_data = "some error"
-      # @greyhound_data = {:depart=>{0=>{:cost=>"79.00", :start_time=>"12:15AM", :end_time=>"07:40AM", :travel_time=>"7h 25m"}, 1=>{:cost=>"79.00", :start_time=>"06:30AM", :end_time=>"12:15PM", :travel_time=>"5h 45m"}, 2=>{:cost=>"88.00", :start_time=>"12:30PM", :end_time=>"05:30PM", :travel_time=>"5h 00m"}, 3=>{:cost=>"81.00", :start_time=>"02:30PM", :end_time=>"07:30PM", :travel_time=>"5h 00m"}, 4=>{:cost=>"81.00", :start_time=>"06:00PM", :end_time=>"11:45PM", :travel_time=>"5h 45m"}}, :return=>{0=>{:cost=>"", :start_time=>"08:00AM", :end_time=>"01:20PM", :travel_time=>"5h 20m"}, 1=>{:cost=>"", :start_time=>"09:15AM", :end_time=>"04:40PM", :travel_time=>"7h 25m"}, 2=>{:cost=>"", :start_time=>"12:01PM", :end_time=>"05:00PM", :travel_time=>"4h 59m"}, 3=>{:cost=>"", :start_time=>"03:30PM", :end_time=>"09:30PM", :travel_time=>"6h 00m"}, 4=>{:cost=>"", :start_time=>"11:15PM", :end_time=>"05:05AM", :travel_time=>"5h 50m"}}}
-    end
-
+      # @greyhound_data = {:depart=>{0=>{:cost=>"79.00", :start_time=>"12:15AM", :end_time=>"07:40AM", :travel_time=>"7h 25m"}}, :return=>{0=>{:cost=>"", :start_time=>"08:00AM", :end_time=>"01:20PM", :travel_time=>"5h 20m"}}}
 
     @festival.save_bus_data(@greyhound_data, @festival.id, session.id)
+
 
     # byebug
     respond_to do |format|

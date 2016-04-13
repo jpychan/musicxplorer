@@ -98,19 +98,21 @@
             -else
               img[src="#{image_path('plane_loading.gif')}"]
     
-    div#more-info
-      div 
-        - if @festival.description
-          h2 Description
-          p #{@festival.description}
-      
-      - if @festival.artists.length > 0 
-        div
-          h2 Performers
+    - if @festival.description || @festival.artists
+    
+      div#more-info
+        div 
+          - if @festival.description
+            h2 Description
+            p #{@festival.description}
+        
+        - if @festival.artists.length > 0 
+          div
+            h2 Performers
 
-          #artist-list
-            ul
-              - @festival.artists.each do |artist|
-                li #{artist.name}
+            #artist-list
+              ul
+                - @festival.artists.each do |artist|
+                  li #{artist.name}
 
     div[id="flickr-imgs" class="flickr-imgs row" data-name="#{@festival.name}"]

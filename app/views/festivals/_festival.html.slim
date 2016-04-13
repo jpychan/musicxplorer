@@ -1,8 +1,9 @@
--for i in 0..@festivals.length - 1
-  a[href="/festivals/#{@festivals[i].id}"]
+- @festivals.each_with_index do | festival, index|
+
+  a[href="/festivals/#{festival.id}"]
     div[class="festival_card"]
-      div[class="festival_card_header image#{@img_classes[i]}"]
+      div[class="festival_card_header image#{@img_classes[index]}"]
       div[class="festival_card_body"]
-        p[class="festival_name"]#{@festivals[i].name} 
-        p[class="festival_location"]#{@festivals[i].location}
-        p[class="festival_date"]#{@festivals[i].date} 
+        p[class="festival_name"]#{festival.name} 
+        p[class="festival_location"]#{festival.location}
+        p[class="festival_date"]#{festival.date} 

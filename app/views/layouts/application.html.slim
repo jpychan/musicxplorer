@@ -1,12 +1,12 @@
 doctype html
 html
   head
-    title Music Festival
-
+    title MusicXplorer
 
     meta charset= "utf-8"
     link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"
     link href='https://fonts.googleapis.com/css?family=Noto+Serif|Raleway:400,700|Boogaloo' rel='stylesheet' type='text/css'
+
     = javascript_include_tag "https://maps.googleapis.com/maps/api/js?libraries=places&key=#{ENV['GOOGLE_KEY']}"
 
     = stylesheet_link_tag  "application", media: 'all'
@@ -16,8 +16,9 @@ html
     = csrf_meta_tags
 
   body
-
+    
     .wrapper-container
+      a[name="top"]
 
       = render 'nav'
        
@@ -25,5 +26,9 @@ html
       
       = render 'festival_compare'
       = render 'location_change'
+
+      div#top-link
+        a[href="#top"] Back to Top
+
       = render 'footer'
 

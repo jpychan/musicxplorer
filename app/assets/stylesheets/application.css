@@ -61,6 +61,10 @@ a:hover {
   top: 10%; 
 }
 
+#locationModal .modal-header {
+  height: 40px;
+}
+
 .modal-body { 
   text-align: center;
   clear: both;
@@ -205,7 +209,7 @@ i { margin-right: 3px; }
 
 .results-list {
   overflow: auto;
-  height: 750px;
+  max-height: 750px;
 }
 
 #map {
@@ -400,6 +404,12 @@ i { margin-right: 3px; }
   left: 0;
 }
 
+#top-link {
+  text-align:right;
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+
 @media only screen and (min-width: 550px) {
 
   #upcoming_festivals {
@@ -410,6 +420,11 @@ i { margin-right: 3px; }
     width: 300px;
     margin-left: 20px;
     margin-right: 20px;
+  }
+
+  .results-list {
+    overflow: auto;
+    max-height: 750px;
   }
 }
 
@@ -504,3 +519,4 @@ i { margin-right: 3px; }
 #soulmate .soulmate-type:after {
   clear: both;
 }
+

@@ -136,7 +136,7 @@ $(function() {
 
 });
 
-function initMap() {
+function initMap(festivalResults) {
 
   var myLatLng = {
     lat: $('#search_lat').val(),
@@ -149,7 +149,7 @@ function initMap() {
 
   map = new google.maps.Map(mapCon, {
     center: searchLocation,
-    zoom: 7
+    zoom: 5
   });
 
   var marker = new google.maps.Marker({
@@ -158,26 +158,26 @@ function initMap() {
     title: 'Hello World'
   });
 
-  $.getJSON("/festivals", function(data) {
-    $.each(data, function(index, festival) {
-      var marker = new google.maps.Marker({
-        map: map, 
-        position: {lat:festival.latitude, lng:festival.longitude}, 
-        name: name
+  for (var i = 0; i < festivalResults.length; i++) {
+    var marker = new google.maps.Marker({
+      map: map,
+      position: {lat: festivalResults[i].lat, lng: festivalResults[i].lng},
+    });
+
+    var infowindow = new google.maps.InfoWindow({
+        content: ('<p>' + festivalResults[i].name + '<br>' +
+                festivalResults[i].date + '<br>' + 
+                festivalResults[i].city + ', ' + festivalResults[i].state + '</p>' +
+                '<a href="/festivals/' + festivalResults[i].id + '">More info</a>')
       });
-      var infowindow = new google.maps.InfoWindow({
-        content: ('<p>' + festival.name + '<br>' +
-                festival.date + '<br>' + 
-                festival.city + ', ' + festival.state + '</p>' +
-                '<a href="/festivals/' + festival.id + '">More info</a>')
-      });
-      marker.addListener('click', function() {
-        infowindow.open(map, marker);
-        infowindow.addListener('closeclick', function() {
-          infowindow.close();
-        });
+
+    marker.addListener('click', function() {
+      infowindow.open(map, marker);
+      infowindow.addListener('closeclick', function() {
+        infowindow.close();
       });
     });
-  });
+  };
+
 }   
 

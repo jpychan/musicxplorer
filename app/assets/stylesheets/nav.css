@@ -113,6 +113,9 @@ input:focus {
 
   #usr_location {
     margin-left: 0;
+    width: 100%;
+    padding-left: 0;
+    padding-right: 20px;
   }
 }
 

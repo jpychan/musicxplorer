@@ -12,8 +12,6 @@ Rails.application.routes.draw do
 
   root 'festivals#all'
 
-  get '/festivals' => 'festivals#parse_all'
-
   resources :festivals do
     get :autocomplete_festival_name, :on => :collection
     get :autocomplete_airport_name, :on => :collection
