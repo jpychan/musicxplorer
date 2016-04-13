@@ -48,10 +48,13 @@ class FestivalsController < ApplicationController
       @festivals << Festival.find(id)
     else
       date = params[:date] == '' ? Date.today : params[:date]
+      
+      festival = Festival.search(params, date, session.id)
 
-      @festivals = Festival.search(params, date, session.id)
+      @festivals << festival
+
     end
-
+    byebug
     @img_classes = Festival.set_background(@festivals.length)
 
     @festivals_hash = []

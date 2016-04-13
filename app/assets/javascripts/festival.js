@@ -152,12 +152,6 @@ function initMap(festivalResults) {
     zoom: 5
   });
 
-  var marker = new google.maps.Marker({
-    map: map,
-    position: searchLocation,
-    title: 'Hello World'
-  });
-
   for (var i = 0; i < festivalResults.length; i++) {
     var marker = new google.maps.Marker({
       map: map,
