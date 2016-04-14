@@ -85,7 +85,7 @@ $(function() {
           displayCost(f['time_bus'], f['price_bus'], row);
           displayCost(f['time_flight_in'], f['price_flight'], row);
 
-          $('<td>').html('<button class="remove-fave"><i class="fa fa-star"></i> Remove</button>').appendTo(row);
+          $('<td>').html('<button class="remove-fave"><i class="fa fa-trash-o fa-2x"></i></button>').appendTo(row);
         });
       }
     }

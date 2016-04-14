@@ -73,7 +73,7 @@
           div[id="car" class="route-details active"]
 
             div.driving-cost data-car-price="#{@price_by_car}" data-car-time="#{@time_by_car}"
-              - if @price_by_car
+              - if @price_by_car > 0
                 p Price: $#{display(@price_by_car)} (CDN)
                 p Trip duration: #{@time_by_car}
                 p.note Note: Starting off with empty tank of gas and not including switching modes of transportation
