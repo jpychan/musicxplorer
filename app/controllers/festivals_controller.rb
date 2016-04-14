@@ -11,7 +11,15 @@ class FestivalsController < ApplicationController
     set_search_and_user_location
 
     @genres = Genre.all.order(:name)
-    @festivals = Festival.upcoming
+    festivals = Festival.upcoming
+
+    @festivals = []
+
+    festivals.each do |festival|
+      @festivals << festival
+
+    end
+    # byebug
     @img_classes = Festival.set_background(@festivals.length)
   end
 
@@ -37,24 +45,22 @@ class FestivalsController < ApplicationController
 
   # GET FESTIVAL SEARCH RESULTS
   def festival_list
-    @festivals = []
 
     if params[:festival_name] == ''
       params[:festival_id] = ''
     end
 
     if params[:festival_id].length > 0
+      @festivals = []
       id = params[:festival_id].to_i
       @festivals << Festival.find(id)
     else
       date = params[:date] == '' ? Date.today : params[:date]
       
-      festival = Festival.search(params, date, session.id)
-
-      @festivals << festival
+      @festivals = Festival.search(params, date, session.id)
 
     end
-    byebug
+    # byebug
     @img_classes = Festival.set_background(@festivals.length)
 
     @festivals_hash = []
@@ -187,7 +193,7 @@ class FestivalsController < ApplicationController
         response = http.request(request)
         response = JSON.parse(response.body)
         status = response["status"]
-        puts response
+
 
         if status == "fail"
 
