@@ -10,7 +10,7 @@ $(function() {
 
   $('#date-picker').datepicker({
     minDate: new Date(),
-    maxDate: maxDay(), 
+    maxDate: maxDay(),
     dateFormat: 'yy-mm-dd'
   });
 
@@ -54,12 +54,12 @@ $(function() {
         locationInput.removeClass('input-active');
         locationInput.addClass('input-locked');
         locationInput.prop('disabled', true);
-        
+
         $('#locationModal').modal('show');
         $.ajax('/usr-info',
           { type: 'GET',
             data: {usr_location: userInput},
-            success: function(xhr) { 
+            success: function(xhr) {
               console.log('ok');
           }
       });
@@ -87,7 +87,7 @@ $(function() {
     $('#festival-search-form').slideToggle();
 
   });
-  
+
   // SOULMATE AUTO-COMPLETE
   var render, select, festivalRender, festivalSelect;
   render = function(term, data, type) {
@@ -100,7 +100,7 @@ $(function() {
 
   $('#search-artist').soulmate({
     url: '/soulmate/search',
-    types: ['artist'],
+    types: ['artists'],
     renderCallback: render,
     selectCallback: select,
     minQueryLength: 2,
