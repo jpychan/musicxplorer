@@ -47,7 +47,7 @@ $(function() {
 
         $('.container').attr('data-userlatitude', userInput.lat);
         $('.container').attr('data-userlongitude', userInput.lng);
-        $('search_location').attr('value', userInput.formatted_address);
+        $('#search_location').attr('value', userInput.formatted_address);
         $('#search_lat').attr('value', userInput.lat);
         $('#search_long').attr('value', userInput.lng);
 
