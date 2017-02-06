@@ -23,7 +23,7 @@ class DrivingInfoService
   def get_avg_gas_price
 
     origin = @origin['location'] ? @origin['location'].gsub(',','').split(' ').join('%2C') : 'Vancouver%2CBC'
-    gasbuddy = Nokogiri::HTML(open("http://gasbuddy.com/?search=#{origin}"))
+    gasbuddy = Nokogiri::HTML(open("https://gasbuddy.com/?search=#{origin}"))
     gas_price = gasbuddy.css('.gb-price-lg')[0].text.gsub(/\s+/, '').to_f / 100
   end
 
@@ -34,7 +34,7 @@ class DrivingInfoService
 
     url  = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=#{origin}|#{dest}&destinations=#{dest}|#{origin}&key=#{ENV['GOOGLE_KEY']}&avoid=tolls"
     encode_url = URI.encode(url)
-    googl_dist = URI.parse(encode_url) 
+    googl_dist = URI.parse(encode_url)
 
     googl_resp = HTTParty.get(googl_dist, verify: false)
     googl_data = JSON.parse(googl_resp.body)['rows']
@@ -42,7 +42,7 @@ class DrivingInfoService
     round_trip = []
     googl_data.each do |trip|
       # filter the distance matrix
-      trip['elements'].each do |ele|  
+      trip['elements'].each do |ele|
         if ele['status'] == 'ZERO_RESULTS' || ele['status'] == 'NOT_FOUND'
           round_trip << {'distance' => {'value' => 0}, 'duration' => {'text' => "n/a"}}
         elsif ele['distance']['value'] != 0

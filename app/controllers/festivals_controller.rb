@@ -33,8 +33,10 @@ class FestivalsController < ApplicationController
 
     driving = DrivingInfoService.new(@festival, session.id)
     @price_by_car = driving.calc_driving_cost
-    # byebug
     @time_by_car = driving.get_trip_time[0]
+
+    # @price_by_car = 123
+    # @time_by_car = 123
   end
 
   # PRE-CALCULATE COORDINATES FOR LOCATION
@@ -57,7 +59,7 @@ class FestivalsController < ApplicationController
       @festivals << Festival.find(id)
     else
       date = params[:date] == '' ? Date.today : params[:date]
-      
+
       @festivals = Festival.search(params, date, session.id)
 
     end
@@ -72,16 +74,16 @@ class FestivalsController < ApplicationController
         name: festival.name,
         date: festival.date,
         city: festival.city,
-        state: festival.state, 
-        lat: festival.latitude, 
-        lng: festival.longitude 
+        state: festival.state,
+        lat: festival.latitude,
+        lng: festival.longitude
       }
 
       @festivals_hash << hash
     end
 
     gon.festivals = @festivals_hash
-    
+
     respond_to do |format|
       format.js {render layout: false}
     end
@@ -106,13 +108,13 @@ class FestivalsController < ApplicationController
 
     head :created
   end
-  
+
   def festival_unselect
     $redis.hdel("#{session.id}_saved", params[:festivalId])
     head :ok
   end
 
-  def flickr_images 
+  def flickr_images
 
     festival = params[:festival].gsub(/\s\d{4}/, '')
 
@@ -160,7 +162,7 @@ class FestivalsController < ApplicationController
     @return_from = { city: @festival.city, state: @festival.state }
     trip_type = "Round Trip"
     browser = "phantomjs"
-  
+
     key = "bus/#{@festival.id}/#{@depart_from}"
     ghound = GreyhoundScraper.new(@depart_date, @depart_from, @return_date, @return_from, trip_type, browser)
     @greyhound_data = ghound.run
@@ -178,7 +180,7 @@ class FestivalsController < ApplicationController
     end
   end
 
-  protected 
+  protected
     def set_search_and_user_location
       @genres = Genre.all.order(:name)
       @all_festivals = Festival.all.order(:name)
