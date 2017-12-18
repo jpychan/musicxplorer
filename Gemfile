@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+ruby "2.0.0"
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.6'
 
@@ -48,7 +49,7 @@ gem 'seed_dump'
 gem 'kaminari'
 
 # Greyhound Scraper
-gem  'watir-webdriver'
+gem 'watir-webdriver'
 gem 'watir-scroll'
 gem 'phantomjs'
 gem 'rails-jquery-autocomplete'

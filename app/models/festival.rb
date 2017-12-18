@@ -37,11 +37,11 @@ class Festival < ActiveRecord::Base
   def self.search(params, date, session_id)
 
     @festivals = self.joins("INNER JOIN performances AS p ON p.festival_id = festivals.id INNER JOIN artists AS a ON p.artist_id = a.id INNER JOIN festival_genres AS fg ON fg.festival_id = festivals.id INNER JOIN genres AS g ON fg.genre_id = g.id").where('start_date >= ? AND LOWER(camping) LIKE ? AND g.name LIKE ? AND a.name LIKE ?', date, "%#{params[:camping]}%", "%#{params[:genre]}%", "%#{params[:artist]}%").distinct
-    
+
     d = DistanceService.new
     @festivals = @festivals.select do |f|
       dist_km = d.calc_distance(params["search_lat"], params["search_long"], f)
-      dist_km <= SEARCH_RADIUS 
+      dist_km <= SEARCH_RADIUS
     end
   end
 
@@ -82,7 +82,7 @@ class Festival < ActiveRecord::Base
 
     departure_airport = $redis.hget(session_id, 'departure_airport_iata')
     arrival_airport = DistanceService.new.get_nearest_airport(festival.latitude, festival.longitude, festival.country).iata_code.downcase
-    
+
     if departure_airport == arrival_airport
       return "Festival is located in your home city. Try the driving directions!"
     elsif Date.today > festival.end_date
@@ -97,7 +97,7 @@ class Festival < ActiveRecord::Base
   def save_bus_data(greyhound_data, festival_id, session_id)
 
     puts greyhound_data
-    
+
     if greyhound_data.is_a? Hash
 
       greyhound_data[:depart].each do |key, schedule|
@@ -168,6 +168,6 @@ class Festival < ActiveRecord::Base
 
 
 end
-  
+
 
 

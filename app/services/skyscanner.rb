@@ -5,7 +5,7 @@ module Skyscanner
     def set_flight_search_params(params, session_id, airports)
     festival = Festival.find(params[:festival_id])
     if params[:default]
- 
+
       params[:cabin_class] = "Economy"
       params[:adult] = 1
       params[:children] = 0
@@ -62,7 +62,7 @@ module Skyscanner
     puts response
     response = response.body
     response = JSON.parse(response)
-    return response    
+    return response
   end
 
   def get_first_five_results(data)
@@ -74,7 +74,7 @@ module Skyscanner
     @results = data["Itineraries"]
 
     if @results.length > 0
-      
+
       j = 0
 
       while j <= @results.length - 1

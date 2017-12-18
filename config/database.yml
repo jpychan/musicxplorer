@@ -15,18 +15,5 @@ test:
   <<: *default
   database: festival-find-test
 
-# CZ: custom:
 production:
-  adapter: postgresql
   database: <%= ENV['DATABASE_URL'] %>
-  pool: 5
-
-
-# CZ: Original
-# CZ: note - heroku sets ENV['DATABASE_URL'] for you.
-# not sure about user/pass though
-# production:
-#   <<: *default
-#   database: <%= ENV['DATABASE_URL'] %>
-#   username: 
-#   password: <%= ENV['PRODUCTION-DBPW'] %>

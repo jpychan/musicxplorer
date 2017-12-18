@@ -23,12 +23,11 @@ class DrivingInfoService
   def get_avg_gas_price
 
     origin = @origin['location'] ? @origin['location'].gsub(',','').split(' ').join('%2C') : 'Vancouver%2CBC'
-    gasbuddy = Nokogiri::HTML(open("https://gasbuddy.com/?search=#{origin}"))
+    gasbuddy = Nokogiri::HTML(open("https://gasbuddy.com/home?search=#{origin}"))
     gas_price = gasbuddy.css('.gb-price-lg')[0].text.gsub(/\s+/, '').to_f / 100
   end
 
   def get_trip
-    # byebug
     origin = [@origin['lat'], @origin['lng']].join(',')
     dest = [@festival.latitude, @festival.longitude].join(',')
 

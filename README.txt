@@ -2,6 +2,8 @@ MusicXplorer is a web app that helps you find music festivals around the world a
 
 Try it here: https://musicxplorer.herokuapp.com/
 
+NOTE: Skyscanner no longer provides a dev API key, so the flight search doesn't work at the moment.
+
 Tech Stack:
 - Rails
 - Redis
@@ -27,7 +29,7 @@ Gas price: Gasbuddy
 
 My updates
 - made the site completely mobile responsive (converted from PureCSS to Skeleton)
-- fixed caching - saving data according to user's session ID, rather than overwriting the same row by different users 
+- fixed caching - saving data according to user's session ID, rather than overwriting the same row by different users
 - added caching to save bus and flight data to avoid API being called multiple times for the same search (expires after 30 min)
 - added default location setting by user's IP
 - added Google Places Autocomplete API for users to set their default location
